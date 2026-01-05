@@ -1,15 +1,18 @@
-﻿namespace VRMS.Database.Tables;
+﻿using VRMS.Database.DBHelpers.EnumHelper;
+using VRMS.Enums;
+
+namespace VRMS.Database.Tables;
 
 public static class M_0009_CreateReservationsTable
 {
-    public static string Create() => """
+    public static string Create() => $"""
                                      CREATE TABLE IF NOT EXISTS reservations (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
                                          customer_id INT NOT NULL,
                                          vehicle_id INT NOT NULL,
                                          start_date DATETIME NOT NULL,
                                          end_date DATETIME NOT NULL,
-                                         status ENUM('Pending','Confirmed','Cancelled') NOT NULL,
+                                         status {Tbl.ToEnum<ReservationStatus>()} NOT NULL,
 
                                          CONSTRAINT fk_reservations_customer
                                              FOREIGN KEY (customer_id)

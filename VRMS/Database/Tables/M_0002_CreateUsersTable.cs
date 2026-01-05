@@ -1,8 +1,11 @@
-﻿namespace VRMS.Database.Tables;
+﻿using VRMS.Database.DBHelpers.EnumHelper;
+using VRMS.Enums;
+
+namespace VRMS.Database.Tables;
 
 public static class M_0002_CreateUsersTable
 {
-    public static string Create() => """
+    public static string Create() => $"""
                                      CREATE TABLE IF NOT EXISTS users (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
                                          username VARCHAR(50) NOT NULL UNIQUE,

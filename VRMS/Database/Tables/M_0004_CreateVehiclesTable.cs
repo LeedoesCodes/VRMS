@@ -1,8 +1,11 @@
-﻿namespace VRMS.Database.Tables;
+﻿using VRMS.Database.DBHelpers.EnumHelper;
+using VRMS.Enums;
+
+namespace VRMS.Database.Tables;
 
 public static class M_0004_CreateVehiclesTable
 {
-    public static string Create() => """
+    public static string Create() => $"""
                                      CREATE TABLE IF NOT EXISTS vehicles (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
                                          vehicle_code VARCHAR(50) NOT NULL UNIQUE,
@@ -12,9 +15,9 @@ public static class M_0004_CreateVehiclesTable
                                          color VARCHAR(30) NOT NULL,
                                          license_plate VARCHAR(20) NOT NULL UNIQUE,
                                          vin VARCHAR(50) NOT NULL UNIQUE,
-                                         transmission ENUM('Manual','Automatic') NOT NULL,
-                                         fuel_type ENUM('Gasoline','Diesel','Electric','Hybrid') NOT NULL,
-                                         status ENUM('Available','Reserved','Rented','UnderMaintenance','OutOfService','Retired') NOT NULL,
+                                         transmission {Tbl.ToEnum<TransmissionType>()} NOT NULL,
+                                         fuel_type {Tbl.ToEnum<FuelType>()} NOT NULL,
+                                         status {Tbl.ToEnum<VehicleStatus>()} NOT NULL,
                                          seating_capacity INT NOT NULL,
                                          odometer INT NOT NULL,
                                          vehicle_category_id INT NOT NULL,

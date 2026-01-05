@@ -1,8 +1,11 @@
-﻿namespace VRMS.Database.Tables;
+﻿using VRMS.Database.DBHelpers.EnumHelper;
+using VRMS.Enums;
+
+namespace VRMS.Database.Tables;
 
 public static class M_0008_CreateCustomersTable
 {
-    public static string Create() => """
+    public static string Create() => $"""
                                      CREATE TABLE IF NOT EXISTS customers (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
                                          first_name VARCHAR(50) NOT NULL,
@@ -10,7 +13,7 @@ public static class M_0008_CreateCustomersTable
                                          email VARCHAR(100) NOT NULL,
                                          phone VARCHAR(30) NOT NULL,
                                          date_of_birth DATE NOT NULL,
-                                         customer_type ENUM('Individual','Corporate','Frequent','Blacklisted') NOT NULL,
+                                         customer_type {Tbl.ToEnum<CustomerType>()} NOT NULL,
                                          drivers_license_id INT NOT NULL,
 
                                          CONSTRAINT fk_customers_license

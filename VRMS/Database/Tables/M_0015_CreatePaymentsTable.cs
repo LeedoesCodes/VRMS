@@ -1,13 +1,16 @@
-﻿namespace VRMS.Database.Tables;
+﻿using VRMS.Database.DBHelpers.EnumHelper;
+using VRMS.Enums;
+
+namespace VRMS.Database.Tables;
 
 public static class M_0015_CreatePaymentsTable
 {
-    public static string Create() => """
+    public static string Create() => $"""
                                      CREATE TABLE IF NOT EXISTS payments (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
                                          invoice_id INT NOT NULL,
                                          amount DECIMAL(10,2) NOT NULL,
-                                         payment_method ENUM('Cash','CreditCard','DebitCard','Online') NOT NULL,
+                                         payment_method {Tbl.ToEnum<PaymentMethod>()} NOT NULL,
                                          payment_date DATETIME NOT NULL,
 
                                          CONSTRAINT fk_payments_invoice

@@ -1,7 +1,10 @@
-﻿namespace VRMS.Database.Tables;
+﻿using VRMS.Database.DBHelpers.EnumHelper;
+using VRMS.Enums;
+
+namespace VRMS.Database.Tables;
 public static class M_0010_CreateRentalsTable
 {
-    public static string Create() => """
+    public static string Create() => $"""
                                      CREATE TABLE IF NOT EXISTS rentals (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
                                          reservation_id INT NOT NULL,
@@ -10,7 +13,7 @@ public static class M_0010_CreateRentalsTable
                                          actual_return_date DATETIME NULL,
                                          start_odometer INT NOT NULL,
                                          end_odometer INT NULL,
-                                         status ENUM('Active','Completed','Late') NOT NULL,
+                                         status {Tbl.ToEnum<RentalStatus>()} NOT NULL,
 
                                          CONSTRAINT fk_rentals_reservation
                                              FOREIGN KEY (reservation_id)
@@ -21,5 +24,6 @@ public static class M_0010_CreateRentalsTable
     public static string Drop() => """
                                    DROP TABLE IF EXISTS rentals;
                                    """;
+
 
 }
