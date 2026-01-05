@@ -17,4 +17,8 @@ public static class M_0011_CreateVehicleInspectionsTable
                                              ON DELETE CASCADE
                                      ) ENGINE=InnoDB;
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS vehicle_inspections;
+                                   """;
 }

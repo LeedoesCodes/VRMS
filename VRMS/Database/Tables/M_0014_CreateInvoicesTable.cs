@@ -15,4 +15,8 @@ public static class M_0014_CreateInvoicesTable
                                              ON DELETE RESTRICT
                                      ) ENGINE=InnoDB;
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS invoices;
+                                   """;
 }

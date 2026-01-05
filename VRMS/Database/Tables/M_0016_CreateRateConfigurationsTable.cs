@@ -17,4 +17,8 @@ public static class M_0016_CreateRateConfigurationsTable
                                              ON DELETE RESTRICT
                                      ) ENGINE=InnoDB;
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS rate_configurations;
+                                   """;
 }

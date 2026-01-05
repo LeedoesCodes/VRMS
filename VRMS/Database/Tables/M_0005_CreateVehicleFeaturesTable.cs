@@ -8,4 +8,8 @@ public static class M_0005_CreateVehicleFeaturesTable
                                          name VARCHAR(50) NOT NULL UNIQUE
                                      );
                                      """;
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS vehicle_features;
+                                   """;
+
 }

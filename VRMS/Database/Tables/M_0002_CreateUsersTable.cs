@@ -11,4 +11,9 @@ public static class M_0002_CreateUsersTable
                                          is_active BOOLEAN NOT NULL DEFAULT TRUE
                                      );
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS users;
+                                   """;
+
 }

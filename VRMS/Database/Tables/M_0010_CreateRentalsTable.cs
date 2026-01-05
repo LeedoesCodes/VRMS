@@ -18,4 +18,8 @@ public static class M_0010_CreateRentalsTable
                                              ON DELETE RESTRICT
                                      ) ENGINE=InnoDB;
                                      """;
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS rentals;
+                                   """;
+
 }

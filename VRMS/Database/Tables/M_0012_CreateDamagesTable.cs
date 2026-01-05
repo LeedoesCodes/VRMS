@@ -9,4 +9,8 @@ public static class M_0012_CreateDamagesTable
                                          estimated_cost DECIMAL(10,2) NOT NULL
                                      );
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS damages;
+                                   """;
 }

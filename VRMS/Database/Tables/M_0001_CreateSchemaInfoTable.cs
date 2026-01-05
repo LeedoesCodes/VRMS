@@ -18,4 +18,8 @@ public static class M_0001_CreateSchemaInfoTable
 
     public static string CheckInitialized() =>
         "SELECT initialized FROM schema_info WHERE id = 1;";
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS schema_info;
+                                   """;
 }

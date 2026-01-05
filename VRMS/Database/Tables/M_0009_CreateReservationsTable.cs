@@ -22,4 +22,9 @@ public static class M_0009_CreateReservationsTable
                                              ON DELETE RESTRICT
                                      ) ENGINE=InnoDB;
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS reservations;
+                                   """;
+
 }

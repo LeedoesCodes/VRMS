@@ -19,4 +19,9 @@ public static class M_0008_CreateCustomersTable
                                              ON DELETE RESTRICT
                                      ) ENGINE=InnoDB;
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS customers;
+                                   """;
+
 }

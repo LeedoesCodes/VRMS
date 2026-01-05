@@ -21,4 +21,10 @@ public static class M_0013_CreateDamageReportsTable
                                              ON DELETE RESTRICT
                                      ) ENGINE=InnoDB;
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS damage_reports;
+                                   """;
+    
+    
 }

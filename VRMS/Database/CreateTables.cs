@@ -20,8 +20,13 @@ public static class CreateTables
         }
 
         // ===== CREATE TABLES (ORDER MATTERS) =====
+        executeNonQuery(M_0001_CreateSchemaInfoTable.Create());
         executeNonQuery(M_0002_CreateUsersTable.Create());
+        executeNonQuery(M_0003_CreateVehicleCategoriesTable.Create());
         executeNonQuery(M_0004_CreateVehiclesTable.Create());
+        executeNonQuery(M_0005_CreateVehicleFeaturesTable.Create());
+        executeNonQuery(M_0006_CreateVehicleImagesTable.Create());
+        executeNonQuery(M_0007_CreateDriversLicensesTable.Create());
         executeNonQuery(M_0008_CreateCustomersTable.Create());
         executeNonQuery(M_0009_CreateReservationsTable.Create());
         executeNonQuery(M_0010_CreateRentalsTable.Create());

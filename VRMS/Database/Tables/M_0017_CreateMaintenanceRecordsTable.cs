@@ -17,4 +17,8 @@ public static class M_0017_CreateMaintenanceRecordsTable
                                              ON DELETE RESTRICT
                                      ) ENGINE=InnoDB;
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS maintenance_records;
+                                   """;
 }

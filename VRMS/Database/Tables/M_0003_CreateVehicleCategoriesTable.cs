@@ -9,4 +9,8 @@ public static class M_0003_CreateVehicleCategoriesTable
                                          description TEXT NULL
                                      );
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS vehicle_categories;
+                                   """;
 }

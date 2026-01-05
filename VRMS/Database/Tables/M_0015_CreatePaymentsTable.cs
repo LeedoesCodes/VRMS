@@ -16,4 +16,9 @@ public static class M_0015_CreatePaymentsTable
                                              ON DELETE CASCADE
                                      ) ENGINE=InnoDB;
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS payments;
+                                   """;
+
 }

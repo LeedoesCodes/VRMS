@@ -11,4 +11,8 @@ public static class M_0007_CreateDriversLicensesTable
                                          issuing_country VARCHAR(50) NOT NULL
                                      );
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS drivers_licenses;
+                                   """;
 }

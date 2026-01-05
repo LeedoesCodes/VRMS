@@ -25,4 +25,8 @@ public static class M_0004_CreateVehiclesTable
                                              ON DELETE RESTRICT
                                      ) ENGINE=InnoDB;
                                      """;
+    
+    public static string Drop() => """
+                                   DROP TABLE IF EXISTS vehicles;
+                                   """;
 }
