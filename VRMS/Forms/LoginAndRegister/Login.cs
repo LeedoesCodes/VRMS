@@ -1,20 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace VRMS.Forms.LoginAndRegister
+namespace Vehicle_Rental_Management_System.Forms
 {
     public partial class Login : Form
     {
         public Login()
         {
             InitializeComponent();
+
+            // Add rounded corners to the card panel (optional logic)
+            // Or just keep the flat look
         }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        // Add placeholders for other clicks or link them in Designer
+        // private void btnLogin_Click(object sender, EventArgs e) { ... }
+        // private void btnGoToRegister_Click(object sender, EventArgs e) { ... }
     }
 }
