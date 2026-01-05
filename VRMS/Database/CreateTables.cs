@@ -31,6 +31,8 @@ public static class CreateTables
         executeNonQuery(M_0014_CreateInvoicesTable.Create());
         executeNonQuery(M_0015_CreatePaymentsTable.Create());
         executeNonQuery(M_0016_CreateRateConfigurationsTable.Create());
+        executeNonQuery(M_0017_CreateMaintenanceRecordsTable.Create());
+        
 
         // Mark schema as initialized
         executeNonQuery(M_0001_CreateSchemaInfoTable.InsertInitial());
