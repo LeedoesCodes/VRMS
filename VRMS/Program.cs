@@ -1,15 +1,16 @@
-namespace VRMS;
+using System;
+using System.Windows.Forms;
+using Vehicle_Rental_Management_System;
 
-static class Program
+namespace VRMS
 {
-    /// <summary>
-    ///  The main entry point for the application.
-    /// </summary>
-    [STAThread]
-    static void Main()
+    static class Program
     {
-        // To customize application configuration such as set high DPI settings or default font,
-        // see https://aka.ms/applicationconfiguration.
-        ApplicationConfiguration.Initialize();
+        [STAThread]
+        static void Main()
+        {
+            ApplicationConfiguration.Initialize();
+            Application.Run(new Welcome());
+        }
     }
 }
