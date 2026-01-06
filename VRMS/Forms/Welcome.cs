@@ -41,6 +41,9 @@ namespace Vehicle_Rental_Management_System
             {
                 log.GoToRegisterRequest += (s, e) => { showingLogin = false; LoadControl(new RegisterUserControl()); };
                 log.ExitApplication += (s, e) => Application.Exit();
+
+                
+                log.LoginSuccess += LoginUC_LoginSuccess;
             }
             else if (uc is RegisterUserControl reg)
             {
@@ -51,6 +54,22 @@ namespace Vehicle_Rental_Management_System
             CenterUC(uc);
             panelLogin.BringToFront();
             FocusContent();
+        }
+
+        
+        private void LoginUC_LoginSuccess(object sender, EventArgs e)
+        {
+           
+            Vehicle_Rental_Management_System.Forms.MainForm mainForm = new Vehicle_Rental_Management_System.Forms.MainForm();
+
+           
+            mainForm.Show();
+
+           
+            this.Hide();
+
+           
+            mainForm.FormClosed += (s, args) => Application.Exit();
         }
 
         private void animationTimer_Tick(object sender, EventArgs e)

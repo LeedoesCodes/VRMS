@@ -8,21 +8,21 @@ namespace Vehicle_Rental_Management_System.Forms
         public AddReservationForm()
         {
             InitializeComponent();
-
-            // Wire up internal events manually if desired, 
-            // or use the Designer to double-click buttons later.
-            this.btnCancel.Click += (s, e) => this.Close();
         }
 
-        // Logic Placeholders
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // Database save logic goes here
+            // TODO: Add your validation and SQL saving logic here
+
+            // If save is successful:
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
-        private void RecalculateTotal(object sender, EventArgs e)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
-            // Calculation logic goes here
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }

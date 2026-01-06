@@ -1,15 +1,19 @@
 using System;
 using System.Windows.Forms;
-using Vehicle_Rental_Management_System;
 
-namespace VRMS
+namespace Vehicle_Rental_Management_System
 {
     static class Program
     {
+        // Global variables to store session data
+        public static string CurrentUsername { get; set; } = "Guest";
+        public static string CurrentUserRole { get; set; } = "User";
+
         [STAThread]
         static void Main()
         {
-            ApplicationConfiguration.Initialize();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Welcome());
         }
     }

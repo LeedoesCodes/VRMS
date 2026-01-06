@@ -1,0 +1,97 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "VRMS/1.0.0": {
+        "dependencies": {
+          "AForge.Video.DirectShow": "2.2.5",
+          "WinForms.DataVisualization": "1.10.0"
+        },
+        "runtime": {
+          "VRMS.dll": {}
+        }
+      },
+      "AForge/2.2.5": {
+        "runtime": {
+          "lib/AForge.dll": {
+            "assemblyVersion": "2.2.5.0",
+            "fileVersion": "2.2.5.0"
+          }
+        }
+      },
+      "AForge.Video/2.2.5": {
+        "dependencies": {
+          "AForge": "2.2.5"
+        },
+        "runtime": {
+          "lib/AForge.Video.dll": {
+            "assemblyVersion": "2.2.5.0",
+            "fileVersion": "2.2.5.0"
+          }
+        }
+      },
+      "AForge.Video.DirectShow/2.2.5": {
+        "dependencies": {
+          "AForge.Video": "2.2.5"
+        },
+        "runtime": {
+          "lib/AForge.Video.DirectShow.dll": {
+            "assemblyVersion": "2.2.5.0",
+            "fileVersion": "2.2.5.0"
+          }
+        }
+      },
+      "WinForms.DataVisualization/1.10.0": {
+        "runtime": {
+          "lib/net9.0-windows7.0/WinForms.DataVisualization.Utilities.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.10.0.0"
+          },
+          "lib/net9.0-windows7.0/WinForms.DataVisualization.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.10.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "VRMS/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AForge/2.2.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-clkumhM9DggqIzEXAHgVLeWO4arG5YfoPr7J4jfjJx35AoeEIJSSm49J25bwp/9mXQYLwi7y1Wunc8qgYJsGxg==",
+      "path": "aforge/2.2.5",
+      "hashPath": "aforge.2.2.5.nupkg.sha512"
+    },
+    "AForge.Video/2.2.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XqzcOXtBUagEPRqg/00oayxlCPmxP4284SdM62mVotsNoD03fs19BrzdMBfhUOOYPyd0B/IXH7tEWnSDmc2gxA==",
+      "path": "aforge.video/2.2.5",
+      "hashPath": "aforge.video.2.2.5.nupkg.sha512"
+    },
+    "AForge.Video.DirectShow/2.2.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pEch6felU/RGAbl0A7yjaQjsGxwiRFU9R+qBqR92wQo++XhzPLeQaZHnAPIBYaG7MfoqtjgCDkK4z3Tra4VQ3w==",
+      "path": "aforge.video.directshow/2.2.5",
+      "hashPath": "aforge.video.directshow.2.2.5.nupkg.sha512"
+    },
+    "WinForms.DataVisualization/1.10.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QKFQUf6xnsseiRsWfIeKvbWRJWvOKOvkoec/pWxEjwYrr4Vix4xmAWmvTpJGxoeWRXOzV7Pprm5SCFqzXzBA4g==",
+      "path": "winforms.datavisualization/1.10.0",
+      "hashPath": "winforms.datavisualization.1.10.0.nupkg.sha512"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="Controls\Admin\AdminView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\CustomersView\CustomersView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\Dashboard\Dashboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\RentalsView\RentalsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\ReservationsView\ReservationsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\VehiclesView\VehiclesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\Customer\CameraForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Damages\AddDamageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\LoginAndRegister\LoginUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\LoginAndRegister\RegisterUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\Main\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Payments\PaymentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Controls\Reports\ReportsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\Rentals\NewRentalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Rentals\RentalDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Reservation\AddReservationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Vehicle\AddVehicleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Rentals\ReturnVehicleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Vehicle\EditVehicleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Welcome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
