@@ -1,11 +1,10 @@
-﻿using System;
-using System.Reflection;
-using VRMS.Database.Migrations;
+﻿using System.Reflection;
+using VRMS.Database.Exceptions;
 using VRMS.Database.Migrations.Tables;
 
-namespace VRMS.Database.DBHelpers.TableExecutors;
+namespace VRMS.Database.Executors;
 
-public static class CreateExecutor
+public static class DropExecutor
 {
     public static void Execute(
         Action<string> executeNonQuery,
@@ -22,26 +21,28 @@ public static class CreateExecutor
                 t.IsAbstract &&
                 t.IsSealed &&
                 t.Name.StartsWith("M_") &&
-                t.GetMethod("Create", BindingFlags.Public | BindingFlags.Static) != null
+                t.GetMethod("Drop", BindingFlags.Public | BindingFlags.Static) != null
             )
-            .OrderBy(t => t.Name) // ascending
+            .OrderByDescending(t => t.Name) // descending
             .ToList();
 
         foreach (var type in tableTypes)
         {
+            string sql = string.Empty;
+
             try
             {
-                ExecuteMethod(type, "Create", executeNonQuery);
+                sql = ExecuteMethod(type, "Drop", executeNonQuery);
                 Console.WriteLine($"[OK] {type.Name}");
             }
             catch (Exception ex)
             {
-                HandleError(type, ex, strictMode, "create");
+                HandleError(type, ex, strictMode, "create", sql);
             }
         }
     }
 
-    private static void ExecuteMethod(
+    private static string ExecuteMethod(
         Type tableType,
         string methodName,
         Action<string> executeNonQuery
@@ -55,18 +56,20 @@ public static class CreateExecutor
         );
 
         var sql = method.Invoke(null, null) as string
-            ?? throw new InvalidOperationException(
-                $"{methodName}() on {tableType.Name} did not return SQL"
-            );
+                  ?? throw new InvalidOperationException(
+                      $"{methodName}() on {tableType.Name} did not return SQL"
+                  );
 
         executeNonQuery(sql);
+        return sql;
     }
 
     private static void HandleError(
         Type type,
         Exception ex,
         bool strictMode,
-        string action
+        string action,
+        string sql
     )
     {
         var root = ex is TargetInvocationException tie && tie.InnerException != null
@@ -78,8 +81,10 @@ public static class CreateExecutor
 
         if (strictMode)
         {
-            throw new InvalidOperationException(
-                $"Schema {action} failed at {type.Name}",
+            throw new SchemaExecutionException(
+                type.Name,
+                action,
+                sql,
                 root
             );
         }

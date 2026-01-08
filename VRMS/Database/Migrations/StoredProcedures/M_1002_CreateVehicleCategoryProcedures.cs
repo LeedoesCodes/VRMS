@@ -5,12 +5,6 @@ namespace VRMS.Database.Migrations.StoredProcedures;
 public static class M_1002_CreateVehicleCategoryProcedures
 {
     public static string Create() => $"""
-                                      DROP PROCEDURE IF EXISTS sp_vehicle_categories_create;
-                                      DROP PROCEDURE IF EXISTS sp_vehicle_categories_get_by_id;
-                                      DROP PROCEDURE IF EXISTS sp_vehicle_categories_get_all;
-                                      DROP PROCEDURE IF EXISTS sp_vehicle_categories_update;
-                                      DROP PROCEDURE IF EXISTS sp_vehicle_categories_delete;
-
                                       {SP_VehicleCategories_Create.Sql()}
                                       {SP_VehicleCategories_GetById.Sql()}
                                       {SP_VehicleCategories_GetAll.Sql()}

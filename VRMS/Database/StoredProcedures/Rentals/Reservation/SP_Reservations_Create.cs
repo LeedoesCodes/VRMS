@@ -3,6 +3,8 @@
 public static class SP_Reservations_Create
 {
     public static string Sql() => """
+                                  DROP PROCEDURE IF EXISTS sp_reservations_create;
+
                                   CREATE PROCEDURE sp_reservations_create (
                                       IN p_customer_id INT,
                                       IN p_vehicle_id INT,

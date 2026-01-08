@@ -1,13 +1,38 @@
 ﻿using VRMS.Database;
+using VRMS.Database.Exceptions;
+using VRMS.Database.Executors;
 
 namespace VRMS.Terminal.Commands;
 
 public class MigrateCommand : ICommand
 {
-    public string Name { get; } = "migrate";
-    public void Execute()
+    public string Name => "migrate";
+
+    public CommandResult Execute()
     {
-        CreateTables.Run(DB.ExecuteScalar, DB.ExecuteNonQuery);
-        MessageBox.Show("Database migrated successfully.");
+        try
+        {
+            Create.Run(DB.ExecuteScalar, DB.ExecuteNonQuery);
+            return new CommandResult(true, "Database migrated successfully.");
+        }
+        catch (SchemaExecutionException ex)
+        {
+            return new CommandResult(
+                false,
+                $"""
+                 Migration failed.
+
+                 Table: {ex.TableName}
+                 Action: {ex.Action}
+
+                 Error:
+                 {ex.InnerException?.Message}
+
+                 SQL:
+                 {ex.Sql}
+                 """
+            );
+        }
     }
+
 }

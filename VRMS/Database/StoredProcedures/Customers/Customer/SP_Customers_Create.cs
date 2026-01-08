@@ -3,6 +3,8 @@
 public static class SP_Customers_Create
 {
     public static string Sql() => """
+                                  DROP PROCEDURE IF EXISTS sp_customers_create;
+
                                   CREATE PROCEDURE sp_customers_create (
                                       IN p_first_name VARCHAR(50),
                                       IN p_last_name VARCHAR(50),

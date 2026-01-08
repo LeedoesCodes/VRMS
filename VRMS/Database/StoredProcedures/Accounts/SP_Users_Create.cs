@@ -3,6 +3,9 @@
 public static class SP_Users_Create
 {
     public static string Sql() => """
+                                  
+                                  DROP PROCEDURE IF EXISTS sp_users_create;
+                                  
                                   CREATE PROCEDURE sp_users_create (
                                       IN p_username VARCHAR(50),
                                       IN p_password_hash VARCHAR(255),

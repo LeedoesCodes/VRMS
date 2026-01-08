@@ -3,7 +3,7 @@
 public static class SP_VehicleImages_Delete
 {
     public static string Sql() => """
-                                  DELIMITER $$
+                                  DROP PROCEDURE IF EXISTS sp_vehicle_images_delete;
 
                                   CREATE PROCEDURE sp_vehicle_images_delete (
                                       IN p_id INT
@@ -11,8 +11,6 @@ public static class SP_VehicleImages_Delete
                                   BEGIN
                                       DELETE FROM vehicle_images
                                       WHERE id = p_id;
-                                  END$$
-
-                                  DELIMITER ;
+                                  END;
                                   """;
 }

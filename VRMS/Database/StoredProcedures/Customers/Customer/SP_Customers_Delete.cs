@@ -3,6 +3,8 @@
 public static class SP_Customers_Delete
 {
     public static string Sql() => """
+                                  DROP PROCEDURE IF EXISTS sp_customers_delete;
+
                                   CREATE PROCEDURE sp_customers_delete (
                                       IN p_customer_id INT
                                   )

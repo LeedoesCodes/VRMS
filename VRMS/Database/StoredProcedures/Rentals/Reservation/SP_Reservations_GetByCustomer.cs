@@ -3,6 +3,8 @@
 public static class SP_Reservations_GetByCustomer
 {
     public static string Sql() => """
+                                  DROP PROCEDURE IF EXISTS sp_reservations_get_by_customer;
+
                                   CREATE PROCEDURE sp_reservations_get_by_customer (
                                       IN p_customer_id INT
                                   )

@@ -3,6 +3,8 @@
 public static class SP_Vehicles_Update
 {
     public static string Sql() => """
+                                  DROP PROCEDURE IF EXISTS sp_vehicles_update;
+
                                   CREATE PROCEDURE sp_vehicles_update (
                                       IN p_vehicle_id INT,
                                       IN p_color VARCHAR(30),

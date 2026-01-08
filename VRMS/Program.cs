@@ -8,14 +8,12 @@ namespace VRMS
 {
     internal static class Program
     {
-        
         public static string CurrentUsername { get; set; } = "Guest";
         public static string CurrentUserRole { get; set; } = "User";
 
         [STAThread]
         static void Main(string[] args)
         {
-           
             var config = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
                 .AddJsonFile("appsettings.json", optional: false)
@@ -31,11 +29,36 @@ namespace VRMS
 
             DB.Initialize(connectionString);
 
-            if (CommandDispatcher.TryExecute(args))
+            // ----------------------------
+            // Handle terminal commands
+            // ----------------------------
+            if (CommandDispatcher.TryExecute(args, out var result))
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
+                using var context = new ApplicationContext();
+
+                Task.Run(() =>
+                {
+                    MessageBox.Show(
+                        result!.Message,
+                        result.Success ? "Success" : "Error",
+                        MessageBoxButtons.OK,
+                        result.Success
+                            ? MessageBoxIcon.Information
+                            : MessageBoxIcon.Error
+                    );
+
+                    context.ExitThread();
+                });
+
+                Application.Run(context);
                 return;
+            }
 
-            ApplicationConfiguration.Initialize();
-
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Welcome());
         }
     }

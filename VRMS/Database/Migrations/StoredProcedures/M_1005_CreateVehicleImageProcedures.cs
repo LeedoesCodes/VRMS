@@ -5,10 +5,6 @@ namespace VRMS.Database.Migrations.StoredProcedures;
 public static class M_1005_CreateVehicleImageProcedures
 {
     public static string Create() => $"""
-                                      DROP PROCEDURE IF EXISTS sp_vehicle_images_create;
-                                      DROP PROCEDURE IF EXISTS sp_vehicle_images_get_by_vehicle_id;
-                                      DROP PROCEDURE IF EXISTS sp_vehicle_images_delete;
-
                                       {SP_VehicleImages_Create.Sql()}
                                       {SP_VehicleImages_GetByVehicleId.Sql()}
                                       {SP_VehicleImages_Delete.Sql()}

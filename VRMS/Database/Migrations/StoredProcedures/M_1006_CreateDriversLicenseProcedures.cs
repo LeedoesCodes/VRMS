@@ -5,12 +5,6 @@ namespace VRMS.Database.Migrations.StoredProcedures;
 public static class M_1006_CreateDriversLicenseProcedures
 {
     public static string Create() => $"""
-                                      DROP PROCEDURE IF EXISTS sp_drivers_licenses_create;
-                                      DROP PROCEDURE IF EXISTS sp_drivers_licenses_get_by_id;
-                                      DROP PROCEDURE IF EXISTS sp_drivers_licenses_get_by_number;
-                                      DROP PROCEDURE IF EXISTS sp_drivers_licenses_update;
-                                      DROP PROCEDURE IF EXISTS sp_drivers_licenses_delete;
-
                                       {SP_DriversLicenses_Create.Sql()}
                                       {SP_DriversLicenses_GetById.Sql()}
                                       {SP_DriversLicenses_GetByNumber.Sql()}

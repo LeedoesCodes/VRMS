@@ -3,6 +3,8 @@
 public static class SP_Users_GetById
 {
     public static string Sql() => """
+                                  DROP PROCEDURE IF EXISTS sp_users_get_by_id;
+                                  
                                   CREATE PROCEDURE sp_users_get_by_id (
                                       IN p_user_id INT
                                   )

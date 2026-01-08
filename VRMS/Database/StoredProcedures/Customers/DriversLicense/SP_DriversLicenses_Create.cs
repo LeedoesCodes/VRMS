@@ -3,6 +3,8 @@
 public static class SP_DriversLicenses_Create
 {
     public static string Sql() => """
+                                  DROP PROCEDURE IF EXISTS sp_drivers_licenses_create;
+
                                   CREATE PROCEDURE sp_drivers_licenses_create (
                                       IN p_license_number VARCHAR(50),
                                       IN p_issue_date DATE,

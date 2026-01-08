@@ -3,6 +3,8 @@
 public static class SP_Customers_Update
 {
     public static string Sql() => """
+                                  DROP PROCEDURE IF EXISTS sp_customers_update;
+
                                   CREATE PROCEDURE sp_customers_update (
                                       IN p_customer_id INT,
                                       IN p_first_name VARCHAR(50),

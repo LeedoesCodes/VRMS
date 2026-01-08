@@ -3,6 +3,8 @@
 public static class SP_Users_Authenticate
 {
     public static string Sql() => """
+                                  DROP PROCEDURE IF EXISTS sp_users_authenticate;
+                                  
                                   CREATE PROCEDURE sp_users_authenticate (
                                       IN p_username VARCHAR(50)
                                   )

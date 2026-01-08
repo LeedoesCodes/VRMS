@@ -3,6 +3,8 @@
 public static class SP_Reservations_UpdateStatus
 {
     public static string Sql() => """
+                                  DROP PROCEDURE IF EXISTS sp_reservations_update_status;
+
                                   CREATE PROCEDURE sp_reservations_update_status (
                                       IN p_reservation_id INT,
                                       IN p_status ENUM('Pending','Confirmed','Cancelled','Completed')

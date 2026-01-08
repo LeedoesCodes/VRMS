@@ -3,7 +3,7 @@
 public static class SP_VehicleImages_Create
 {
     public static string Sql() => """
-                                  DELIMITER $$
+                                  DROP PROCEDURE IF EXISTS sp_vehicle_images_create;
 
                                   CREATE PROCEDURE sp_vehicle_images_create (
                                       IN p_vehicle_id INT,
@@ -12,8 +12,6 @@ public static class SP_VehicleImages_Create
                                   BEGIN
                                       INSERT INTO vehicle_images (vehicle_id, image_path)
                                       VALUES (p_vehicle_id, p_image_path);
-                                  END$$
-
-                                  DELIMITER ;
+                                  END;
                                   """;
 }
