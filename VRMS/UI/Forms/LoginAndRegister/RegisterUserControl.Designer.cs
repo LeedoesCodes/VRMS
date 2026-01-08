@@ -17,203 +17,186 @@
 
         private void InitializeComponent()
         {
-            this.pnlMain = new System.Windows.Forms.Panel();
-            this.lblSub = new System.Windows.Forms.Label();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtUsername = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtEmail = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cbRole = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtConfirmPass = new System.Windows.Forms.TextBox();
-            this.btnRegister = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.pnlMain.SuspendLayout();
-            this.SuspendLayout();
+            pnlMain = new Panel();
+            lblSub = new Label();
+            lblTitle = new Label();
+            label1 = new Label();
+            txtUsername = new TextBox();
+            label4 = new Label();
+            txtEmail = new TextBox();
+            label2 = new Label();
+            txtPassword = new TextBox();
+            label3 = new Label();
+            txtConfirmPass = new TextBox();
+            btnRegister = new Button();
+            btnCancel = new Button();
+            pnlMain.SuspendLayout();
+            SuspendLayout();
             // 
             // pnlMain
             // 
-            this.pnlMain.BackColor = System.Drawing.Color.White;
-            this.pnlMain.Controls.Add(this.lblSub);
-            this.pnlMain.Controls.Add(this.lblTitle);
-            this.pnlMain.Controls.Add(this.label1);
-            this.pnlMain.Controls.Add(this.txtUsername);
-            this.pnlMain.Controls.Add(this.label4);
-            this.pnlMain.Controls.Add(this.txtEmail);
-            this.pnlMain.Controls.Add(this.label6);
-            this.pnlMain.Controls.Add(this.cbRole);
-            this.pnlMain.Controls.Add(this.label2);
-            this.pnlMain.Controls.Add(this.txtPassword);
-            this.pnlMain.Controls.Add(this.label3);
-            this.pnlMain.Controls.Add(this.txtConfirmPass);
-            this.pnlMain.Controls.Add(this.btnRegister);
-            this.pnlMain.Controls.Add(this.btnCancel); // Now correctly added to the panel
-            this.pnlMain.Location = new System.Drawing.Point(50, 20);
-            this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(440, 560); // Increased height to fit Cancel button
-            this.pnlMain.TabIndex = 0;
+            pnlMain.BackColor = Color.White;
+            pnlMain.Controls.Add(lblSub);
+            pnlMain.Controls.Add(lblTitle);
+            pnlMain.Controls.Add(label1);
+            pnlMain.Controls.Add(txtUsername);
+            pnlMain.Controls.Add(label4);
+            pnlMain.Controls.Add(txtEmail);
+            pnlMain.Controls.Add(label2);
+            pnlMain.Controls.Add(txtPassword);
+            pnlMain.Controls.Add(label3);
+            pnlMain.Controls.Add(txtConfirmPass);
+            pnlMain.Controls.Add(btnRegister);
+            pnlMain.Controls.Add(btnCancel);
+            pnlMain.Location = new Point(57, 27);
+            pnlMain.Margin = new Padding(3, 4, 3, 4);
+            pnlMain.Name = "pnlMain";
+            pnlMain.Size = new Size(503, 747);
+            pnlMain.TabIndex = 0;
             // 
             // lblSub
             // 
-            this.lblSub.AutoSize = true;
-            this.lblSub.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblSub.ForeColor = System.Drawing.Color.Gray;
-            this.lblSub.Location = new System.Drawing.Point(33, 63);
-            this.lblSub.Name = "lblSub";
-            this.lblSub.Size = new System.Drawing.Size(186, 15);
-            this.lblSub.TabIndex = 15;
-            this.lblSub.Text = "Join the VRMS management team";
+            lblSub.AutoSize = true;
+            lblSub.Font = new Font("Segoe UI", 9F);
+            lblSub.ForeColor = Color.Gray;
+            lblSub.Location = new Point(38, 84);
+            lblSub.Name = "lblSub";
+            lblSub.Size = new Size(233, 20);
+            lblSub.TabIndex = 15;
+            lblSub.Text = "Join the VRMS management team";
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            this.lblTitle.Location = new System.Drawing.Point(29, 23);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(189, 32);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Create Account";
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(44, 62, 80);
+            lblTitle.Location = new Point(33, 31);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(232, 41);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Create Account";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(33, 104);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 15);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Username";
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label1.Location = new Point(38, 139);
+            label1.Name = "label1";
+            label1.Size = new Size(78, 20);
+            label1.TabIndex = 1;
+            label1.Text = "Username";
             // 
             // txtUsername
             // 
-            this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtUsername.Location = new System.Drawing.Point(36, 127);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(370, 25);
-            this.txtUsername.TabIndex = 2;
+            txtUsername.Font = new Font("Segoe UI", 10F);
+            txtUsername.Location = new Point(41, 169);
+            txtUsername.Margin = new Padding(3, 4, 3, 4);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(422, 30);
+            txtUsername.TabIndex = 2;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.label4.Location = new System.Drawing.Point(33, 167);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(81, 15);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Email Address";
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label4.Location = new Point(38, 223);
+            label4.Name = "label4";
+            label4.Size = new Size(104, 20);
+            label4.TabIndex = 7;
+            label4.Text = "Email Address";
             // 
             // txtEmail
             // 
-            this.txtEmail.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtEmail.Location = new System.Drawing.Point(36, 190);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(370, 25);
-            this.txtEmail.TabIndex = 8;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.label6.Location = new System.Drawing.Point(33, 231);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(30, 15);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "Role";
-            // 
-            // cbRole
-            // 
-            this.cbRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbRole.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cbRole.FormattingEnabled = true;
-            this.cbRole.Items.AddRange(new object[] { "Admin", "Staff" });
-            this.cbRole.Location = new System.Drawing.Point(36, 254);
-            this.cbRole.Name = "cbRole";
-            this.cbRole.Size = new System.Drawing.Size(370, 25);
-            this.cbRole.TabIndex = 13;
+            txtEmail.Font = new Font("Segoe UI", 10F);
+            txtEmail.Location = new Point(41, 253);
+            txtEmail.Margin = new Padding(3, 4, 3, 4);
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(422, 30);
+            txtEmail.TabIndex = 8;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(33, 294);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 15);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Password";
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label2.Location = new Point(38, 392);
+            label2.Name = "label2";
+            label2.Size = new Size(73, 20);
+            label2.TabIndex = 3;
+            label2.Text = "Password";
             // 
             // txtPassword
             // 
-            this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtPassword.Location = new System.Drawing.Point(36, 317);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = '●';
-            this.txtPassword.Size = new System.Drawing.Size(370, 25);
-            this.txtPassword.TabIndex = 4;
+            txtPassword.Font = new Font("Segoe UI", 10F);
+            txtPassword.Location = new Point(41, 423);
+            txtPassword.Margin = new Padding(3, 4, 3, 4);
+            txtPassword.Name = "txtPassword";
+            txtPassword.PasswordChar = '●';
+            txtPassword.Size = new Size(422, 30);
+            txtPassword.TabIndex = 4;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(33, 358);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(103, 15);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Confirm Password";
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label3.Location = new Point(38, 477);
+            label3.Name = "label3";
+            label3.Size = new Size(132, 20);
+            label3.TabIndex = 5;
+            label3.Text = "Confirm Password";
             // 
             // txtConfirmPass
             // 
-            this.txtConfirmPass.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtConfirmPass.Location = new System.Drawing.Point(36, 381);
-            this.txtConfirmPass.Name = "txtConfirmPass";
-            this.txtConfirmPass.PasswordChar = '●';
-            this.txtConfirmPass.Size = new System.Drawing.Size(370, 25);
-            this.txtConfirmPass.TabIndex = 6;
+            txtConfirmPass.Font = new Font("Segoe UI", 10F);
+            txtConfirmPass.Location = new Point(41, 508);
+            txtConfirmPass.Margin = new Padding(3, 4, 3, 4);
+            txtConfirmPass.Name = "txtConfirmPass";
+            txtConfirmPass.PasswordChar = '●';
+            txtConfirmPass.Size = new Size(422, 30);
+            txtConfirmPass.TabIndex = 6;
             // 
             // btnRegister
             // 
-            this.btnRegister.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.btnRegister.FlatAppearance.BorderSize = 0;
-            this.btnRegister.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRegister.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnRegister.ForeColor = System.Drawing.Color.White;
-            this.btnRegister.Location = new System.Drawing.Point(36, 440);
-            this.btnRegister.Name = "btnRegister";
-            this.btnRegister.Size = new System.Drawing.Size(370, 50);
-            this.btnRegister.TabIndex = 11;
-            this.btnRegister.Text = "Register Account";
-            this.btnRegister.UseVisualStyleBackColor = false;
-            this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
+            btnRegister.BackColor = Color.FromArgb(46, 204, 113);
+            btnRegister.FlatAppearance.BorderSize = 0;
+            btnRegister.FlatStyle = FlatStyle.Flat;
+            btnRegister.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnRegister.ForeColor = Color.White;
+            btnRegister.Location = new Point(41, 587);
+            btnRegister.Margin = new Padding(3, 4, 3, 4);
+            btnRegister.Name = "btnRegister";
+            btnRegister.Size = new Size(423, 67);
+            btnRegister.TabIndex = 11;
+            btnRegister.Text = "Register Account";
+            btnRegister.UseVisualStyleBackColor = false;
+            btnRegister.Click += btnRegister_Click;
             // 
             // btnCancel
             // 
-            this.btnCancel.FlatAppearance.BorderSize = 0;
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.btnCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
-            this.btnCancel.Location = new System.Drawing.Point(155, 505); // Centered relative to pnlMain
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(130, 35);
-            this.btnCancel.TabIndex = 12;
-            this.btnCancel.Text = "Back to Login";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            btnCancel.FlatAppearance.BorderSize = 0;
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            btnCancel.ForeColor = Color.FromArgb(149, 165, 166);
+            btnCancel.Location = new Point(177, 673);
+            btnCancel.Margin = new Padding(3, 4, 3, 4);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(149, 47);
+            btnCancel.TabIndex = 12;
+            btnCancel.Text = "Back to Login";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
             // 
             // RegisterUserControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
-            this.Controls.Add(this.pnlMain);
-            this.Name = "RegisterUserControl";
-            this.Size = new System.Drawing.Size(540, 610);
-            this.pnlMain.ResumeLayout(false);
-            this.pnlMain.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(236, 240, 241);
+            Controls.Add(pnlMain);
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "RegisterUserControl";
+            Size = new Size(617, 813);
+            pnlMain.ResumeLayout(false);
+            pnlMain.PerformLayout();
+            ResumeLayout(false);
 
         }
 
@@ -230,8 +213,6 @@
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Button btnRegister;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.ComboBox cbRole;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.Label lblSub;
     }

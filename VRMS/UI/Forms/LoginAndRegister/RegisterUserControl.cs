@@ -35,7 +35,7 @@ namespace VRMS.Controls
             txtEmail.Clear();
             txtPassword.Clear();
             txtConfirmPass.Clear();
-            if (cbRole.Items.Count > 0) cbRole.SelectedIndex = 0;
+           
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
