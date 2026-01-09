@@ -7,7 +7,7 @@ public static class SP_VehicleInspections_Create
 
                                   CREATE PROCEDURE sp_vehicle_inspections_create (
                                       IN p_rental_id INT,
-                                      IN p_inspection_type ENUM('Pickup','Return'),
+                                      IN p_inspection_type VARCHAR(50),
                                       IN p_notes TEXT,
                                       IN p_fuel_level VARCHAR(20),
                                       IN p_cleanliness VARCHAR(20)

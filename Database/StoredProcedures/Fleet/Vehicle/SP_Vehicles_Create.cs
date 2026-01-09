@@ -13,9 +13,9 @@ public static class SP_Vehicles_Create
                                       IN p_color VARCHAR(30),
                                       IN p_license_plate VARCHAR(20),
                                       IN p_vin VARCHAR(50),
-                                      IN p_transmission ENUM('Manual','Automatic'),
-                                      IN p_fuel_type ENUM('Gasoline','Diesel','Electric','Hybrid'),
-                                      IN p_status ENUM('Available','Rented','Maintenance','Retired'),
+                                      IN p_transmission VARCHAR(50),
+                                      IN p_fuel_type VARCHAR(50),
+                                      IN p_status VARCHAR(50),
                                       IN p_seating_capacity INT,
                                       IN p_odometer INT,
                                       IN p_vehicle_category_id INT

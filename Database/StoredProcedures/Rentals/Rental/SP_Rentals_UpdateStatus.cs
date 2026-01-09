@@ -7,7 +7,7 @@ public static class SP_Rentals_UpdateStatus
 
                                   CREATE PROCEDURE sp_rentals_update_status (
                                       IN p_rental_id INT,
-                                      IN p_status ENUM('Active','Completed','Cancelled')
+                                      IN p_status VARCHAR(50)
                                   )
                                   BEGIN
                                       UPDATE rentals

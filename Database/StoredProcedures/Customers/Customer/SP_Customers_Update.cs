@@ -11,7 +11,7 @@ public static class SP_Customers_Update
                                       IN p_last_name VARCHAR(50),
                                       IN p_email VARCHAR(100),
                                       IN p_phone VARCHAR(30),
-                                      IN p_customer_type ENUM('Regular','VIP')
+                                      IN p_customer_type VARCHAR(50)
                                   )
                                   BEGIN
                                       UPDATE customers

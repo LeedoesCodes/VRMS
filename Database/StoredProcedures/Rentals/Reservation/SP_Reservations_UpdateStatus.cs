@@ -7,7 +7,7 @@ public static class SP_Reservations_UpdateStatus
 
                                   CREATE PROCEDURE sp_reservations_update_status (
                                       IN p_reservation_id INT,
-                                      IN p_status ENUM('Pending','Confirmed','Cancelled','Completed')
+                                      IN p_status VARCHAR(50)
                                   )
                                   BEGIN
                                       UPDATE reservations

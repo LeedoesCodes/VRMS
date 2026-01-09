@@ -8,7 +8,7 @@ public static class SP_Payments_Create
                                   CREATE PROCEDURE sp_payments_create (
                                       IN p_invoice_id INT,
                                       IN p_amount DECIMAL(10,2),
-                                      IN p_payment_method ENUM('Cash','Card','Online'),
+                                      IN p_payment_method VARCHAR(50),
                                       IN p_payment_date DATETIME
                                   )
                                   BEGIN

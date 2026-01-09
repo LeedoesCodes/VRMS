@@ -10,7 +10,7 @@ public static class SP_Reservations_Create
                                       IN p_vehicle_id INT,
                                       IN p_start_date DATETIME,
                                       IN p_end_date DATETIME,
-                                      IN p_status ENUM('Pending','Confirmed','Cancelled','Completed')
+                                      IN p_status VARCHAR(50)
                                   )
                                   BEGIN
                                       INSERT INTO reservations (

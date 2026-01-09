@@ -7,7 +7,7 @@ public static class SP_Vehicles_UpdateStatus
 
                                   CREATE PROCEDURE sp_vehicles_update_status (
                                       IN p_vehicle_id INT,
-                                      IN p_status ENUM('Available','Rented','Maintenance','Retired')
+                                      IN p_status VARCHAR(50)
                                   )
                                   BEGIN
                                       UPDATE vehicles

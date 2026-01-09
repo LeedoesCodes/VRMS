@@ -10,7 +10,7 @@ public static class SP_Rentals_Create
                                       IN p_pickup_date DATETIME,
                                       IN p_expected_return_date DATETIME,
                                       IN p_start_odometer INT,
-                                      IN p_status ENUM('Active','Completed','Cancelled')
+                                      IN p_status VARCHAR(50)
                                   )
                                   BEGIN
                                       INSERT INTO rentals (

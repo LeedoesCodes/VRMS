@@ -11,7 +11,7 @@ public static class SP_Customers_Create
                                       IN p_email VARCHAR(100),
                                       IN p_phone VARCHAR(30),
                                       IN p_date_of_birth DATE,
-                                      IN p_customer_type ENUM('Regular','VIP'),
+                                      IN p_customer_type VARCHAR(50),
                                       IN p_drivers_license_id INT
                                   )
                                   BEGIN
