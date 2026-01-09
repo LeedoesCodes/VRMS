@@ -1,31 +1,117 @@
 ﻿using System;
 using System.Windows.Forms;
+using VRMS.Services;
+using VRMS.Enums;
 
 namespace VRMS.Controls
 {
     public partial class RegisterUserControl : UserControl
     {
-        // 1. Define the event that the Welcome form will listen to
+        // Event listened to by Welcome form
         public event EventHandler GoBackToLoginRequest;
+
+        private readonly UserService _userService = new();
 
         public RegisterUserControl()
         {
             InitializeComponent();
         }
 
-        // 2. This is linked to btnCancel.Click in the Designer
+        // ----------------------------
+        // BUTTON EVENTS
+        // ----------------------------
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             GoBackToLogin();
         }
 
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            string username = txtUsername.Text.Trim();
+            string email = txtEmail.Text.Trim(); // kept for future use
+            string password = txtPassword.Text;
+            string confirm = txtConfirmPass.Text;
+
+            // ----------------------------
+            // VALIDATION
+            // ----------------------------
+
+            if (string.IsNullOrWhiteSpace(username) ||
+                string.IsNullOrWhiteSpace(password) ||
+                string.IsNullOrWhiteSpace(confirm))
+            {
+                MessageBox.Show(
+                    "Please fill in all required fields.",
+                    "Validation Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            if (password != confirm)
+            {
+                MessageBox.Show(
+                    "Passwords do not match!",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
+
+            try
+            {
+                // ----------------------------
+                // CREATE USER (DB)
+                // ----------------------------
+
+                _userService.CreateUser(
+                    username,
+                    password,
+                    UserRole.RentalAgent, // default role
+                    isActive: true
+                );
+
+                MessageBox.Show(
+                    "Registration successful! You may now log in.",
+                    "Success",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                GoBackToLogin();
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Expected errors (e.g. duplicate username)
+                MessageBox.Show(
+                    ex.Message,
+                    "Registration Failed",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+            catch (Exception ex)
+            {
+                // Unexpected DB/system errors
+                MessageBox.Show(
+                    $"Registration error: {ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+        }
+
+        // ----------------------------
+        // NAVIGATION
+        // ----------------------------
+
         public void GoBackToLogin()
         {
-            // Optional: Clear fields before leaving
             ClearForm();
-
-            // 3. Raise the event to notify the Welcome form
-            // The ?. ensures it doesn't crash if no one is listening
             GoBackToLoginRequest?.Invoke(this, EventArgs.Empty);
         }
 
@@ -35,29 +121,7 @@ namespace VRMS.Controls
             txtEmail.Clear();
             txtPassword.Clear();
             txtConfirmPass.Clear();
-           
-        }
-
-        private void btnRegister_Click(object sender, EventArgs e)
-        {
-            // Basic validation example
-            if (string.IsNullOrWhiteSpace(txtUsername.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
-            {
-                MessageBox.Show("Please fill in all fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (txtPassword.Text != txtConfirmPass.Text)
-            {
-                MessageBox.Show("Passwords do not match!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // TODO: Add your Database Registration Logic here
-            MessageBox.Show("Registration successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Auto-return to login after success
-            GoBackToLogin();
+            txtUsername.Focus();
         }
     }
 }

@@ -1,13 +1,15 @@
-﻿
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using VRMS.Controls;      
-using VRMS.UI.Animation;  
+using VRMS.Controls;
+using VRMS.UI.Animation;
+using VRMS.Models.Accounts;
+using VRMS.Forms;
+using VRMS.Support;   // ✅ REQUIRED FOR Session
 
 namespace VRMS.UI.Forms
 {
-    public partial class Welcome : Form, IAnimationHost  /
+    public partial class Welcome : Form, IAnimationHost
     {
         private UserControl _currentControl;
         private bool _showingLogin = true;
@@ -17,7 +19,6 @@ namespace VRMS.UI.Forms
         {
             InitializeComponent();
 
-           
             _animationManager = new WelcomeFormAnimationManager(this);
             _animationManager.AnimationCompleted += OnAnimationCompleted;
 
@@ -36,6 +37,10 @@ namespace VRMS.UI.Forms
 
             Resize += (s, e) => UpdateLayout();
         }
+
+        // =========================
+        // IAnimationHost
+        // =========================
 
         public void OnAnimationStart()
         {
@@ -61,19 +66,7 @@ namespace VRMS.UI.Forms
             panelLeft.Left = (int)(ClientSize.Width * easedProgress);
             panelLogin.Left = -panelLogin.Width + (int)(panelLogin.Width * easedProgress);
 
-            
             UpdateBackgroundFade(rawProgress);
-        }
-
-        private void UpdateBackgroundFade(float progress)
-        {
-            if (progress <= 0.1f) return;
-
-            float normalizedProgress = (progress - 0.1f) / 0.9f;
-            int alpha = Math.Min(255, 30 + (int)(225 *
-                EasingFunctions.EaseOutQuad(normalizedProgress))); 
-
-            BackColor = panelRight.BackColor = Color.FromArgb(255, alpha, alpha, alpha);
         }
 
         public void OnAnimationComplete()
@@ -89,14 +82,34 @@ namespace VRMS.UI.Forms
             FocusContent();
         }
 
+        private void UpdateBackgroundFade(float progress)
+        {
+            if (progress <= 0.1f) return;
+
+            float normalized = (progress - 0.1f) / 0.9f;
+            int alpha = Math.Min(
+                255,
+                30 + (int)(225 * EasingFunctions.EaseOutQuad(normalized))
+            );
+
+            BackColor = panelRight.BackColor = Color.FromArgb(255, alpha, alpha, alpha);
+        }
+
+        // =========================
+        // ENTRY POINT
+        // =========================
+
         private void btnProceed_Click(object sender, EventArgs e)
         {
-          
             if (_animationManager.IsAnimating) return;
 
             LoadControl(new LoginUserControl());
             _animationManager.StartSlideAnimation();
         }
+
+        // =========================
+        // CONTROL LOADER
+        // =========================
 
         private void LoadControl(UserControl control)
         {
@@ -105,18 +118,20 @@ namespace VRMS.UI.Forms
 
             if (control is LoginUserControl login)
             {
-                login.GoToRegisterRequest += (s, e) =>
+                login.GoToRegisterRequest += (_, __) =>
                 {
                     _showingLogin = false;
                     LoadControl(new RegisterUserControl());
                 };
 
-                login.ExitApplication += (s, e) => Application.Exit();
+                login.ExitApplication += (_, __) => Application.Exit();
+
+                // ✅ Action<User>
                 login.LoginSuccess += OnLoginSuccess;
             }
             else if (control is RegisterUserControl register)
             {
-                register.GoBackToLoginRequest += (s, e) =>
+                register.GoBackToLoginRequest += (_, __) =>
                 {
                     _showingLogin = true;
                     LoadControl(new LoginUserControl());
@@ -129,20 +144,39 @@ namespace VRMS.UI.Forms
             FocusContent();
         }
 
-        private void OnLoginSuccess(object sender, EventArgs e)
+        // =========================
+        // LOGIN SUCCESS
+        // =========================
+
+        private void OnLoginSuccess(User user)
         {
-           
-            var mainForm = new VRMS.Forms.MainForm(); 
+            // Store user in session
+            Session.CurrentUser = user;
+
+            // Backward compatibility with MainForm
+            Program.CurrentUsername = user.Username;
+            Program.CurrentUserRole = user.Role.ToString();
+
+            // Open main app
+            var mainForm = new MainForm();
             mainForm.Show();
 
             Hide();
-            mainForm.FormClosed += (s, args) => Application.Exit();
+            mainForm.FormClosed += (_, __) => Application.Exit();
         }
+
+        // =========================
+        // ANIMATION CALLBACK
+        // =========================
 
         private void OnAnimationCompleted(object sender, EventArgs e)
         {
             FocusContent();
         }
+
+        // =========================
+        // UI HELPERS
+        // =========================
 
         private void FocusContent()
         {
@@ -178,7 +212,6 @@ namespace VRMS.UI.Forms
         {
             if (disposing)
             {
-                
                 _animationManager?.Dispose();
                 components?.Dispose();
             }
