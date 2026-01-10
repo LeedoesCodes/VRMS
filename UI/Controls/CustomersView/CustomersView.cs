@@ -6,7 +6,7 @@ using VRMS.Enums;
 using VRMS.Models.Customers;
 using VRMS.Services.Customer;
 using VRMS.UI.Forms.Customer;
-using VRMS.Forms; // ✅ CameraForm
+using VRMS.Forms; // CameraForm
 
 namespace VRMS.Controls
 {
@@ -64,7 +64,6 @@ namespace VRMS.Controls
             btnCaptureLicense.Click += BtnCaptureLicense_Click;
             btnCheckDrivingRecord.Click += BtnCheckDrivingRecord_Click;
 
-            // Camera buttons
             btnCamera.Click += BtnProfileCamera_Click;
             btnUploadPhoto.Click += BtnBrowseProfilePhoto_Click;
         }
@@ -83,7 +82,7 @@ namespace VRMS.Controls
                 dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     HeaderText = "Name",
-                    DataPropertyName = "LastName",
+                    DataPropertyName = "LastName", // ORIGINAL BEHAVIOR
                     AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
                 });
 
@@ -135,8 +134,12 @@ namespace VRMS.Controls
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
 
@@ -226,7 +229,7 @@ namespace VRMS.Controls
         // CAMERA ACTIONS
         // =====================================================
 
-        // ✅ DRIVER'S LICENSE CAMERA
+        // Driver's License Camera (UNCHANGED)
         private void BtnCaptureLicense_Click(object? sender, EventArgs e)
         {
             using var form = new DriverLicenseCaptureForm();
@@ -237,7 +240,7 @@ namespace VRMS.Controls
             }
         }
 
-        // ✅ PROFILE PHOTO CAMERA (USES CameraForm)
+        // Profile Camera (FIXED to CameraForm)
         private void BtnProfileCamera_Click(object? sender, EventArgs e)
         {
             using var cameraForm = new CameraForm("Capture Profile Photo");
@@ -246,18 +249,10 @@ namespace VRMS.Controls
                 cameraForm.HasCapturedImage)
             {
                 _profilePreviewImage?.Dispose();
-
                 _profilePreviewImage =
                     (Image)cameraForm.CapturedImage.Clone();
 
                 picCustomerPhoto.Image = _profilePreviewImage;
-
-                MessageBox.Show(
-                    "Profile photo captured successfully (preview only).",
-                    "Camera",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
             }
         }
 
@@ -376,7 +371,8 @@ namespace VRMS.Controls
         private void UpdateAgeLabel()
         {
             lblAgeCheck.Text = $"Age: {GetAge()}";
-            lblAgeCheck.ForeColor = GetAge() >= 21 ? Color.Green : Color.Red;
+            lblAgeCheck.ForeColor =
+                GetAge() >= 21 ? Color.Green : Color.Red;
         }
 
         private int GetAge()
