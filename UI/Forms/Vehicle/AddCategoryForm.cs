@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using VRMS.Models.Fleet;
-using VRMS.Services.Vehicle;
+using VRMS.Services.Fleet;
 
 namespace VRMS.UI.Forms
 {

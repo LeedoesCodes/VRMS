@@ -1,4 +1,4 @@
-﻿using VRMS.Database.StoredProcedures.Customers.EmergencyContactPhoneNumber;
+﻿using VRMS.Database.StoredProcedureImplementations.Customers.EmergencyContactPhoneNumber;
 
 namespace VRMS.Database.Migrations;
 

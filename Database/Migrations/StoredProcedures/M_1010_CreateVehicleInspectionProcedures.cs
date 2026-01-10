@@ -1,4 +1,4 @@
-﻿using VRMS.Database.StoredProcedures.Rentals.VehicleInspection;
+﻿using VRMS.Database.StoredProcedureImplementations.Rentals.VehicleInspection;
 
 namespace VRMS.Database.Migrations;
 

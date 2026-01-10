@@ -4,9 +4,14 @@ using VRMS.Enums;
 using VRMS.Forms;
 using VRMS.Models.Fleet;
 
+// Repositories
+using VRMS.Repositories.Fleet;
+using VRMS.Repositories.Rentals;
+using VRMS.Repositories.Accounts;
 
-using VRMS.Services.Vehicle;
+// Services
 using VRMS.Services.Customer;
+using VRMS.Services.Fleet;
 using VRMS.Services.Rental;
 
 namespace VRMS.Controls
@@ -31,23 +36,59 @@ namespace VRMS.Controls
         {
             InitializeComponent();
 
-            // 🔹 Base services
-            _vehicleService = new VehicleService();
-            _driversLicenseService = new DriversLicenseService();
+            // =========================
+            // REPOSITORIES (Fleet)
+            // =========================
 
-            // 🔹 Depends on DriversLicenseService
-            _customerService = new CustomerService(_driversLicenseService);
+            var vehicleRepo = new VehicleRepository();
+            var categoryRepo = new VehicleCategoryRepository();
+            var featureRepo = new VehicleFeatureRepository();
+            var featureMapRepo = new VehicleFeatureMappingRepository();
+            var imageRepo = new VehicleImageRepository();
+            var maintenanceRepo = new MaintenanceRepository();
 
-            // 🔹 Depends on Customer + Vehicle
-            _reservationService = new ReservationService(
-                _customerService,
-                _vehicleService
+            // =========================
+            // SERVICES (Fleet)
+            // =========================
+
+            _vehicleService = new VehicleService(
+                vehicleRepo,
+                categoryRepo,
+                featureRepo,
+                featureMapRepo,
+                imageRepo,
+                maintenanceRepo
             );
 
-            // 🔹 Depends on Reservation + Vehicle
+            // =========================
+            // CUSTOMER
+            // =========================
+
+            _driversLicenseService = new DriversLicenseService();
+            _customerService = new CustomerService(_driversLicenseService);
+
+            // =========================
+            // RESERVATION
+            // =========================
+
+            var reservationRepo = new ReservationRepository();
+
+            _reservationService = new ReservationService(
+                _customerService,
+                _vehicleService,
+                reservationRepo
+            );
+
+            // =========================
+            // RENTAL
+            // =========================
+
+            var rentalRepo = new RentalRepository();
+
             _rentalService = new RentalService(
                 _reservationService,
-                _vehicleService
+                _vehicleService,
+                rentalRepo
             );
 
             Load += VehiclesView_Load;
@@ -126,7 +167,8 @@ namespace VRMS.Controls
             try
             {
                 dgvVehicles.DataSource = null;
-                dgvVehicles.DataSource = _vehicleService.GetAllVehicles();
+                dgvVehicles.DataSource =
+                    _vehicleService.GetAllVehicles();
             }
             catch (Exception ex)
             {
@@ -145,15 +187,13 @@ namespace VRMS.Controls
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            using var addForm = new AddVehicleForm
+            using var addForm = new AddVehicleForm(_vehicleService)
             {
                 StartPosition = FormStartPosition.CenterParent
             };
 
             if (addForm.ShowDialog(this) == DialogResult.OK)
-            {
                 LoadVehicles();
-            }
         }
 
         // =========================
@@ -165,18 +205,20 @@ namespace VRMS.Controls
             if (dgvVehicles.SelectedRows.Count == 0)
                 return;
 
-            if (dgvVehicles.SelectedRows[0].DataBoundItem is not Vehicle vehicle)
+            if (dgvVehicles.SelectedRows[0].DataBoundItem
+                is not Vehicle vehicle)
                 return;
 
-            using var editForm = new EditVehicleForm(vehicle.Id)
-            {
-                StartPosition = FormStartPosition.CenterParent
-            };
+            using var editForm =
+                new EditVehicleForm(vehicle.Id, _vehicleService)
+                {
+                    StartPosition =
+                        FormStartPosition.CenterParent
+                };
 
-            if (editForm.ShowDialog(this) == DialogResult.OK)
-            {
+            if (editForm.ShowDialog(this) ==
+                DialogResult.OK)
                 LoadVehicles();
-            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using VRMS.Database.StoredProcedures.Accounts;
+﻿using VRMS.Database.StoredProcedureImplementations.Accounts;
 
 namespace VRMS.Database.Migrations.StoredProcedures;
 

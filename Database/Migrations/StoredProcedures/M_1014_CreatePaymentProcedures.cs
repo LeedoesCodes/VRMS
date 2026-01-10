@@ -1,4 +1,4 @@
-﻿using VRMS.Database.StoredProcedures.Billing.Payment;
+﻿using VRMS.Database.StoredProcedureImplementations.Billing.Payment;
 
 namespace VRMS.Database.Migrations;
 

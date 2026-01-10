@@ -1,7 +1,6 @@
-﻿using System.Data;
-using VRMS.Database;
-using VRMS.Enums;
-using VRMS.Services.Vehicle;
+﻿using VRMS.Enums;
+using VRMS.Repositories.Rentals;
+using VRMS.Services.Fleet;
 
 namespace VRMS.Services.Rental;
 
@@ -9,24 +8,32 @@ public class RentalService
 {
     private readonly ReservationService _reservationService;
     private readonly VehicleService _vehicleService;
+    private readonly RentalRepository _rentalRepo;
 
     public RentalService(
         ReservationService reservationService,
-        VehicleService vehicleService)
+        VehicleService vehicleService,
+        RentalRepository rentalRepo)
     {
         _reservationService = reservationService;
         _vehicleService = vehicleService;
+        _rentalRepo = rentalRepo;
     }
 
     // -------------------------------------------------
     // START RENTAL (PICKUP)
     // -------------------------------------------------
 
-    public int StartRental(int reservationId, DateTime pickupDate)
+    public int StartRental(
+        int reservationId,
+        DateTime pickupDate)
     {
-        var reservation = _reservationService.GetReservationById(reservationId);
+        var reservation =
+            _reservationService
+                .GetReservationById(reservationId);
 
-        if (reservation.Status != ReservationStatus.Confirmed)
+        if (reservation.Status !=
+            ReservationStatus.Confirmed)
             throw new InvalidOperationException(
                 "Reservation must be confirmed before starting a rental.");
 
@@ -34,37 +41,32 @@ public class RentalService
             throw new InvalidOperationException(
                 "Pickup date cannot be before reservation start date.");
 
-        var existing = GetRentalByReservation(reservationId);
-        if (existing != null)
+        if (_rentalRepo.GetByReservation(reservationId)
+            != null)
             throw new InvalidOperationException(
                 "A rental already exists for this reservation.");
 
-        var vehicle = _vehicleService.GetVehicleById(reservation.VehicleId);
+        var vehicle =
+            _vehicleService.GetVehicleById(
+                reservation.VehicleId);
 
         if (vehicle.Status != VehicleStatus.Reserved)
             throw new InvalidOperationException(
                 "Vehicle must be reserved before starting rental.");
 
-        var table = DB.Query(
-            "CALL sp_rentals_create(@reservationId, @pickup, @expectedReturn, @startOdo, @status);",
-            ("@reservationId", reservationId),
-            ("@pickup", pickupDate),
-            ("@expectedReturn", reservation.EndDate),
-            ("@startOdo", vehicle.Odometer),
-            ("@status", RentalStatus.Active.ToString())
-        );
+        var rentalId =
+            _rentalRepo.Create(
+                reservationId,
+                pickupDate,
+                reservation.EndDate,
+                vehicle.Odometer,
+                RentalStatus.Active);
 
-        int rentalId = Convert.ToInt32(table.Rows[0]["rental_id"]);
-
-        DB.Execute(
-            "CALL sp_rentals_start(@id);",
-            ("@id", rentalId)
-        );
+        _rentalRepo.MarkStarted(rentalId);
 
         _vehicleService.UpdateVehicleStatus(
             reservation.VehicleId,
-            VehicleStatus.Rented
-        );
+            VehicleStatus.Rented);
 
         return rentalId;
     }
@@ -78,7 +80,8 @@ public class RentalService
         DateTime actualReturnDate,
         int endOdometer)
     {
-        var rental = GetRentalById(rentalId);
+        var rental =
+            _rentalRepo.GetById(rentalId);
 
         if (rental.Status != RentalStatus.Active)
             throw new InvalidOperationException(
@@ -92,29 +95,28 @@ public class RentalService
             throw new InvalidOperationException(
                 "End odometer must be greater than start odometer.");
 
-        DB.Execute(
-            "CALL sp_rentals_complete(@id, @returnDate, @endOdo);",
-            ("@id", rentalId),
-            ("@returnDate", actualReturnDate),
-            ("@endOdo", endOdometer)
-        );
+        _rentalRepo.Complete(
+            rentalId,
+            actualReturnDate,
+            endOdometer);
 
-        bool isLate = actualReturnDate > rental.ExpectedReturnDate;
-
-        if (isLate)
+        if (actualReturnDate >
+            rental.ExpectedReturnDate)
         {
-            DB.Execute(
-                "CALL sp_rentals_update_status(@id, @status);",
-                ("@id", rentalId),
-                ("@status", RentalStatus.Late.ToString())
-            );
+            _rentalRepo.UpdateStatus(
+                rentalId,
+                RentalStatus.Late);
         }
 
-        var reservation = _reservationService.GetReservationById(
-            rental.ReservationId);
+        var reservation =
+            _reservationService
+                .GetReservationById(
+                    rental.ReservationId);
 
-        var vehicle = _vehicleService.GetVehicleById(
-            reservation.VehicleId);
+        var vehicle =
+            _vehicleService
+                .GetVehicleById(
+                    reservation.VehicleId);
 
         _vehicleService.UpdateVehicle(
             vehicleId: reservation.VehicleId,
@@ -122,13 +124,11 @@ public class RentalService
             newOdometer: endOdometer,
             fuelEfficiency: vehicle.FuelEfficiency,
             cargoCapacity: vehicle.CargoCapacity,
-            categoryId: vehicle.VehicleCategoryId
-        );
+            categoryId: vehicle.VehicleCategoryId);
 
         _vehicleService.UpdateVehicleStatus(
             reservation.VehicleId,
-            VehicleStatus.Available
-        );
+            VehicleStatus.Available);
     }
 
     // -------------------------------------------------
@@ -136,52 +136,9 @@ public class RentalService
     // -------------------------------------------------
 
     public Models.Rentals.Rental GetRentalById(int rentalId)
-    {
-        var table = DB.Query(
-            "CALL sp_rentals_get_by_id(@id);",
-            ("@id", rentalId)
-        );
+        => _rentalRepo.GetById(rentalId);
 
-        if (table.Rows.Count == 0)
-            throw new InvalidOperationException("Rental not found.");
-
-        return MapRental(table.Rows[0]);
-    }
-
-    public Models.Rentals.Rental? GetRentalByReservation(int reservationId)
-    {
-        var table = DB.Query(
-            "CALL sp_rentals_get_by_reservation(@reservationId);",
-            ("@reservationId", reservationId)
-        );
-
-        if (table.Rows.Count == 0)
-            return null;
-
-        return MapRental(table.Rows[0]);
-    }
-
-    // -------------------------------------------------
-    // MAPPING
-    // -------------------------------------------------
-
-    private static Models.Rentals.Rental MapRental(DataRow row)
-    {
-        return new Models.Rentals.Rental
-        {
-            Id = Convert.ToInt32(row["id"]),
-            ReservationId = Convert.ToInt32(row["reservation_id"]),
-            PickupDate = Convert.ToDateTime(row["pickup_date"]),
-            ExpectedReturnDate = Convert.ToDateTime(row["expected_return_date"]),
-            ActualReturnDate = row["actual_return_date"] == DBNull.Value
-                ? null
-                : Convert.ToDateTime(row["actual_return_date"]),
-            StartOdometer = Convert.ToInt32(row["start_odometer"]),
-            EndOdometer = row["end_odometer"] == DBNull.Value
-                ? null
-                : Convert.ToInt32(row["end_odometer"]),
-            Status = Enum.Parse<RentalStatus>(
-                row["status"].ToString()!, true)
-        };
-    }
+    public Models.Rentals.Rental? GetRentalByReservation(
+        int reservationId)
+        => _rentalRepo.GetByReservation(reservationId);
 }

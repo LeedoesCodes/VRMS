@@ -1,34 +1,37 @@
-﻿using System.Data;
-using VRMS.Database;
-using VRMS.Enums;
+﻿using VRMS.Enums;
 using VRMS.Helpers.Security;
 using VRMS.Models.Accounts;
+using VRMS.Repositories.Accounts;
 
 namespace VRMS.Services.Account;
 
 public class UserService
 {
+    private readonly UserRepository _userRepo;
+
+    public UserService(UserRepository userRepo)
+    {
+        _userRepo = userRepo;
+    }
+
     // ----------------------------
     // AUTHENTICATION
     // ----------------------------
 
-    public User Authenticate(string username, string plainPassword)
+    public User Authenticate(
+        string username,
+        string plainPassword)
     {
-        var table = DB.Query(
-            "CALL sp_users_authenticate(@username);",
-            ("@username", username)
-        );
+        var user =
+            _userRepo.GetForAuthentication(username);
 
-        if (table.Rows.Count == 0)
-            throw new InvalidOperationException("Invalid username or inactive account.");
+        if (!Password.Verify(
+                plainPassword,
+                user.PasswordHash))
+            throw new InvalidOperationException(
+                "Invalid password.");
 
-        var row = table.Rows[0];
-        var storedHash = row["password_hash"].ToString()!;
-
-        if (!VerifyPassword(plainPassword, storedHash))
-            throw new InvalidOperationException("Invalid password.");
-
-        return MaterializeUser(row);
+        return user;
     }
 
     // ----------------------------
@@ -39,20 +42,19 @@ public class UserService
         string username,
         string plainPassword,
         UserRole role,
-        bool isActive = true
-    )
+        bool isActive = true)
     {
+        if (string.IsNullOrWhiteSpace(username))
+            throw new InvalidOperationException(
+                "Username cannot be empty.");
+
         var hash = Password.Hash(plainPassword);
 
-        var table = DB.Query(
-            "CALL sp_users_create(@username, @hash, @role, @active);",
-            ("@username", username),
-            ("@hash", hash),
-            ("@role", role.ToString()),
-            ("@active", isActive)
-        );
-
-        return Convert.ToInt32(table.Rows[0]["user_id"]);
+        return _userRepo.Create(
+            username,
+            hash,
+            role,
+            isActive);
     }
 
     // ----------------------------
@@ -60,42 +62,17 @@ public class UserService
     // ----------------------------
 
     public User GetById(int userId)
-    {
-        var table = DB.Query(
-            "CALL sp_users_get_by_id(@id);",
-            ("@id", userId)
-        );
-
-        if (table.Rows.Count == 0)
-            throw new InvalidOperationException("User not found.");
-
-        return MaterializeUser(table.Rows[0]);
-    }
+        => _userRepo.GetById(userId);
 
     public User GetByUsername(string username)
-    {
-        var table = DB.Query(
-            "CALL sp_users_get_by_username(@username);",
-            ("@username", username)
-        );
-
-        if (table.Rows.Count == 0)
-            throw new InvalidOperationException("User not found.");
-
-        return MaterializeUser(table.Rows[0]);
-    }
+        => _userRepo.GetByUsername(username);
 
     // ----------------------------
     // DEACTIVATE
     // ----------------------------
 
     public void Deactivate(int userId)
-    {
-        DB.Execute(
-            "CALL sp_users_deactivate(@id);",
-            ("@id", userId)
-        );
-    }
+        => _userRepo.Deactivate(userId);
 
     // ----------------------------
     // PASSWORD MANAGEMENT
@@ -104,21 +81,22 @@ public class UserService
     public void ChangePassword(
         int userId,
         string currentPlainPassword,
-        string newPlainPassword
-    )
+        string newPlainPassword)
     {
-        var user = GetById(userId);
+        var user = _userRepo.GetById(userId);
 
-        if (!VerifyPassword(currentPlainPassword, user.PasswordHash))
-            throw new InvalidOperationException("Current password is incorrect.");
+        if (!Password.Verify(
+                currentPlainPassword,
+                user.PasswordHash))
+            throw new InvalidOperationException(
+                "Current password is incorrect.");
 
-        var newHash = Password.Hash(newPlainPassword);
+        var newHash =
+            Password.Hash(newPlainPassword);
 
-        DB.Execute(
-            "CALL sp_users_update_password(@id, @hash);",
-            ("@id", userId),
-            ("@hash", newHash)
-        );
+        _userRepo.UpdatePassword(
+            userId,
+            newHash);
     }
 
     // ----------------------------
@@ -129,52 +107,16 @@ public class UserService
         int userId,
         string username,
         UserRole role,
-        bool isActive
-    )
+        bool isActive)
     {
         if (string.IsNullOrWhiteSpace(username))
-            throw new InvalidOperationException("Username cannot be empty.");
+            throw new InvalidOperationException(
+                "Username cannot be empty.");
 
-        DB.Execute(
-            "CALL sp_users_update_profile(@id, @username, @role, @active);",
-            ("@id", userId),
-            ("@username", username),
-            ("@role", role.ToString()),
-            ("@active", isActive)
-        );
+        _userRepo.UpdateProfile(
+            userId,
+            username,
+            role,
+            isActive);
     }
-
-    // ----------------------------
-    // INTERNAL HELPERS
-    // ----------------------------
-
-    private static User MaterializeUser(DataRow row)
-    {
-        var role = Enum.Parse<UserRole>(row["role"].ToString()!, true);
-
-        User user = role switch
-        {
-            UserRole.Admin => new Admin(),
-            UserRole.RentalAgent => new RentalAgent(),
-            _ => throw new InvalidOperationException("Unknown user role.")
-        };
-
-        user.Id = Convert.ToInt32(row["id"]);
-        user.Username = row["username"].ToString()!;
-        user.PasswordHash = row["password_hash"].ToString()!;
-        user.Role = role;
-        user.IsActive = Convert.ToBoolean(row["is_active"]);
-
-        return user;
-    }
-
-    // ----------------------------
-    // PASSWORD SECURITY
-    // ----------------------------
-
-    private static bool VerifyPassword(string plain, string hash)
-    {
-        return Password.Verify(plain, hash);
-    }
-
 }

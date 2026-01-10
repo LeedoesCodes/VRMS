@@ -1,4 +1,4 @@
-﻿using VRMS.Database.StoredProcedures.Damages.Damage;
+﻿using VRMS.Database.StoredProcedureImplementations.Damages.Damage;
 
 namespace VRMS.Database.Migrations;
 

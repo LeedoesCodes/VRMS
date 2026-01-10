@@ -1,4 +1,4 @@
-﻿using VRMS.Database.StoredProcedures.Rentals.Reservation;
+﻿using VRMS.Database.StoredProcedureImplementations.Rentals.Reservation;
 
 namespace VRMS.Database.Migrations;
 

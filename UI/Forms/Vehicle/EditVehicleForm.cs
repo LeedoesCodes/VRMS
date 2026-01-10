@@ -2,22 +2,23 @@
 using System.Windows.Forms;
 using VRMS.Models.Fleet;
 using VRMS.Enums;
-using VRMS.Services.Vehicle;
+using VRMS.Services.Fleet;
 
 namespace VRMS.Forms
 {
     public partial class EditVehicleForm : Form
     {
         private readonly int _vehicleId;
-        private readonly VehicleService _vehicleService = new();
+        private readonly VehicleService _vehicleService;
         private Vehicle _vehicle = null!;
 
         // =========================
         // CONSTRUCTOR
         // =========================
-        public EditVehicleForm(int vehicleId)
+        public EditVehicleForm(int vehicleId, VehicleService vehicleService)
         {
             InitializeComponent();
+            _vehicleService = vehicleService;
             _vehicleId = vehicleId;
 
             Load += EditVehicleForm_Load;
