@@ -54,6 +54,7 @@ namespace VRMS.Controls
             btnSave.Click += BtnSave_Click;
             btnDelete.Click += BtnDelete_Click;
             btnClear.Click += (_, _) => ClearForm();
+
             btnManageAccount.Click += BtnManageAccount_Click;
             btnEmergencyContacts.Click += BtnEmergencyContacts_Click;
 
@@ -143,12 +144,8 @@ namespace VRMS.Controls
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    ex.Message,
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MessageBox.Show(ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -171,7 +168,7 @@ namespace VRMS.Controls
         }
 
         // =====================================================
-        // CREATE / UPDATE (MATCHES SERVICE)
+        // CREATE / UPDATE  (MATCHES SERVICE EXACTLY)
         // =====================================================
 
         private void CreateCustomer()
@@ -188,6 +185,7 @@ namespace VRMS.Controls
                 txtLastName.Text.Trim(),
                 txtEmail.Text.Trim(),
                 txtPhone.Text.Trim(),
+                txtAddress.Text.Trim(),
                 dtpDOB.Value.Date,
                 (CustomerCategory)cbCustomerType.SelectedItem!,
                 chkLoyalty.Checked,
@@ -206,6 +204,7 @@ namespace VRMS.Controls
                 txtLastName.Text.Trim(),
                 txtEmail.Text.Trim(),
                 txtPhone.Text.Trim(),
+                txtAddress.Text.Trim(),
                 (CustomerCategory)cbCustomerType.SelectedItem!,
                 chkLoyalty.Checked,
                 chkBlacklist.Checked
@@ -310,8 +309,9 @@ namespace VRMS.Controls
             txtLastName.Text = c.LastName;
             txtEmail.Text = c.Email;
             txtPhone.Text = c.Phone;
-            dtpDOB.Value = c.DateOfBirth;
+            txtAddress.Text = c.Address;
 
+            dtpDOB.Value = c.DateOfBirth;
             cbCustomerType.SelectedItem = c.Category;
             chkLoyalty.Checked = c.IsFrequent;
             chkBlacklist.Checked = c.IsBlacklisted;

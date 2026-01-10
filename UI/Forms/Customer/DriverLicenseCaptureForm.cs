@@ -5,19 +5,22 @@ using System.IO;
 using System.Windows.Forms;
 using AForge.Video;
 using AForge.Video.DirectShow;
-using System.Security.Cryptography;
 
 namespace VRMS.UI.Forms.Customer
 {
     public partial class DriverLicenseCaptureForm : Form
     {
-        // Camera
+        // =============================
+        // CAMERA FIELDS
+        // =============================
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice? videoSource;
         private Bitmap? capturedImage;
         private bool isCameraRunning;
 
-        // Adjustments
+        // =============================
+        // IMAGE ADJUSTMENTS
+        // =============================
         private float brightness = 1.0f;
         private float contrast = 1.0f;
         private int rotationAngle = 0;
@@ -26,12 +29,12 @@ namespace VRMS.UI.Forms.Customer
         {
             InitializeComponent();
             InitializeCamera();
+            FormClosing += DriverLicenseCaptureForm_FormClosing;
         }
 
-        // --------------------------------------------------
+        // ==================================================
         // CAMERA INITIALIZATION
-        // --------------------------------------------------
-
+        // ==================================================
         private void InitializeCamera()
         {
             try
@@ -57,10 +60,9 @@ namespace VRMS.UI.Forms.Customer
             }
         }
 
-        // --------------------------------------------------
-        // FRAME HANDLER (SAFE)
-        // --------------------------------------------------
-
+        // ==================================================
+        // FRAME HANDLER (SAFE UI UPDATE)
+        // ==================================================
         private void VideoSource_NewFrame(object sender, NewFrameEventArgs e)
         {
             if (picCameraPreview.IsDisposed || !picCameraPreview.IsHandleCreated)
@@ -88,10 +90,9 @@ namespace VRMS.UI.Forms.Customer
             }
         }
 
-        // --------------------------------------------------
-        // START / STOP
-        // --------------------------------------------------
-
+        // ==================================================
+        // START / STOP CAMERA
+        // ==================================================
         private void btnStartCamera_Click(object sender, EventArgs e)
         {
             if (videoSource == null || isCameraRunning)
@@ -103,6 +104,7 @@ namespace VRMS.UI.Forms.Customer
             btnStartCamera.Enabled = false;
             btnStopCamera.Enabled = true;
             btnCapture.Enabled = true;
+
             lblStatus.Text = "Status: Camera running";
         }
 
@@ -111,23 +113,37 @@ namespace VRMS.UI.Forms.Customer
             StopCamera();
         }
 
+        // 🔥 HARD STOP — THIS IS THE IMPORTANT PART
         private void StopCamera()
         {
-            if (videoSource == null || !isCameraRunning)
+            if (videoSource == null)
                 return;
 
-            videoSource.NewFrame -= VideoSource_NewFrame;
-
-            if (videoSource.IsRunning)
+            try
             {
-                videoSource.SignalToStop();
-                videoSource.WaitForStop();
+                videoSource.NewFrame -= VideoSource_NewFrame;
+
+                if (videoSource.IsRunning)
+                {
+                    videoSource.SignalToStop();
+                    videoSource.WaitForStop();
+                }
+            }
+            catch
+            {
+                // ignore shutdown errors
+            }
+            finally
+            {
+                videoSource = null;
+                isCameraRunning = false;
             }
 
-            isCameraRunning = false;
-
-            picCameraPreview.Image?.Dispose();
-            picCameraPreview.Image = null;
+            if (!picCameraPreview.IsDisposed)
+            {
+                picCameraPreview.Image?.Dispose();
+                picCameraPreview.Image = null;
+            }
 
             btnStartCamera.Enabled = true;
             btnStopCamera.Enabled = false;
@@ -136,10 +152,9 @@ namespace VRMS.UI.Forms.Customer
             lblStatus.Text = "Status: Camera stopped";
         }
 
-        // --------------------------------------------------
-        // CAPTURE
-        // --------------------------------------------------
-
+        // ==================================================
+        // CAPTURE IMAGE
+        // ==================================================
         private void btnCapture_Click(object sender, EventArgs e)
         {
             if (picCameraPreview.Image == null)
@@ -166,14 +181,12 @@ namespace VRMS.UI.Forms.Customer
 
             btnSave.Enabled = false;
             btnRetake.Enabled = false;
-
             lblPreviewInfo.Text = "Captured image will appear here";
         }
 
-        // --------------------------------------------------
-        // SAVE
-        // --------------------------------------------------
-
+        // ==================================================
+        // SAVE IMAGE (FORCE CAMERA OFF FIRST)
+        // ==================================================
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (capturedImage == null)
@@ -198,14 +211,16 @@ namespace VRMS.UI.Forms.Customer
             using Bitmap finalImage = ApplyAdjustments(capturedImage);
             finalImage.Save(dlg.FileName, format);
 
+            // 🔥 FORCE CAMERA SHUTDOWN
+            StopCamera();
+
             DialogResult = DialogResult.OK;
             Close();
         }
 
-        // --------------------------------------------------
+        // ==================================================
         // IMAGE ADJUSTMENTS
-        // --------------------------------------------------
-
+        // ==================================================
         private Bitmap ApplyAdjustments(Bitmap original)
         {
             Bitmap adjusted = new Bitmap(original);
@@ -244,16 +259,21 @@ namespace VRMS.UI.Forms.Customer
             };
 
             attr.SetColorMatrix(new ColorMatrix(matrix));
-            g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height),
-                0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attr);
+
+            g.DrawImage(
+                image,
+                new Rectangle(0, 0, image.Width, image.Height),
+                0, 0, image.Width, image.Height,
+                GraphicsUnit.Pixel,
+                attr
+            );
 
             return adjusted;
         }
 
-        // --------------------------------------------------
-        // ROTATE / ADJUST BUTTONS
-        // --------------------------------------------------
-
+        // ==================================================
+        // ROTATION / ADJUST BUTTONS
+        // ==================================================
         private void btnRotate_Click(object sender, EventArgs e)
         {
             if (capturedImage == null)
@@ -288,10 +308,9 @@ namespace VRMS.UI.Forms.Customer
             picCapturedImage.Image = ApplyAdjustments(capturedImage);
         }
 
-        // --------------------------------------------------
-        // CLEAN SHUTDOWN
-        // --------------------------------------------------
-
+        // ==================================================
+        // CLEAN EXIT
+        // ==================================================
         private void DriverLicenseCaptureForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             StopCamera();
@@ -300,6 +319,7 @@ namespace VRMS.UI.Forms.Customer
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            StopCamera();
             DialogResult = DialogResult.Cancel;
             Close();
         }
