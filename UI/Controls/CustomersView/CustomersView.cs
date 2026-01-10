@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using VRMS.Enums;
 using VRMS.Models.Customers;
 using VRMS.Services.Customer;
+using VRMS.UI.Forms.Customer;
 
 namespace VRMS.Controls
 {
@@ -26,7 +27,6 @@ namespace VRMS.Controls
             InitializeCustomerTypeCombo();
             HookEvents();
             LoadCustomers();
-            
         }
 
         // =====================================================
@@ -53,10 +53,14 @@ namespace VRMS.Controls
 
             dgvCustomers.SelectionChanged += DgvCustomers_SelectionChanged;
             dtpDOB.ValueChanged += (_, _) => UpdateAgeLabel();
+
+            // ✅ UI-only integrations
+            btnCaptureLicense.Click += BtnCaptureLicense_Click;
+            button1.Click += BtnCheckDrivingRecord_Click; // "Check Driving Record"
         }
 
         // =====================================================
-        // LOAD / GRID
+        // GRID
         // =====================================================
 
         private void LoadCustomers()
@@ -110,13 +114,9 @@ namespace VRMS.Controls
             try
             {
                 if (_selectedCustomer == null)
-                {
                     CreateCustomer();
-                }
                 else
-                {
                     UpdateCustomer();
-                }
 
                 LoadCustomers();
                 ClearForm();
@@ -186,7 +186,50 @@ namespace VRMS.Controls
         }
 
         // =====================================================
-        // FORM
+        // UI ACTIONS (FRONT-END ONLY)
+        // =====================================================
+
+        private void BtnCaptureLicense_Click(object? sender, EventArgs e)
+        {
+            using (var form = new DriverLicenseCaptureForm())
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    MessageBox.Show(
+                        "Driver's license image captured successfully.",
+                        "Capture Complete",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
+
+                    // Visual feedback only
+                    btnCaptureLicense.BackColor = Color.FromArgb(46, 204, 113);
+                }
+            }
+        }
+
+        private void BtnCheckDrivingRecord_Click(object? sender, EventArgs e)
+        {
+            var result = MessageBox.Show(
+                "No external driving record system connected.\n\n" +
+                "Is the customer cleared to rent?",
+                "Driving Record Verification",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                MessageBox.Show("✔ Driving Record: Cleared");
+            }
+            else if (result == DialogResult.No)
+            {
+                MessageBox.Show("❌ Driving Record: Not Cleared");
+            }
+        }
+
+        // =====================================================
+        // FORM HELPERS
         // =====================================================
 
         private void PopulateForm(Customer c)
@@ -224,10 +267,6 @@ namespace VRMS.Controls
             picCustomerPhoto.Image = null;
             dgvCustomers.ClearSelection();
         }
-
-        // =====================================================
-        // HELPERS
-        // =====================================================
 
         private bool ValidateForm()
         {
@@ -270,12 +309,11 @@ namespace VRMS.Controls
 
         private void BtnManageAccount_Click(object? sender, EventArgs e)
         {
-            if (_selectedCustomer == null)
-                return;
-
             MessageBox.Show(
-                "Account management comes later (UserService)",
-                "Info"
+                "Account management comes later (UserService).",
+                "Info",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
             );
         }
     }
