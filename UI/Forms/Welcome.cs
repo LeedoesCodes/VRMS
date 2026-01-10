@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using VRMS.Controls;
 using VRMS.Forms;
 using VRMS.Models.Accounts;
+using VRMS.Repositories.Accounts;
+using VRMS.Services.Account;
 using VRMS.Support;
 using VRMS.UI.Animation;
 
@@ -13,10 +15,18 @@ namespace VRMS.UI.Forms
     {
         private UserControl? _currentControl;
         private readonly IAnimationManager _animationManager;
+        private readonly UserService _userService;
 
         public Welcome()
         {
             InitializeComponent();
+
+            // =========================
+            // AUTH COMPOSITION ROOT
+            // =========================
+
+            var userRepo = new UserRepository();
+            _userService = new UserService(userRepo);
 
             _animationManager = new WelcomeFormAnimationManager(this);
             _animationManager.AnimationCompleted += (_, __) => FocusContent();
@@ -49,7 +59,7 @@ namespace VRMS.UI.Forms
             if (_animationManager.IsAnimating)
                 return;
 
-            LoadControl(new LoginUserControl());
+            LoadControl(new LoginUserControl(_userService));
 
             // ✅ RESET POSITION BEFORE ANIMATION
             panelLogin.Visible = true;
@@ -71,7 +81,7 @@ namespace VRMS.UI.Forms
             {
                 login.GoToRegisterRequest += (_, __) =>
                 {
-                    LoadControl(new RegisterUserControl());
+                    LoadControl(new RegisterUserControl(_userService));
                 };
 
                 login.ExitApplication += (_, __) => Application.Exit();
@@ -88,7 +98,7 @@ namespace VRMS.UI.Forms
             {
                 register.GoBackToLoginRequest += (_, __) =>
                 {
-                    LoadControl(new LoginUserControl());
+                    LoadControl(new LoginUserControl(_userService));
                 };
             }
 

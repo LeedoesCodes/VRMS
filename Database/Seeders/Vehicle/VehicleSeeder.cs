@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using VRMS.Enums;
-using VRMS.Services.Vehicle;
+using VRMS.Services.Fleet;
 
 namespace VRMS.Database.Seeders.Vehicle;
 

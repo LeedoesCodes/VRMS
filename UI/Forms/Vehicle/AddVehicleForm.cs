@@ -3,19 +3,19 @@ using System.IO;
 using System.Windows.Forms;
 using VRMS.Models.Fleet;
 using VRMS.Enums;
-using VRMS.Services.Vehicle;
+using VRMS.Services.Fleet;
 using VRMS.UI.Forms;
 
 namespace VRMS.Forms
 {
     public partial class AddVehicleForm : Form
     {
-        private readonly VehicleService _vehicleService = new();
+        private readonly VehicleService _vehicleService;
 
-        public AddVehicleForm()
+        public AddVehicleForm(VehicleService vehicleService)
         {
             InitializeComponent();
-
+            _vehicleService = vehicleService;
             Load += AddVehicleForm_Load;
             btnSave.Click += BtnSave_Click;
             btnCancel.Click += (_, __) => Close();

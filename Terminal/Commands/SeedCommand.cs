@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using VRMS.Database.Seeders;
-using VRMS.Services.Account;
-using VRMS.Services.Vehicle;
 
 namespace VRMS.Terminal.Commands;
 

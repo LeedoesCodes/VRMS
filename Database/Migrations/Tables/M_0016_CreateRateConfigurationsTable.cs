@@ -5,7 +5,7 @@ public static class M_0016_CreateRateConfigurationsTable
     public static string Create() => """
                                      CREATE TABLE IF NOT EXISTS rate_configurations (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
-                                         vehicle_category_id INT NOT NULL,
+                                         vehicle_category_id INT NOT NULL UNIQUE,
                                          daily_rate DECIMAL(10,2) NOT NULL,
                                          weekly_rate DECIMAL(10,2) NOT NULL,
                                          monthly_rate DECIMAL(10,2) NOT NULL,

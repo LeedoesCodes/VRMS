@@ -10,11 +10,12 @@ namespace VRMS.Controls
         // Event listened to by Welcome form
         public event EventHandler GoBackToLoginRequest;
 
-        private readonly UserService _userService = new();
+        private readonly UserService _userService;
 
-        public RegisterUserControl()
+        public RegisterUserControl(UserService userService)
         {
             InitializeComponent();
+            _userService = userService;
         }
 
         // ----------------------------

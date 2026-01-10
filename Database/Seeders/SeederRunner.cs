@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using VRMS.Services.Account;
-using VRMS.Services.Vehicle;
+using VRMS.Services.Fleet;
 
 namespace VRMS.Database.Seeders;
 

@@ -1,9 +1,8 @@
-﻿using System.Data;
-using VRMS.Database;
-using VRMS.Enums;
+﻿using VRMS.Enums;
 using VRMS.Models.Rentals;
+using VRMS.Repositories.Rentals;
 using VRMS.Services.Customer;
-using VRMS.Services.Vehicle;
+using VRMS.Services.Fleet;
 
 namespace VRMS.Services.Rental;
 
@@ -11,13 +10,16 @@ public class ReservationService
 {
     private readonly CustomerService _customerService;
     private readonly VehicleService _vehicleService;
+    private readonly ReservationRepository _reservationRepo;
 
     public ReservationService(
         CustomerService customerService,
-        VehicleService vehicleService)
+        VehicleService vehicleService,
+        ReservationRepository reservationRepo)
     {
         _customerService = customerService;
         _vehicleService = vehicleService;
+        _reservationRepo = reservationRepo;
     }
 
     // -------------------------------------------------
@@ -31,30 +33,34 @@ public class ReservationService
         DateTime endDate)
     {
         if (startDate >= endDate)
-            throw new InvalidOperationException("Start date must be before end date.");
+            throw new InvalidOperationException(
+                "Start date must be before end date.");
 
         // Customer eligibility
-        _customerService.EnsureCustomerCanRent(customerId, startDate);
+        _customerService.EnsureCustomerCanRent(
+            customerId,
+            startDate);
 
         // Vehicle eligibility
-        var vehicle = _vehicleService.GetVehicleById(vehicleId);
+        var vehicle =
+            _vehicleService.GetVehicleById(vehicleId);
 
         if (vehicle.Status != VehicleStatus.Available)
-            throw new InvalidOperationException("Vehicle is not available for reservation.");
+            throw new InvalidOperationException(
+                "Vehicle is not available for reservation.");
 
         // Overlap check
-        EnsureNoOverlap(vehicleId, startDate, endDate);
+        EnsureNoOverlap(
+            vehicleId,
+            startDate,
+            endDate);
 
-        var table = DB.Query(
-            "CALL sp_reservations_create(@customerId, @vehicleId, @start, @end, @status);",
-            ("@customerId", customerId),
-            ("@vehicleId", vehicleId),
-            ("@start", startDate),
-            ("@end", endDate),
-            ("@status", ReservationStatus.Pending.ToString())
-        );
-
-        return Convert.ToInt32(table.Rows[0]["reservation_id"]);
+        return _reservationRepo.Create(
+            customerId,
+            vehicleId,
+            startDate,
+            endDate,
+            ReservationStatus.Pending);
     }
 
     // -------------------------------------------------
@@ -63,47 +69,52 @@ public class ReservationService
 
     public void ConfirmReservation(int reservationId)
     {
-        var reservation = GetReservationById(reservationId);
+        var reservation =
+            _reservationRepo.GetById(reservationId);
 
-        EnsureStatusTransition(reservation.Status, ReservationStatus.Confirmed);
+        EnsureStatusTransition(
+            reservation.Status,
+            ReservationStatus.Confirmed);
 
-        // Re-check overlap before confirming
+        // Re-check overlap
         EnsureNoOverlap(
             reservation.VehicleId,
             reservation.StartDate,
             reservation.EndDate,
-            reservation.Id
-        );
+            reservation.Id);
 
         // Lock vehicle
         _vehicleService.UpdateVehicleStatus(
             reservation.VehicleId,
-            VehicleStatus.Reserved
-        );
+            VehicleStatus.Reserved);
 
-        UpdateReservationStatus(reservationId, ReservationStatus.Confirmed);
+        _reservationRepo.UpdateStatus(
+            reservationId,
+            ReservationStatus.Confirmed);
     }
 
     public void CancelReservation(int reservationId)
     {
-        var reservation = GetReservationById(reservationId);
+        var reservation =
+            _reservationRepo.GetById(reservationId);
 
-        EnsureStatusTransition(reservation.Status, ReservationStatus.Cancelled);
+        EnsureStatusTransition(
+            reservation.Status,
+            ReservationStatus.Cancelled);
 
-        DB.Execute(
-            "CALL sp_reservations_cancel(@id);",
-            ("@id", reservationId)
-        );
+        _reservationRepo.Cancel(reservationId);
 
-        // Release vehicle only if no other active reservations exist
-        if (reservation.Status == ReservationStatus.Confirmed)
+        // Release vehicle if no other active reservations
+        if (reservation.Status ==
+            ReservationStatus.Confirmed)
         {
-            if (!HasActiveReservations(reservation.VehicleId, reservationId))
+            if (!HasActiveReservations(
+                    reservation.VehicleId,
+                    reservation.Id))
             {
                 _vehicleService.UpdateVehicleStatus(
                     reservation.VehicleId,
-                    VehicleStatus.Available
-                );
+                    VehicleStatus.Available);
             }
         }
     }
@@ -112,53 +123,24 @@ public class ReservationService
     // READ
     // -------------------------------------------------
 
-    public Reservation GetReservationById(int reservationId)
-    {
-        var table = DB.Query(
-            "CALL sp_reservations_get_by_id(@id);",
-            ("@id", reservationId)
-        );
+    public Reservation GetReservationById(
+        int reservationId)
+        => _reservationRepo.GetById(
+            reservationId);
 
-        if (table.Rows.Count == 0)
-            throw new InvalidOperationException("Reservation not found.");
+    public List<Reservation> GetReservationsByCustomer(
+        int customerId)
+        => _reservationRepo.GetByCustomer(
+            customerId);
 
-        return MapReservation(table.Rows[0]);
-    }
-
-    public List<Reservation> GetReservationsByCustomer(int customerId)
-    {
-        var table = DB.Query(
-            "CALL sp_reservations_get_by_customer(@customerId);",
-            ("@customerId", customerId)
-        );
-
-        return MapReservations(table);
-    }
-
-    public List<Reservation> GetReservationsByVehicle(int vehicleId)
-    {
-        var table = DB.Query(
-            "CALL sp_reservations_get_by_vehicle(@vehicleId);",
-            ("@vehicleId", vehicleId)
-        );
-
-        return MapReservations(table);
-    }
+    public List<Reservation> GetReservationsByVehicle(
+        int vehicleId)
+        => _reservationRepo.GetByVehicle(
+            vehicleId);
 
     // -------------------------------------------------
-    // INTERNAL HELPERS
+    // INTERNAL RULES
     // -------------------------------------------------
-
-    private void UpdateReservationStatus(
-        int reservationId,
-        ReservationStatus status)
-    {
-        DB.Execute(
-            "CALL sp_reservations_update_status(@id, @status);",
-            ("@id", reservationId),
-            ("@status", status.ToString())
-        );
-    }
 
     private void EnsureStatusTransition(
         ReservationStatus current,
@@ -173,15 +155,15 @@ public class ReservationService
             ReservationStatus.Confirmed =>
                 next is ReservationStatus.Cancelled,
 
-            ReservationStatus.Cancelled => false,
+            ReservationStatus.Cancelled =>
+                false,
 
             _ => false
         };
 
         if (!valid)
             throw new InvalidOperationException(
-                $"Illegal reservation status transition: {current} → {next}"
-            );
+                $"Illegal reservation status transition: {current} → {next}");
     }
 
     private void EnsureNoOverlap(
@@ -190,14 +172,17 @@ public class ReservationService
         DateTime end,
         int? ignoreReservationId = null)
     {
-        var reservations = GetReservationsByVehicle(vehicleId);
+        var reservations =
+            _reservationRepo.GetByVehicle(vehicleId);
 
         foreach (var r in reservations)
         {
-            if (ignoreReservationId.HasValue && r.Id == ignoreReservationId.Value)
+            if (ignoreReservationId.HasValue
+                && r.Id == ignoreReservationId.Value)
                 continue;
 
-            if (r.Status == ReservationStatus.Cancelled)
+            if (r.Status ==
+                ReservationStatus.Cancelled)
                 continue;
 
             bool overlaps =
@@ -206,8 +191,7 @@ public class ReservationService
 
             if (overlaps)
                 throw new InvalidOperationException(
-                    "Reservation overlaps with an existing reservation."
-                );
+                    "Reservation overlaps with an existing reservation.");
         }
     }
 
@@ -215,46 +199,20 @@ public class ReservationService
         int vehicleId,
         int excludingReservationId)
     {
-        var reservations = GetReservationsByVehicle(vehicleId);
+        var reservations =
+            _reservationRepo.GetByVehicle(vehicleId);
 
         foreach (var r in reservations)
         {
             if (r.Id == excludingReservationId)
                 continue;
 
-            if (r.Status is ReservationStatus.Pending
+            if (r.Status is
+                ReservationStatus.Pending
                 or ReservationStatus.Confirmed)
                 return true;
         }
 
         return false;
-    }
-
-    // -------------------------------------------------
-    // MAPPING
-    // -------------------------------------------------
-
-    private static Reservation MapReservation(DataRow row)
-    {
-        return new Reservation
-        {
-            Id = Convert.ToInt32(row["id"]),
-            CustomerId = Convert.ToInt32(row["customer_id"]),
-            VehicleId = Convert.ToInt32(row["vehicle_id"]),
-            StartDate = Convert.ToDateTime(row["start_date"]),
-            EndDate = Convert.ToDateTime(row["end_date"]),
-            Status = Enum.Parse<ReservationStatus>(
-                row["status"].ToString()!, true)
-        };
-    }
-
-    private static List<Reservation> MapReservations(DataTable table)
-    {
-        var list = new List<Reservation>();
-
-        foreach (DataRow row in table.Rows)
-            list.Add(MapReservation(row));
-
-        return list;
     }
 }
