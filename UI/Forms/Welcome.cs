@@ -1,25 +1,25 @@
-﻿
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using VRMS.Controls;      
-using VRMS.UI.Animation;  
+using VRMS.Controls;
+using VRMS.Forms;
+using VRMS.Models.Accounts;
+using VRMS.Support;
+using VRMS.UI.Animation;
 
 namespace VRMS.UI.Forms
 {
-    public partial class Welcome : Form, IAnimationHost  
+    public partial class Welcome : Form, IAnimationHost
     {
-        private UserControl _currentControl;
-        private bool _showingLogin = true;
+        private UserControl? _currentControl;
         private readonly IAnimationManager _animationManager;
 
         public Welcome()
         {
             InitializeComponent();
 
-           
             _animationManager = new WelcomeFormAnimationManager(this);
-            _animationManager.AnimationCompleted += OnAnimationCompleted;
+            _animationManager.AnimationCompleted += (_, __) => FocusContent();
 
             InitializeForm();
         }
@@ -28,75 +28,39 @@ namespace VRMS.UI.Forms
         {
             DoubleBuffered = true;
 
-            Load += (s, e) =>
+            Load += (_, __) =>
             {
                 WindowState = FormWindowState.Maximized;
                 UpdateLayout();
+
+                // ✅ IMPORTANT: initial hidden state
+                panelLogin.Visible = false;
             };
 
-            Resize += (s, e) => UpdateLayout();
+            Resize += (_, __) => UpdateLayout();
         }
 
-        public void OnAnimationStart()
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(OnAnimationStart));
-                return;
-            }
-
-            btnProceed.Enabled = false;
-            panelLogin.Visible = true;
-            panelLogin.Left = -panelLogin.Width;
-        }
-
-        public void UpdateAnimationFrame(float easedProgress, float rawProgress)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action<float, float>(UpdateAnimationFrame), easedProgress, rawProgress);
-                return;
-            }
-
-            panelLeft.Left = (int)(ClientSize.Width * easedProgress);
-            panelLogin.Left = -panelLogin.Width + (int)(panelLogin.Width * easedProgress);
-
-            
-            UpdateBackgroundFade(rawProgress);
-        }
-
-        private void UpdateBackgroundFade(float progress)
-        {
-            if (progress <= 0.1f) return;
-
-            float normalizedProgress = (progress - 0.1f) / 0.9f;
-            int alpha = Math.Min(255, 30 + (int)(225 *
-                EasingFunctions.EaseOutQuad(normalizedProgress))); 
-
-            BackColor = panelRight.BackColor = Color.FromArgb(255, alpha, alpha, alpha);
-        }
-
-        public void OnAnimationComplete()
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(OnAnimationComplete));
-                return;
-            }
-
-            panelLeft.Visible = false;
-            BackColor = panelRight.BackColor = Color.White;
-            FocusContent();
-        }
+        // =========================
+        // ENTRY POINT
+        // =========================
 
         private void btnProceed_Click(object sender, EventArgs e)
         {
-          
-            if (_animationManager.IsAnimating) return;
+            if (_animationManager.IsAnimating)
+                return;
 
             LoadControl(new LoginUserControl());
+
+            // ✅ RESET POSITION BEFORE ANIMATION
+            panelLogin.Visible = true;
+            panelLogin.Left = -panelLogin.Width;
+
             _animationManager.StartSlideAnimation();
         }
+
+        // =========================
+        // CONTROL LOADER
+        // =========================
 
         private void LoadControl(UserControl control)
         {
@@ -105,20 +69,25 @@ namespace VRMS.UI.Forms
 
             if (control is LoginUserControl login)
             {
-                login.GoToRegisterRequest += (s, e) =>
+                login.GoToRegisterRequest += (_, __) =>
                 {
-                    _showingLogin = false;
                     LoadControl(new RegisterUserControl());
                 };
 
-                login.ExitApplication += (s, e) => Application.Exit();
-                login.LoginSuccess += OnLoginSuccess;
+                login.ExitApplication += (_, __) => Application.Exit();
+
+                login.LoginSuccess += (_, __) =>
+                {
+                    if (login.LoggedInUser == null)
+                        return;
+
+                    HandleLoginSuccess(login.LoggedInUser);
+                };
             }
             else if (control is RegisterUserControl register)
             {
-                register.GoBackToLoginRequest += (s, e) =>
+                register.GoBackToLoginRequest += (_, __) =>
                 {
-                    _showingLogin = true;
                     LoadControl(new LoginUserControl());
                 };
             }
@@ -126,23 +95,53 @@ namespace VRMS.UI.Forms
             panelLogin.Controls.Add(control);
             CenterControl(control);
             panelLogin.BringToFront();
-            FocusContent();
         }
 
-        private void OnLoginSuccess(object sender, EventArgs e)
+        // =========================
+        // LOGIN SUCCESS
+        // =========================
+
+        private void HandleLoginSuccess(User user)
         {
-           
-            var mainForm = new VRMS.Forms.MainForm(); 
+            Session.CurrentUser = user;
+
+            Program.CurrentUsername = user.Username;
+            Program.CurrentUserRole = user.Role.ToString();
+
+            var mainForm = new MainForm();
             mainForm.Show();
 
             Hide();
-            mainForm.FormClosed += (s, args) => Application.Exit();
+            mainForm.FormClosed += (_, __) => Application.Exit();
         }
 
-        private void OnAnimationCompleted(object sender, EventArgs e)
+        // =========================
+        // IAnimationHost
+        // =========================
+
+        public void OnAnimationStart()
         {
+            btnProceed.Enabled = false;
+
+            // ✅ ENSURE VISIBILITY DURING ANIMATION
+            panelLogin.Visible = true;
+        }
+
+        public void UpdateAnimationFrame(float easedProgress, float rawProgress)
+        {
+            panelLeft.Left = (int)(ClientSize.Width * easedProgress);
+            panelLogin.Left = -panelLogin.Width + (int)(panelLogin.Width * easedProgress);
+        }
+
+        public void OnAnimationComplete()
+        {
+            panelLeft.Visible = false;
             FocusContent();
         }
+
+        // =========================
+        // UI HELPERS
+        // =========================
 
         private void FocusContent()
         {
@@ -171,15 +170,15 @@ namespace VRMS.UI.Forms
                 ClientSize.Height
             );
 
-            CenterControl(_currentControl);
+            if (_currentControl != null)
+                CenterControl(_currentControl);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                
-                _animationManager?.Dispose();
+                _animationManager.Dispose();
                 components?.Dispose();
             }
             base.Dispose(disposing);

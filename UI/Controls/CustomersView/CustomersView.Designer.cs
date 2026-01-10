@@ -128,7 +128,7 @@
             splitContainer1.Panel2.Controls.Add(panel2);
             splitContainer1.Panel2.Controls.Add(tabControl1);
             splitContainer1.Size = new Size(1333, 1078);
-            splitContainer1.SplitterDistance = 400; // Reduced from 450 for better laptop display
+            splitContainer1.SplitterDistance = 400;
             splitContainer1.SplitterWidth = 5;
             splitContainer1.TabIndex = 0;
             // 
@@ -199,11 +199,11 @@
             panel2.Controls.Add(btnManageAccount);
             panel2.Controls.Add(btnDelete);
             panel2.Controls.Add(btnClear);
-            panel2.Dock = DockStyle.Bottom; // Changed to DockStyle.Bottom
+            panel2.Dock = DockStyle.Bottom;
             panel2.Location = new Point(0, 907);
             panel2.Margin = new Padding(13, 15, 13, 15);
             panel2.Name = "panel2";
-            panel2.Size = new Size(928, 171); // Adjusted size
+            panel2.Size = new Size(928, 171);
             panel2.TabIndex = 1;
             // 
             // btnSave
@@ -220,6 +220,7 @@
             btnSave.TabIndex = 0;
             btnSave.Text = "💾 Save Changes";
             btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += BtnSave_Click;
             // 
             // btnManageAccount
             // 
@@ -235,6 +236,7 @@
             btnManageAccount.TabIndex = 3;
             btnManageAccount.Text = "🔐 Manage Account";
             btnManageAccount.UseVisualStyleBackColor = false;
+            btnManageAccount.Click += BtnManageAccount_Click;
             // 
             // btnDelete
             // 
@@ -250,6 +252,7 @@
             btnDelete.TabIndex = 1;
             btnDelete.Text = "🗑️ Delete";
             btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Click += BtnDelete_Click;
             // 
             // btnClear
             // 
@@ -259,7 +262,7 @@
             btnClear.FlatStyle = FlatStyle.Flat;
             btnClear.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnClear.ForeColor = Color.White;
-            btnClear.Location = new Point(668, 38); // Adjusted position
+            btnClear.Location = new Point(668, 38);
             btnClear.Margin = new Padding(3, 4, 3, 4);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(180, 60);
@@ -274,18 +277,17 @@
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
             tabControl1.Font = new Font("Segoe UI", 10F);
-            tabControl1.ItemSize = new Size(0, 45); // Changed to 0 width for auto-sizing
+            tabControl1.ItemSize = new Size(0, 45);
             tabControl1.Location = new Point(0, 0);
             tabControl1.Margin = new Padding(4, 5, 4, 5);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(928, 894); // Adjusted size
-            tabControl1.SizeMode = TabSizeMode.Normal; // Changed from Fixed to Normal
+            tabControl1.Size = new Size(926, 894);
             tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
-            tabPage1.AutoScroll = true; // Added for scrolling
+            tabPage1.AutoScroll = true;
             tabPage1.Controls.Add(label13);
             tabPage1.Controls.Add(lblAgeCheck);
             tabPage1.Controls.Add(dtpDOB);
@@ -308,7 +310,7 @@
             tabPage1.Margin = new Padding(3, 4, 3, 4);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(10, 12, 10, 12);
-            tabPage1.Size = new Size(920, 841); // Adjusted size
+            tabPage1.Size = new Size(918, 841);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Personal Profile";
             tabPage1.UseVisualStyleBackColor = true;
@@ -353,6 +355,7 @@
             btnCamera.TabIndex = 14;
             btnCamera.Text = "📷 Camera";
             btnCamera.UseVisualStyleBackColor = true;
+            btnCamera.Click += BtnProfileCamera_Click;
             // 
             // btnUploadPhoto
             // 
@@ -366,6 +369,7 @@
             btnUploadPhoto.TabIndex = 13;
             btnUploadPhoto.Text = "📂 Upload";
             btnUploadPhoto.UseVisualStyleBackColor = false;
+            btnUploadPhoto.Click += BtnBrowseProfilePhoto_Click;
             // 
             // label12
             // 
@@ -384,7 +388,7 @@
             txtLastName.Location = new Point(399, 292);
             txtLastName.Margin = new Padding(3, 4, 3, 4);
             txtLastName.Name = "txtLastName";
-            txtLastName.Size = new Size(480, 30); // Adjusted size
+            txtLastName.Size = new Size(480, 30);
             txtLastName.TabIndex = 11;
             // 
             // groupBox1
@@ -399,7 +403,7 @@
             groupBox1.Margin = new Padding(3, 4, 3, 4);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(3, 4, 3, 4);
-            groupBox1.Size = new Size(860, 122); // Adjusted size
+            groupBox1.Size = new Size(860, 122);
             groupBox1.TabIndex = 10;
             groupBox1.TabStop = false;
             groupBox1.Text = "Emergency Contact";
@@ -449,7 +453,7 @@
             txtPhone.Location = new Point(24, 597);
             txtPhone.Margin = new Padding(3, 4, 3, 4);
             txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(855, 30); // Adjusted size
+            txtPhone.Size = new Size(855, 30);
             txtPhone.TabIndex = 9;
             // 
             // label5
@@ -469,7 +473,7 @@
             txtEmail.Location = new Point(24, 537);
             txtEmail.Margin = new Padding(3, 4, 3, 4);
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(855, 30); // Adjusted size
+            txtEmail.Size = new Size(855, 30);
             txtEmail.TabIndex = 7;
             // 
             // label4
@@ -490,7 +494,7 @@
             txtAddress.Margin = new Padding(3, 4, 3, 4);
             txtAddress.Multiline = true;
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(852, 70); // Adjusted size
+            txtAddress.Size = new Size(852, 70);
             txtAddress.TabIndex = 5;
             // 
             // label3
@@ -547,14 +551,14 @@
             // 
             // tabPage2
             // 
-            tabPage2.AutoScroll = true; // Added for scrolling
+            tabPage2.AutoScroll = true;
             tabPage2.Controls.Add(groupBox3);
             tabPage2.Controls.Add(groupBox2);
             tabPage2.Location = new Point(4, 49);
             tabPage2.Margin = new Padding(3, 4, 3, 4);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(10, 12, 10, 12);
-            tabPage2.Size = new Size(920, 841); // Adjusted size
+            tabPage2.Size = new Size(918, 841);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Driver's License & Verification";
             tabPage2.UseVisualStyleBackColor = true;
@@ -570,7 +574,7 @@
             groupBox3.Margin = new Padding(3, 4, 3, 4);
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(3, 4, 3, 4);
-            groupBox3.Size = new Size(860, 249); // Adjusted size
+            groupBox3.Size = new Size(860, 249);
             groupBox3.TabIndex = 1;
             groupBox3.TabStop = false;
             groupBox3.Text = "Verification Actions";
@@ -625,7 +629,7 @@
             groupBox2.Margin = new Padding(3, 4, 3, 4);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(3, 4, 3, 4);
-            groupBox2.Size = new Size(860, 298); // Adjusted size
+            groupBox2.Size = new Size(860, 298);
             groupBox2.TabIndex = 0;
             groupBox2.TabStop = false;
             groupBox2.Text = "License Details";
@@ -708,7 +712,7 @@
             // 
             // tabPage3
             // 
-            tabPage3.AutoScroll = true; // Added for scrolling
+            tabPage3.AutoScroll = true;
             tabPage3.Controls.Add(dgvHistory);
             tabPage3.Controls.Add(groupBox5);
             tabPage3.Controls.Add(groupBox4);
@@ -716,7 +720,7 @@
             tabPage3.Margin = new Padding(3, 4, 3, 4);
             tabPage3.Name = "tabPage3";
             tabPage3.Padding = new Padding(10, 12, 10, 12);
-            tabPage3.Size = new Size(920, 841); // Adjusted size
+            tabPage3.Size = new Size(918, 841);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "History & Status";
             tabPage3.UseVisualStyleBackColor = true;
@@ -755,7 +759,7 @@
             dgvHistory.RowHeadersWidth = 51;
             dgvHistory.RowTemplate.Height = 30;
             dgvHistory.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvHistory.Size = new Size(860, 388); // Adjusted size
+            dgvHistory.Size = new Size(860, 388);
             dgvHistory.TabIndex = 2;
             // 
             // groupBox5
@@ -769,7 +773,7 @@
             groupBox5.Margin = new Padding(3, 4, 3, 4);
             groupBox5.Name = "groupBox5";
             groupBox5.Padding = new Padding(3, 4, 3, 4);
-            groupBox5.Size = new Size(860, 169); // Adjusted size
+            groupBox5.Size = new Size(860, 169);
             groupBox5.TabIndex = 1;
             groupBox5.TabStop = false;
             groupBox5.Text = "Rental History";
@@ -813,7 +817,7 @@
             groupBox4.Margin = new Padding(3, 4, 3, 4);
             groupBox4.Name = "groupBox4";
             groupBox4.Padding = new Padding(3, 4, 3, 4);
-            groupBox4.Size = new Size(860, 211); // Adjusted size
+            groupBox4.Size = new Size(860, 211);
             groupBox4.TabIndex = 0;
             groupBox4.TabStop = false;
             groupBox4.Text = "Classification";
@@ -846,7 +850,6 @@
             // 
             cbCustomerType.Font = new Font("Segoe UI", 10F);
             cbCustomerType.FormattingEnabled = true;
-            cbCustomerType.Items.AddRange(new object[] { "Individual", "Corporate" });
             cbCustomerType.Location = new Point(27, 39);
             cbCustomerType.Margin = new Padding(3, 4, 3, 4);
             cbCustomerType.Name = "cbCustomerType";

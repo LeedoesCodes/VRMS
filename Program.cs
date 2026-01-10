@@ -69,14 +69,14 @@ namespace VRMS
             //Uncomment for testing (Migration testing)
             //Drop.Run(DB.ExecuteNonQuery);
             //Create.Run(DB.ExecuteScalar, DB.ExecuteNonQuery);
-            //return;
+           // return;
 
             // ----------------------------
             // Start WinForms UI
             // ----------------------------
             ApplicationConfiguration.Initialize();
 
-            // IMPORTANT: Welcome is in namespace VRMS
+           
             Application.Run(new Welcome());
         }
     }

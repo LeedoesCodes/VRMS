@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Windows.Forms;
+using VRMS.Services.Account;
+using VRMS.Models.Accounts;
 
 namespace VRMS.Controls
 {
     public partial class LoginUserControl : UserControl
     {
-        public event EventHandler GoToRegisterRequest;
-        public event EventHandler LoginSuccess;
-        public event EventHandler ExitApplication;
+        public event EventHandler? GoToRegisterRequest;
+        public event EventHandler? LoginSuccess;
+        public event EventHandler? ExitApplication;
+
+        private readonly UserService _userService = new();
+
+        // ✅ Store logged-in user
+        public User? LoggedInUser { get; private set; }
 
         public LoginUserControl()
         {
@@ -21,61 +28,89 @@ namespace VRMS.Controls
             txtPassword.KeyDown += TextBox_KeyDown;
         }
 
-        // Clean event triggers using expression-bodied members
-        private void btnLogin_Click(object sender, EventArgs e) => PerformLogin();
-        private void btnGoToRegister_Click(object sender, EventArgs e) => GoToRegisterRequest?.Invoke(this, EventArgs.Empty);
-        private void btnExit_Click(object sender, EventArgs e) => ExitApplication?.Invoke(this, EventArgs.Empty);
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            PerformLogin();
+        }
+
+        private void btnGoToRegister_Click(object sender, EventArgs e)
+        {
+            GoToRegisterRequest?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            ExitApplication?.Invoke(this, EventArgs.Empty);
+        }
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 PerformLogin();
-                e.Handled = e.SuppressKeyPress = true;
+                e.Handled = true;
+                e.SuppressKeyPress = true;
             }
         }
 
         private void PerformLogin()
         {
-            string user = txtUsername.Text.Trim();
-            string pass = txtPassword.Text;
+            string username = txtUsername.Text.Trim();
+            string password = txtPassword.Text;
 
-            // 1. Validation
-            if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
+            if (string.IsNullOrWhiteSpace(username) ||
+                string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Please enter both username and password.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                if (string.IsNullOrEmpty(user)) txtUsername.Focus(); else txtPassword.Focus();
+                MessageBox.Show(
+                    "Please enter both username and password.",
+                    "Validation",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return;
             }
 
             try
             {
-                // 2. Hard-coded Credential Check
-                bool loginSuccess = (user == "lee" && pass == "123456");
+                var user = _userService.Authenticate(username, password);
 
-                if (loginSuccess)
+                if (!user.IsActive)
                 {
-                    txtPassword.Clear();
-                    LoginSuccess?.Invoke(this, EventArgs.Empty);
+                    MessageBox.Show(
+                        "This account is inactive.",
+                        "Access Denied",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                    return;
                 }
-                else
-                {
-                    MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtPassword.SelectAll();
-                    txtPassword.Focus();
-                }
+
+                // ✅ Save user
+                LoggedInUser = user;
+
+                txtPassword.Clear();
+
+                // ✅ EventHandler signature is correct
+                LoginSuccess?.Invoke(this, EventArgs.Empty);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Login Failed",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Login error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    $"Login error: {ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
-        }
-
-        public void ClearForm()
-        {
-            txtUsername.Clear();
-            txtPassword.Clear();
-            txtUsername.Focus();
         }
 
         public void FocusUsername()

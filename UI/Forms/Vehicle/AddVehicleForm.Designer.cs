@@ -30,7 +30,6 @@
         {
             panelHeader = new Panel();
             lblTitle = new Label();
-            picVehicleIcon = new PictureBox();
             panelContent = new Panel();
             tabControl = new TabControl();
             tabBasicInfo = new TabPage();
@@ -49,8 +48,8 @@
             txtPlate = new TextBox();
             lblCategory = new Label();
             cbCategory = new ComboBox();
+            btnAddCategory = new Button();
             lblVehicleCode = new Label();
-            txtVehicleCode = new TextBox();
             tabSpecifications = new TabPage();
             panelSpecs = new Panel();
             grpSpecifications = new GroupBox();
@@ -80,16 +79,6 @@
             lblCargoCapacity = new Label();
             numCargoCapacity = new NumericUpDown();
             chkInsuranceIncluded = new CheckBox();
-            tabPricing = new TabPage();
-            panelPricing = new Panel();
-            grpPricing = new GroupBox();
-            tableLayoutPanel4 = new TableLayoutPanel();
-            lblDailyRate = new Label();
-            numDailyRate = new NumericUpDown();
-            lblWeeklyRate = new Label();
-            numWeeklyRate = new NumericUpDown();
-            lblMonthlyRate = new Label();
-            numMonthlyRate = new NumericUpDown();
             tabImages = new TabPage();
             panelImages = new Panel();
             grpImages = new GroupBox();
@@ -102,7 +91,6 @@
             btnCancel = new Button();
             btnSave = new Button();
             panelHeader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picVehicleIcon).BeginInit();
             panelContent.SuspendLayout();
             tabControl.SuspendLayout();
             tabBasicInfo.SuspendLayout();
@@ -121,13 +109,6 @@
             grpFeatures.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numCargoCapacity).BeginInit();
-            tabPricing.SuspendLayout();
-            panelPricing.SuspendLayout();
-            grpPricing.SuspendLayout();
-            tableLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numDailyRate).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numWeeklyRate).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numMonthlyRate).BeginInit();
             tabImages.SuspendLayout();
             panelImages.SuspendLayout();
             grpImages.SuspendLayout();
@@ -140,7 +121,6 @@
             // 
             panelHeader.BackColor = Color.FromArgb(30, 60, 90);
             panelHeader.Controls.Add(lblTitle);
-            panelHeader.Controls.Add(picVehicleIcon);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
@@ -152,20 +132,11 @@
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(70, 20);
+            lblTitle.Location = new Point(20, 20);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(286, 41);
+            lblTitle.Size = new Size(226, 32);
             lblTitle.TabIndex = 1;
             lblTitle.Text = "Vehicle Information";
-            // 
-            // picVehicleIcon
-            // 
-            picVehicleIcon.Location = new Point(20, 15);
-            picVehicleIcon.Name = "picVehicleIcon";
-            picVehicleIcon.Size = new Size(40, 40);
-            picVehicleIcon.SizeMode = PictureBoxSizeMode.Zoom;
-            picVehicleIcon.TabIndex = 0;
-            picVehicleIcon.TabStop = false;
             // 
             // panelContent
             // 
@@ -183,7 +154,6 @@
             tabControl.Controls.Add(tabBasicInfo);
             tabControl.Controls.Add(tabSpecifications);
             tabControl.Controls.Add(tabFeatures);
-            tabControl.Controls.Add(tabPricing);
             tabControl.Controls.Add(tabImages);
             tabControl.Dock = DockStyle.Fill;
             tabControl.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -231,9 +201,10 @@
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnCount = 3;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.Controls.Add(lblMake, 0, 0);
             tableLayoutPanel1.Controls.Add(txtMake, 1, 0);
             tableLayoutPanel1.Controls.Add(lblModel, 0, 1);
@@ -246,10 +217,10 @@
             tableLayoutPanel1.Controls.Add(txtPlate, 1, 4);
             tableLayoutPanel1.Controls.Add(lblCategory, 0, 5);
             tableLayoutPanel1.Controls.Add(cbCategory, 1, 5);
+            tableLayoutPanel1.Controls.Add(btnAddCategory, 2, 5);
             tableLayoutPanel1.Controls.Add(lblVehicleCode, 0, 6);
-            tableLayoutPanel1.Controls.Add(txtVehicleCode, 1, 6);
             tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(3, 25);
+            tableLayoutPanel1.Location = new Point(3, 21);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.Padding = new Padding(20, 10, 20, 10);
             tableLayoutPanel1.RowCount = 7;
@@ -260,7 +231,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.28571F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.28571F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.28571F));
-            tableLayoutPanel1.Size = new Size(770, 328);
+            tableLayoutPanel1.Size = new Size(770, 332);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // lblMake
@@ -279,11 +250,12 @@
             // txtMake
             // 
             txtMake.BorderStyle = BorderStyle.FixedSingle;
+            tableLayoutPanel1.SetColumnSpan(txtMake, 2);
             txtMake.Dock = DockStyle.Fill;
             txtMake.Font = new Font("Segoe UI", 9.75F);
             txtMake.Location = new Point(242, 13);
             txtMake.Name = "txtMake";
-            txtMake.Size = new Size(505, 29);
+            txtMake.Size = new Size(505, 25);
             txtMake.TabIndex = 1;
             // 
             // lblModel
@@ -302,11 +274,12 @@
             // txtModel
             // 
             txtModel.BorderStyle = BorderStyle.FixedSingle;
+            tableLayoutPanel1.SetColumnSpan(txtModel, 2);
             txtModel.Dock = DockStyle.Fill;
             txtModel.Font = new Font("Segoe UI", 9.75F);
             txtModel.Location = new Point(242, 57);
             txtModel.Name = "txtModel";
-            txtModel.Size = new Size(505, 29);
+            txtModel.Size = new Size(505, 25);
             txtModel.TabIndex = 3;
             // 
             // lblYear
@@ -325,13 +298,14 @@
             // numYear
             // 
             numYear.BorderStyle = BorderStyle.FixedSingle;
+            tableLayoutPanel1.SetColumnSpan(numYear, 2);
             numYear.Dock = DockStyle.Fill;
             numYear.Font = new Font("Segoe UI", 9.75F);
             numYear.Location = new Point(242, 101);
             numYear.Maximum = new decimal(new int[] { 2100, 0, 0, 0 });
             numYear.Minimum = new decimal(new int[] { 1990, 0, 0, 0 });
             numYear.Name = "numYear";
-            numYear.Size = new Size(505, 29);
+            numYear.Size = new Size(505, 25);
             numYear.TabIndex = 5;
             numYear.Value = new decimal(new int[] { 2024, 0, 0, 0 });
             // 
@@ -351,11 +325,12 @@
             // txtColor
             // 
             txtColor.BorderStyle = BorderStyle.FixedSingle;
+            tableLayoutPanel1.SetColumnSpan(txtColor, 2);
             txtColor.Dock = DockStyle.Fill;
             txtColor.Font = new Font("Segoe UI", 9.75F);
             txtColor.Location = new Point(242, 145);
             txtColor.Name = "txtColor";
-            txtColor.Size = new Size(505, 29);
+            txtColor.Size = new Size(505, 25);
             txtColor.TabIndex = 7;
             // 
             // lblPlate
@@ -374,11 +349,12 @@
             // txtPlate
             // 
             txtPlate.BorderStyle = BorderStyle.FixedSingle;
+            tableLayoutPanel1.SetColumnSpan(txtPlate, 2);
             txtPlate.Dock = DockStyle.Fill;
             txtPlate.Font = new Font("Segoe UI", 9.75F);
             txtPlate.Location = new Point(242, 189);
             txtPlate.Name = "txtPlate";
-            txtPlate.Size = new Size(505, 29);
+            txtPlate.Size = new Size(505, 25);
             txtPlate.TabIndex = 9;
             // 
             // lblCategory
@@ -403,31 +379,31 @@
             cbCategory.Items.AddRange(new object[] { "Hatchback", "Sedan", "SUV", "Pick-up", "Van/Minibus" });
             cbCategory.Location = new Point(242, 233);
             cbCategory.Name = "cbCategory";
-            cbCategory.Size = new Size(505, 29);
+            cbCategory.Size = new Size(432, 25);
             cbCategory.TabIndex = 11;
+            // 
+            // btnAddCategory
+            // 
+            btnAddCategory.BackColor = Color.FromArgb(52, 152, 219);
+            btnAddCategory.Dock = DockStyle.Fill;
+            btnAddCategory.FlatAppearance.BorderSize = 0;
+            btnAddCategory.FlatStyle = FlatStyle.Flat;
+            btnAddCategory.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            btnAddCategory.ForeColor = Color.White;
+            btnAddCategory.Location = new Point(680, 233);
+            btnAddCategory.Name = "btnAddCategory";
+            btnAddCategory.Size = new Size(67, 38);
+            btnAddCategory.TabIndex = 14;
+            btnAddCategory.Text = "+ Add";
+            btnAddCategory.UseVisualStyleBackColor = false;
+            btnAddCategory.Click += BtnAddCategory_Click;
             // 
             // lblVehicleCode
             // 
-            lblVehicleCode.AutoSize = true;
-            lblVehicleCode.Dock = DockStyle.Fill;
-            lblVehicleCode.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            lblVehicleCode.ForeColor = Color.FromArgb(30, 60, 90);
             lblVehicleCode.Location = new Point(23, 274);
             lblVehicleCode.Name = "lblVehicleCode";
-            lblVehicleCode.Size = new Size(213, 44);
-            lblVehicleCode.TabIndex = 12;
-            lblVehicleCode.Text = "Vehicle Code:";
-            lblVehicleCode.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // txtVehicleCode
-            // 
-            txtVehicleCode.BorderStyle = BorderStyle.FixedSingle;
-            txtVehicleCode.Dock = DockStyle.Fill;
-            txtVehicleCode.Font = new Font("Segoe UI", 9.75F);
-            txtVehicleCode.Location = new Point(242, 277);
-            txtVehicleCode.Name = "txtVehicleCode";
-            txtVehicleCode.Size = new Size(505, 29);
-            txtVehicleCode.TabIndex = 13;
+            lblVehicleCode.Size = new Size(100, 23);
+            lblVehicleCode.TabIndex = 15;
             // 
             // tabSpecifications
             // 
@@ -482,7 +458,7 @@
             tableLayoutPanel2.Controls.Add(lblStatus, 0, 5);
             tableLayoutPanel2.Controls.Add(cbStatus, 1, 5);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(3, 25);
+            tableLayoutPanel2.Location = new Point(3, 21);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.Padding = new Padding(20, 10, 20, 10);
             tableLayoutPanel2.RowCount = 6;
@@ -492,7 +468,7 @@
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.66667F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.66667F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.66667F));
-            tableLayoutPanel2.Size = new Size(770, 328);
+            tableLayoutPanel2.Size = new Size(770, 332);
             tableLayoutPanel2.TabIndex = 0;
             // 
             // lblTransmission
@@ -517,7 +493,7 @@
             cbTransmission.Items.AddRange(new object[] { "Manual", "Automatic" });
             cbTransmission.Location = new Point(242, 13);
             cbTransmission.Name = "cbTransmission";
-            cbTransmission.Size = new Size(505, 29);
+            cbTransmission.Size = new Size(505, 25);
             cbTransmission.TabIndex = 1;
             // 
             // lblFuel
@@ -542,7 +518,7 @@
             cbFuel.Items.AddRange(new object[] { "Gasoline", "Diesel", "Electric", "Hybrid" });
             cbFuel.Location = new Point(242, 64);
             cbFuel.Name = "cbFuel";
-            cbFuel.Size = new Size(505, 29);
+            cbFuel.Size = new Size(505, 25);
             cbFuel.TabIndex = 3;
             // 
             // lblSeats
@@ -567,7 +543,7 @@
             numSeats.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             numSeats.Minimum = new decimal(new int[] { 2, 0, 0, 0 });
             numSeats.Name = "numSeats";
-            numSeats.Size = new Size(505, 29);
+            numSeats.Size = new Size(505, 25);
             numSeats.TabIndex = 5;
             numSeats.Value = new decimal(new int[] { 4, 0, 0, 0 });
             // 
@@ -592,7 +568,7 @@
             numMileage.Location = new Point(242, 166);
             numMileage.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             numMileage.Name = "numMileage";
-            numMileage.Size = new Size(505, 29);
+            numMileage.Size = new Size(505, 25);
             numMileage.TabIndex = 7;
             // 
             // lblVIN
@@ -615,7 +591,7 @@
             txtVIN.Font = new Font("Segoe UI", 9.75F);
             txtVIN.Location = new Point(242, 217);
             txtVIN.Name = "txtVIN";
-            txtVIN.Size = new Size(505, 29);
+            txtVIN.Size = new Size(505, 25);
             txtVIN.TabIndex = 9;
             // 
             // lblStatus
@@ -626,7 +602,7 @@
             lblStatus.ForeColor = Color.FromArgb(30, 60, 90);
             lblStatus.Location = new Point(23, 265);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(213, 53);
+            lblStatus.Size = new Size(213, 57);
             lblStatus.TabIndex = 10;
             lblStatus.Text = "Status:";
             lblStatus.TextAlign = ContentAlignment.MiddleLeft;
@@ -640,7 +616,7 @@
             cbStatus.Items.AddRange(new object[] { "Available for rent", "Currently rented", "Reserved", "Under maintenance", "Out of service", "Retired/Sold" });
             cbStatus.Location = new Point(242, 268);
             cbStatus.Name = "cbStatus";
-            cbStatus.Size = new Size(505, 29);
+            cbStatus.Size = new Size(505, 25);
             cbStatus.TabIndex = 11;
             // 
             // tabFeatures
@@ -692,7 +668,7 @@
             tableLayoutPanel3.Controls.Add(numCargoCapacity, 1, 3);
             tableLayoutPanel3.Controls.Add(chkInsuranceIncluded, 0, 4);
             tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(3, 25);
+            tableLayoutPanel3.Location = new Point(3, 21);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.Padding = new Padding(20, 10, 20, 10);
             tableLayoutPanel3.RowCount = 5;
@@ -701,7 +677,7 @@
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel3.Size = new Size(776, 334);
+            tableLayoutPanel3.Size = new Size(776, 338);
             tableLayoutPanel3.TabIndex = 0;
             // 
             // chkAC
@@ -712,7 +688,7 @@
             chkAC.ForeColor = Color.FromArgb(50, 50, 50);
             chkAC.Location = new Point(23, 13);
             chkAC.Name = "chkAC";
-            chkAC.Size = new Size(362, 56);
+            chkAC.Size = new Size(362, 57);
             chkAC.TabIndex = 0;
             chkAC.Text = "✓ Air Conditioning";
             chkAC.UseVisualStyleBackColor = true;
@@ -723,9 +699,9 @@
             chkGPS.Dock = DockStyle.Fill;
             chkGPS.Font = new Font("Segoe UI", 9.75F);
             chkGPS.ForeColor = Color.FromArgb(50, 50, 50);
-            chkGPS.Location = new Point(23, 75);
+            chkGPS.Location = new Point(23, 76);
             chkGPS.Name = "chkGPS";
-            chkGPS.Size = new Size(362, 56);
+            chkGPS.Size = new Size(362, 57);
             chkGPS.TabIndex = 1;
             chkGPS.Text = "✓ GPS Navigation";
             chkGPS.UseVisualStyleBackColor = true;
@@ -736,9 +712,9 @@
             chkBluetooth.Dock = DockStyle.Fill;
             chkBluetooth.Font = new Font("Segoe UI", 9.75F);
             chkBluetooth.ForeColor = Color.FromArgb(50, 50, 50);
-            chkBluetooth.Location = new Point(23, 137);
+            chkBluetooth.Location = new Point(23, 139);
             chkBluetooth.Name = "chkBluetooth";
-            chkBluetooth.Size = new Size(362, 56);
+            chkBluetooth.Size = new Size(362, 57);
             chkBluetooth.TabIndex = 2;
             chkBluetooth.Text = "✓ Bluetooth Connectivity";
             chkBluetooth.UseVisualStyleBackColor = true;
@@ -749,9 +725,9 @@
             chkChildSeat.Dock = DockStyle.Fill;
             chkChildSeat.Font = new Font("Segoe UI", 9.75F);
             chkChildSeat.ForeColor = Color.FromArgb(50, 50, 50);
-            chkChildSeat.Location = new Point(23, 199);
+            chkChildSeat.Location = new Point(23, 202);
             chkChildSeat.Name = "chkChildSeat";
-            chkChildSeat.Size = new Size(362, 56);
+            chkChildSeat.Size = new Size(362, 57);
             chkChildSeat.TabIndex = 3;
             chkChildSeat.Text = "✓ Child Seat Availability";
             chkChildSeat.UseVisualStyleBackColor = true;
@@ -764,7 +740,7 @@
             lblFuelEfficiency.ForeColor = Color.FromArgb(30, 60, 90);
             lblFuelEfficiency.Location = new Point(391, 10);
             lblFuelEfficiency.Name = "lblFuelEfficiency";
-            lblFuelEfficiency.Size = new Size(362, 62);
+            lblFuelEfficiency.Size = new Size(362, 63);
             lblFuelEfficiency.TabIndex = 4;
             lblFuelEfficiency.Text = "Fuel Efficiency (km/L):";
             lblFuelEfficiency.TextAlign = ContentAlignment.MiddleLeft;
@@ -774,9 +750,9 @@
             txtFuelEfficiency.BorderStyle = BorderStyle.FixedSingle;
             txtFuelEfficiency.Dock = DockStyle.Fill;
             txtFuelEfficiency.Font = new Font("Segoe UI", 9.75F);
-            txtFuelEfficiency.Location = new Point(391, 75);
+            txtFuelEfficiency.Location = new Point(391, 76);
             txtFuelEfficiency.Name = "txtFuelEfficiency";
-            txtFuelEfficiency.Size = new Size(362, 29);
+            txtFuelEfficiency.Size = new Size(362, 25);
             txtFuelEfficiency.TabIndex = 5;
             // 
             // lblCargoCapacity
@@ -785,9 +761,9 @@
             lblCargoCapacity.Dock = DockStyle.Fill;
             lblCargoCapacity.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             lblCargoCapacity.ForeColor = Color.FromArgb(30, 60, 90);
-            lblCargoCapacity.Location = new Point(391, 134);
+            lblCargoCapacity.Location = new Point(391, 136);
             lblCargoCapacity.Name = "lblCargoCapacity";
-            lblCargoCapacity.Size = new Size(362, 62);
+            lblCargoCapacity.Size = new Size(362, 63);
             lblCargoCapacity.TabIndex = 6;
             lblCargoCapacity.Text = "Cargo Capacity (liters):";
             lblCargoCapacity.TextAlign = ContentAlignment.MiddleLeft;
@@ -797,10 +773,10 @@
             numCargoCapacity.BorderStyle = BorderStyle.FixedSingle;
             numCargoCapacity.Dock = DockStyle.Fill;
             numCargoCapacity.Font = new Font("Segoe UI", 9.75F);
-            numCargoCapacity.Location = new Point(391, 199);
+            numCargoCapacity.Location = new Point(391, 202);
             numCargoCapacity.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numCargoCapacity.Name = "numCargoCapacity";
-            numCargoCapacity.Size = new Size(362, 29);
+            numCargoCapacity.Size = new Size(362, 25);
             numCargoCapacity.TabIndex = 7;
             // 
             // chkInsuranceIncluded
@@ -810,143 +786,12 @@
             chkInsuranceIncluded.Dock = DockStyle.Fill;
             chkInsuranceIncluded.Font = new Font("Segoe UI", 9.75F);
             chkInsuranceIncluded.ForeColor = Color.FromArgb(50, 50, 50);
-            chkInsuranceIncluded.Location = new Point(23, 261);
+            chkInsuranceIncluded.Location = new Point(23, 265);
             chkInsuranceIncluded.Name = "chkInsuranceIncluded";
             chkInsuranceIncluded.Size = new Size(730, 60);
             chkInsuranceIncluded.TabIndex = 8;
             chkInsuranceIncluded.Text = "✓ Insurance Coverage Included";
             chkInsuranceIncluded.UseVisualStyleBackColor = true;
-            // 
-            // tabPricing
-            // 
-            tabPricing.BackColor = Color.FromArgb(248, 249, 250);
-            tabPricing.Controls.Add(panelPricing);
-            tabPricing.Location = new Point(4, 34);
-            tabPricing.Name = "tabPricing";
-            tabPricing.Size = new Size(802, 382);
-            tabPricing.TabIndex = 3;
-            tabPricing.Text = "Pricing";
-            // 
-            // panelPricing
-            // 
-            panelPricing.Controls.Add(grpPricing);
-            panelPricing.Dock = DockStyle.Fill;
-            panelPricing.Location = new Point(0, 0);
-            panelPricing.Name = "panelPricing";
-            panelPricing.Padding = new Padding(10);
-            panelPricing.Size = new Size(802, 382);
-            panelPricing.TabIndex = 0;
-            // 
-            // grpPricing
-            // 
-            grpPricing.BackColor = Color.White;
-            grpPricing.Controls.Add(tableLayoutPanel4);
-            grpPricing.Dock = DockStyle.Fill;
-            grpPricing.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            grpPricing.ForeColor = Color.FromArgb(50, 50, 50);
-            grpPricing.Location = new Point(10, 10);
-            grpPricing.Name = "grpPricing";
-            grpPricing.Size = new Size(782, 362);
-            grpPricing.TabIndex = 0;
-            grpPricing.TabStop = false;
-            grpPricing.Text = "Rental Rates";
-            // 
-            // tableLayoutPanel4
-            // 
-            tableLayoutPanel4.ColumnCount = 2;
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
-            tableLayoutPanel4.Controls.Add(lblDailyRate, 0, 0);
-            tableLayoutPanel4.Controls.Add(numDailyRate, 1, 0);
-            tableLayoutPanel4.Controls.Add(lblWeeklyRate, 0, 1);
-            tableLayoutPanel4.Controls.Add(numWeeklyRate, 1, 1);
-            tableLayoutPanel4.Controls.Add(lblMonthlyRate, 0, 2);
-            tableLayoutPanel4.Controls.Add(numMonthlyRate, 1, 2);
-            tableLayoutPanel4.Dock = DockStyle.Fill;
-            tableLayoutPanel4.Location = new Point(3, 25);
-            tableLayoutPanel4.Name = "tableLayoutPanel4";
-            tableLayoutPanel4.Padding = new Padding(20, 10, 20, 10);
-            tableLayoutPanel4.RowCount = 3;
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33333F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33333F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33333F));
-            tableLayoutPanel4.Size = new Size(776, 334);
-            tableLayoutPanel4.TabIndex = 0;
-            // 
-            // lblDailyRate
-            // 
-            lblDailyRate.AutoSize = true;
-            lblDailyRate.Dock = DockStyle.Fill;
-            lblDailyRate.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            lblDailyRate.ForeColor = Color.FromArgb(30, 60, 90);
-            lblDailyRate.Location = new Point(23, 10);
-            lblDailyRate.Name = "lblDailyRate";
-            lblDailyRate.Size = new Size(214, 104);
-            lblDailyRate.TabIndex = 0;
-            lblDailyRate.Text = "Daily Rate ($):";
-            lblDailyRate.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // numDailyRate
-            // 
-            numDailyRate.BorderStyle = BorderStyle.FixedSingle;
-            numDailyRate.DecimalPlaces = 2;
-            numDailyRate.Dock = DockStyle.Fill;
-            numDailyRate.Font = new Font("Segoe UI", 9.75F);
-            numDailyRate.Location = new Point(243, 13);
-            numDailyRate.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
-            numDailyRate.Name = "numDailyRate";
-            numDailyRate.Size = new Size(510, 29);
-            numDailyRate.TabIndex = 1;
-            // 
-            // lblWeeklyRate
-            // 
-            lblWeeklyRate.AutoSize = true;
-            lblWeeklyRate.Dock = DockStyle.Fill;
-            lblWeeklyRate.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            lblWeeklyRate.ForeColor = Color.FromArgb(30, 60, 90);
-            lblWeeklyRate.Location = new Point(23, 114);
-            lblWeeklyRate.Name = "lblWeeklyRate";
-            lblWeeklyRate.Size = new Size(214, 104);
-            lblWeeklyRate.TabIndex = 2;
-            lblWeeklyRate.Text = "Weekly Rate ($):";
-            lblWeeklyRate.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // numWeeklyRate
-            // 
-            numWeeklyRate.BorderStyle = BorderStyle.FixedSingle;
-            numWeeklyRate.DecimalPlaces = 2;
-            numWeeklyRate.Dock = DockStyle.Fill;
-            numWeeklyRate.Font = new Font("Segoe UI", 9.75F);
-            numWeeklyRate.Location = new Point(243, 117);
-            numWeeklyRate.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
-            numWeeklyRate.Name = "numWeeklyRate";
-            numWeeklyRate.Size = new Size(510, 29);
-            numWeeklyRate.TabIndex = 3;
-            // 
-            // lblMonthlyRate
-            // 
-            lblMonthlyRate.AutoSize = true;
-            lblMonthlyRate.Dock = DockStyle.Fill;
-            lblMonthlyRate.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            lblMonthlyRate.ForeColor = Color.FromArgb(30, 60, 90);
-            lblMonthlyRate.Location = new Point(23, 218);
-            lblMonthlyRate.Name = "lblMonthlyRate";
-            lblMonthlyRate.Size = new Size(214, 106);
-            lblMonthlyRate.TabIndex = 4;
-            lblMonthlyRate.Text = "Monthly Rate ($):";
-            lblMonthlyRate.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // numMonthlyRate
-            // 
-            numMonthlyRate.BorderStyle = BorderStyle.FixedSingle;
-            numMonthlyRate.DecimalPlaces = 2;
-            numMonthlyRate.Dock = DockStyle.Fill;
-            numMonthlyRate.Font = new Font("Segoe UI", 9.75F);
-            numMonthlyRate.Location = new Point(243, 221);
-            numMonthlyRate.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
-            numMonthlyRate.Name = "numMonthlyRate";
-            numMonthlyRate.Size = new Size(510, 29);
-            numMonthlyRate.TabIndex = 5;
             // 
             // tabImages
             // 
@@ -989,10 +834,10 @@
             flowLayoutPanel1.Controls.Add(btnAddImage);
             flowLayoutPanel1.Controls.Add(btnRemoveImage);
             flowLayoutPanel1.Dock = DockStyle.Fill;
-            flowLayoutPanel1.Location = new Point(3, 25);
+            flowLayoutPanel1.Location = new Point(3, 21);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Padding = new Padding(10);
-            flowLayoutPanel1.Size = new Size(776, 334);
+            flowLayoutPanel1.Size = new Size(776, 338);
             flowLayoutPanel1.TabIndex = 0;
             // 
             // picVehicleImage
@@ -1012,7 +857,7 @@
             lstImages.FormattingEnabled = true;
             lstImages.Location = new Point(369, 13);
             lstImages.Name = "lstImages";
-            lstImages.Size = new Size(350, 109);
+            lstImages.Size = new Size(350, 106);
             lstImages.TabIndex = 1;
             // 
             // btnAddImage
@@ -1086,7 +931,7 @@
             // 
             // AddVehicleForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 19F);
+            AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             CancelButton = btnCancel;
@@ -1103,7 +948,6 @@
             Text = "Vehicle Management - VRMS";
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picVehicleIcon).EndInit();
             panelContent.ResumeLayout(false);
             tabControl.ResumeLayout(false);
             tabBasicInfo.ResumeLayout(false);
@@ -1125,14 +969,6 @@
             tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numCargoCapacity).EndInit();
-            tabPricing.ResumeLayout(false);
-            panelPricing.ResumeLayout(false);
-            grpPricing.ResumeLayout(false);
-            tableLayoutPanel4.ResumeLayout(false);
-            tableLayoutPanel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numDailyRate).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numWeeklyRate).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numMonthlyRate).EndInit();
             tabImages.ResumeLayout(false);
             panelImages.ResumeLayout(false);
             grpImages.ResumeLayout(false);
@@ -1140,83 +976,71 @@
             ((System.ComponentModel.ISupportInitialize)picVehicleImage).EndInit();
             panelFooter.ResumeLayout(false);
             ResumeLayout(false);
-
         }
 
         #endregion
 
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.PictureBox picVehicleIcon;
         private System.Windows.Forms.Panel panelContent;
-        private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage tabBasicInfo;
-        private System.Windows.Forms.Panel panelBasicInfo;
-        private System.Windows.Forms.GroupBox grpBasicInfo;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label lblMake;
-        private System.Windows.Forms.TextBox txtMake;
-        private System.Windows.Forms.Label lblModel;
-        private System.Windows.Forms.TextBox txtModel;
-        private System.Windows.Forms.Label lblYear;
-        private System.Windows.Forms.NumericUpDown numYear;
-        private System.Windows.Forms.Label lblColor;
-        private System.Windows.Forms.TextBox txtColor;
-        private System.Windows.Forms.Label lblPlate;
-        private System.Windows.Forms.TextBox txtPlate;
-        private System.Windows.Forms.Label lblCategory;
-        private System.Windows.Forms.ComboBox cbCategory;
-        private System.Windows.Forms.Label lblVehicleCode;
-        private System.Windows.Forms.TextBox txtVehicleCode;
-        private System.Windows.Forms.TabPage tabSpecifications;
-        private System.Windows.Forms.Panel panelSpecs;
-        private System.Windows.Forms.GroupBox grpSpecifications;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label lblTransmission;
-        private System.Windows.Forms.ComboBox cbTransmission;
-        private System.Windows.Forms.Label lblFuel;
-        private System.Windows.Forms.ComboBox cbFuel;
-        private System.Windows.Forms.Label lblSeats;
-        private System.Windows.Forms.NumericUpDown numSeats;
-        private System.Windows.Forms.Label lblMileage;
-        private System.Windows.Forms.NumericUpDown numMileage;
-        private System.Windows.Forms.Label lblVIN;
-        private System.Windows.Forms.TextBox txtVIN;
-        private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.ComboBox cbStatus;
-        private System.Windows.Forms.TabPage tabFeatures;
-        private System.Windows.Forms.Panel panelFeatures;
-        private System.Windows.Forms.GroupBox grpFeatures;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.CheckBox chkAC;
-        private System.Windows.Forms.CheckBox chkGPS;
-        private System.Windows.Forms.CheckBox chkBluetooth;
-        private System.Windows.Forms.CheckBox chkChildSeat;
-        private System.Windows.Forms.Label lblFuelEfficiency;
-        private System.Windows.Forms.TextBox txtFuelEfficiency;
-        private System.Windows.Forms.Label lblCargoCapacity;
-        private System.Windows.Forms.NumericUpDown numCargoCapacity;
-        private System.Windows.Forms.CheckBox chkInsuranceIncluded;
-        private System.Windows.Forms.TabPage tabPricing;
-        private System.Windows.Forms.Panel panelPricing;
-        private System.Windows.Forms.GroupBox grpPricing;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Label lblDailyRate;
-        private System.Windows.Forms.NumericUpDown numDailyRate;
-        private System.Windows.Forms.Label lblWeeklyRate;
-        private System.Windows.Forms.NumericUpDown numWeeklyRate;
-        private System.Windows.Forms.Label lblMonthlyRate;
-        private System.Windows.Forms.NumericUpDown numMonthlyRate;
-        private System.Windows.Forms.TabPage tabImages;
-        private System.Windows.Forms.Panel panelImages;
-        private System.Windows.Forms.GroupBox grpImages;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.PictureBox picVehicleImage;
-        private System.Windows.Forms.ListBox lstImages;
-        private System.Windows.Forms.Button btnAddImage;
-        private System.Windows.Forms.Button btnRemoveImage;
         private System.Windows.Forms.Panel panelFooter;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
+        private TabControl tabControl;
+        private TabPage tabBasicInfo;
+        private Panel panelBasicInfo;
+        private GroupBox grpBasicInfo;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Label lblMake;
+        private TextBox txtMake;
+        private Label lblModel;
+        private TextBox txtModel;
+        private Label lblYear;
+        private NumericUpDown numYear;
+        private Label lblColor;
+        private TextBox txtColor;
+        private Label lblPlate;
+        private TextBox txtPlate;
+        private Label lblCategory;
+        private ComboBox cbCategory;
+        private Button btnAddCategory;
+        private Label lblVehicleCode;
+        private TabPage tabSpecifications;
+        private Panel panelSpecs;
+        private GroupBox grpSpecifications;
+        private TableLayoutPanel tableLayoutPanel2;
+        private Label lblTransmission;
+        private ComboBox cbTransmission;
+        private Label lblFuel;
+        private ComboBox cbFuel;
+        private Label lblSeats;
+        private NumericUpDown numSeats;
+        private Label lblMileage;
+        private NumericUpDown numMileage;
+        private Label lblVIN;
+        private TextBox txtVIN;
+        private Label lblStatus;
+        private ComboBox cbStatus;
+        private TabPage tabFeatures;
+        private Panel panelFeatures;
+        private GroupBox grpFeatures;
+        private TableLayoutPanel tableLayoutPanel3;
+        private CheckBox chkAC;
+        private CheckBox chkGPS;
+        private CheckBox chkBluetooth;
+        private CheckBox chkChildSeat;
+        private Label lblFuelEfficiency;
+        private TextBox txtFuelEfficiency;
+        private Label lblCargoCapacity;
+        private NumericUpDown numCargoCapacity;
+        private CheckBox chkInsuranceIncluded;
+        private TabPage tabImages;
+        private Panel panelImages;
+        private GroupBox grpImages;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private PictureBox picVehicleImage;
+        private ListBox lstImages;
+        private Button btnAddImage;
+        private Button btnRemoveImage;
     }
 }
