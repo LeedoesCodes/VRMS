@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using VRMS.Database;
 using VRMS.Enums;
+using VRMS.Repositories.Customers;
 
 namespace VRMS.Services.Customer
 {
@@ -15,16 +16,17 @@ namespace VRMS.Services.Customer
         private const string CustomerPhotoFileName = "profile";
 
         private readonly DriversLicenseService _driversLicenseService;
+        private readonly CustomerRepository _repo;
 
         public CustomerService(DriversLicenseService driversLicenseService)
         {
             _driversLicenseService = driversLicenseService;
+            _repo = new CustomerRepository();
         }
 
         // =====================================================
         // CREATE  (MASTER)
         // =====================================================
-
         public int CreateCustomer(
             string firstName,
             string lastName,
@@ -43,28 +45,24 @@ namespace VRMS.Services.Customer
             if (license.ExpiryDate < DateTime.UtcNow.Date)
                 throw new InvalidOperationException("Driver's license is expired.");
 
-            var table = DB.Query(
-                "CALL sp_customers_create(@first,@last,@email,@phone, @address,@dob,@category,@isFrequent,@isBlacklisted,@photo,@licenseId);",
-                ("@first", firstName),
-                ("@last", lastName),
-                ("@email", email),
-                ("@phone", phone),
-                ("@address", address),
-                ("@dob", dateOfBirth),
-                ("@category", category.ToString()),
-                ("@isFrequent", isFrequent),
-                ("@isBlacklisted", isBlacklisted),
-                ("@photo", DefaultCustomerPhotoPath),
-                ("@licenseId", driversLicenseId)
+            return _repo.Create(
+                firstName,
+                lastName,
+                email,
+                phone,
+                address,
+                dateOfBirth,
+                category,
+                isFrequent,
+                isBlacklisted,
+                DefaultCustomerPhotoPath,
+                driversLicenseId
             );
-
-            return Convert.ToInt32(table.Rows[0]["customer_id"]);
         }
 
         // =====================================================
         // UPDATE  (MASTER)
         // =====================================================
-
         public void UpdateCustomer(
             int customerId,
             string firstName,
@@ -78,54 +76,37 @@ namespace VRMS.Services.Customer
             bool isBlacklisted
         )
         {
-            DB.Execute(
-                "CALL sp_customers_update(@id,@first,@last,@email,@phone,@address,@dob,@category,@isFrequent,@isBlacklisted,@photo);",
-                ("@id", customerId),
-                ("@first", firstName),
-                ("@last", lastName),
-                ("@email", email),
-                ("@phone", phone),
-                ("@address", address),
-                ("@dob", dateOfBirth),
-                ("@category", category.ToString()),
-                ("@isFrequent", isFrequent),
-                ("@isBlacklisted", isBlacklisted),
-                ("@photo", DefaultCustomerPhotoPath)
+            _repo.Update(
+                customerId,
+                firstName,
+                lastName,
+                email,
+                phone,
+                address,
+                dateOfBirth,
+                category,
+                isFrequent,
+                isBlacklisted,
+                DefaultCustomerPhotoPath
             );
         }
 
         // =====================================================
         // READ
         // =====================================================
-
         public Models.Customers.Customer GetCustomerById(int customerId)
         {
-            var table = DB.Query(
-                "CALL sp_customers_get_by_id(@id);",
-                ("@id", customerId)
-            );
-
-            if (table.Rows.Count == 0)
-                throw new InvalidOperationException("Customer not found.");
-
-            return MapCustomer(table.Rows[0]);
+            return _repo.GetById(customerId);
         }
 
         public List<Models.Customers.Customer> GetAllCustomers()
         {
-            var table = DB.Query("CALL sp_customers_get_all();");
-
-            var list = new List<Models.Customers.Customer>();
-            foreach (DataRow row in table.Rows)
-                list.Add(MapCustomer(row));
-
-            return list;
+            return _repo.GetAll();
         }
 
         // =====================================================
         // DELETE
         // =====================================================
-
         public void DeleteCustomer(int customerId)
         {
             var directory = GetCustomerPhotoDirectory(customerId);
@@ -133,16 +114,12 @@ namespace VRMS.Services.Customer
             if (Directory.Exists(directory))
                 Directory.Delete(directory, true);
 
-            DB.Execute(
-                "CALL sp_customers_delete(@id);",
-                ("@id", customerId)
-            );
+            _repo.Delete(customerId);
         }
 
         // =====================================================
-        // CUSTOMER PHOTO
+        // CUSTOMER PHOTO (file system + DB)
         // =====================================================
-
         public void SetCustomerPhoto(
             int customerId,
             Stream photoStream,
@@ -170,11 +147,8 @@ namespace VRMS.Services.Customer
             using var fs = new FileStream(fullPath, FileMode.Create, FileAccess.Write);
             photoStream.CopyTo(fs);
 
-            DB.Execute(
-                "CALL sp_customers_set_photo(@id,@path);",
-                ("@id", customerId),
-                ("@path", relativePath)
-            );
+            // update DB with the relative path (keeps same stored-proc call)
+            _repo.SetPhoto(customerId, relativePath);
         }
 
         public void DeleteCustomerPhoto(int customerId)
@@ -184,16 +158,12 @@ namespace VRMS.Services.Customer
             if (Directory.Exists(directory))
                 Directory.Delete(directory, true);
 
-            DB.Execute(
-                "CALL sp_customers_reset_photo(@id);",
-                ("@id", customerId)
-            );
+            _repo.ResetPhoto(customerId);
         }
 
         // =====================================================
         // ELIGIBILITY
         // =====================================================
-
         public void EnsureCustomerCanRent(int customerId, DateTime asOfDate)
         {
             var customer = GetCustomerById(customerId);
@@ -209,39 +179,8 @@ namespace VRMS.Services.Customer
         }
 
         // =====================================================
-        // MAPPING
+        // MAPPING HELPERS
         // =====================================================
-
-        private static Models.Customers.Customer MapCustomer(DataRow row)
-        {
-            var photoPath = row["photo_path"] == DBNull.Value
-                ? DefaultCustomerPhotoPath
-                : row["photo_path"].ToString();
-
-            if (string.IsNullOrWhiteSpace(photoPath))
-                photoPath = DefaultCustomerPhotoPath;
-
-            return new Models.Customers.Customer
-            {
-                Id = Convert.ToInt32(row["id"]),
-                FirstName = row["first_name"].ToString()!,
-                LastName = row["last_name"].ToString()!,
-                Email = row["email"].ToString()!,
-                Phone = row["phone"].ToString()!,
-                Address = row["address"].ToString()!,
-                DateOfBirth = Convert.ToDateTime(row["date_of_birth"]),
-
-                Category = Enum.Parse<CustomerCategory>(
-                    row["customer_category"].ToString()!, true),
-
-                IsFrequent = Convert.ToBoolean(row["is_frequent"]),
-                IsBlacklisted = Convert.ToBoolean(row["is_blacklisted"]),
-
-                PhotoPath = photoPath,
-                DriversLicenseId = Convert.ToInt32(row["drivers_license_id"])
-            };
-        }
-
         private static string GetCustomerPhotoDirectory(int customerId)
         {
             return Path.Combine(
