@@ -10,7 +10,9 @@ namespace VRMS.Forms
     {
         private readonly int _vehicleId;
         private readonly VehicleService _vehicleService;
+
         private Vehicle _vehicle = null!;
+        private bool _isLoaded = false; // IMPORTANT FLAG
 
         // =========================
         // CONSTRUCTOR
@@ -18,8 +20,11 @@ namespace VRMS.Forms
         public EditVehicleForm(int vehicleId, VehicleService vehicleService)
         {
             InitializeComponent();
-            _vehicleService = vehicleService;
+
             _vehicleId = vehicleId;
+            _vehicleService = vehicleService;
+
+            btnSave.Enabled = false;
 
             Load += EditVehicleForm_Load;
             btnSave.Click += BtnSave_Click;
@@ -34,13 +39,18 @@ namespace VRMS.Forms
             try
             {
                 _vehicle = _vehicleService.GetVehicleFull(_vehicleId);
+
                 PopulateForm();
+                HookValidationEvents();
+
+                _isLoaded = true;
+                ValidateFormState(null, EventArgs.Empty);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
                     ex.Message,
-                    "Error",
+                    "Error Loading Vehicle",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
@@ -48,6 +58,9 @@ namespace VRMS.Forms
             }
         }
 
+        // =========================
+        // POPULATE FORM
+        // =========================
         private void PopulateForm()
         {
             // Identity (read-only)
@@ -60,6 +73,7 @@ namespace VRMS.Forms
             // Editable
             txtColor.Text = _vehicle.Color;
             numMileage.Value = _vehicle.Odometer;
+            numSeats.Value = _vehicle.SeatingCapacity;
 
             // Enums
             cbTransmission.DataSource = Enum.GetValues(typeof(TransmissionType));
@@ -69,8 +83,6 @@ namespace VRMS.Forms
             cbTransmission.SelectedItem = _vehicle.Transmission;
             cbFuel.SelectedItem = _vehicle.FuelType;
             cbStatus.SelectedItem = _vehicle.Status;
-
-            numSeats.Value = _vehicle.SeatingCapacity;
 
             // Lock immutable fields
             txtMake.ReadOnly = true;
@@ -82,6 +94,16 @@ namespace VRMS.Forms
             cbTransmission.Enabled = false;
             cbFuel.Enabled = false;
             numSeats.Enabled = false;
+        }
+
+        // =========================
+        // EVENT HOOKING
+        // =========================
+        private void HookValidationEvents()
+        {
+            txtColor.TextChanged += ValidateFormState;
+            numMileage.ValueChanged += ValidateFormState;
+            cbStatus.SelectedIndexChanged += ValidateFormState;
         }
 
         // =========================
@@ -97,15 +119,18 @@ namespace VRMS.Forms
                     vehicleId: _vehicleId,
                     color: txtColor.Text.Trim(),
                     newOdometer: (int)numMileage.Value,
-                    fuelEfficiency: _vehicle.FuelEfficiency, // preserve
-                    cargoCapacity: _vehicle.CargoCapacity,   // preserve
+                    fuelEfficiency: _vehicle.FuelEfficiency,
+                    cargoCapacity: _vehicle.CargoCapacity,
                     categoryId: _vehicle.VehicleCategoryId
                 );
 
                 var newStatus = (VehicleStatus)cbStatus.SelectedItem!;
                 if (newStatus != _vehicle.Status)
                 {
-                    _vehicleService.UpdateVehicleStatus(_vehicleId, newStatus);
+                    _vehicleService.UpdateVehicleStatus(
+                        _vehicleId,
+                        newStatus
+                    );
                 }
 
                 DialogResult = DialogResult.OK;
@@ -123,7 +148,7 @@ namespace VRMS.Forms
         }
 
         // =========================
-        // VALIDATION
+        // VALIDATION (STRICT)
         // =========================
         private void ValidateForm()
         {
@@ -134,6 +159,22 @@ namespace VRMS.Forms
                 throw new InvalidOperationException(
                     "Odometer value cannot be less than the current reading."
                 );
+        }
+
+        // =========================
+        // VALIDATION (STATE)
+        // =========================
+        private void ValidateFormState(object? sender, EventArgs e)
+        {
+            if (!_isLoaded || _vehicle == null)
+                return;
+
+            bool hasChanges =
+                txtColor.Text.Trim() != _vehicle.Color ||
+                numMileage.Value != _vehicle.Odometer ||
+                (VehicleStatus)cbStatus.SelectedItem! != _vehicle.Status;
+
+            btnSave.Enabled = hasChanges;
         }
     }
 }

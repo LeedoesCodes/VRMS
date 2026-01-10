@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using VRMS.Models.Fleet;
 using VRMS.Enums;
@@ -16,11 +17,29 @@ namespace VRMS.Forms
         {
             InitializeComponent();
             _vehicleService = vehicleService;
+
+            HookEvents();
             Load += AddVehicleForm_Load;
+        }
+
+        // =========================
+        // EVENT WIRING
+        // =========================
+        private void HookEvents()
+        {
             btnSave.Click += BtnSave_Click;
             btnCancel.Click += (_, __) => Close();
             btnAddImage.Click += BtnSelectImage_Click;
+            btnRemoveImage.Click += BtnRemoveImage_Click;
             btnAddCategory.Click += BtnAddCategory_Click;
+
+            lstImages.SelectedIndexChanged += LstImages_SelectedIndexChanged;
+
+            txtMake.TextChanged += ValidateFormState;
+            txtModel.TextChanged += ValidateFormState;
+            txtPlate.TextChanged += ValidateFormState;
+            txtVIN.TextChanged += ValidateFormState;
+            cbCategory.SelectedIndexChanged += ValidateFormState;
         }
 
         // =========================
@@ -28,13 +47,19 @@ namespace VRMS.Forms
         // =========================
         private void AddVehicleForm_Load(object sender, EventArgs e)
         {
-            cbTransmission.DataSource = Enum.GetValues(typeof(TransmissionType));
-            cbFuel.DataSource = Enum.GetValues(typeof(FuelType));
+            cbTransmission.DataSource =
+                Enum.GetValues(typeof(TransmissionType));
 
-            cbStatus.DataSource = new[] { VehicleStatus.Available };
+            cbFuel.DataSource =
+                Enum.GetValues(typeof(FuelType));
+
+            cbStatus.DataSource =
+                new[] { VehicleStatus.Available };
+
             cbStatus.SelectedItem = VehicleStatus.Available;
 
             LoadCategories();
+            btnSave.Enabled = false;
         }
 
         private void LoadCategories()
@@ -69,26 +94,22 @@ namespace VRMS.Forms
                     SeatingCapacity = (int)numSeats.Value,
                     Odometer = (int)numMileage.Value,
 
-                    FuelEfficiency = 0,     // default
-                    CargoCapacity = 0,      // default
+                    FuelEfficiency = decimal.TryParse(
+                        txtFuelEfficiency.Text, out var eff) ? eff : 0,
+
+                    CargoCapacity = (int)numCargoCapacity.Value,
                     VehicleCategoryId = (int)cbCategory.SelectedValue
                 };
 
                 int vehicleId = _vehicleService.CreateVehicle(vehicle);
 
-                // Upload images
-                foreach (var item in lstImages.Items)
+                foreach (string path in lstImages.Items)
                 {
-                    var filePath = item.ToString()!;
-                    var fileName = Path.GetFileName(filePath);
-
-                    using var stream = File.OpenRead(filePath);
-
+                    using var stream = File.OpenRead(path);
                     _vehicleService.AddVehicleImage(
                         vehicleId,
                         stream,
-                        fileName
-                    );
+                        Path.GetFileName(path));
                 }
 
                 DialogResult = DialogResult.OK;
@@ -100,8 +121,7 @@ namespace VRMS.Forms
                     ex.Message,
                     "Add Vehicle Failed",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -117,7 +137,7 @@ namespace VRMS.Forms
                 throw new InvalidOperationException("Model is required.");
 
             if (string.IsNullOrWhiteSpace(txtPlate.Text))
-                throw new InvalidOperationException("License Plate is required.");
+                throw new InvalidOperationException("License plate is required.");
 
             if (string.IsNullOrWhiteSpace(txtVIN.Text))
                 throw new InvalidOperationException("VIN is required.");
@@ -132,6 +152,16 @@ namespace VRMS.Forms
                 throw new InvalidOperationException("Category is required.");
         }
 
+        private void ValidateFormState(object? sender, EventArgs e)
+        {
+            btnSave.Enabled =
+                !string.IsNullOrWhiteSpace(txtMake.Text) &&
+                !string.IsNullOrWhiteSpace(txtModel.Text) &&
+                !string.IsNullOrWhiteSpace(txtPlate.Text) &&
+                !string.IsNullOrWhiteSpace(txtVIN.Text) &&
+                cbCategory.SelectedItem != null;
+        }
+
         // =========================
         // IMAGE HANDLING
         // =========================
@@ -140,14 +170,44 @@ namespace VRMS.Forms
             using OpenFileDialog dlg = new()
             {
                 Filter = "Image Files|*.jpg;*.jpeg;*.png",
-                Title = "Select Vehicle Image"
+                Multiselect = true,
+                Title = "Select Vehicle Images"
             };
 
-            if (dlg.ShowDialog() == DialogResult.OK)
+            if (dlg.ShowDialog() != DialogResult.OK)
+                return;
+
+            foreach (var file in dlg.FileNames)
             {
-                picVehicleImage.ImageLocation = dlg.FileName;
-                lstImages.Items.Add(dlg.FileName);
+                if (!lstImages.Items.Contains(file))
+                    lstImages.Items.Add(file);
             }
+
+            if (lstImages.Items.Count > 0)
+                lstImages.SelectedIndex = 0;
+        }
+
+        private void LstImages_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            if (lstImages.SelectedItem is string path &&
+                File.Exists(path))
+            {
+                picVehicleImage.ImageLocation = path;
+            }
+        }
+
+        private void BtnRemoveImage_Click(object? sender, EventArgs e)
+        {
+            if (lstImages.SelectedItem == null)
+                return;
+
+            int index = lstImages.SelectedIndex;
+            lstImages.Items.RemoveAt(index);
+
+            picVehicleImage.Image = null;
+
+            if (lstImages.Items.Count > 0)
+                lstImages.SelectedIndex = Math.Max(0, index - 1);
         }
 
         // =========================
@@ -161,9 +221,7 @@ namespace VRMS.Forms
             };
 
             if (form.ShowDialog(this) == DialogResult.OK)
-            {
                 LoadCategories();
-            }
         }
     }
 }

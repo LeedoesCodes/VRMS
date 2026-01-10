@@ -52,19 +52,47 @@ namespace VRMS.UI.Forms.Customer
 
             lblCustomerName.Text = customerName;
 
+            InitializeDefaults();
             HookEvents();
             LoadContacts();
             ResetForm();
         }
 
-        #region LOAD
+        // =====================================================
+        // INIT
+        // =====================================================
+
+        private void InitializeDefaults()
+        {
+            if (cmbRelationship.Items.Count == 0)
+            {
+                cmbRelationship.Items.AddRange(new object[]
+                {
+                    "Parent",
+                    "Sibling",
+                    "Spouse",
+                    "Partner",
+                    "Friend",
+                    "Relative",
+                    "Guardian",
+                    "Other"
+                });
+            }
+
+            cmbRelationship.SelectedIndex = 0;
+        }
+
+        // =====================================================
+        // LOAD
+        // =====================================================
 
         private void LoadContacts()
         {
             _contacts.Clear();
             dgvContacts.Rows.Clear();
 
-            var serviceContacts = _service.GetEmergencyContactsByCustomerId(CustomerId);
+            var serviceContacts =
+                _service.GetEmergencyContactsByCustomerId(CustomerId);
 
             foreach (var c in serviceContacts)
             {
@@ -93,9 +121,9 @@ namespace VRMS.UI.Forms.Customer
             lblContactCount.Text = $"{_contacts.Count} emergency contact(s)";
         }
 
-        #endregion
-
-        #region EVENTS
+        // =====================================================
+        // EVENTS
+        // =====================================================
 
         private void HookEvents()
         {
@@ -113,13 +141,14 @@ namespace VRMS.UI.Forms.Customer
             dgvPhoneNumbers.CellClick += PhoneGridClick;
         }
 
-        #endregion
-
-        #region CONTACT CRUD
+        // =====================================================
+        // CONTACT CRUD
+        // =====================================================
 
         private void SaveContact(object? sender, EventArgs e)
         {
-            if (!ValidateForm()) return;
+            if (!ValidateForm())
+                return;
 
             int newId = _service.CreateEmergencyContact(
                 CustomerId,
@@ -129,7 +158,10 @@ namespace VRMS.UI.Forms.Customer
             );
 
             foreach (var p in ReadPhones())
-                _service.AddEmergencyContactPhoneNumber(newId, p.Normalized());
+            {
+                if (!string.IsNullOrWhiteSpace(p.Normalized()))
+                    _service.AddEmergencyContactPhoneNumber(newId, p.Normalized());
+            }
 
             LoadContacts();
             ResetForm();
@@ -137,9 +169,10 @@ namespace VRMS.UI.Forms.Customer
 
         private void UpdateContact(object? sender, EventArgs e)
         {
-            if (_current == null || !ValidateForm()) return;
+            if (_current == null || !ValidateForm())
+                return;
 
-            // UI-only workaround: delete & recreate
+            // Simple & safe strategy
             _service.DeleteEmergencyContact(_current.Id);
 
             int newId = _service.CreateEmergencyContact(
@@ -150,7 +183,10 @@ namespace VRMS.UI.Forms.Customer
             );
 
             foreach (var p in ReadPhones())
-                _service.AddEmergencyContactPhoneNumber(newId, p.Normalized());
+            {
+                if (!string.IsNullOrWhiteSpace(p.Normalized()))
+                    _service.AddEmergencyContactPhoneNumber(newId, p.Normalized());
+            }
 
             LoadContacts();
             ResetForm();
@@ -158,16 +194,24 @@ namespace VRMS.UI.Forms.Customer
 
         private void DeleteContact(object? sender, EventArgs e)
         {
-            if (_current == null) return;
+            if (_current == null)
+                return;
+
+            if (MessageBox.Show(
+                "Delete this emergency contact?",
+                "Confirm",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning) != DialogResult.Yes)
+                return;
 
             _service.DeleteEmergencyContact(_current.Id);
             LoadContacts();
             ResetForm();
         }
 
-        #endregion
-
-        #region UI HELPERS
+        // =====================================================
+        // UI HELPERS
+        // =====================================================
 
         private void ResetForm()
         {
@@ -187,10 +231,17 @@ namespace VRMS.UI.Forms.Customer
 
         private void SelectContact(object? sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
+            if (e.RowIndex < 0 || e.RowIndex >= dgvContacts.Rows.Count)
+                return;
 
-            int id = Convert.ToInt32(dgvContacts.Rows[e.RowIndex].Cells[0].Value);
-            _current = _contacts.First(c => c.Id == id);
+            if (!int.TryParse(
+                dgvContacts.Rows[e.RowIndex].Cells[0].Value?.ToString(),
+                out int id))
+                return;
+
+            _current = _contacts.FirstOrDefault(c => c.Id == id);
+            if (_current == null)
+                return;
 
             txtFirstName.Text = _current.FirstName;
             txtLastName.Text = _current.LastName;
@@ -198,7 +249,14 @@ namespace VRMS.UI.Forms.Customer
 
             dgvPhoneNumbers.Rows.Clear();
             foreach (var p in _current.Phones)
-                dgvPhoneNumbers.Rows.Add(null, p.Type, p.Number, p.IsPrimary);
+            {
+                dgvPhoneNumbers.Rows.Add(
+                    null,
+                    p.Type,
+                    p.Number,
+                    p.IsPrimary
+                );
+            }
 
             btnSaveContact.Enabled = false;
             btnUpdateContact.Enabled = true;
@@ -212,23 +270,44 @@ namespace VRMS.UI.Forms.Customer
 
         private void PhoneGridClick(object? sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == dgvPhoneNumbers.Columns["colRemovePhone"].Index
-                && e.RowIndex >= 0)
+            if (e.RowIndex < 0)
+                return;
+
+            if (dgvPhoneNumbers.Columns[e.ColumnIndex].Name == "colRemovePhone")
             {
                 dgvPhoneNumbers.Rows.RemoveAt(e.RowIndex);
             }
         }
 
-        #endregion
-
-        #region VALIDATION
+        // =====================================================
+        // VALIDATION
+        // =====================================================
 
         private bool ValidateForm()
         {
-            if (string.IsNullOrWhiteSpace(txtFirstName.Text)) return false;
-            if (string.IsNullOrWhiteSpace(txtLastName.Text)) return false;
-            if (cmbRelationship.SelectedItem == null) return false;
-            if (dgvPhoneNumbers.Rows.Count == 0) return false;
+            if (string.IsNullOrWhiteSpace(txtFirstName.Text))
+            {
+                MessageBox.Show("First name required.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtLastName.Text))
+            {
+                MessageBox.Show("Last name required.");
+                return false;
+            }
+
+            if (cmbRelationship.SelectedItem == null)
+            {
+                MessageBox.Show("Select a relationship.");
+                return false;
+            }
+
+            if (ReadPhones().Count == 0)
+            {
+                MessageBox.Show("At least one phone number is required.");
+                return false;
+            }
 
             return true;
         }
@@ -239,19 +318,29 @@ namespace VRMS.UI.Forms.Customer
 
             foreach (DataGridViewRow row in dgvPhoneNumbers.Rows)
             {
-                if (row.IsNewRow) continue;
+                if (row.IsNewRow)
+                    continue;
+
+                var number =
+                    row.Cells["colPhoneNumber"].Value?.ToString() ?? "";
+
+                if (string.IsNullOrWhiteSpace(number))
+                    continue;
 
                 list.Add(new PhoneNumber
                 {
-                    Type = row.Cells["colPhoneType"].Value?.ToString() ?? "Mobile",
-                    Number = row.Cells["colPhoneNumber"].Value?.ToString() ?? "",
-                    IsPrimary = Convert.ToBoolean(row.Cells["colPrimary"].Value ?? false)
+                    Type =
+                        row.Cells["colPhoneType"].Value?.ToString() ?? "Mobile",
+                    Number = number,
+                    IsPrimary =
+                        Convert.ToBoolean(
+                            row.Cells["colPrimary"].Value ?? false)
                 });
             }
 
             return list;
         }
 
-        #endregion
+
     }
 }

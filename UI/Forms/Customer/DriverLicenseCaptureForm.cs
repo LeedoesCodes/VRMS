@@ -18,20 +18,19 @@ namespace VRMS.UI.Forms.Customer
         private bool isCameraRunning;
 
         // =============================
-        // LICENSE IMAGES (OWNED)
+        // UI PREVIEW BITMAPS (DISPLAY ONLY)
         // =============================
-        private Bitmap? frontImage;
-        private Bitmap? backImage;
-        private bool isFrontCaptured;
-        private bool isBackCaptured;
+        private Bitmap? frontPreview;
+        private Bitmap? backPreview;
 
         // =============================
-        // IMAGE ADJUSTMENTS
+        // STORED IMAGE DATA (SAFE)
         // =============================
-        private float brightness = 1.0f;
-        private float contrast = 1.0f;
-        private int rotationAngle;
-        private Rectangle? cropRegion;
+        private byte[]? frontImageBytes;
+        private byte[]? backImageBytes;
+
+        private bool isFrontCaptured;
+        private bool isBackCaptured;
 
         // =============================
         // PUBLIC ACCESS
@@ -68,7 +67,7 @@ namespace VRMS.UI.Forms.Customer
         }
 
         // ==================================================
-        // CAMERA FRAME (SAFE)
+        // CAMERA FRAME (UI SAFE)
         // ==================================================
         private void VideoSource_NewFrame(object sender, NewFrameEventArgs e)
         {
@@ -117,6 +116,7 @@ namespace VRMS.UI.Forms.Customer
             try
             {
                 videoSource.NewFrame -= VideoSource_NewFrame;
+
                 if (videoSource.IsRunning)
                 {
                     videoSource.SignalToStop();
@@ -143,55 +143,77 @@ namespace VRMS.UI.Forms.Customer
         }
 
         // ==================================================
-        // CAPTURE (CRITICAL FIX)
+        // CAPTURE (FINAL SAFE VERSION)
         // ==================================================
         private void btnCaptureFront_Click(object sender, EventArgs e)
         {
-            CaptureImage(ref frontImage, picFrontImage, ref isFrontCaptured, "Front", lblFrontInfo);
+            Capture(
+                ref frontPreview,
+                ref frontImageBytes,
+                picFrontImage,
+                ref isFrontCaptured,
+                "Front",
+                lblFrontInfo
+            );
         }
 
         private void btnCaptureBack_Click(object sender, EventArgs e)
         {
-            CaptureImage(ref backImage, picBackImage, ref isBackCaptured, "Back", lblBackInfo);
+            Capture(
+                ref backPreview,
+                ref backImageBytes,
+                picBackImage,
+                ref isBackCaptured,
+                "Back",
+                lblBackInfo
+            );
         }
 
-        private void CaptureImage(
-            ref Bitmap? targetImage,
+        private void Capture(
+            ref Bitmap? previewBitmap,
+            ref byte[]? imageBytes,
             PictureBox previewBox,
-            ref bool isCaptured,
+            ref bool captured,
             string side,
             Label infoLabel)
         {
-            if (picCameraPreview.Image is not Bitmap preview)
+            if (picCameraPreview.Image is not Bitmap cameraFrame)
             {
                 MessageBox.Show("Camera not ready.");
                 return;
             }
 
-            if (preview.Width <= 0 || preview.Height <= 0)
+            int w = cameraFrame.Width;
+            int h = cameraFrame.Height;
+
+            if (w <= 0 || h <= 0)
             {
-                MessageBox.Show("Invalid camera frame. Try again.");
+                MessageBox.Show("Invalid camera frame.");
                 return;
             }
 
-            targetImage?.Dispose();
+            previewBitmap?.Dispose();
 
-            // ✅ DEEP COPY — OWNED BITMAP
-            targetImage = new Bitmap(
-                preview.Width,
-                preview.Height,
-                PixelFormat.Format24bppRgb
-            );
-
-            using (Graphics g = Graphics.FromImage(targetImage))
+            // Create owned bitmap
+            Bitmap owned = new Bitmap(w, h, PixelFormat.Format24bppRgb);
+            using (Graphics g = Graphics.FromImage(owned))
             {
-                g.DrawImage(preview, 0, 0, preview.Width, preview.Height);
+                g.DrawImageUnscaled(cameraFrame, 0, 0);
             }
 
-            previewBox.Image?.Dispose();
-            previewBox.Image = new Bitmap(targetImage);
+            // Convert to bytes IMMEDIATELY (SAFE FOREVER)
+            using (var ms = new MemoryStream())
+            {
+                owned.Save(ms, ImageFormat.Jpeg);
+                imageBytes = ms.ToArray();
+            }
 
-            isCaptured = true;
+            previewBitmap = owned;
+
+            previewBox.Image?.Dispose();
+            previewBox.Image = new Bitmap(owned);
+
+            captured = true;
             infoLabel.Text = $"{side} side captured";
             lblStatus.Text = $"Status: {side} captured";
 
@@ -199,76 +221,13 @@ namespace VRMS.UI.Forms.Customer
         }
 
         // ==================================================
-        // IMAGE ADJUSTMENTS (SAFE)
+        // EXPORT (NO BITMAP USAGE)
         // ==================================================
-        private void btnRotate_Click(object sender, EventArgs e)
-        {
-            Rotate(ref GetCurrentImage(), GetCurrentPictureBox());
-        }
+        public MemoryStream? GetFrontImageStream()
+            => frontImageBytes == null ? null : new MemoryStream(frontImageBytes);
 
-        private void Rotate(ref Bitmap? image, PictureBox pb)
-        {
-            if (image == null) return;
-
-            rotationAngle = (rotationAngle + 90) % 360;
-
-            Bitmap rotated = new Bitmap(image);
-            rotated.RotateFlip(rotationAngle switch
-            {
-                90 => RotateFlipType.Rotate90FlipNone,
-                180 => RotateFlipType.Rotate180FlipNone,
-                270 => RotateFlipType.Rotate270FlipNone,
-                _ => RotateFlipType.RotateNoneFlipNone
-            });
-
-            image.Dispose();
-            image = rotated;
-
-            pb.Image?.Dispose();
-            pb.Image = new Bitmap(image);
-        }
-
-        private ref Bitmap? GetCurrentImage()
-        {
-            return ref (tabPreview.SelectedTab == tabFront ? ref frontImage : ref backImage);
-        }
-
-        private PictureBox GetCurrentPictureBox()
-        {
-            return tabPreview.SelectedTab == tabFront ? picFrontImage : picBackImage;
-        }
-
-        // ==================================================
-        // SAVE / EXPORT
-        // ==================================================
-        public MemoryStream? GetFrontImageStream() => GetImageStream(frontImage);
-        public MemoryStream? GetBackImageStream() => GetImageStream(backImage);
-
-        private MemoryStream? GetImageStream(Bitmap? source)
-{
-    if (source == null)
-        return null;
-
-    // Create a brand-new, owned bitmap
-    using var safeBitmap = new Bitmap(
-        source.Width,
-        source.Height,
-        PixelFormat.Format24bppRgb
-    );
-
-    using (Graphics g = Graphics.FromImage(safeBitmap))
-    {
-        g.Clear(Color.Black);
-        g.DrawImage(source, 0, 0, source.Width, source.Height);
-    }
-
-    var stream = new MemoryStream();
-    safeBitmap.Save(stream, ImageFormat.Jpeg);
-    stream.Position = 0;
-
-    return stream;
-}
-
+        public MemoryStream? GetBackImageStream()
+            => backImageBytes == null ? null : new MemoryStream(backImageBytes);
 
         // ==================================================
         // UI STATE
@@ -301,8 +260,8 @@ namespace VRMS.UI.Forms.Customer
         private void DriverLicenseCaptureForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             StopCamera();
-            frontImage?.Dispose();
-            backImage?.Dispose();
+            frontPreview?.Dispose();
+            backPreview?.Dispose();
         }
     }
 }
