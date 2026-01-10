@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using VRMS.Services.Customer;
@@ -9,61 +8,35 @@ namespace VRMS.UI.Forms.Customer
 {
     public partial class EmergencyContactsForm : Form
     {
-        #region MODELS
+        #region UI MODELS
 
-        public class PhoneNumber
+        private class PhoneNumber
         {
-            public int Id { get; set; }
-            public string Number { get; set; }
-            public string Type { get; set; }
+            public string Type { get; set; } = "Mobile";
+            public string Number { get; set; } = "";
             public bool IsPrimary { get; set; }
 
-            public string GetFormattedNumber()
+            public string Normalized()
                 => new string(Number.Where(char.IsDigit).ToArray());
         }
 
-        public class EmergencyContact
+        private class EmergencyContact
         {
-            public int Id { get; set; }
-            public int CustomerId { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string Relationship { get; set; }
-            public string Notes { get; set; }
-            public List<PhoneNumber> PhoneNumbers { get; set; } = new();
+            public int Id;
+            public string FirstName = "";
+            public string LastName = "";
+            public string Relationship = "";
+            public List<PhoneNumber> Phones = new();
 
             public string FullName => $"{FirstName} {LastName}";
-
-            public EmergencyContact Clone()
-            {
-                return new EmergencyContact
-                {
-                    Id = Id,
-                    CustomerId = CustomerId,
-                    FirstName = FirstName,
-                    LastName = LastName,
-                    Relationship = Relationship,
-                    Notes = Notes,
-                    PhoneNumbers = PhoneNumbers
-                        .Select(p => new PhoneNumber
-                        {
-                            Id = p.Id,
-                            Number = p.Number,
-                            Type = p.Type,
-                            IsPrimary = p.IsPrimary
-                        }).ToList()
-                };
-            }
         }
 
         #endregion
 
-        private readonly EmergencyContactService emergencyContactService;
-        private readonly List<EmergencyContact> contacts = new();
+        private readonly EmergencyContactService _service;
+        private readonly List<EmergencyContact> _contacts = new();
 
-        private EmergencyContact? currentContact;
-        private bool isEditing;
-        private bool hasUnsavedChanges;
+        private EmergencyContact? _current;
 
         public int CustomerId { get; }
         public string CustomerName { get; }
@@ -75,61 +48,49 @@ namespace VRMS.UI.Forms.Customer
             CustomerId = customerId;
             CustomerName = customerName;
 
-            emergencyContactService = new EmergencyContactService();
+            _service = new EmergencyContactService();
 
-            lblCustomerName.Text = CustomerName;
+            lblCustomerName.Text = customerName;
 
-            cmbRelationship.Items.AddRange(new[]
-            {
-                "Spouse", "Parent", "Child", "Sibling", "Friend", "Colleague", "Other"
-            });
-            cmbRelationship.SelectedIndex = 0;
-
-            LoadContacts();
             HookEvents();
+            LoadContacts();
+            ResetForm();
         }
 
         #region LOAD
 
         private void LoadContacts()
         {
-            contacts.Clear();
+            _contacts.Clear();
+            dgvContacts.Rows.Clear();
 
-            var serviceContacts =
-                emergencyContactService.GetEmergencyContactsByCustomerId(CustomerId);
+            var serviceContacts = _service.GetEmergencyContactsByCustomerId(CustomerId);
 
             foreach (var c in serviceContacts)
             {
-                contacts.Add(new EmergencyContact
+                var contact = new EmergencyContact
                 {
                     Id = c.Id,
-                    CustomerId = c.CustomerId,
                     FirstName = c.FirstName,
                     LastName = c.LastName,
                     Relationship = c.Relationship,
-                    PhoneNumbers = emergencyContactService
+                    Phones = _service
                         .GetEmergencyContactPhoneNumbers(c.Id)
                         .Select(p => new PhoneNumber { Number = p })
                         .ToList()
-                });
-            }
+                };
 
-            RefreshGrid();
-        }
+                _contacts.Add(contact);
 
-        private void RefreshGrid()
-        {
-            dgvContacts.Rows.Clear();
-
-            foreach (var c in contacts)
-            {
                 dgvContacts.Rows.Add(
-                    c.Id,
-                    c.FullName,
-                    c.Relationship,
-                    c.PhoneNumbers.Count
+                    contact.Id,
+                    contact.FullName,
+                    contact.Relationship,
+                    contact.Phones.Count
                 );
             }
+
+            lblContactCount.Text = $"{_contacts.Count} emergency contact(s)";
         }
 
         #endregion
@@ -138,150 +99,153 @@ namespace VRMS.UI.Forms.Customer
 
         private void HookEvents()
         {
-            btnAddNew.Click += (_, _) => StartNew();
-            btnSaveContact.Click += BtnSave_Click;
-            btnUpdateContact.Click += BtnUpdate_Click;
-            btnDeleteContact.Click += BtnDelete_Click;
-            btnClear.Click += (_, _) => ClearForm();
+            btnAddNew.Click += (_, _) => ResetForm();
+            btnClear.Click += (_, _) => ResetForm();
             btnClose.Click += (_, _) => Close();
 
-            txtFirstName.TextChanged += OnChanged;
-            txtLastName.TextChanged += OnChanged;
-            cmbRelationship.SelectedIndexChanged += OnChanged;
+            btnSaveContact.Click += SaveContact;
+            btnUpdateContact.Click += UpdateContact;
+            btnDeleteContact.Click += DeleteContact;
 
-            dgvContacts.CellClick += DgvContacts_CellClick;
+            btnAddPhone.Click += (_, _) => AddPhoneRow();
+
+            dgvContacts.CellClick += SelectContact;
+            dgvPhoneNumbers.CellClick += PhoneGridClick;
         }
 
         #endregion
 
-        #region CRUD
+        #region CONTACT CRUD
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private void SaveContact(object? sender, EventArgs e)
         {
             if (!ValidateForm()) return;
 
-            int newId = emergencyContactService.CreateEmergencyContact(
+            int newId = _service.CreateEmergencyContact(
                 CustomerId,
                 txtFirstName.Text.Trim(),
                 txtLastName.Text.Trim(),
-                cmbRelationship.SelectedItem.ToString()
+                cmbRelationship.Text
             );
 
-            foreach (var p in GetPhones())
-                emergencyContactService.AddEmergencyContactPhoneNumber(
-                    newId, p.GetFormattedNumber());
+            foreach (var p in ReadPhones())
+                _service.AddEmergencyContactPhoneNumber(newId, p.Normalized());
 
             LoadContacts();
-            ClearForm();
+            ResetForm();
         }
 
-        /// <summary>
-        /// 🔥 FIXED UPDATE WITHOUT SERVICE CHANGE
-        /// </summary>
-        private void BtnUpdate_Click(object sender, EventArgs e)
+        private void UpdateContact(object? sender, EventArgs e)
         {
-            if (currentContact == null || !ValidateForm())
-                return;
+            if (_current == null || !ValidateForm()) return;
 
-            var phones = GetPhones();
+            // UI-only workaround: delete & recreate
+            _service.DeleteEmergencyContact(_current.Id);
 
-            // 🔴 Delete old contact
-            emergencyContactService.DeleteEmergencyContact(currentContact.Id);
-
-            // 🟢 Recreate contact
-            int newId = emergencyContactService.CreateEmergencyContact(
+            int newId = _service.CreateEmergencyContact(
                 CustomerId,
                 txtFirstName.Text.Trim(),
                 txtLastName.Text.Trim(),
-                cmbRelationship.SelectedItem.ToString()
+                cmbRelationship.Text
             );
 
-            // 🟢 Re-add phones
-            foreach (var p in phones)
-                emergencyContactService.AddEmergencyContactPhoneNumber(
-                    newId, p.GetFormattedNumber());
+            foreach (var p in ReadPhones())
+                _service.AddEmergencyContactPhoneNumber(newId, p.Normalized());
 
             LoadContacts();
-            ClearForm();
+            ResetForm();
         }
 
-        private void BtnDelete_Click(object sender, EventArgs e)
+        private void DeleteContact(object? sender, EventArgs e)
         {
-            if (currentContact == null) return;
+            if (_current == null) return;
 
-            emergencyContactService.DeleteEmergencyContact(currentContact.Id);
+            _service.DeleteEmergencyContact(_current.Id);
             LoadContacts();
-            ClearForm();
+            ResetForm();
         }
 
         #endregion
 
-        #region UI
+        #region UI HELPERS
 
-        private void StartNew()
-        {
-            ClearForm();
-            isEditing = false;
-            currentContact = null;
-        }
-
-        private void ClearForm()
+        private void ResetForm()
         {
             txtFirstName.Clear();
             txtLastName.Clear();
             txtNotes.Clear();
+
+            cmbRelationship.SelectedIndex = 0;
             dgvPhoneNumbers.Rows.Clear();
 
-            currentContact = null;
-            hasUnsavedChanges = false;
+            _current = null;
+
+            btnSaveContact.Enabled = true;
+            btnUpdateContact.Enabled = false;
+            btnDeleteContact.Enabled = false;
         }
 
-        private void DgvContacts_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void SelectContact(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
             int id = Convert.ToInt32(dgvContacts.Rows[e.RowIndex].Cells[0].Value);
-            currentContact = contacts.First(c => c.Id == id).Clone();
+            _current = _contacts.First(c => c.Id == id);
 
-            txtFirstName.Text = currentContact.FirstName;
-            txtLastName.Text = currentContact.LastName;
-            cmbRelationship.SelectedItem = currentContact.Relationship;
+            txtFirstName.Text = _current.FirstName;
+            txtLastName.Text = _current.LastName;
+            cmbRelationship.Text = _current.Relationship;
 
             dgvPhoneNumbers.Rows.Clear();
-            foreach (var p in currentContact.PhoneNumbers)
-                dgvPhoneNumbers.Rows.Add(0, "Mobile", p.Number, p.IsPrimary);
+            foreach (var p in _current.Phones)
+                dgvPhoneNumbers.Rows.Add(null, p.Type, p.Number, p.IsPrimary);
 
-            isEditing = true;
+            btnSaveContact.Enabled = false;
+            btnUpdateContact.Enabled = true;
+            btnDeleteContact.Enabled = true;
         }
 
-        private void OnChanged(object? sender, EventArgs e)
+        private void AddPhoneRow()
         {
-            hasUnsavedChanges = true;
+            dgvPhoneNumbers.Rows.Add(null, "Mobile", "", false);
+        }
+
+        private void PhoneGridClick(object? sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dgvPhoneNumbers.Columns["colRemovePhone"].Index
+                && e.RowIndex >= 0)
+            {
+                dgvPhoneNumbers.Rows.RemoveAt(e.RowIndex);
+            }
         }
 
         #endregion
 
-        #region HELPERS
+        #region VALIDATION
 
         private bool ValidateForm()
         {
             if (string.IsNullOrWhiteSpace(txtFirstName.Text)) return false;
             if (string.IsNullOrWhiteSpace(txtLastName.Text)) return false;
             if (cmbRelationship.SelectedItem == null) return false;
-            return dgvPhoneNumbers.Rows.Count > 0;
+            if (dgvPhoneNumbers.Rows.Count == 0) return false;
+
+            return true;
         }
 
-        private List<PhoneNumber> GetPhones()
+        private List<PhoneNumber> ReadPhones()
         {
             var list = new List<PhoneNumber>();
 
-            foreach (DataGridViewRow r in dgvPhoneNumbers.Rows)
+            foreach (DataGridViewRow row in dgvPhoneNumbers.Rows)
             {
-                if (r.IsNewRow) continue;
+                if (row.IsNewRow) continue;
 
                 list.Add(new PhoneNumber
                 {
-                    Number = r.Cells["colPhoneNumber"].Value?.ToString() ?? ""
+                    Type = row.Cells["colPhoneType"].Value?.ToString() ?? "Mobile",
+                    Number = row.Cells["colPhoneNumber"].Value?.ToString() ?? "",
+                    IsPrimary = Convert.ToBoolean(row.Cells["colPrimary"].Value ?? false)
                 });
             }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using VRMS.Models.Fleet;
 using VRMS.Enums;
@@ -25,7 +26,6 @@ namespace VRMS.Forms
         // =========================
         // FORM LOAD
         // =========================
-
         private void AddVehicleForm_Load(object sender, EventArgs e)
         {
             cbTransmission.DataSource = Enum.GetValues(typeof(TransmissionType));
@@ -48,7 +48,6 @@ namespace VRMS.Forms
         // =========================
         // SAVE VEHICLE
         // =========================
-
         private void BtnSave_Click(object? sender, EventArgs e)
         {
             try
@@ -57,9 +56,7 @@ namespace VRMS.Forms
 
                 var vehicle = new Vehicle
                 {
-                    // ✅ REQUIRED
                     VehicleCode = $"VEH-{DateTime.UtcNow:yyyyMMddHHmmss}",
-
                     Make = txtMake.Text.Trim(),
                     Model = txtModel.Text.Trim(),
                     Year = (int)numYear.Value,
@@ -72,15 +69,26 @@ namespace VRMS.Forms
                     SeatingCapacity = (int)numSeats.Value,
                     Odometer = (int)numMileage.Value,
 
+                    FuelEfficiency = 0,     // default
+                    CargoCapacity = 0,      // default
                     VehicleCategoryId = (int)cbCategory.SelectedValue
                 };
 
                 int vehicleId = _vehicleService.CreateVehicle(vehicle);
 
-                // Optional images
+                // Upload images
                 foreach (var item in lstImages.Items)
                 {
-                    _vehicleService.AddVehicleImage(vehicleId, item.ToString()!);
+                    var filePath = item.ToString()!;
+                    var fileName = Path.GetFileName(filePath);
+
+                    using var stream = File.OpenRead(filePath);
+
+                    _vehicleService.AddVehicleImage(
+                        vehicleId,
+                        stream,
+                        fileName
+                    );
                 }
 
                 DialogResult = DialogResult.OK;
@@ -100,7 +108,6 @@ namespace VRMS.Forms
         // =========================
         // VALIDATION
         // =========================
-
         private void ValidateForm()
         {
             if (string.IsNullOrWhiteSpace(txtMake.Text))
@@ -128,7 +135,6 @@ namespace VRMS.Forms
         // =========================
         // IMAGE HANDLING
         // =========================
-
         private void BtnSelectImage_Click(object? sender, EventArgs e)
         {
             using OpenFileDialog dlg = new()
@@ -147,7 +153,6 @@ namespace VRMS.Forms
         // =========================
         // ADD CATEGORY
         // =========================
-
         private void BtnAddCategory_Click(object? sender, EventArgs e)
         {
             using var form = new AddCategoryForm(_vehicleService)

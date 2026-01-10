@@ -84,7 +84,7 @@
             lblTitle.ForeColor = Color.White;
             lblTitle.Location = new Point(20, 20);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(287, 41);
+            lblTitle.Size = new Size(346, 41);
             lblTitle.TabIndex = 1;
             lblTitle.Text = "Capture Driver's License";
             // 
@@ -171,6 +171,7 @@
             btnStartCamera.TabIndex = 0;
             btnStartCamera.Text = "🎥 Start Camera";
             btnStartCamera.UseVisualStyleBackColor = false;
+            btnStartCamera.Click += btnStartCamera_Click;
             // 
             // btnStopCamera
             // 
@@ -185,6 +186,7 @@
             btnStopCamera.TabIndex = 1;
             btnStopCamera.Text = "⏹ Stop Camera";
             btnStopCamera.UseVisualStyleBackColor = false;
+            btnStopCamera.Click += btnStopCamera_Click;
             // 
             // btnCapture
             // 
@@ -199,6 +201,7 @@
             btnCapture.TabIndex = 2;
             btnCapture.Text = "📸 Capture";
             btnCapture.UseVisualStyleBackColor = false;
+            btnCapture.Click += btnCapture_Click;
             // 
             // btnRetake
             // 
@@ -213,6 +216,7 @@
             btnRetake.TabIndex = 3;
             btnRetake.Text = "🔄 Retake";
             btnRetake.UseVisualStyleBackColor = false;
+            btnRetake.Click += btnRetake_Click;
             // 
             // panelPreview
             // 
@@ -223,7 +227,7 @@
             panelPreview.Location = new Point(5, 5);
             panelPreview.Name = "panelPreview";
             panelPreview.Padding = new Padding(10);
-            panelPreview.Size = new Size(295, 390);
+            panelPreview.Size = new Size(300, 390);
             panelPreview.TabIndex = 0;
             // 
             // picCapturedImage
@@ -232,7 +236,7 @@
             picCapturedImage.Dock = DockStyle.Fill;
             picCapturedImage.Location = new Point(10, 10);
             picCapturedImage.Name = "picCapturedImage";
-            picCapturedImage.Size = new Size(273, 368);
+            picCapturedImage.Size = new Size(278, 368);
             picCapturedImage.SizeMode = PictureBoxSizeMode.Zoom;
             picCapturedImage.TabIndex = 0;
             picCapturedImage.TabStop = false;
@@ -245,7 +249,7 @@
             panelPreviewInfo.Location = new Point(5, 395);
             panelPreviewInfo.Name = "panelPreviewInfo";
             panelPreviewInfo.Padding = new Padding(10);
-            panelPreviewInfo.Size = new Size(295, 60);
+            panelPreviewInfo.Size = new Size(300, 60);
             panelPreviewInfo.TabIndex = 1;
             // 
             // lblPreviewInfo
@@ -255,7 +259,7 @@
             lblPreviewInfo.ForeColor = Color.FromArgb(30, 60, 90);
             lblPreviewInfo.Location = new Point(10, 10);
             lblPreviewInfo.Name = "lblPreviewInfo";
-            lblPreviewInfo.Size = new Size(275, 40);
+            lblPreviewInfo.Size = new Size(280, 40);
             lblPreviewInfo.TabIndex = 0;
             lblPreviewInfo.Text = "Captured image will appear here";
             lblPreviewInfo.TextAlign = ContentAlignment.MiddleCenter;
@@ -270,7 +274,7 @@
             panelActions.Location = new Point(5, 455);
             panelActions.Name = "panelActions";
             panelActions.Padding = new Padding(10);
-            panelActions.Size = new Size(295, 50);
+            panelActions.Size = new Size(300, 50);
             panelActions.TabIndex = 2;
             // 
             // btnRotate
@@ -286,6 +290,7 @@
             btnRotate.TabIndex = 0;
             btnRotate.Text = "🔄 Rotate";
             btnRotate.UseVisualStyleBackColor = false;
+            btnRotate.Click += btnRotate_Click;
             // 
             // btnBrightness
             // 
@@ -300,6 +305,7 @@
             btnBrightness.TabIndex = 1;
             btnBrightness.Text = "💡 Bright";
             btnBrightness.UseVisualStyleBackColor = false;
+            btnBrightness.Click += btnBrightness_Click;
             // 
             // btnContrast
             // 
@@ -314,6 +320,7 @@
             btnContrast.TabIndex = 2;
             btnContrast.Text = "⚫ Contrast";
             btnContrast.UseVisualStyleBackColor = false;
+            btnContrast.Click += btnContrast_Click;
             // 
             // panelFooter
             // 
@@ -342,6 +349,7 @@
             btnCancel.TabIndex = 2;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // btnSave
             // 
@@ -356,6 +364,7 @@
             btnSave.TabIndex = 1;
             btnSave.Text = "Save License";
             btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
             // 
             // lblStatus
             // 
@@ -364,7 +373,7 @@
             lblStatus.ForeColor = Color.Gray;
             lblStatus.Location = new Point(20, 30);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(240, 20);
+            lblStatus.Size = new Size(227, 20);
             lblStatus.TabIndex = 0;
             lblStatus.Text = "Status: Ready to capture license...";
             // 

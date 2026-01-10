@@ -15,7 +15,6 @@ namespace VRMS.Forms
         // =========================
         // CONSTRUCTOR
         // =========================
-
         public EditVehicleForm(int vehicleId)
         {
             InitializeComponent();
@@ -29,7 +28,6 @@ namespace VRMS.Forms
         // =========================
         // LOAD VEHICLE
         // =========================
-
         private void EditVehicleForm_Load(object sender, EventArgs e)
         {
             try
@@ -73,7 +71,7 @@ namespace VRMS.Forms
 
             numSeats.Value = _vehicle.SeatingCapacity;
 
-            // 🔒 Lock immutable fields
+            // Lock immutable fields
             txtMake.ReadOnly = true;
             txtModel.ReadOnly = true;
             numYear.Enabled = false;
@@ -88,7 +86,6 @@ namespace VRMS.Forms
         // =========================
         // SAVE CHANGES
         // =========================
-
         private void BtnSave_Click(object? sender, EventArgs e)
         {
             try
@@ -99,6 +96,8 @@ namespace VRMS.Forms
                     vehicleId: _vehicleId,
                     color: txtColor.Text.Trim(),
                     newOdometer: (int)numMileage.Value,
+                    fuelEfficiency: _vehicle.FuelEfficiency, // preserve
+                    cargoCapacity: _vehicle.CargoCapacity,   // preserve
                     categoryId: _vehicle.VehicleCategoryId
                 );
 
@@ -125,7 +124,6 @@ namespace VRMS.Forms
         // =========================
         // VALIDATION
         // =========================
-
         private void ValidateForm()
         {
             if (string.IsNullOrWhiteSpace(txtColor.Text))
