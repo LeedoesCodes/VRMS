@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using VRMS.Enums;
 using VRMS.Forms;
@@ -7,7 +9,6 @@ using VRMS.Models.Fleet;
 // Repositories
 using VRMS.Repositories.Fleet;
 using VRMS.Repositories.Rentals;
-using VRMS.Repositories.Accounts;
 
 // Services
 using VRMS.Services.Customer;
@@ -28,6 +29,9 @@ namespace VRMS.Controls
         private readonly ReservationService _reservationService;
         private readonly RentalService _rentalService;
 
+        private static readonly string StorageRoot =
+            Path.Combine(AppContext.BaseDirectory, "Storage");
+
         // =========================
         // CONSTRUCTOR
         // =========================
@@ -36,9 +40,9 @@ namespace VRMS.Controls
         {
             InitializeComponent();
 
-            // =========================
-            // REPOSITORIES (Fleet)
-            // =========================
+            // -------------------------
+            // REPOSITORIES
+            // -------------------------
 
             var vehicleRepo = new VehicleRepository();
             var categoryRepo = new VehicleCategoryRepository();
@@ -47,9 +51,9 @@ namespace VRMS.Controls
             var imageRepo = new VehicleImageRepository();
             var maintenanceRepo = new MaintenanceRepository();
 
-            // =========================
-            // SERVICES (Fleet)
-            // =========================
+            // -------------------------
+            // SERVICES
+            // -------------------------
 
             _vehicleService = new VehicleService(
                 vehicleRepo,
@@ -60,31 +64,17 @@ namespace VRMS.Controls
                 maintenanceRepo
             );
 
-            // =========================
-            // CUSTOMER
-            // =========================
-
             _driversLicenseService = new DriversLicenseService();
             _customerService = new CustomerService(_driversLicenseService);
 
-            // =========================
-            // RESERVATION
-            // =========================
-
             var reservationRepo = new ReservationRepository();
-
             _reservationService = new ReservationService(
                 _customerService,
                 _vehicleService,
                 reservationRepo
             );
 
-            // =========================
-            // RENTAL
-            // =========================
-
             var rentalRepo = new RentalRepository();
-
             _rentalService = new RentalService(
                 _reservationService,
                 _vehicleService,
@@ -102,6 +92,8 @@ namespace VRMS.Controls
         {
             ConfigureGrid();
             LoadVehicles();
+
+            dgvVehicles.SelectionChanged += DgvVehicles_SelectionChanged;
         }
 
         private void ConfigureGrid()
@@ -167,8 +159,9 @@ namespace VRMS.Controls
             try
             {
                 dgvVehicles.DataSource = null;
-                dgvVehicles.DataSource =
-                    _vehicleService.GetAllVehicles();
+                dgvVehicles.DataSource = _vehicleService.GetAllVehicles();
+
+                picVehiclePreview.Image = null;
             }
             catch (Exception ex)
             {
@@ -178,6 +171,58 @@ namespace VRMS.Controls
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
+            }
+        }
+
+        // =========================
+        // IMAGE PREVIEW
+        // =========================
+
+        private void DgvVehicles_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (dgvVehicles.SelectedRows.Count == 0)
+            {
+                picVehiclePreview.Image = null;
+                return;
+            }
+
+            if (dgvVehicles.SelectedRows[0].DataBoundItem is not Vehicle vehicle)
+                return;
+
+            LoadVehiclePreview(vehicle.Id);
+        }
+
+        private void LoadVehiclePreview(int vehicleId)
+        {
+            try
+            {
+                picVehiclePreview.Image = null;
+
+                var images = _vehicleService.GetVehicleImages(vehicleId);
+
+                if (images.Count == 0)
+                    return;
+
+                // Take FIRST image as preview
+                var image = images.First();
+                var fullPath = Path.Combine(StorageRoot, image.ImagePath);
+
+                if (!File.Exists(fullPath))
+                    return;
+
+                // Prevent file lock
+                using var fs = new FileStream(
+                    fullPath,
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.ReadWrite);
+
+                picVehiclePreview.Image = System.Drawing.Image.FromStream(fs);
+            }
+            catch
+            {
+                // Never crash UI due to image issues
+                picVehiclePreview.Image = null;
             }
         }
 
@@ -205,19 +250,16 @@ namespace VRMS.Controls
             if (dgvVehicles.SelectedRows.Count == 0)
                 return;
 
-            if (dgvVehicles.SelectedRows[0].DataBoundItem
-                is not Vehicle vehicle)
+            if (dgvVehicles.SelectedRows[0].DataBoundItem is not Vehicle vehicle)
                 return;
 
             using var editForm =
                 new EditVehicleForm(vehicle.Id, _vehicleService)
                 {
-                    StartPosition =
-                        FormStartPosition.CenterParent
+                    StartPosition = FormStartPosition.CenterParent
                 };
 
-            if (editForm.ShowDialog(this) ==
-                DialogResult.OK)
+            if (editForm.ShowDialog(this) == DialogResult.OK)
                 LoadVehicles();
         }
     }
