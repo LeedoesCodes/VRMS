@@ -8,7 +8,9 @@ public static class CommandDispatcher
     {
         new MigrateCommand(),
         new DropCommand(),
-        new FreshCommand()
+        new FreshCommand(),
+        new SeedCommand(), 
+        new HashCommand()
     };
 
     public static bool TryExecute(string[] args, out CommandResult? result)
@@ -27,8 +29,10 @@ public static class CommandDispatcher
             return true;
         }
 
-        result = command.Execute();
+        // pass everything AFTER the command name
+        var commandArgs = args.Skip(1).ToArray();
+
+        result = command.Execute(commandArgs);
         return true;
     }
-
 }

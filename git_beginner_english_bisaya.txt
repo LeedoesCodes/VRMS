@@ -1,8 +1,9 @@
-GIT SITUATIONS GUIDE (English + Bisaya, Beginner Friendly)
+GIT SITUATIONS GUIDE
+(English + Bisaya, Beginner Friendly)
 
-==============================
+========================================
 SITUATION 1: Kuhaon RA ang changes gikan sa upstream (SAFE)
-==============================
+========================================
 
 STEP-BY-STEP:
 git checkout master
@@ -16,11 +17,13 @@ git fetch upstream
 git merge upstream/master
 git push origin master
 
-Meaning: Kuha lang ko sa ilang updates, ayaw hilabti akong work.
+Meaning:
+Kuha lang ko sa ilang updates, ayaw hilabti akong work.
 
-==============================
+
+========================================
 SITUATION 2: Kuhaon ang changes pero limpyo ang history (REBASE)
-==============================
+========================================
 
 STEP-BY-STEP:
 git checkout master
@@ -37,11 +40,16 @@ git fetch upstream
 git rebase upstream/master
 git push origin master
 
-==============================
-SITUATION 3: Ipareha GYUD tanan (DESTRUCTIVE)
-==============================
+Meaning:
+Same updates, pero limpyo ug straight ang commit history.
 
-WARNING: Mabura imong local changes
+
+========================================
+SITUATION 3: Ipareha GYUD tanan (DESTRUCTIVE)
+========================================
+
+WARNING:
+Mabura imong local changes
 
 STEP-BY-STEP:
 git checkout master
@@ -55,9 +63,13 @@ git fetch upstream
 git reset --hard upstream/master
 git push origin master --force
 
-==============================
+Meaning:
+Ipapareho gyud tanan sa upstream. Walay salbabida.
+
+
+========================================
 SITUATION 4: Commit ug Push
-==============================
+========================================
 
 STEP-BY-STEP:
 git status
@@ -70,9 +82,13 @@ git add .
 git commit -m "My changes"
 git push origin master
 
-==============================
+Meaning:
+I-save ug i-upload imong work.
+
+
+========================================
 SITUATION 5: Start new work (SAFE WAY)
-==============================
+========================================
 
 STEP-BY-STEP:
 git checkout master
@@ -86,11 +102,98 @@ git fetch upstream
 git merge upstream/master
 git checkout -b feature/my-task
 
-==============================
-IMPORTANT REMINDERS
-==============================
+Meaning:
+Ayaw diretsu sa master. Himo ug branch.
 
-Order pirmi:
+
+========================================
+SITUATION 6: IKAW ang REPOSITORY OWNER
+========================================
+
+As OWNER, ikaw ang final decision sa repo.
+Ikaw mo-review, mo-merge, ug mo-fix.
+
+----------------------------------------
+CASE 1: Naay Pull Request (PR)
+----------------------------------------
+
+git checkout master
+git fetch origin
+git pull origin master
+
+Then:
+Review PR sa GitHub / GitLab
+Click "Merge Pull Request"
+
+Meaning:
+Tan-awon una kung sakto ang code before iapil.
+
+
+----------------------------------------
+CASE 2: Gusto nimo i-test ang PR locally
+----------------------------------------
+
+git fetch origin pull/PR_NUMBER/head:pr-test
+git checkout pr-test
+
+Human testing:
+git checkout master
+git merge pr-test
+git push origin master
+
+Meaning:
+Siguradohon walay guba before merge.
+
+
+----------------------------------------
+CASE 3: Owner fixing outdated repo
+----------------------------------------
+
+git checkout master
+git fetch upstream
+git merge upstream/master
+git push origin master
+
+Meaning:
+Ikaw ang nag-update sa main branch.
+
+
+----------------------------------------
+CASE 4: Naay sayop nga na-merge
+----------------------------------------
+
+SAFE WAY (REVERT):
+git revert COMMIT_HASH
+git push origin master
+
+DESTRUCTIVE (OWNER ONLY):
+git reset --hard COMMIT_HASH
+git push origin master --force
+
+Rule:
+Revert kung public repo
+Reset kung ikaw ra ang ga-work
+
+
+----------------------------------------
+CASE 5: Enforcing clean history (OWNER)
+----------------------------------------
+
+Recommended rules:
+- Pull Requests only
+- Require reviews
+- No direct push to master
+- Rebase before merge
+
+Meaning:
+Ikaw ang tigbantay sa quality sa codebase.
+
+
+========================================
+IMPORTANT REMINDERS
+========================================
+
+ORDER PIRMI:
 git add
 git commit
 git push
@@ -100,3 +203,11 @@ fetch -> merge -> push
 
 Kung gusto ipareha tanan:
 fetch -> reset --hard -> push --force
+
+MASTER RULE:
+Master/Main = STABLE ONLY
+Use branches for work
+
+========================================
+END OF GUIDE
+========================================

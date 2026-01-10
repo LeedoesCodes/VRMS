@@ -3,5 +3,5 @@
 public interface ICommand
 {
     string Name { get; }
-    CommandResult Execute();
+    CommandResult Execute(string[] args);
 }

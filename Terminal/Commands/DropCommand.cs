@@ -7,7 +7,8 @@ namespace VRMS.Terminal.Commands;
 public class DropCommand : ICommand
 {
     public string Name => "drop";
-    public CommandResult Execute()
+
+    public CommandResult Execute(string[] args)
     {
         try
         {
@@ -33,5 +34,4 @@ public class DropCommand : ICommand
             );
         }
     }
-
 }

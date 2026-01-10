@@ -26,58 +26,33 @@ namespace VRMS
                 .AddJsonFile("appsettings.json", optional: false)
                 .Build();
 
-            var connectionString = config.GetConnectionString("Default");
+            var connectionString = config.GetConnectionString("Default")
+                                   ?? throw new InvalidOperationException(
+                                       "Connection string 'Default' is missing in appsettings.json");
 
-            if (string.IsNullOrWhiteSpace(connectionString))
-            {
-                throw new InvalidOperationException(
-                    "Connection string 'Default' is missing in appsettings.json");
-            }
-
-            // ----------------------------
-            // Initialize database
-            // ----------------------------
             DB.Initialize(connectionString);
 
             // ----------------------------
-            // Handle terminal commands
+            // CLI MODE
             // ----------------------------
-            if (CommandDispatcher.TryExecute(args, out var result))
+            if (args.Length > 0)
             {
-                ApplicationConfiguration.Initialize();
-
-                using var context = new ApplicationContext();
-
-                Task.Run(() =>
+                if (CommandDispatcher.TryExecute(args, out var result))
                 {
-                    MessageBox.Show(
-                        result!.Message,
-                        result.Success ? "Success" : "Error",
-                        MessageBoxButtons.OK,
-                        result.Success
-                            ? MessageBoxIcon.Information
-                            : MessageBoxIcon.Error
-                    );
+                    Console.WriteLine(result!.Message);
+                    Environment.Exit(result.Success ? 0 : 1);
+                }
 
-                    context.ExitThread();
-                });
-
-                Application.Run(context);
-                return;
+                Console.Error.WriteLine($"Unknown command: {args[0]}");
+                Environment.Exit(1);
             }
 
-            //Uncomment for testing (Migration testing)
-            //Drop.Run(DB.ExecuteNonQuery);
-            //Create.Run(DB.ExecuteScalar, DB.ExecuteNonQuery);
-           // return;
-
             // ----------------------------
-            // Start WinForms UI
+            // GUI MODE
             // ----------------------------
             ApplicationConfiguration.Initialize();
-
-           
             Application.Run(new Welcome());
         }
+
     }
 }

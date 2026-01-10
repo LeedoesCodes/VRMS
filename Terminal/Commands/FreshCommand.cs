@@ -8,7 +8,7 @@ public class FreshCommand : ICommand
 {
     public string Name => "fresh";
 
-    public CommandResult Execute()
+    public CommandResult Execute(string[] args)
     {
         try
         {

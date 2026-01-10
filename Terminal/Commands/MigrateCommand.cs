@@ -8,7 +8,7 @@ public class MigrateCommand : ICommand
 {
     public string Name => "migrate";
 
-    public CommandResult Execute()
+    public CommandResult Execute(string[] args)
     {
         try
         {
