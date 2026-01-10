@@ -9,6 +9,8 @@ public static class M_1012_CreateDamageReportProcedures
                                       {SP_DamageReports_GetById.Sql()}
                                       {SP_DamageReports_GetByInspection.Sql()}
                                       {SP_DamageReports_Approve.Sql()}
+                                      {SP_DamageReports_SetPhoto.Sql()}
+                                      {SP_DamageReports_ResetPhoto.Sql()}
                                       """;
 
     public static string Drop() => """
@@ -16,5 +18,7 @@ public static class M_1012_CreateDamageReportProcedures
                                    DROP PROCEDURE IF EXISTS sp_damage_reports_get_by_id;
                                    DROP PROCEDURE IF EXISTS sp_damage_reports_get_by_inspection;
                                    DROP PROCEDURE IF EXISTS sp_damage_reports_approve;
+                                   DROP PROCEDURE IF EXISTS sp_damage_reports_set_photo;
+                                   DROP PROCEDURE IF EXISTS sp_damage_reports_reset_photo;
                                    """;
 }

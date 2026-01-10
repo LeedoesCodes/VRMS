@@ -72,22 +72,17 @@ public class DamageService
 
     public int CreateDamageReport(
         int vehicleInspectionId,
-        int damageId,
-        string? photoPath = null
+        int damageId
     )
     {
         // Ensure damage exists
         GetDamageById(damageId);
 
-        var resolvedPhotoPath = string.IsNullOrWhiteSpace(photoPath)
-            ? DefaultDamagePhotoPath
-            : photoPath;
-
         var table = DB.ExecuteQuery($"""
                                          CALL sp_damage_reports_create(
                                              {vehicleInspectionId},
                                              {damageId},
-                                             '{Sql.Esc(resolvedPhotoPath)}'
+                                             '{Sql.Esc(DefaultDamagePhotoPath)}'
                                          );
                                      """);
 
@@ -131,6 +126,27 @@ public class DamageService
 
         return list;
     }
+    
+    public void SetDamageReportPhoto(
+        int damageReportId,
+        string photoPath
+    )
+    {
+        DB.ExecuteNonQuery($"""
+                                CALL sp_damage_reports_set_photo(
+                                    {damageReportId},
+                                    '{Sql.Esc(photoPath)}'
+                                );
+                            """);
+    }
+    
+    public void DeleteDamageReportPhoto(int damageReportId)
+    {
+        DB.ExecuteNonQuery($"""
+                                CALL sp_damage_reports_reset_photo({damageReportId});
+                            """);
+    }
+
 
     // -------------------------------------------------
     // MAPPING

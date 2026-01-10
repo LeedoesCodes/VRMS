@@ -8,6 +8,9 @@ namespace VRMS.Services.Vehicle;
 
 public class VehicleService
 {
+    private const string StorageRoot = "Storage";
+    private const string VehicleImageFolder = "Vehicles";
+    
     // -------------------------------------------------
     // VEHICLES
     // -------------------------------------------------
@@ -345,20 +348,57 @@ public class VehicleService
     // VEHICLE IMAGES
     // -------------------------------------------------
 
-    public void AddVehicleImage(int vehicleId, string imagePath)
+    public void AddVehicleImage(
+        int vehicleId,
+        Stream imageStream,
+        string originalFileName
+    )
     {
         EnsureNotRetired(GetVehicleById(vehicleId));
 
+        var extension = Path.GetExtension(originalFileName);
+        if (string.IsNullOrWhiteSpace(extension))
+            throw new InvalidOperationException("Invalid vehicle image file.");
+
+        var directory = GetVehicleImageDirectory(vehicleId);
+        Directory.CreateDirectory(directory);
+
+        var fileName = $"{Guid.NewGuid()}{extension}";
+        var relativePath = Path.Combine(
+            VehicleImageFolder,
+            vehicleId.ToString(),
+            fileName
+        );
+
+        var fullPath = Path.Combine(StorageRoot, relativePath);
+
+        using var fs = new FileStream(fullPath, FileMode.Create, FileAccess.Write);
+        imageStream.CopyTo(fs);
+
         DB.ExecuteNonQuery($"""
-            CALL sp_vehicle_images_create(
-                {vehicleId},
-                '{Sql.Esc(imagePath)}'
-            );
-        """);
+                                CALL sp_vehicle_images_create(
+                                    {vehicleId},
+                                    '{Sql.Esc(relativePath)}'
+                                );
+                            """);
     }
 
     public void RemoveVehicleImage(int imageId)
     {
+        var table = DB.ExecuteQuery(
+            $"CALL sp_vehicle_images_get_by_id({imageId});"
+        );
+
+        if (table.Rows.Count == 0)
+            return;
+
+        var row = table.Rows[0];
+        var imagePath = row["image_path"].ToString()!;
+
+        var fullPath = Path.Combine(StorageRoot, imagePath);
+        if (File.Exists(fullPath))
+            File.Delete(fullPath);
+
         DB.ExecuteNonQuery($"CALL sp_vehicle_images_delete({imageId});");
     }
 
@@ -472,4 +512,14 @@ public class VehicleService
                 : Convert.ToDateTime(row["end_date"])
         };
     }
+    
+    private static string GetVehicleImageDirectory(int vehicleId)
+    {
+        return Path.Combine(
+            StorageRoot,
+            VehicleImageFolder,
+            vehicleId.ToString()
+        );
+    }
+    
 }
