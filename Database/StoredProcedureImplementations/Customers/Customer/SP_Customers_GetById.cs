@@ -15,6 +15,7 @@ public static class SP_Customers_GetById
                                           last_name,
                                           email,
                                           phone,
+                                          address,
                                           date_of_birth,
                                           customer_category,
                                           is_frequent,
