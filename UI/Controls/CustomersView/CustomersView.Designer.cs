@@ -45,7 +45,6 @@
             btnClear = new Button();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
-            label14 = new Label();
             label13 = new Label();
             lblAgeCheck = new Label();
             dtpDOB = new DateTimePicker();
@@ -65,6 +64,10 @@
             picCustomerPhoto = new PictureBox();
             tabPage2 = new TabPage();
             groupBox3 = new GroupBox();
+            label7 = new Label();
+            label6 = new Label();
+            picLicenseBack = new PictureBox();
+            picLicenseFront = new PictureBox();
             checkBox1 = new CheckBox();
             btnCheckDrivingRecord = new Button();
             btnCaptureLicense = new Button();
@@ -100,6 +103,8 @@
             ((System.ComponentModel.ISupportInitialize)picCustomerPhoto).BeginInit();
             tabPage2.SuspendLayout();
             groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picLicenseBack).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picLicenseFront).BeginInit();
             groupBox2.SuspendLayout();
             tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvHistory).BeginInit();
@@ -252,7 +257,6 @@
             btnManageAccount.TabIndex = 3;
             btnManageAccount.Text = "🔐 Account";
             btnManageAccount.UseVisualStyleBackColor = false;
-            btnManageAccount.Click += BtnManageAccount_Click;
             // 
             // btnDelete
             // 
@@ -284,7 +288,6 @@
             btnClear.TabIndex = 2;
             btnClear.Text = "🔄 Clear";
             btnClear.UseVisualStyleBackColor = false;
-           
             // 
             // tabControl1
             // 
@@ -297,14 +300,13 @@
             tabControl1.Margin = new Padding(4, 5, 4, 5);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(924, 894);
+            tabControl1.Size = new Size(920, 894);
             tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
             tabPage1.AutoScroll = true;
             tabPage1.BackColor = Color.White;
-            tabPage1.Controls.Add(label14);
             tabPage1.Controls.Add(label13);
             tabPage1.Controls.Add(lblAgeCheck);
             tabPage1.Controls.Add(dtpDOB);
@@ -327,26 +329,15 @@
             tabPage1.Margin = new Padding(3, 4, 3, 4);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(20);
-            tabPage1.Size = new Size(916, 858);
+            tabPage1.Size = new Size(912, 858);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Personal Information";
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label14.ForeColor = Color.FromArgb(30, 60, 90);
-            label14.Location = new Point(20, 20);
-            label14.Name = "label14";
-            label14.Size = new Size(151, 23);
-            label14.TabIndex = 18;
-            label14.Text = "Basic Information";
             // 
             // label13
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            label13.Location = new Point(24, 370);
+            label13.Location = new Point(24, 305);
             label13.Name = "label13";
             label13.Size = new Size(108, 23);
             label13.TabIndex = 17;
@@ -357,7 +348,7 @@
             lblAgeCheck.AutoSize = true;
             lblAgeCheck.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             lblAgeCheck.ForeColor = Color.FromArgb(155, 89, 182);
-            lblAgeCheck.Location = new Point(350, 400);
+            lblAgeCheck.Location = new Point(350, 335);
             lblAgeCheck.Name = "lblAgeCheck";
             lblAgeCheck.Size = new Size(49, 23);
             lblAgeCheck.TabIndex = 16;
@@ -366,7 +357,7 @@
             // dtpDOB
             // 
             dtpDOB.Font = new Font("Segoe UI", 10F);
-            dtpDOB.Location = new Point(25, 401);
+            dtpDOB.Location = new Point(25, 336);
             dtpDOB.Margin = new Padding(3, 4, 3, 4);
             dtpDOB.Name = "dtpDOB";
             dtpDOB.Size = new Size(291, 30);
@@ -379,7 +370,7 @@
             btnCamera.FlatStyle = FlatStyle.Flat;
             btnCamera.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnCamera.ForeColor = Color.White;
-            btnCamera.Location = new Point(261, 175);
+            btnCamera.Location = new Point(261, 124);
             btnCamera.Margin = new Padding(3, 4, 3, 4);
             btnCamera.Name = "btnCamera";
             btnCamera.Size = new Size(100, 44);
@@ -395,7 +386,7 @@
             btnUploadPhoto.FlatStyle = FlatStyle.Flat;
             btnUploadPhoto.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnUploadPhoto.ForeColor = Color.White;
-            btnUploadPhoto.Location = new Point(261, 124);
+            btnUploadPhoto.Location = new Point(261, 73);
             btnUploadPhoto.Margin = new Padding(3, 4, 3, 4);
             btnUploadPhoto.Name = "btnUploadPhoto";
             btnUploadPhoto.Size = new Size(100, 44);
@@ -408,7 +399,7 @@
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            label12.Location = new Point(405, 280);
+            label12.Location = new Point(405, 229);
             label12.Name = "label12";
             label12.Size = new Size(95, 23);
             label12.TabIndex = 12;
@@ -419,7 +410,7 @@
             txtLastName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtLastName.BorderStyle = BorderStyle.FixedSingle;
             txtLastName.Font = new Font("Segoe UI", 10F);
-            txtLastName.Location = new Point(411, 304);
+            txtLastName.Location = new Point(411, 253);
             txtLastName.Margin = new Padding(3, 4, 3, 4);
             txtLastName.Name = "txtLastName";
             txtLastName.Size = new Size(465, 30);
@@ -430,7 +421,7 @@
             txtPhone.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtPhone.BorderStyle = BorderStyle.FixedSingle;
             txtPhone.Font = new Font("Segoe UI", 10F);
-            txtPhone.Location = new Point(25, 614);
+            txtPhone.Location = new Point(25, 549);
             txtPhone.Margin = new Padding(3, 4, 3, 4);
             txtPhone.Name = "txtPhone";
             txtPhone.Size = new Size(851, 30);
@@ -440,7 +431,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            label5.Location = new Point(24, 590);
+            label5.Location = new Point(24, 525);
             label5.Name = "label5";
             label5.Size = new Size(132, 23);
             label5.TabIndex = 8;
@@ -451,7 +442,7 @@
             txtEmail.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtEmail.BorderStyle = BorderStyle.FixedSingle;
             txtEmail.Font = new Font("Segoe UI", 10F);
-            txtEmail.Location = new Point(25, 554);
+            txtEmail.Location = new Point(25, 489);
             txtEmail.Margin = new Padding(3, 4, 3, 4);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(851, 30);
@@ -461,7 +452,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            label4.Location = new Point(24, 530);
+            label4.Location = new Point(24, 465);
             label4.Name = "label4";
             label4.Size = new Size(55, 23);
             label4.TabIndex = 6;
@@ -472,7 +463,7 @@
             txtAddress.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtAddress.BorderStyle = BorderStyle.FixedSingle;
             txtAddress.Font = new Font("Segoe UI", 10F);
-            txtAddress.Location = new Point(28, 452);
+            txtAddress.Location = new Point(28, 387);
             txtAddress.Margin = new Padding(3, 4, 3, 4);
             txtAddress.Multiline = true;
             txtAddress.Name = "txtAddress";
@@ -483,7 +474,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            label3.Location = new Point(24, 428);
+            label3.Location = new Point(24, 363);
             label3.Name = "label3";
             label3.Size = new Size(74, 23);
             label3.TabIndex = 4;
@@ -493,7 +484,7 @@
             // 
             txtFirstName.BorderStyle = BorderStyle.FixedSingle;
             txtFirstName.Font = new Font("Segoe UI", 10F);
-            txtFirstName.Location = new Point(28, 304);
+            txtFirstName.Location = new Point(28, 253);
             txtFirstName.Margin = new Padding(3, 4, 3, 4);
             txtFirstName.Name = "txtFirstName";
             txtFirstName.Size = new Size(337, 30);
@@ -503,7 +494,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            label2.Location = new Point(28, 280);
+            label2.Location = new Point(28, 229);
             label2.Name = "label2";
             label2.Size = new Size(97, 23);
             label2.TabIndex = 2;
@@ -514,7 +505,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             label1.ForeColor = Color.FromArgb(30, 60, 90);
-            label1.Location = new Point(28, 62);
+            label1.Location = new Point(28, 11);
             label1.Name = "label1";
             label1.Size = new Size(135, 23);
             label1.TabIndex = 1;
@@ -524,7 +515,7 @@
             // 
             picCustomerPhoto.BackColor = Color.White;
             picCustomerPhoto.BorderStyle = BorderStyle.FixedSingle;
-            picCustomerPhoto.Location = new Point(28, 96);
+            picCustomerPhoto.Location = new Point(28, 45);
             picCustomerPhoto.Margin = new Padding(3, 4, 3, 4);
             picCustomerPhoto.Name = "picCustomerPhoto";
             picCustomerPhoto.Size = new Size(226, 180);
@@ -542,13 +533,17 @@
             tabPage2.Margin = new Padding(3, 4, 3, 4);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(20);
-            tabPage2.Size = new Size(916, 858);
+            tabPage2.Size = new Size(912, 858);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Driver's License";
             // 
             // groupBox3
             // 
             groupBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox3.Controls.Add(label7);
+            groupBox3.Controls.Add(label6);
+            groupBox3.Controls.Add(picLicenseBack);
+            groupBox3.Controls.Add(picLicenseFront);
             groupBox3.Controls.Add(checkBox1);
             groupBox3.Controls.Add(btnCheckDrivingRecord);
             groupBox3.Controls.Add(btnCaptureLicense);
@@ -561,6 +556,42 @@
             groupBox3.TabIndex = 1;
             groupBox3.TabStop = false;
             groupBox3.Text = "Verification Actions";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(687, 26);
+            label7.Name = "label7";
+            label7.Size = new Size(49, 25);
+            label7.TabIndex = 6;
+            label7.Text = "Back";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(424, 26);
+            label6.Name = "label6";
+            label6.Size = new Size(57, 25);
+            label6.TabIndex = 5;
+            label6.Text = "Front";
+            // 
+            // picLicenseBack
+            // 
+            picLicenseBack.Location = new Point(606, 54);
+            picLicenseBack.Name = "picLicenseBack";
+            picLicenseBack.Size = new Size(210, 137);
+            picLicenseBack.SizeMode = PictureBoxSizeMode.Zoom;
+            picLicenseBack.TabIndex = 4;
+            picLicenseBack.TabStop = false;
+            // 
+            // picLicenseFront
+            // 
+            picLicenseFront.Location = new Point(351, 54);
+            picLicenseFront.Name = "picLicenseFront";
+            picLicenseFront.Size = new Size(210, 137);
+            picLicenseFront.SizeMode = PictureBoxSizeMode.Zoom;
+            picLicenseFront.TabIndex = 3;
+            picLicenseFront.TabStop = false;
             // 
             // checkBox1
             // 
@@ -584,7 +615,7 @@
             btnCheckDrivingRecord.Location = new Point(44, 120);
             btnCheckDrivingRecord.Margin = new Padding(3, 4, 3, 4);
             btnCheckDrivingRecord.Name = "btnCheckDrivingRecord";
-            btnCheckDrivingRecord.Size = new Size(268, 52);
+            btnCheckDrivingRecord.Size = new Size(216, 52);
             btnCheckDrivingRecord.TabIndex = 1;
             btnCheckDrivingRecord.Text = "🛡️ Check Driving Record";
             btnCheckDrivingRecord.UseVisualStyleBackColor = false;
@@ -600,7 +631,7 @@
             btnCaptureLicense.Location = new Point(44, 54);
             btnCaptureLicense.Margin = new Padding(3, 4, 3, 4);
             btnCaptureLicense.Name = "btnCaptureLicense";
-            btnCaptureLicense.Size = new Size(268, 52);
+            btnCaptureLicense.Size = new Size(216, 52);
             btnCaptureLicense.TabIndex = 0;
             btnCaptureLicense.Text = "📷 Capture License Photo";
             btnCaptureLicense.UseVisualStyleBackColor = false;
@@ -716,7 +747,7 @@
             tabPage3.Margin = new Padding(3, 4, 3, 4);
             tabPage3.Name = "tabPage3";
             tabPage3.Padding = new Padding(20);
-            tabPage3.Size = new Size(916, 858);
+            tabPage3.Size = new Size(912, 858);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "History & Status";
             // 
@@ -886,6 +917,8 @@
             tabPage2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picLicenseBack).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picLicenseFront).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             tabPage3.ResumeLayout(false);
@@ -952,7 +985,10 @@
         private System.Windows.Forms.Label lblAgeCheck;
         private System.Windows.Forms.DateTimePicker dtpDOB;
         private System.Windows.Forms.DataGridView dgvHistory;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button btnEmergencyContacts;
+        private Label label7;
+        private Label label6;
+        private PictureBox picLicenseBack;
+        private PictureBox picLicenseFront;
     }
 }

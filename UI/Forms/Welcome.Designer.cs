@@ -1,5 +1,4 @@
-﻿// UI/Forms/Welcome.Designer.cs
-namespace VRMS.UI.Forms
+﻿namespace VRMS.UI.Forms
 {
     partial class Welcome
     {
@@ -84,11 +83,17 @@ namespace VRMS.UI.Forms
             this.Controls.Add(this.panelLogin);
             this.Controls.Add(this.panelLeft);
             this.Controls.Add(this.panelRight);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+
+          
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+
             this.Name = "Welcome";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Welcome";
+            this.Text = "VRMS - Welcome";
+
+            
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+
             this.panelLeft.ResumeLayout(false);
             this.ResumeLayout(false);
         }
