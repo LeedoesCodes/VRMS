@@ -6,7 +6,8 @@ using System.Windows.Forms;
 using VRMS.Enums;
 using VRMS.Models.Customers;
 using VRMS.Services.Customer;
-using VRMS.UI.Forms.Customer;
+using VRMS.UI.Forms.Customer; // DriverLicenseCaptureForm
+using VRMS.Forms;             // CameraForm
 
 namespace VRMS.Controls
 {
@@ -16,6 +17,9 @@ namespace VRMS.Controls
         private readonly CustomerService _customerService;
 
         private Customer? _selectedCustomer;
+
+        // UI-only profile image preview
+        private Image? _profilePreviewImage;
 
         public CustomersView()
         {
@@ -48,15 +52,19 @@ namespace VRMS.Controls
         {
             btnSave.Click += BtnSave_Click;
             btnDelete.Click += BtnDelete_Click;
-            btnClear.Click += (_, _) => ClearForm();
+            btnClear.Click += BtnClear_Click;
             btnManageAccount.Click += BtnManageAccount_Click;
 
             dgvCustomers.SelectionChanged += DgvCustomers_SelectionChanged;
             dtpDOB.ValueChanged += (_, _) => UpdateAgeLabel();
 
-            // ✅ UI-only integrations
+            // License & verification
             btnCaptureLicense.Click += BtnCaptureLicense_Click;
-            button1.Click += BtnCheckDrivingRecord_Click; // "Check Driving Record"
+            button1.Click += BtnCheckDrivingRecord_Click;
+
+            // Profile photo (UI only)
+            btnCamera.Click += BtnProfileCamera_Click;
+            btnUploadPhoto.Click += BtnBrowseProfilePhoto_Click;
         }
 
         // =====================================================
@@ -65,10 +73,8 @@ namespace VRMS.Controls
 
         private void LoadCustomers()
         {
-            var customers = _customerService.GetAllCustomers();
-
             dgvCustomers.AutoGenerateColumns = false;
-            dgvCustomers.DataSource = customers;
+            dgvCustomers.DataSource = _customerService.GetAllCustomers();
 
             if (dgvCustomers.Columns.Count == 0)
             {
@@ -96,10 +102,8 @@ namespace VRMS.Controls
             _selectedCustomer =
                 dgvCustomers.SelectedRows[0].DataBoundItem as Customer;
 
-            if (_selectedCustomer == null)
-                return;
-
-            PopulateForm(_selectedCustomer);
+            if (_selectedCustomer != null)
+                PopulateForm(_selectedCustomer);
         }
 
         // =====================================================
@@ -133,14 +137,12 @@ namespace VRMS.Controls
             if (_selectedCustomer == null)
                 return;
 
-            var confirm = MessageBox.Show(
+            if (MessageBox.Show(
                 "Delete this customer?",
                 "Confirm",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning
-            );
-
-            if (confirm != DialogResult.Yes)
+            ) != DialogResult.Yes)
                 return;
 
             _customerService.DeleteCustomer(_selectedCustomer.Id);
@@ -186,50 +188,135 @@ namespace VRMS.Controls
         }
 
         // =====================================================
-        // UI ACTIONS (FRONT-END ONLY)
+        // UI ACTIONS – LICENSE & VERIFICATION
         // =====================================================
 
         private void BtnCaptureLicense_Click(object? sender, EventArgs e)
         {
-            using (var form = new DriverLicenseCaptureForm())
-            {
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    MessageBox.Show(
-                        "Driver's license image captured successfully.",
-                        "Capture Complete",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                    );
+            using var form = new DriverLicenseCaptureForm();
 
-                    // Visual feedback only
-                    btnCaptureLicense.BackColor = Color.FromArgb(46, 204, 113);
-                }
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show(
+                    "Driver's license image captured successfully.",
+                    "Capture Complete",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                btnCaptureLicense.BackColor = Color.FromArgb(46, 204, 113);
             }
         }
 
         private void BtnCheckDrivingRecord_Click(object? sender, EventArgs e)
         {
             var result = MessageBox.Show(
-                "No external driving record system connected.\n\n" +
-                "Is the customer cleared to rent?",
+                "No external driving record system connected.\n\nIs the customer cleared to rent?",
                 "Driving Record Verification",
                 MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Question
             );
 
             if (result == DialogResult.Yes)
-            {
                 MessageBox.Show("✔ Driving Record: Cleared");
-            }
             else if (result == DialogResult.No)
-            {
                 MessageBox.Show("❌ Driving Record: Not Cleared");
+        }
+
+        // =====================================================
+        // UI ACTIONS – PROFILE PHOTO (CORRECTLY USES CameraForm)
+        // =====================================================
+
+        private void BtnProfileCamera_Click(object? sender, EventArgs e)
+        {
+            using (var form = new CameraForm())
+            {
+                if (form.ShowDialog() == DialogResult.OK && form.CapturedImage != null)
+                {
+                    _profilePreviewImage = form.CapturedImage;
+                    picCustomerPhoto.Image = _profilePreviewImage;
+
+                    MessageBox.Show(
+                        "Profile photo captured successfully.",
+                        "Camera",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
+                }
+            }
+        }
+
+        private void BtnBrowseProfilePhoto_Click(object? sender, EventArgs e)
+        {
+            using var dialog = new OpenFileDialog
+            {
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp",
+                Title = "Select Profile Photo"
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                _profilePreviewImage = Image.FromFile(dialog.FileName);
+                picCustomerPhoto.Image = _profilePreviewImage;
             }
         }
 
         // =====================================================
-        // FORM HELPERS
+        // CLEAR / NEW
+        // =====================================================
+
+        private void BtnClear_Click(object? sender, EventArgs e)
+        {
+            ClearForm();
+
+            MessageBox.Show(
+                "Ready to add a new customer.",
+                "New Customer",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+        }
+
+        private void ClearForm()
+        {
+            _selectedCustomer = null;
+
+            ClearTextBoxes(this);
+
+            cbCustomerType.SelectedIndex = 0;
+
+            dtpDOB.Value = DateTime.Today.AddYears(-21);
+            dtpIssueDate.Value = DateTime.Today;
+            dtpExpiryDate.Value = DateTime.Today.AddYears(5);
+
+            chkLoyalty.Checked = false;
+            chkBlacklist.Checked = false;
+            checkBox1.Checked = false; // International License
+
+            picCustomerPhoto.Image = null;
+            _profilePreviewImage = null;
+
+            btnCaptureLicense.BackColor = SystemColors.Control;
+
+            lblAgeCheck.Text = "Age:";
+            lblAgeCheck.ForeColor = Color.DimGray;
+
+            dgvCustomers.ClearSelection();
+        }
+
+        private void ClearTextBoxes(Control parent)
+        {
+            foreach (Control control in parent.Controls)
+            {
+                if (control is TextBox tb)
+                    tb.Clear();
+                else
+                    ClearTextBoxes(control);
+            }
+        }
+
+        // =====================================================
+        // HELPERS
         // =====================================================
 
         private void PopulateForm(Customer c)
@@ -239,33 +326,9 @@ namespace VRMS.Controls
             txtEmail.Text = c.Email;
             txtPhone.Text = c.Phone;
             dtpDOB.Value = c.DateOfBirth;
-
             cbCustomerType.SelectedItem = c.CustomerType;
 
-            var license = _driversLicenseService.GetDriversLicenseById(c.DriversLicenseId);
-            txtLicenseNum.Text = license.LicenseNumber;
-            txtLicenseState.Text = license.IssuingCountry;
-            dtpIssueDate.Value = license.IssueDate;
-            dtpExpiryDate.Value = license.ExpiryDate;
-
             UpdateAgeLabel();
-        }
-
-        private void ClearForm()
-        {
-            _selectedCustomer = null;
-
-            foreach (var tb in Controls.OfType<TextBox>())
-                tb.Clear();
-
-            cbCustomerType.SelectedIndex = 0;
-
-            dtpDOB.Value = DateTime.Today.AddYears(-21);
-            dtpIssueDate.Value = DateTime.Today;
-            dtpExpiryDate.Value = DateTime.Today.AddYears(5);
-
-            picCustomerPhoto.Image = null;
-            dgvCustomers.ClearSelection();
         }
 
         private bool ValidateForm()

@@ -220,6 +220,7 @@
             btnSave.TabIndex = 0;
             btnSave.Text = "💾 Save Changes";
             btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += BtnSave_Click;
             // 
             // btnManageAccount
             // 
@@ -235,6 +236,7 @@
             btnManageAccount.TabIndex = 3;
             btnManageAccount.Text = "🔐 Manage Account";
             btnManageAccount.UseVisualStyleBackColor = false;
+            btnManageAccount.Click += BtnManageAccount_Click;
             // 
             // btnDelete
             // 
@@ -250,6 +252,7 @@
             btnDelete.TabIndex = 1;
             btnDelete.Text = "🗑️ Delete";
             btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Click += BtnDelete_Click;
             // 
             // btnClear
             // 
@@ -279,7 +282,7 @@
             tabControl1.Margin = new Padding(4, 5, 4, 5);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(927, 894);
+            tabControl1.Size = new Size(926, 894);
             tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -307,7 +310,7 @@
             tabPage1.Margin = new Padding(3, 4, 3, 4);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(10, 12, 10, 12);
-            tabPage1.Size = new Size(919, 841);
+            tabPage1.Size = new Size(918, 841);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Personal Profile";
             tabPage1.UseVisualStyleBackColor = true;
@@ -352,6 +355,7 @@
             btnCamera.TabIndex = 14;
             btnCamera.Text = "📷 Camera";
             btnCamera.UseVisualStyleBackColor = true;
+            btnCamera.Click += BtnProfileCamera_Click;
             // 
             // btnUploadPhoto
             // 
@@ -365,6 +369,7 @@
             btnUploadPhoto.TabIndex = 13;
             btnUploadPhoto.Text = "📂 Upload";
             btnUploadPhoto.UseVisualStyleBackColor = false;
+            btnUploadPhoto.Click += BtnBrowseProfilePhoto_Click;
             // 
             // label12
             // 
@@ -553,7 +558,7 @@
             tabPage2.Margin = new Padding(3, 4, 3, 4);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(10, 12, 10, 12);
-            tabPage2.Size = new Size(919, 841);
+            tabPage2.Size = new Size(918, 841);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Driver's License & Verification";
             tabPage2.UseVisualStyleBackColor = true;
@@ -715,7 +720,7 @@
             tabPage3.Margin = new Padding(3, 4, 3, 4);
             tabPage3.Name = "tabPage3";
             tabPage3.Padding = new Padding(10, 12, 10, 12);
-            tabPage3.Size = new Size(919, 841);
+            tabPage3.Size = new Size(918, 841);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "History & Status";
             tabPage3.UseVisualStyleBackColor = true;
