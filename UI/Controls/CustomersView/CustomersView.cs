@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using VRMS.Enums;
 using VRMS.Models.Customers;
 using VRMS.Services.Customer;
-using VRMS.UI.Forms.Customer; // DriverLicenseCaptureForm
-using VRMS.Forms;             // CameraForm
+using VRMS.UI.Forms.Customer;
 
 namespace VRMS.Controls
 {
@@ -60,7 +58,7 @@ namespace VRMS.Controls
 
             // License & verification
             btnCaptureLicense.Click += BtnCaptureLicense_Click;
-            button1.Click += BtnCheckDrivingRecord_Click;
+            btnCheckDrivingRecord.Click += BtnCheckDrivingRecord_Click;
 
             // Profile photo (UI only)
             btnCamera.Click += BtnProfileCamera_Click;
@@ -127,8 +125,12 @@ namespace VRMS.Controls
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
 
@@ -182,13 +184,12 @@ namespace VRMS.Controls
                 txtLastName.Text,
                 txtEmail.Text,
                 txtPhone.Text,
-                (CustomerType)cbCustomerType.SelectedItem!,
-                _selectedCustomer.PhotoPath
+                (CustomerType)cbCustomerType.SelectedItem!
             );
         }
 
         // =====================================================
-        // UI ACTIONS – LICENSE & VERIFICATION
+        // UI ACTIONS
         // =====================================================
 
         private void BtnCaptureLicense_Click(object? sender, EventArgs e)
@@ -224,25 +225,21 @@ namespace VRMS.Controls
         }
 
         // =====================================================
-        // UI ACTIONS – PROFILE PHOTO (CORRECTLY USES CameraForm)
+        // PROFILE PHOTO (UI ONLY)
         // =====================================================
 
         private void BtnProfileCamera_Click(object? sender, EventArgs e)
         {
-            using (var form = new CameraForm())
-            {
-                if (form.ShowDialog() == DialogResult.OK && form.CapturedImage != null)
-                {
-                    _profilePreviewImage = form.CapturedImage;
-                    picCustomerPhoto.Image = _profilePreviewImage;
+            using var form = new DriverLicenseCaptureForm();
 
-                    MessageBox.Show(
-                        "Profile photo captured successfully.",
-                        "Camera",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                    );
-                }
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show(
+                    "Profile photo captured (preview only).",
+                    "Camera",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
             }
         }
 
@@ -291,7 +288,7 @@ namespace VRMS.Controls
 
             chkLoyalty.Checked = false;
             chkBlacklist.Checked = false;
-            checkBox1.Checked = false; // International License
+            checkBox1.Checked = false;
 
             picCustomerPhoto.Image = null;
             _profilePreviewImage = null;

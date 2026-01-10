@@ -28,714 +28,699 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmergencyContactsForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.panelHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.panelContent = new System.Windows.Forms.Panel();
-            this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.panelContactList = new System.Windows.Forms.Panel();
-            this.dgvContacts = new System.Windows.Forms.DataGridView();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFullName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRelationship = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPhoneCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colActions = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.panelListHeader = new System.Windows.Forms.Panel();
-            this.lblContactCount = new System.Windows.Forms.Label();
-            this.lblCustomerName = new System.Windows.Forms.Label();
-            this.panelContactDetails = new System.Windows.Forms.Panel();
-            this.panelContactForm = new System.Windows.Forms.Panel();
-            this.txtNotes = new System.Windows.Forms.TextBox();
-            this.lblNotes = new System.Windows.Forms.Label();
-            this.cmbRelationship = new System.Windows.Forms.ComboBox();
-            this.lblRelationship = new System.Windows.Forms.Label();
-            this.txtLastName = new System.Windows.Forms.TextBox();
-            this.lblLastName = new System.Windows.Forms.Label();
-            this.txtFirstName = new System.Windows.Forms.TextBox();
-            this.lblFirstName = new System.Windows.Forms.Label();
-            this.panelDetailsHeader = new System.Windows.Forms.Panel();
-            this.lblDetailsTitle = new System.Windows.Forms.Label();
-            this.panelPhoneNumbers = new System.Windows.Forms.Panel();
-            this.dgvPhoneNumbers = new System.Windows.Forms.DataGridView();
-            this.colPhoneId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPhoneType = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colPhoneNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrimary = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colRemovePhone = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.btnAddPhone = new System.Windows.Forms.Button();
-            this.lblPhoneNumbers = new System.Windows.Forms.Label();
-            this.panelContactActions = new System.Windows.Forms.Panel();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.btnDeleteContact = new System.Windows.Forms.Button();
-            this.btnUpdateContact = new System.Windows.Forms.Button();
-            this.btnSaveContact = new System.Windows.Forms.Button();
-            this.panelFooter = new System.Windows.Forms.Panel();
-            this.btnAddNew = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.panelHeader.SuspendLayout();
-            this.panelContent.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
-            this.splitContainer.Panel1.SuspendLayout();
-            this.splitContainer.Panel2.SuspendLayout();
-            this.splitContainer.SuspendLayout();
-            this.panelContactList.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvContacts)).BeginInit();
-            this.panelListHeader.SuspendLayout();
-            this.panelContactDetails.SuspendLayout();
-            this.panelContactForm.SuspendLayout();
-            this.panelDetailsHeader.SuspendLayout();
-            this.panelPhoneNumbers.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPhoneNumbers)).BeginInit();
-            this.panelContactActions.SuspendLayout();
-            this.panelFooter.SuspendLayout();
-            this.SuspendLayout();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            panelHeader = new Panel();
+            lblTitle = new Label();
+            panelContent = new Panel();
+            splitContainer = new SplitContainer();
+            panelContactList = new Panel();
+            dgvContacts = new DataGridView();
+            colId = new DataGridViewTextBoxColumn();
+            colFullName = new DataGridViewTextBoxColumn();
+            colRelationship = new DataGridViewTextBoxColumn();
+            colPhoneCount = new DataGridViewTextBoxColumn();
+            colActions = new DataGridViewButtonColumn();
+            panelListHeader = new Panel();
+            lblContactCount = new Label();
+            lblCustomerName = new Label();
+            panelContactDetails = new Panel();
+            panelContactActions = new Panel();
+            btnClear = new Button();
+            btnDeleteContact = new Button();
+            btnUpdateContact = new Button();
+            btnSaveContact = new Button();
+            panelPhoneNumbers = new Panel();
+            dgvPhoneNumbers = new DataGridView();
+            colPhoneId = new DataGridViewTextBoxColumn();
+            colPhoneType = new DataGridViewComboBoxColumn();
+            colPhoneNumber = new DataGridViewTextBoxColumn();
+            colPrimary = new DataGridViewCheckBoxColumn();
+            colRemovePhone = new DataGridViewButtonColumn();
+            btnAddPhone = new Button();
+            lblPhoneNumbers = new Label();
+            panelContactForm = new Panel();
+            txtNotes = new TextBox();
+            lblNotes = new Label();
+            cmbRelationship = new ComboBox();
+            lblRelationship = new Label();
+            txtLastName = new TextBox();
+            lblLastName = new Label();
+            txtFirstName = new TextBox();
+            lblFirstName = new Label();
+            panelDetailsHeader = new Panel();
+            lblDetailsTitle = new Label();
+            panelFooter = new Panel();
+            btnAddNew = new Button();
+            btnClose = new Button();
+            panelHeader.SuspendLayout();
+            panelContent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer).BeginInit();
+            splitContainer.Panel1.SuspendLayout();
+            splitContainer.Panel2.SuspendLayout();
+            splitContainer.SuspendLayout();
+            panelContactList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvContacts).BeginInit();
+            panelListHeader.SuspendLayout();
+            panelContactDetails.SuspendLayout();
+            panelContactActions.SuspendLayout();
+            panelPhoneNumbers.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvPhoneNumbers).BeginInit();
+            panelContactForm.SuspendLayout();
+            panelDetailsHeader.SuspendLayout();
+            panelFooter.SuspendLayout();
+            SuspendLayout();
             // 
             // panelHeader
             // 
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            this.panelHeader.Controls.Add(this.lblTitle);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1000, 70);
-            this.panelHeader.TabIndex = 0;
+            panelHeader.BackColor = Color.FromArgb(30, 60, 90);
+            panelHeader.Controls.Add(lblTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1200, 80);
+            panelHeader.TabIndex = 0;
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(20, 15);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(305, 41);
-            this.lblTitle.TabIndex = 1;
-            this.lblTitle.Text = "Emergency Contacts";
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI Semibold", 20F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(25, 20);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(333, 46);
+            lblTitle.TabIndex = 1;
+            lblTitle.Text = "Emergency Contacts";
             // 
             // panelContent
             // 
-            this.panelContent.BackColor = System.Drawing.Color.White;
-            this.panelContent.Controls.Add(this.splitContainer);
-            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(0, 70);
-            this.panelContent.Name = "panelContent";
-            this.panelContent.Padding = new System.Windows.Forms.Padding(20);
-            this.panelContent.Size = new System.Drawing.Size(1000, 560);
-            this.panelContent.TabIndex = 1;
+            panelContent.BackColor = Color.White;
+            panelContent.Controls.Add(splitContainer);
+            panelContent.Dock = DockStyle.Fill;
+            panelContent.Location = new Point(0, 80);
+            panelContent.Name = "panelContent";
+            panelContent.Padding = new Padding(25);
+            panelContent.Size = new Size(1200, 680);
+            panelContent.TabIndex = 1;
             // 
             // splitContainer
             // 
-            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer.Location = new System.Drawing.Point(20, 20);
-            this.splitContainer.Name = "splitContainer";
+            splitContainer.Dock = DockStyle.Fill;
+            splitContainer.Location = new Point(25, 25);
+            splitContainer.Name = "splitContainer";
             // 
             // splitContainer.Panel1
             // 
-            this.splitContainer.Panel1.Controls.Add(this.panelContactList);
-            this.splitContainer.Panel1.Controls.Add(this.panelListHeader);
+            splitContainer.Panel1.Controls.Add(panelContactList);
+            splitContainer.Panel1.Controls.Add(panelListHeader);
+            splitContainer.Panel1.Padding = new Padding(0, 0, 10, 0);
             // 
             // splitContainer.Panel2
             // 
-            this.splitContainer.Panel2.Controls.Add(this.panelContactDetails);
-            this.splitContainer.Size = new System.Drawing.Size(960, 520);
-            this.splitContainer.SplitterDistance = 480;
-            this.splitContainer.SplitterWidth = 10;
-            this.splitContainer.TabIndex = 0;
+            splitContainer.Panel2.Controls.Add(panelContactDetails);
+            splitContainer.Panel2.Padding = new Padding(10, 0, 0, 0);
+            splitContainer.Size = new Size(1150, 630);
+            splitContainer.SplitterDistance = 600;
+            splitContainer.SplitterWidth = 15;
+            splitContainer.TabIndex = 0;
             // 
             // panelContactList
             // 
-            this.panelContactList.Controls.Add(this.dgvContacts);
-            this.panelContactList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContactList.Location = new System.Drawing.Point(0, 60);
-            this.panelContactList.Name = "panelContactList";
-            this.panelContactList.Size = new System.Drawing.Size(480, 460);
-            this.panelContactList.TabIndex = 1;
+            panelContactList.Controls.Add(dgvContacts);
+            panelContactList.Dock = DockStyle.Fill;
+            panelContactList.Location = new Point(0, 70);
+            panelContactList.Name = "panelContactList";
+            panelContactList.Size = new Size(590, 560);
+            panelContactList.TabIndex = 1;
             // 
             // dgvContacts
             // 
-            this.dgvContacts.AllowUserToAddRows = false;
-            this.dgvContacts.AllowUserToDeleteRows = false;
-            this.dgvContacts.AllowUserToResizeRows = false;
-            this.dgvContacts.BackgroundColor = System.Drawing.Color.White;
-            this.dgvContacts.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvContacts.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.dgvContacts.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvContacts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvContacts.ColumnHeadersHeight = 50;
-            this.dgvContacts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvContacts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colId,
-            this.colFullName,
-            this.colRelationship,
-            this.colPhoneCount,
-            this.colActions});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvContacts.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvContacts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvContacts.EnableHeadersVisualStyles = false;
-            this.dgvContacts.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.dgvContacts.Location = new System.Drawing.Point(0, 0);
-            this.dgvContacts.MultiSelect = false;
-            this.dgvContacts.Name = "dgvContacts";
-            this.dgvContacts.ReadOnly = true;
-            this.dgvContacts.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.dgvContacts.RowHeadersVisible = false;
-            this.dgvContacts.RowHeadersWidth = 51;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            this.dgvContacts.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvContacts.RowTemplate.Height = 45;
-            this.dgvContacts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvContacts.Size = new System.Drawing.Size(480, 460);
-            this.dgvContacts.TabIndex = 0;
+            dgvContacts.AllowUserToAddRows = false;
+            dgvContacts.AllowUserToDeleteRows = false;
+            dgvContacts.AllowUserToResizeRows = false;
+            dgvContacts.BackgroundColor = Color.White;
+            dgvContacts.BorderStyle = BorderStyle.None;
+            dgvContacts.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvContacts.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 249, 250);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(30, 60, 90);
+            dataGridViewCellStyle1.Padding = new Padding(15, 10, 15, 10);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(248, 249, 250);
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(30, 60, 90);
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvContacts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvContacts.ColumnHeadersHeight = 55;
+            dgvContacts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvContacts.Columns.AddRange(new DataGridViewColumn[] { colId, colFullName, colRelationship, colPhoneCount, colActions });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.White;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle2.Padding = new Padding(15, 5, 15, 5);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(240, 245, 250);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(30, 60, 90);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvContacts.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvContacts.Dock = DockStyle.Fill;
+            dgvContacts.EnableHeadersVisualStyles = false;
+            dgvContacts.GridColor = Color.FromArgb(240, 240, 240);
+            dgvContacts.Location = new Point(0, 0);
+            dgvContacts.MultiSelect = false;
+            dgvContacts.Name = "dgvContacts";
+            dgvContacts.ReadOnly = true;
+            dgvContacts.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvContacts.RowHeadersVisible = false;
+            dgvContacts.RowHeadersWidth = 51;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle3.Padding = new Padding(15, 10, 15, 10);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(240, 245, 250);
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(30, 60, 90);
+            dgvContacts.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dgvContacts.RowTemplate.Height = 50;
+            dgvContacts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvContacts.Size = new Size(590, 560);
+            dgvContacts.TabIndex = 0;
             // 
             // colId
             // 
-            this.colId.DataPropertyName = "Id";
-            this.colId.HeaderText = "ID";
-            this.colId.MinimumWidth = 6;
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Visible = false;
-            this.colId.Width = 125;
+            colId.DataPropertyName = "Id";
+            colId.HeaderText = "ID";
+            colId.MinimumWidth = 6;
+            colId.Name = "colId";
+            colId.ReadOnly = true;
+            colId.Visible = false;
+            colId.Width = 125;
             // 
             // colFullName
             // 
-            this.colFullName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colFullName.DataPropertyName = "FullName";
-            this.colFullName.FillWeight = 40F;
-            this.colFullName.HeaderText = "CONTACT NAME";
-            this.colFullName.MinimumWidth = 6;
-            this.colFullName.Name = "colFullName";
-            this.colFullName.ReadOnly = true;
-            this.colFullName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            colFullName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colFullName.DataPropertyName = "FullName";
+            colFullName.FillWeight = 40F;
+            colFullName.HeaderText = "CONTACT NAME";
+            colFullName.MinimumWidth = 250;
+            colFullName.Name = "colFullName";
+            colFullName.ReadOnly = true;
+            colFullName.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // colRelationship
             // 
-            this.colRelationship.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colRelationship.DataPropertyName = "Relationship";
-            this.colRelationship.FillWeight = 30F;
-            this.colRelationship.HeaderText = "RELATIONSHIP";
-            this.colRelationship.MinimumWidth = 6;
-            this.colRelationship.Name = "colRelationship";
-            this.colRelationship.ReadOnly = true;
-            this.colRelationship.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            colRelationship.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colRelationship.DataPropertyName = "Relationship";
+            colRelationship.FillWeight = 30F;
+            colRelationship.HeaderText = "RELATIONSHIP";
+            colRelationship.MinimumWidth = 180;
+            colRelationship.Name = "colRelationship";
+            colRelationship.ReadOnly = true;
+            colRelationship.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // colPhoneCount
             // 
-            this.colPhoneCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colPhoneCount.DataPropertyName = "PhoneCount";
-            this.colPhoneCount.FillWeight = 20F;
-            this.colPhoneCount.HeaderText = "PHONE NUMBERS";
-            this.colPhoneCount.MinimumWidth = 6;
-            this.colPhoneCount.Name = "colPhoneCount";
-            this.colPhoneCount.ReadOnly = true;
-            this.colPhoneCount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            colPhoneCount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colPhoneCount.DataPropertyName = "PhoneCount";
+            colPhoneCount.FillWeight = 20F;
+            colPhoneCount.HeaderText = "PHONE NUMBERS";
+            colPhoneCount.MinimumWidth = 150;
+            colPhoneCount.Name = "colPhoneCount";
+            colPhoneCount.ReadOnly = true;
+            colPhoneCount.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // colActions
             // 
-            this.colActions.FillWeight = 10F;
-            this.colActions.HeaderText = "";
-            this.colActions.MinimumWidth = 6;
-            this.colActions.Name = "colActions";
-            this.colActions.ReadOnly = true;
-            this.colActions.Text = "Select";
-            this.colActions.UseColumnTextForButtonValue = true;
+            colActions.FillWeight = 10F;
+            colActions.HeaderText = "";
+            colActions.MinimumWidth = 80;
+            colActions.Name = "colActions";
+            colActions.ReadOnly = true;
+            colActions.Text = "Select";
+            colActions.UseColumnTextForButtonValue = true;
+            colActions.Width = 125;
             // 
             // panelListHeader
             // 
-            this.panelListHeader.BackColor = System.Drawing.Color.White;
-            this.panelListHeader.Controls.Add(this.lblContactCount);
-            this.panelListHeader.Controls.Add(this.lblCustomerName);
-            this.panelListHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelListHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelListHeader.Name = "panelListHeader";
-            this.panelListHeader.Size = new System.Drawing.Size(480, 60);
-            this.panelListHeader.TabIndex = 0;
+            panelListHeader.BackColor = Color.White;
+            panelListHeader.Controls.Add(lblContactCount);
+            panelListHeader.Controls.Add(lblCustomerName);
+            panelListHeader.Dock = DockStyle.Top;
+            panelListHeader.Location = new Point(0, 0);
+            panelListHeader.Name = "panelListHeader";
+            panelListHeader.Padding = new Padding(0, 0, 10, 0);
+            panelListHeader.Size = new Size(590, 70);
+            panelListHeader.TabIndex = 0;
             // 
             // lblContactCount
             // 
-            this.lblContactCount.AutoSize = true;
-            this.lblContactCount.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblContactCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(122)))), ((int)(((byte)(137)))));
-            this.lblContactCount.Location = new System.Drawing.Point(20, 35);
-            this.lblContactCount.Name = "lblContactCount";
-            this.lblContactCount.Size = new System.Drawing.Size(127, 20);
-            this.lblContactCount.TabIndex = 1;
-            this.lblContactCount.Text = "0 emergency contacts";
+            lblContactCount.AutoSize = true;
+            lblContactCount.Font = new Font("Segoe UI", 10F);
+            lblContactCount.ForeColor = Color.FromArgb(108, 122, 137);
+            lblContactCount.Location = new Point(25, 40);
+            lblContactCount.Name = "lblContactCount";
+            lblContactCount.Size = new Size(177, 23);
+            lblContactCount.TabIndex = 1;
+            lblContactCount.Text = "0 emergency contacts";
             // 
             // lblCustomerName
             // 
-            this.lblCustomerName.AutoSize = true;
-            this.lblCustomerName.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblCustomerName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            this.lblCustomerName.Location = new System.Drawing.Point(20, 10);
-            this.lblCustomerName.Name = "lblCustomerName";
-            this.lblCustomerName.Size = new System.Drawing.Size(139, 28);
-            this.lblCustomerName.TabIndex = 0;
-            this.lblCustomerName.Text = "Customer Name";
+            lblCustomerName.AutoSize = true;
+            lblCustomerName.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
+            lblCustomerName.ForeColor = Color.FromArgb(30, 60, 90);
+            lblCustomerName.Location = new Point(25, 10);
+            lblCustomerName.Name = "lblCustomerName";
+            lblCustomerName.Size = new Size(191, 32);
+            lblCustomerName.TabIndex = 0;
+            lblCustomerName.Text = "Customer Name";
             // 
             // panelContactDetails
             // 
-            this.panelContactDetails.Controls.Add(this.panelContactForm);
-            this.panelContactDetails.Controls.Add(this.panelDetailsHeader);
-            this.panelContactDetails.Controls.Add(this.panelPhoneNumbers);
-            this.panelContactDetails.Controls.Add(this.panelContactActions);
-            this.panelContactDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContactDetails.Location = new System.Drawing.Point(0, 0);
-            this.panelContactDetails.Name = "panelContactDetails";
-            this.panelContactDetails.Size = new System.Drawing.Size(470, 520);
-            this.panelContactDetails.TabIndex = 0;
-            // 
-            // panelContactForm
-            // 
-            this.panelContactForm.BackColor = System.Drawing.Color.White;
-            this.panelContactForm.Controls.Add(this.txtNotes);
-            this.panelContactForm.Controls.Add(this.lblNotes);
-            this.panelContactForm.Controls.Add(this.cmbRelationship);
-            this.panelContactForm.Controls.Add(this.lblRelationship);
-            this.panelContactForm.Controls.Add(this.txtLastName);
-            this.panelContactForm.Controls.Add(this.lblLastName);
-            this.panelContactForm.Controls.Add(this.txtFirstName);
-            this.panelContactForm.Controls.Add(this.lblFirstName);
-            this.panelContactForm.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelContactForm.Location = new System.Drawing.Point(0, 40);
-            this.panelContactForm.Name = "panelContactForm";
-            this.panelContactForm.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.panelContactForm.Size = new System.Drawing.Size(470, 180);
-            this.panelContactForm.TabIndex = 2;
-            // 
-            // txtNotes
-            // 
-            this.txtNotes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtNotes.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtNotes.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtNotes.Location = new System.Drawing.Point(20, 140);
-            this.txtNotes.Multiline = true;
-            this.txtNotes.Name = "txtNotes";
-            this.txtNotes.PlaceholderText = "Additional information (optional)";
-            this.txtNotes.Size = new System.Drawing.Size(430, 30);
-            this.txtNotes.TabIndex = 7;
-            // 
-            // lblNotes
-            // 
-            this.lblNotes.AutoSize = true;
-            this.lblNotes.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblNotes.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblNotes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblNotes.Location = new System.Drawing.Point(20, 120);
-            this.lblNotes.Name = "lblNotes";
-            this.lblNotes.Size = new System.Drawing.Size(50, 20);
-            this.lblNotes.TabIndex = 6;
-            this.lblNotes.Text = "Notes:";
-            // 
-            // cmbRelationship
-            // 
-            this.cmbRelationship.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cmbRelationship.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRelationship.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmbRelationship.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cmbRelationship.FormattingEnabled = true;
-            this.cmbRelationship.Items.AddRange(new object[] {
-            "Spouse",
-            "Parent",
-            "Child",
-            "Sibling",
-            "Friend",
-            "Colleague",
-            "Other"});
-            this.cmbRelationship.Location = new System.Drawing.Point(20, 90);
-            this.cmbRelationship.Name = "cmbRelationship";
-            this.cmbRelationship.Size = new System.Drawing.Size(430, 28);
-            this.cmbRelationship.TabIndex = 5;
-            // 
-            // lblRelationship
-            // 
-            this.lblRelationship.AutoSize = true;
-            this.lblRelationship.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblRelationship.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblRelationship.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblRelationship.Location = new System.Drawing.Point(20, 70);
-            this.lblRelationship.Name = "lblRelationship";
-            this.lblRelationship.Size = new System.Drawing.Size(94, 20);
-            this.lblRelationship.TabIndex = 4;
-            this.lblRelationship.Text = "Relationship:";
-            // 
-            // txtLastName
-            // 
-            this.txtLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtLastName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtLastName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtLastName.Location = new System.Drawing.Point(20, 40);
-            this.txtLastName.Name = "txtLastName";
-            this.txtLastName.PlaceholderText = "Last name";
-            this.txtLastName.Size = new System.Drawing.Size(430, 27);
-            this.txtLastName.TabIndex = 3;
-            // 
-            // lblLastName
-            // 
-            this.lblLastName.AutoSize = true;
-            this.lblLastName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblLastName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblLastName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblLastName.Location = new System.Drawing.Point(20, 20);
-            this.lblLastName.Name = "lblLastName";
-            this.lblLastName.Size = new System.Drawing.Size(79, 20);
-            this.lblLastName.TabIndex = 2;
-            this.lblLastName.Text = "Last Name:";
-            // 
-            // txtFirstName
-            // 
-            this.txtFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFirstName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtFirstName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtFirstName.Location = new System.Drawing.Point(20, 0);
-            this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.PlaceholderText = "First name";
-            this.txtFirstName.Size = new System.Drawing.Size(430, 27);
-            this.txtFirstName.TabIndex = 1;
-            // 
-            // lblFirstName
-            // 
-            this.lblFirstName.AutoSize = true;
-            this.lblFirstName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblFirstName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblFirstName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblFirstName.Location = new System.Drawing.Point(20, 0);
-            this.lblFirstName.Name = "lblFirstName";
-            this.lblFirstName.Size = new System.Drawing.Size(80, 20);
-            this.lblFirstName.TabIndex = 0;
-            this.lblFirstName.Text = "First Name:";
-            // 
-            // panelDetailsHeader
-            // 
-            this.panelDetailsHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            this.panelDetailsHeader.Controls.Add(this.lblDetailsTitle);
-            this.panelDetailsHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelDetailsHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelDetailsHeader.Name = "panelDetailsHeader";
-            this.panelDetailsHeader.Size = new System.Drawing.Size(470, 40);
-            this.panelDetailsHeader.TabIndex = 0;
-            // 
-            // lblDetailsTitle
-            // 
-            this.lblDetailsTitle.AutoSize = true;
-            this.lblDetailsTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblDetailsTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            this.lblDetailsTitle.Location = new System.Drawing.Point(20, 8);
-            this.lblDetailsTitle.Name = "lblDetailsTitle";
-            this.lblDetailsTitle.Size = new System.Drawing.Size(163, 25);
-            this.lblDetailsTitle.TabIndex = 0;
-            this.lblDetailsTitle.Text = "Contact Details";
-            // 
-            // panelPhoneNumbers
-            // 
-            this.panelPhoneNumbers.BackColor = System.Drawing.Color.White;
-            this.panelPhoneNumbers.Controls.Add(this.dgvPhoneNumbers);
-            this.panelPhoneNumbers.Controls.Add(this.btnAddPhone);
-            this.panelPhoneNumbers.Controls.Add(this.lblPhoneNumbers);
-            this.panelPhoneNumbers.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelPhoneNumbers.Location = new System.Drawing.Point(0, 220);
-            this.panelPhoneNumbers.Name = "panelPhoneNumbers";
-            this.panelPhoneNumbers.Padding = new System.Windows.Forms.Padding(20, 10, 20, 0);
-            this.panelPhoneNumbers.Size = new System.Drawing.Size(470, 180);
-            this.panelPhoneNumbers.TabIndex = 1;
-            // 
-            // dgvPhoneNumbers
-            // 
-            this.dgvPhoneNumbers.AllowUserToAddRows = false;
-            this.dgvPhoneNumbers.AllowUserToDeleteRows = false;
-            this.dgvPhoneNumbers.AllowUserToResizeRows = false;
-            this.dgvPhoneNumbers.BackgroundColor = System.Drawing.Color.White;
-            this.dgvPhoneNumbers.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvPhoneNumbers.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dgvPhoneNumbers.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(5);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvPhoneNumbers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dgvPhoneNumbers.ColumnHeadersHeight = 35;
-            this.dgvPhoneNumbers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvPhoneNumbers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colPhoneId,
-            this.colPhoneType,
-            this.colPhoneNumber,
-            this.colPrimary,
-            this.colRemovePhone});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(5);
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvPhoneNumbers.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvPhoneNumbers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvPhoneNumbers.EnableHeadersVisualStyles = false;
-            this.dgvPhoneNumbers.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.dgvPhoneNumbers.Location = new System.Drawing.Point(20, 40);
-            this.dgvPhoneNumbers.Name = "dgvPhoneNumbers";
-            this.dgvPhoneNumbers.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.dgvPhoneNumbers.RowHeadersVisible = false;
-            this.dgvPhoneNumbers.RowHeadersWidth = 51;
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(5);
-            this.dgvPhoneNumbers.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            this.dgvPhoneNumbers.RowTemplate.Height = 35;
-            this.dgvPhoneNumbers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPhoneNumbers.Size = new System.Drawing.Size(430, 110);
-            this.dgvPhoneNumbers.TabIndex = 2;
-            // 
-            // colPhoneId
-            // 
-            this.colPhoneId.HeaderText = "ID";
-            this.colPhoneId.MinimumWidth = 6;
-            this.colPhoneId.Name = "colPhoneId";
-            this.colPhoneId.Visible = false;
-            this.colPhoneId.Width = 125;
-            // 
-            // colPhoneType
-            // 
-            this.colPhoneType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colPhoneType.FillWeight = 30F;
-            this.colPhoneType.HeaderText = "TYPE";
-            this.colPhoneType.Items.AddRange(new object[] {
-            "Mobile",
-            "Home",
-            "Work",
-            "Other"});
-            this.colPhoneType.MinimumWidth = 6;
-            this.colPhoneType.Name = "colPhoneType";
-            // 
-            // colPhoneNumber
-            // 
-            this.colPhoneNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colPhoneNumber.FillWeight = 50F;
-            this.colPhoneNumber.HeaderText = "PHONE NUMBER";
-            this.colPhoneNumber.MinimumWidth = 6;
-            this.colPhoneNumber.Name = "colPhoneNumber";
-            // 
-            // colPrimary
-            // 
-            this.colPrimary.FillWeight = 10F;
-            this.colPrimary.HeaderText = "Primary";
-            this.colPrimary.MinimumWidth = 6;
-            this.colPrimary.Name = "colPrimary";
-            // 
-            // colRemovePhone
-            // 
-            this.colRemovePhone.FillWeight = 10F;
-            this.colRemovePhone.HeaderText = "";
-            this.colRemovePhone.MinimumWidth = 6;
-            this.colRemovePhone.Name = "colRemovePhone";
-            this.colRemovePhone.Text = "X";
-            this.colRemovePhone.UseColumnTextForButtonValue = true;
-            // 
-            // btnAddPhone
-            // 
-            this.btnAddPhone.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.btnAddPhone.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnAddPhone.FlatAppearance.BorderSize = 0;
-            this.btnAddPhone.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddPhone.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnAddPhone.ForeColor = System.Drawing.Color.White;
-            this.btnAddPhone.Location = new System.Drawing.Point(20, 150);
-            this.btnAddPhone.Name = "btnAddPhone";
-            this.btnAddPhone.Size = new System.Drawing.Size(430, 30);
-            this.btnAddPhone.TabIndex = 1;
-            this.btnAddPhone.Text = "➕ Add Phone Number";
-            this.btnAddPhone.UseVisualStyleBackColor = false;
-            // 
-            // lblPhoneNumbers
-            // 
-            this.lblPhoneNumbers.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblPhoneNumbers.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblPhoneNumbers.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            this.lblPhoneNumbers.Location = new System.Drawing.Point(20, 10);
-            this.lblPhoneNumbers.Name = "lblPhoneNumbers";
-            this.lblPhoneNumbers.Size = new System.Drawing.Size(430, 30);
-            this.lblPhoneNumbers.TabIndex = 0;
-            this.lblPhoneNumbers.Text = "Phone Numbers";
-            this.lblPhoneNumbers.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            panelContactDetails.Controls.Add(panelContactActions);
+            panelContactDetails.Controls.Add(panelPhoneNumbers);
+            panelContactDetails.Controls.Add(panelContactForm);
+            panelContactDetails.Controls.Add(panelDetailsHeader);
+            panelContactDetails.Dock = DockStyle.Fill;
+            panelContactDetails.Location = new Point(10, 0);
+            panelContactDetails.Name = "panelContactDetails";
+            panelContactDetails.Size = new Size(525, 630);
+            panelContactDetails.TabIndex = 0;
             // 
             // panelContactActions
             // 
-            this.panelContactActions.BackColor = System.Drawing.Color.White;
-            this.panelContactActions.Controls.Add(this.btnClear);
-            this.panelContactActions.Controls.Add(this.btnDeleteContact);
-            this.panelContactActions.Controls.Add(this.btnUpdateContact);
-            this.panelContactActions.Controls.Add(this.btnSaveContact);
-            this.panelContactActions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelContactActions.Location = new System.Drawing.Point(0, 400);
-            this.panelContactActions.Name = "panelContactActions";
-            this.panelContactActions.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.panelContactActions.Size = new System.Drawing.Size(470, 70);
-            this.panelContactActions.TabIndex = 3;
+            panelContactActions.BackColor = Color.White;
+            panelContactActions.Controls.Add(btnClear);
+            panelContactActions.Controls.Add(btnDeleteContact);
+            panelContactActions.Controls.Add(btnUpdateContact);
+            panelContactActions.Controls.Add(btnSaveContact);
+            panelContactActions.Dock = DockStyle.Bottom;
+            panelContactActions.Location = new Point(0, 540);
+            panelContactActions.Name = "panelContactActions";
+            panelContactActions.Padding = new Padding(15, 10, 15, 10);
+            panelContactActions.Size = new Size(525, 90);
+            panelContactActions.TabIndex = 3;
             // 
             // btnClear
             // 
-            this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(122)))), ((int)(((byte)(137)))));
-            this.btnClear.FlatAppearance.BorderSize = 0;
-            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClear.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnClear.ForeColor = System.Drawing.Color.White;
-            this.btnClear.Location = new System.Drawing.Point(20, 10);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(90, 45);
-            this.btnClear.TabIndex = 3;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = false;
+            btnClear.BackColor = Color.FromArgb(108, 122, 137);
+            btnClear.FlatAppearance.BorderSize = 0;
+            btnClear.FlatStyle = FlatStyle.Flat;
+            btnClear.Font = new Font("Segoe UI", 10F);
+            btnClear.ForeColor = Color.White;
+            btnClear.Location = new Point(15, 10);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(100, 45);
+            btnClear.TabIndex = 3;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = false;
             // 
             // btnDeleteContact
             // 
-            this.btnDeleteContact.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
-            this.btnDeleteContact.FlatAppearance.BorderSize = 0;
-            this.btnDeleteContact.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteContact.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnDeleteContact.ForeColor = System.Drawing.Color.White;
-            this.btnDeleteContact.Location = new System.Drawing.Point(120, 10);
-            this.btnDeleteContact.Name = "btnDeleteContact";
-            this.btnDeleteContact.Size = new System.Drawing.Size(90, 45);
-            this.btnDeleteContact.TabIndex = 2;
-            this.btnDeleteContact.Text = "Delete";
-            this.btnDeleteContact.UseVisualStyleBackColor = false;
+            btnDeleteContact.BackColor = Color.FromArgb(231, 76, 60);
+            btnDeleteContact.FlatAppearance.BorderSize = 0;
+            btnDeleteContact.FlatStyle = FlatStyle.Flat;
+            btnDeleteContact.Font = new Font("Segoe UI", 10F);
+            btnDeleteContact.ForeColor = Color.White;
+            btnDeleteContact.Location = new Point(125, 10);
+            btnDeleteContact.Name = "btnDeleteContact";
+            btnDeleteContact.Size = new Size(100, 45);
+            btnDeleteContact.TabIndex = 2;
+            btnDeleteContact.Text = "Delete";
+            btnDeleteContact.UseVisualStyleBackColor = false;
             // 
             // btnUpdateContact
             // 
-            this.btnUpdateContact.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(156)))), ((int)(((byte)(18)))));
-            this.btnUpdateContact.FlatAppearance.BorderSize = 0;
-            this.btnUpdateContact.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUpdateContact.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnUpdateContact.ForeColor = System.Drawing.Color.White;
-            this.btnUpdateContact.Location = new System.Drawing.Point(220, 10);
-            this.btnUpdateContact.Name = "btnUpdateContact";
-            this.btnUpdateContact.Size = new System.Drawing.Size(110, 45);
-            this.btnUpdateContact.TabIndex = 1;
-            this.btnUpdateContact.Text = "Update";
-            this.btnUpdateContact.UseVisualStyleBackColor = false;
+            btnUpdateContact.BackColor = Color.FromArgb(243, 156, 18);
+            btnUpdateContact.FlatAppearance.BorderSize = 0;
+            btnUpdateContact.FlatStyle = FlatStyle.Flat;
+            btnUpdateContact.Font = new Font("Segoe UI", 10F);
+            btnUpdateContact.ForeColor = Color.White;
+            btnUpdateContact.Location = new Point(235, 10);
+            btnUpdateContact.Name = "btnUpdateContact";
+            btnUpdateContact.Size = new Size(120, 45);
+            btnUpdateContact.TabIndex = 1;
+            btnUpdateContact.Text = "Update";
+            btnUpdateContact.UseVisualStyleBackColor = false;
             // 
             // btnSaveContact
             // 
-            this.btnSaveContact.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.btnSaveContact.FlatAppearance.BorderSize = 0;
-            this.btnSaveContact.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveContact.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnSaveContact.ForeColor = System.Drawing.Color.White;
-            this.btnSaveContact.Location = new System.Drawing.Point(340, 10);
-            this.btnSaveContact.Name = "btnSaveContact";
-            this.btnSaveContact.Size = new System.Drawing.Size(110, 45);
-            this.btnSaveContact.TabIndex = 0;
-            this.btnSaveContact.Text = "Save New";
-            this.btnSaveContact.UseVisualStyleBackColor = false;
+            btnSaveContact.BackColor = Color.FromArgb(46, 204, 113);
+            btnSaveContact.FlatAppearance.BorderSize = 0;
+            btnSaveContact.FlatStyle = FlatStyle.Flat;
+            btnSaveContact.Font = new Font("Segoe UI", 10F);
+            btnSaveContact.ForeColor = Color.White;
+            btnSaveContact.Location = new Point(365, 10);
+            btnSaveContact.Name = "btnSaveContact";
+            btnSaveContact.Size = new Size(145, 45);
+            btnSaveContact.TabIndex = 0;
+            btnSaveContact.Text = "Save New";
+            btnSaveContact.UseVisualStyleBackColor = false;
+            // 
+            // panelPhoneNumbers
+            // 
+            panelPhoneNumbers.BackColor = Color.White;
+            panelPhoneNumbers.Controls.Add(dgvPhoneNumbers);
+            panelPhoneNumbers.Controls.Add(btnAddPhone);
+            panelPhoneNumbers.Controls.Add(lblPhoneNumbers);
+            panelPhoneNumbers.Dock = DockStyle.Top;
+            panelPhoneNumbers.Location = new Point(0, 280);
+            panelPhoneNumbers.Name = "panelPhoneNumbers";
+            panelPhoneNumbers.Padding = new Padding(15, 15, 15, 10);
+            panelPhoneNumbers.Size = new Size(525, 260);
+            panelPhoneNumbers.TabIndex = 2;
+            // 
+            // dgvPhoneNumbers
+            // 
+            dgvPhoneNumbers.AllowUserToAddRows = false;
+            dgvPhoneNumbers.AllowUserToDeleteRows = false;
+            dgvPhoneNumbers.AllowUserToResizeRows = false;
+            dgvPhoneNumbers.BackgroundColor = Color.White;
+            dgvPhoneNumbers.BorderStyle = BorderStyle.None;
+            dgvPhoneNumbers.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvPhoneNumbers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(248, 249, 250);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(30, 60, 90);
+            dataGridViewCellStyle4.Padding = new Padding(10);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(248, 249, 250);
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(30, 60, 90);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvPhoneNumbers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dgvPhoneNumbers.ColumnHeadersHeight = 45;
+            dgvPhoneNumbers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvPhoneNumbers.Columns.AddRange(new DataGridViewColumn[] { colPhoneId, colPhoneType, colPhoneNumber, colPrimary, colRemovePhone });
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.White;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle5.Padding = new Padding(10);
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(240, 245, 250);
+            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(30, 60, 90);
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            dgvPhoneNumbers.DefaultCellStyle = dataGridViewCellStyle5;
+            dgvPhoneNumbers.Dock = DockStyle.Fill;
+            dgvPhoneNumbers.EnableHeadersVisualStyles = false;
+            dgvPhoneNumbers.GridColor = Color.FromArgb(240, 240, 240);
+            dgvPhoneNumbers.Location = new Point(15, 55);
+            dgvPhoneNumbers.Name = "dgvPhoneNumbers";
+            dgvPhoneNumbers.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvPhoneNumbers.RowHeadersVisible = false;
+            dgvPhoneNumbers.RowHeadersWidth = 51;
+            dataGridViewCellStyle6.Padding = new Padding(10);
+            dgvPhoneNumbers.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dgvPhoneNumbers.RowTemplate.Height = 45;
+            dgvPhoneNumbers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvPhoneNumbers.Size = new Size(495, 145);
+            dgvPhoneNumbers.TabIndex = 2;
+            // 
+            // colPhoneId
+            // 
+            colPhoneId.HeaderText = "ID";
+            colPhoneId.MinimumWidth = 6;
+            colPhoneId.Name = "colPhoneId";
+            colPhoneId.Visible = false;
+            colPhoneId.Width = 125;
+            // 
+            // colPhoneType
+            // 
+            colPhoneType.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colPhoneType.FillWeight = 30F;
+            colPhoneType.HeaderText = "TYPE";
+            colPhoneType.Items.AddRange(new object[] { "Mobile", "Home", "Work", "Other" });
+            colPhoneType.MinimumWidth = 120;
+            colPhoneType.Name = "colPhoneType";
+            // 
+            // colPhoneNumber
+            // 
+            colPhoneNumber.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colPhoneNumber.FillWeight = 50F;
+            colPhoneNumber.HeaderText = "PHONE NUMBER";
+            colPhoneNumber.MinimumWidth = 200;
+            colPhoneNumber.Name = "colPhoneNumber";
+            // 
+            // colPrimary
+            // 
+            colPrimary.FillWeight = 10F;
+            colPrimary.HeaderText = "Primary";
+            colPrimary.MinimumWidth = 70;
+            colPrimary.Name = "colPrimary";
+            colPrimary.Width = 125;
+            // 
+            // colRemovePhone
+            // 
+            colRemovePhone.FillWeight = 10F;
+            colRemovePhone.HeaderText = "";
+            colRemovePhone.MinimumWidth = 60;
+            colRemovePhone.Name = "colRemovePhone";
+            colRemovePhone.Text = "X";
+            colRemovePhone.UseColumnTextForButtonValue = true;
+            colRemovePhone.Width = 125;
+            // 
+            // btnAddPhone
+            // 
+            btnAddPhone.BackColor = Color.FromArgb(52, 152, 219);
+            btnAddPhone.Dock = DockStyle.Bottom;
+            btnAddPhone.FlatAppearance.BorderSize = 0;
+            btnAddPhone.FlatStyle = FlatStyle.Flat;
+            btnAddPhone.Font = new Font("Segoe UI", 10F);
+            btnAddPhone.ForeColor = Color.White;
+            btnAddPhone.Location = new Point(15, 200);
+            btnAddPhone.Name = "btnAddPhone";
+            btnAddPhone.Size = new Size(495, 50);
+            btnAddPhone.TabIndex = 1;
+            btnAddPhone.Text = "➕ Add Phone Number";
+            btnAddPhone.UseVisualStyleBackColor = false;
+            // 
+            // lblPhoneNumbers
+            // 
+            lblPhoneNumbers.Dock = DockStyle.Top;
+            lblPhoneNumbers.Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold);
+            lblPhoneNumbers.ForeColor = Color.FromArgb(30, 60, 90);
+            lblPhoneNumbers.Location = new Point(15, 15);
+            lblPhoneNumbers.Name = "lblPhoneNumbers";
+            lblPhoneNumbers.Size = new Size(495, 40);
+            lblPhoneNumbers.TabIndex = 0;
+            lblPhoneNumbers.Text = "Phone Numbers";
+            lblPhoneNumbers.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // panelContactForm
+            // 
+            panelContactForm.BackColor = Color.White;
+            panelContactForm.Controls.Add(txtNotes);
+            panelContactForm.Controls.Add(lblNotes);
+            panelContactForm.Controls.Add(cmbRelationship);
+            panelContactForm.Controls.Add(lblRelationship);
+            panelContactForm.Controls.Add(txtLastName);
+            panelContactForm.Controls.Add(lblLastName);
+            panelContactForm.Controls.Add(txtFirstName);
+            panelContactForm.Controls.Add(lblFirstName);
+            panelContactForm.Dock = DockStyle.Top;
+            panelContactForm.Location = new Point(0, 50);
+            panelContactForm.Name = "panelContactForm";
+            panelContactForm.Padding = new Padding(15);
+            panelContactForm.Size = new Size(525, 230);
+            panelContactForm.TabIndex = 1;
+            // 
+            // txtNotes
+            // 
+            txtNotes.BorderStyle = BorderStyle.FixedSingle;
+            txtNotes.Dock = DockStyle.Top;
+            txtNotes.Font = new Font("Segoe UI", 10F);
+            txtNotes.Location = new Point(15, 198);
+            txtNotes.Multiline = true;
+            txtNotes.Name = "txtNotes";
+            txtNotes.PlaceholderText = "Additional information (optional)";
+            txtNotes.Size = new Size(495, 35);
+            txtNotes.TabIndex = 7;
+            // 
+            // lblNotes
+            // 
+            lblNotes.AutoSize = true;
+            lblNotes.Dock = DockStyle.Top;
+            lblNotes.Font = new Font("Segoe UI", 10F);
+            lblNotes.ForeColor = Color.FromArgb(64, 64, 64);
+            lblNotes.Location = new Point(15, 175);
+            lblNotes.Name = "lblNotes";
+            lblNotes.Size = new Size(59, 23);
+            lblNotes.TabIndex = 6;
+            lblNotes.Text = "Notes:";
+            // 
+            // cmbRelationship
+            // 
+            cmbRelationship.Dock = DockStyle.Top;
+            cmbRelationship.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbRelationship.FlatStyle = FlatStyle.Flat;
+            cmbRelationship.Font = new Font("Segoe UI", 10F);
+            cmbRelationship.FormattingEnabled = true;
+            cmbRelationship.Items.AddRange(new object[] { "Spouse", "Parent", "Child", "Sibling", "Friend", "Colleague", "Other" });
+            cmbRelationship.Location = new Point(15, 144);
+            cmbRelationship.Name = "cmbRelationship";
+            cmbRelationship.Size = new Size(495, 31);
+            cmbRelationship.TabIndex = 5;
+            // 
+            // lblRelationship
+            // 
+            lblRelationship.AutoSize = true;
+            lblRelationship.Dock = DockStyle.Top;
+            lblRelationship.Font = new Font("Segoe UI", 10F);
+            lblRelationship.ForeColor = Color.FromArgb(64, 64, 64);
+            lblRelationship.Location = new Point(15, 121);
+            lblRelationship.Name = "lblRelationship";
+            lblRelationship.Size = new Size(107, 23);
+            lblRelationship.TabIndex = 4;
+            lblRelationship.Text = "Relationship:";
+            // 
+            // txtLastName
+            // 
+            txtLastName.BorderStyle = BorderStyle.FixedSingle;
+            txtLastName.Dock = DockStyle.Top;
+            txtLastName.Font = new Font("Segoe UI", 10F);
+            txtLastName.Location = new Point(15, 91);
+            txtLastName.Name = "txtLastName";
+            txtLastName.PlaceholderText = "Last name";
+            txtLastName.Size = new Size(495, 30);
+            txtLastName.TabIndex = 3;
+            // 
+            // lblLastName
+            // 
+            lblLastName.AutoSize = true;
+            lblLastName.Dock = DockStyle.Top;
+            lblLastName.Font = new Font("Segoe UI", 10F);
+            lblLastName.ForeColor = Color.FromArgb(64, 64, 64);
+            lblLastName.Location = new Point(15, 68);
+            lblLastName.Name = "lblLastName";
+            lblLastName.Size = new Size(95, 23);
+            lblLastName.TabIndex = 2;
+            lblLastName.Text = "Last Name:";
+            // 
+            // txtFirstName
+            // 
+            txtFirstName.BorderStyle = BorderStyle.FixedSingle;
+            txtFirstName.Dock = DockStyle.Top;
+            txtFirstName.Font = new Font("Segoe UI", 10F);
+            txtFirstName.Location = new Point(15, 38);
+            txtFirstName.Name = "txtFirstName";
+            txtFirstName.PlaceholderText = "First name";
+            txtFirstName.Size = new Size(495, 30);
+            txtFirstName.TabIndex = 1;
+            // 
+            // lblFirstName
+            // 
+            lblFirstName.AutoSize = true;
+            lblFirstName.Dock = DockStyle.Top;
+            lblFirstName.Font = new Font("Segoe UI", 10F);
+            lblFirstName.ForeColor = Color.FromArgb(64, 64, 64);
+            lblFirstName.Location = new Point(15, 15);
+            lblFirstName.Name = "lblFirstName";
+            lblFirstName.Size = new Size(96, 23);
+            lblFirstName.TabIndex = 0;
+            lblFirstName.Text = "First Name:";
+            // 
+            // panelDetailsHeader
+            // 
+            panelDetailsHeader.BackColor = Color.FromArgb(248, 249, 250);
+            panelDetailsHeader.Controls.Add(lblDetailsTitle);
+            panelDetailsHeader.Dock = DockStyle.Top;
+            panelDetailsHeader.Location = new Point(0, 0);
+            panelDetailsHeader.Name = "panelDetailsHeader";
+            panelDetailsHeader.Padding = new Padding(15, 10, 15, 10);
+            panelDetailsHeader.Size = new Size(525, 50);
+            panelDetailsHeader.TabIndex = 0;
+            // 
+            // lblDetailsTitle
+            // 
+            lblDetailsTitle.AutoSize = true;
+            lblDetailsTitle.Font = new Font("Segoe UI Semibold", 13F, FontStyle.Bold);
+            lblDetailsTitle.ForeColor = Color.FromArgb(30, 60, 90);
+            lblDetailsTitle.Location = new Point(15, 10);
+            lblDetailsTitle.Name = "lblDetailsTitle";
+            lblDetailsTitle.Size = new Size(164, 30);
+            lblDetailsTitle.TabIndex = 0;
+            lblDetailsTitle.Text = "Contact Details";
             // 
             // panelFooter
             // 
-            this.panelFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            this.panelFooter.Controls.Add(this.btnAddNew);
-            this.panelFooter.Controls.Add(this.btnClose);
-            this.panelFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelFooter.Location = new System.Drawing.Point(0, 630);
-            this.panelFooter.Name = "panelFooter";
-            this.panelFooter.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
-            this.panelFooter.Size = new System.Drawing.Size(1000, 80);
-            this.panelFooter.TabIndex = 2;
+            panelFooter.BackColor = Color.FromArgb(248, 249, 250);
+            panelFooter.Controls.Add(btnAddNew);
+            panelFooter.Controls.Add(btnClose);
+            panelFooter.Dock = DockStyle.Bottom;
+            panelFooter.Location = new Point(0, 760);
+            panelFooter.Name = "panelFooter";
+            panelFooter.Padding = new Padding(25, 15, 25, 15);
+            panelFooter.Size = new Size(1200, 90);
+            panelFooter.TabIndex = 2;
             // 
             // btnAddNew
             // 
-            this.btnAddNew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.btnAddNew.FlatAppearance.BorderSize = 0;
-            this.btnAddNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNew.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnAddNew.ForeColor = System.Drawing.Color.White;
-            this.btnAddNew.Location = new System.Drawing.Point(20, 15);
-            this.btnAddNew.Name = "btnAddNew";
-            this.btnAddNew.Size = new System.Drawing.Size(160, 45);
-            this.btnAddNew.TabIndex = 0;
-            this.btnAddNew.Text = "➕ New Contact";
-            this.btnAddNew.UseVisualStyleBackColor = false;
+            btnAddNew.BackColor = Color.FromArgb(46, 204, 113);
+            btnAddNew.FlatAppearance.BorderSize = 0;
+            btnAddNew.FlatStyle = FlatStyle.Flat;
+            btnAddNew.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            btnAddNew.ForeColor = Color.White;
+            btnAddNew.Location = new Point(25, 15);
+            btnAddNew.Name = "btnAddNew";
+            btnAddNew.Size = new Size(180, 55);
+            btnAddNew.TabIndex = 0;
+            btnAddNew.Text = "➕ New Contact";
+            btnAddNew.UseVisualStyleBackColor = false;
             // 
             // btnClose
             // 
-            this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(122)))), ((int)(((byte)(137)))));
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(860, 15);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(120, 45);
-            this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = false;
+            btnClose.BackColor = Color.FromArgb(108, 122, 137);
+            btnClose.DialogResult = DialogResult.Cancel;
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            btnClose.ForeColor = Color.White;
+            btnClose.Location = new Point(1055, 15);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(120, 55);
+            btnClose.TabIndex = 1;
+            btnClose.Text = "Close";
+            btnClose.UseVisualStyleBackColor = false;
             // 
             // EmergencyContactsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(1000, 710);
-            this.Controls.Add(this.panelContent);
-            this.Controls.Add(this.panelFooter);
-            this.Controls.Add(this.panelHeader);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "EmergencyContactsForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Emergency Contacts - VRMS";
-            this.panelHeader.ResumeLayout(false);
-            this.panelHeader.PerformLayout();
-            this.panelContent.ResumeLayout(false);
-            this.splitContainer.Panel1.ResumeLayout(false);
-            this.splitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
-            this.splitContainer.ResumeLayout(false);
-            this.panelContactList.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvContacts)).EndInit();
-            this.panelListHeader.ResumeLayout(false);
-            this.panelListHeader.PerformLayout();
-            this.panelContactDetails.ResumeLayout(false);
-            this.panelContactForm.ResumeLayout(false);
-            this.panelContactForm.PerformLayout();
-            this.panelDetailsHeader.ResumeLayout(false);
-            this.panelDetailsHeader.PerformLayout();
-            this.panelPhoneNumbers.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPhoneNumbers)).EndInit();
-            this.panelContactActions.ResumeLayout(false);
-            this.panelFooter.ResumeLayout(false);
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            CancelButton = btnClose;
+            ClientSize = new Size(1200, 850);
+            Controls.Add(panelContent);
+            Controls.Add(panelFooter);
+            Controls.Add(panelHeader);
+            Font = new Font("Segoe UI", 9F);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "EmergencyContactsForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Emergency Contacts - VRMS";
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelContent.ResumeLayout(false);
+            splitContainer.Panel1.ResumeLayout(false);
+            splitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer).EndInit();
+            splitContainer.ResumeLayout(false);
+            panelContactList.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvContacts).EndInit();
+            panelListHeader.ResumeLayout(false);
+            panelListHeader.PerformLayout();
+            panelContactDetails.ResumeLayout(false);
+            panelContactActions.ResumeLayout(false);
+            panelPhoneNumbers.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvPhoneNumbers).EndInit();
+            panelContactForm.ResumeLayout(false);
+            panelContactForm.PerformLayout();
+            panelDetailsHeader.ResumeLayout(false);
+            panelDetailsHeader.PerformLayout();
+            panelFooter.ResumeLayout(false);
+            ResumeLayout(false);
 
         }
 
@@ -751,6 +736,11 @@
         private System.Windows.Forms.Label lblContactCount;
         private System.Windows.Forms.Label lblCustomerName;
         private System.Windows.Forms.Panel panelContactDetails;
+        private System.Windows.Forms.Panel panelContactActions;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnDeleteContact;
+        private System.Windows.Forms.Button btnUpdateContact;
+        private System.Windows.Forms.Button btnSaveContact;
         private System.Windows.Forms.Panel panelPhoneNumbers;
         private System.Windows.Forms.DataGridView dgvPhoneNumbers;
         private System.Windows.Forms.Button btnAddPhone;
@@ -766,11 +756,6 @@
         private System.Windows.Forms.Label lblFirstName;
         private System.Windows.Forms.Panel panelDetailsHeader;
         private System.Windows.Forms.Label lblDetailsTitle;
-        private System.Windows.Forms.Panel panelContactActions;
-        private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Button btnDeleteContact;
-        private System.Windows.Forms.Button btnUpdateContact;
-        private System.Windows.Forms.Button btnSaveContact;
         private System.Windows.Forms.Panel panelFooter;
         private System.Windows.Forms.Button btnAddNew;
         private System.Windows.Forms.Button btnClose;

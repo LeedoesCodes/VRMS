@@ -38,12 +38,14 @@
             panel1 = new Panel();
             txtSearch = new TextBox();
             panel2 = new Panel();
+            btnManageEmergencyContacts = new Button();
             btnSave = new Button();
             btnManageAccount = new Button();
             btnDelete = new Button();
             btnClear = new Button();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            label14 = new Label();
             label13 = new Label();
             lblAgeCheck = new Label();
             dtpDOB = new DateTimePicker();
@@ -51,11 +53,6 @@
             btnUploadPhoto = new Button();
             label12 = new Label();
             txtLastName = new TextBox();
-            groupBox1 = new GroupBox();
-            label7 = new Label();
-            label6 = new Label();
-            txtEmergencyPhone = new TextBox();
-            txtEmergencyName = new TextBox();
             txtPhone = new TextBox();
             label5 = new Label();
             txtEmail = new TextBox();
@@ -69,7 +66,7 @@
             tabPage2 = new TabPage();
             groupBox3 = new GroupBox();
             checkBox1 = new CheckBox();
-            button1 = new Button();
+            btnCheckDrivingRecord = new Button();
             btnCaptureLicense = new Button();
             groupBox2 = new GroupBox();
             label11 = new Label();
@@ -100,7 +97,6 @@
             panel2.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
-            groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picCustomerPhoto).BeginInit();
             tabPage2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -141,38 +137,38 @@
             dgvCustomers.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvCustomers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(26, 188, 156);
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(30, 60, 90);
             dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(30, 60, 90);
+            dataGridViewCellStyle1.SelectionForeColor = Color.White;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dgvCustomers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dgvCustomers.ColumnHeadersHeight = 40;
+            dgvCustomers.ColumnHeadersHeight = 50;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.BackColor = Color.White;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 9.75F);
             dataGridViewCellStyle2.ForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(236, 240, 241);
-            dataGridViewCellStyle2.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(240, 245, 250);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(30, 60, 90);
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvCustomers.DefaultCellStyle = dataGridViewCellStyle2;
             dgvCustomers.Dock = DockStyle.Fill;
             dgvCustomers.EnableHeadersVisualStyles = false;
-            dgvCustomers.GridColor = Color.WhiteSmoke;
+            dgvCustomers.GridColor = Color.FromArgb(240, 240, 240);
             dgvCustomers.Location = new Point(0, 92);
             dgvCustomers.Margin = new Padding(4, 5, 4, 5);
             dgvCustomers.Name = "dgvCustomers";
             dgvCustomers.RowHeadersVisible = false;
             dgvCustomers.RowHeadersWidth = 51;
-            dgvCustomers.RowTemplate.Height = 35;
+            dgvCustomers.RowTemplate.Height = 40;
             dgvCustomers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCustomers.Size = new Size(400, 986);
             dgvCustomers.TabIndex = 1;
             // 
             // panel1
             // 
-            panel1.BackColor = Color.WhiteSmoke;
+            panel1.BackColor = Color.White;
             panel1.Controls.Add(txtSearch);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -184,17 +180,19 @@
             // txtSearch
             // 
             txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtSearch.BorderStyle = BorderStyle.FixedSingle;
             txtSearch.Font = new Font("Segoe UI", 10F);
             txtSearch.Location = new Point(20, 28);
             txtSearch.Margin = new Padding(4, 5, 4, 5);
             txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Search by name, phone, email...";
             txtSearch.Size = new Size(355, 30);
             txtSearch.TabIndex = 0;
-            txtSearch.Text = "Search Customer...";
             // 
             // panel2
             // 
-            panel2.BackColor = Color.WhiteSmoke;
+            panel2.BackColor = Color.FromArgb(248, 249, 250);
+            panel2.Controls.Add(btnManageEmergencyContacts);
             panel2.Controls.Add(btnSave);
             panel2.Controls.Add(btnManageAccount);
             panel2.Controls.Add(btnDelete);
@@ -203,71 +201,84 @@
             panel2.Location = new Point(0, 907);
             panel2.Margin = new Padding(13, 15, 13, 15);
             panel2.Name = "panel2";
+            panel2.Padding = new Padding(20, 15, 20, 15);
             panel2.Size = new Size(928, 171);
             panel2.TabIndex = 1;
+            // 
+            // btnManageEmergencyContacts
+            // 
+            btnManageEmergencyContacts.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnManageEmergencyContacts.BackColor = Color.FromArgb(155, 89, 182);
+            btnManageEmergencyContacts.FlatAppearance.BorderSize = 0;
+            btnManageEmergencyContacts.FlatStyle = FlatStyle.Flat;
+            btnManageEmergencyContacts.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            btnManageEmergencyContacts.ForeColor = Color.White;
+            btnManageEmergencyContacts.Location = new Point(628, 38);
+            btnManageEmergencyContacts.Margin = new Padding(3, 4, 3, 4);
+            btnManageEmergencyContacts.Name = "btnManageEmergencyContacts";
+            btnManageEmergencyContacts.Size = new Size(220, 60);
+            btnManageEmergencyContacts.TabIndex = 4;
+            btnManageEmergencyContacts.Text = "📱 Emergency Contacts";
+            btnManageEmergencyContacts.UseVisualStyleBackColor = false;
             // 
             // btnSave
             // 
             btnSave.BackColor = Color.FromArgb(46, 204, 113);
             btnSave.FlatAppearance.BorderSize = 0;
             btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnSave.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnSave.ForeColor = Color.White;
             btnSave.Location = new Point(20, 38);
             btnSave.Margin = new Padding(3, 4, 3, 4);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(180, 60);
+            btnSave.Size = new Size(160, 60);
             btnSave.TabIndex = 0;
-            btnSave.Text = "💾 Save Changes";
+            btnSave.Text = "💾 Save";
             btnSave.UseVisualStyleBackColor = false;
-            btnSave.Click += BtnSave_Click;
             // 
             // btnManageAccount
             // 
-            btnManageAccount.BackColor = Color.FromArgb(52, 73, 94);
+            btnManageAccount.BackColor = Color.FromArgb(52, 152, 219);
             btnManageAccount.FlatAppearance.BorderSize = 0;
             btnManageAccount.FlatStyle = FlatStyle.Flat;
-            btnManageAccount.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnManageAccount.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnManageAccount.ForeColor = Color.White;
-            btnManageAccount.Location = new Point(235, 38);
+            btnManageAccount.Location = new Point(190, 38);
             btnManageAccount.Margin = new Padding(3, 4, 3, 4);
             btnManageAccount.Name = "btnManageAccount";
-            btnManageAccount.Size = new Size(180, 60);
+            btnManageAccount.Size = new Size(160, 60);
             btnManageAccount.TabIndex = 3;
-            btnManageAccount.Text = "🔐 Manage Account";
+            btnManageAccount.Text = "🔐 Account";
             btnManageAccount.UseVisualStyleBackColor = false;
-            btnManageAccount.Click += BtnManageAccount_Click;
             // 
             // btnDelete
             // 
             btnDelete.BackColor = Color.FromArgb(231, 76, 60);
             btnDelete.FlatAppearance.BorderSize = 0;
             btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnDelete.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(451, 38);
+            btnDelete.Location = new Point(360, 38);
             btnDelete.Margin = new Padding(3, 4, 3, 4);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(180, 60);
+            btnDelete.Size = new Size(120, 60);
             btnDelete.TabIndex = 1;
             btnDelete.Text = "🗑️ Delete";
             btnDelete.UseVisualStyleBackColor = false;
-            btnDelete.Click += BtnDelete_Click;
             // 
             // btnClear
             // 
-            btnClear.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnClear.BackColor = Color.FromArgb(149, 165, 166);
+            btnClear.BackColor = Color.FromArgb(108, 122, 137);
             btnClear.FlatAppearance.BorderSize = 0;
             btnClear.FlatStyle = FlatStyle.Flat;
-            btnClear.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnClear.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnClear.ForeColor = Color.White;
-            btnClear.Location = new Point(668, 38);
+            btnClear.Location = new Point(490, 38);
             btnClear.Margin = new Padding(3, 4, 3, 4);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(180, 60);
+            btnClear.Size = new Size(120, 60);
             btnClear.TabIndex = 2;
-            btnClear.Text = "\U0001f9f9 Clear / New";
+            btnClear.Text = "🔄 Clear";
             btnClear.UseVisualStyleBackColor = false;
             // 
             // tabControl1
@@ -277,17 +288,18 @@
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
             tabControl1.Font = new Font("Segoe UI", 10F);
-            tabControl1.ItemSize = new Size(0, 45);
             tabControl1.Location = new Point(0, 0);
             tabControl1.Margin = new Padding(4, 5, 4, 5);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(926, 894);
+            tabControl1.Size = new Size(928, 894);
             tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
             tabPage1.AutoScroll = true;
+            tabPage1.BackColor = Color.White;
+            tabPage1.Controls.Add(label14);
             tabPage1.Controls.Add(label13);
             tabPage1.Controls.Add(lblAgeCheck);
             tabPage1.Controls.Add(dtpDOB);
@@ -295,7 +307,6 @@
             tabPage1.Controls.Add(btnUploadPhoto);
             tabPage1.Controls.Add(label12);
             tabPage1.Controls.Add(txtLastName);
-            tabPage1.Controls.Add(groupBox1);
             tabPage1.Controls.Add(txtPhone);
             tabPage1.Controls.Add(label5);
             tabPage1.Controls.Add(txtEmail);
@@ -306,20 +317,31 @@
             tabPage1.Controls.Add(label2);
             tabPage1.Controls.Add(label1);
             tabPage1.Controls.Add(picCustomerPhoto);
-            tabPage1.Location = new Point(4, 49);
+            tabPage1.Font = new Font("Segoe UI", 9F);
+            tabPage1.Location = new Point(4, 30);
             tabPage1.Margin = new Padding(3, 4, 3, 4);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(10, 12, 10, 12);
-            tabPage1.Size = new Size(918, 841);
+            tabPage1.Padding = new Padding(20, 20, 20, 20);
+            tabPage1.Size = new Size(920, 860);
             tabPage1.TabIndex = 0;
-            tabPage1.Text = "Personal Profile";
-            tabPage1.UseVisualStyleBackColor = true;
+            tabPage1.Text = "Personal Information";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label14.ForeColor = Color.FromArgb(30, 60, 90);
+            label14.Location = new Point(20, 20);
+            label14.Name = "label14";
+            label14.Size = new Size(184, 23);
+            label14.TabIndex = 18;
+            label14.Text = "Basic Information";
             // 
             // label13
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            label13.Location = new Point(29, 339);
+            label13.Location = new Point(24, 370);
             label13.Name = "label13";
             label13.Size = new Size(108, 23);
             label13.TabIndex = 17;
@@ -329,8 +351,8 @@
             // 
             lblAgeCheck.AutoSize = true;
             lblAgeCheck.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            lblAgeCheck.ForeColor = Color.DimGray;
-            lblAgeCheck.Location = new Point(350, 369);
+            lblAgeCheck.ForeColor = Color.FromArgb(155, 89, 182);
+            lblAgeCheck.Location = new Point(350, 400);
             lblAgeCheck.Name = "lblAgeCheck";
             lblAgeCheck.Size = new Size(49, 23);
             lblAgeCheck.TabIndex = 16;
@@ -339,7 +361,7 @@
             // dtpDOB
             // 
             dtpDOB.Font = new Font("Segoe UI", 10F);
-            dtpDOB.Location = new Point(30, 370);
+            dtpDOB.Location = new Point(25, 401);
             dtpDOB.Margin = new Padding(3, 4, 3, 4);
             dtpDOB.Name = "dtpDOB";
             dtpDOB.Size = new Size(291, 30);
@@ -347,170 +369,124 @@
             // 
             // btnCamera
             // 
+            btnCamera.BackColor = Color.FromArgb(52, 152, 219);
+            btnCamera.FlatAppearance.BorderSize = 0;
             btnCamera.FlatStyle = FlatStyle.Flat;
-            btnCamera.Location = new Point(261, 219);
+            btnCamera.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            btnCamera.ForeColor = Color.White;
+            btnCamera.Location = new Point(261, 175);
             btnCamera.Margin = new Padding(3, 4, 3, 4);
             btnCamera.Name = "btnCamera";
             btnCamera.Size = new Size(100, 44);
             btnCamera.TabIndex = 14;
             btnCamera.Text = "📷 Camera";
-            btnCamera.UseVisualStyleBackColor = true;
-            btnCamera.Click += BtnProfileCamera_Click;
+            btnCamera.UseVisualStyleBackColor = false;
             // 
             // btnUploadPhoto
             // 
-            btnUploadPhoto.BackColor = Color.FromArgb(52, 152, 219);
+            btnUploadPhoto.BackColor = Color.FromArgb(46, 204, 113);
+            btnUploadPhoto.FlatAppearance.BorderSize = 0;
             btnUploadPhoto.FlatStyle = FlatStyle.Flat;
-            btnUploadPhoto.ForeColor = SystemColors.ButtonHighlight;
-            btnUploadPhoto.Location = new Point(261, 168);
+            btnUploadPhoto.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            btnUploadPhoto.ForeColor = Color.White;
+            btnUploadPhoto.Location = new Point(261, 124);
             btnUploadPhoto.Margin = new Padding(3, 4, 3, 4);
             btnUploadPhoto.Name = "btnUploadPhoto";
             btnUploadPhoto.Size = new Size(100, 44);
             btnUploadPhoto.TabIndex = 13;
             btnUploadPhoto.Text = "📂 Upload";
             btnUploadPhoto.UseVisualStyleBackColor = false;
-            btnUploadPhoto.Click += BtnBrowseProfilePhoto_Click;
             // 
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label12.Location = new Point(393, 268);
+            label12.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            label12.Location = new Point(405, 280);
             label12.Name = "label12";
-            label12.Size = new Size(84, 20);
+            label12.Size = new Size(95, 23);
             label12.TabIndex = 12;
             label12.Text = "Last Name:";
             // 
             // txtLastName
             // 
             txtLastName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtLastName.BorderStyle = BorderStyle.FixedSingle;
             txtLastName.Font = new Font("Segoe UI", 10F);
-            txtLastName.Location = new Point(399, 292);
+            txtLastName.Location = new Point(411, 304);
             txtLastName.Margin = new Padding(3, 4, 3, 4);
             txtLastName.Name = "txtLastName";
-            txtLastName.Size = new Size(480, 30);
+            txtLastName.Size = new Size(465, 30);
             txtLastName.TabIndex = 11;
-            // 
-            // groupBox1
-            // 
-            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox1.Controls.Add(label7);
-            groupBox1.Controls.Add(label6);
-            groupBox1.Controls.Add(txtEmergencyPhone);
-            groupBox1.Controls.Add(txtEmergencyName);
-            groupBox1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            groupBox1.Location = new Point(20, 645);
-            groupBox1.Margin = new Padding(3, 4, 3, 4);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(3, 4, 3, 4);
-            groupBox1.Size = new Size(860, 122);
-            groupBox1.TabIndex = 10;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Emergency Contact";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label7.Location = new Point(381, 31);
-            label7.Name = "label7";
-            label7.Size = new Size(57, 20);
-            label7.TabIndex = 5;
-            label7.Text = "Phone:";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label6.Location = new Point(29, 31);
-            label6.Name = "label6";
-            label6.Size = new Size(54, 20);
-            label6.TabIndex = 4;
-            label6.Text = "Name:";
-            // 
-            // txtEmergencyPhone
-            // 
-            txtEmergencyPhone.Font = new Font("Segoe UI", 10F);
-            txtEmergencyPhone.Location = new Point(385, 61);
-            txtEmergencyPhone.Margin = new Padding(3, 4, 3, 4);
-            txtEmergencyPhone.Name = "txtEmergencyPhone";
-            txtEmergencyPhone.Size = new Size(291, 30);
-            txtEmergencyPhone.TabIndex = 1;
-            // 
-            // txtEmergencyName
-            // 
-            txtEmergencyName.Font = new Font("Segoe UI", 10F);
-            txtEmergencyName.Location = new Point(33, 61);
-            txtEmergencyName.Margin = new Padding(3, 4, 3, 4);
-            txtEmergencyName.Name = "txtEmergencyName";
-            txtEmergencyName.Size = new Size(291, 30);
-            txtEmergencyName.TabIndex = 0;
             // 
             // txtPhone
             // 
             txtPhone.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtPhone.BorderStyle = BorderStyle.FixedSingle;
             txtPhone.Font = new Font("Segoe UI", 10F);
-            txtPhone.Location = new Point(24, 597);
+            txtPhone.Location = new Point(25, 609);
             txtPhone.Margin = new Padding(3, 4, 3, 4);
             txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(855, 30);
+            txtPhone.Size = new Size(851, 30);
             txtPhone.TabIndex = 9;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label5.Location = new Point(23, 573);
+            label5.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            label5.Location = new Point(24, 585);
             label5.Name = "label5";
-            label5.Size = new Size(119, 20);
+            label5.Size = new Size(130, 23);
             label5.TabIndex = 8;
             label5.Text = "Phone Number:";
             // 
             // txtEmail
             // 
             txtEmail.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtEmail.BorderStyle = BorderStyle.FixedSingle;
             txtEmail.Font = new Font("Segoe UI", 10F);
-            txtEmail.Location = new Point(24, 537);
+            txtEmail.Location = new Point(25, 549);
             txtEmail.Margin = new Padding(3, 4, 3, 4);
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(855, 30);
+            txtEmail.Size = new Size(851, 30);
             txtEmail.TabIndex = 7;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label4.Location = new Point(23, 513);
+            label4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            label4.Location = new Point(24, 525);
             label4.Name = "label4";
-            label4.Size = new Size(50, 20);
+            label4.Size = new Size(55, 23);
             label4.TabIndex = 6;
             label4.Text = "Email:";
             // 
             // txtAddress
             // 
             txtAddress.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtAddress.BorderStyle = BorderStyle.FixedSingle;
             txtAddress.Font = new Font("Segoe UI", 10F);
-            txtAddress.Location = new Point(27, 435);
+            txtAddress.Location = new Point(28, 447);
             txtAddress.Margin = new Padding(3, 4, 3, 4);
             txtAddress.Multiline = true;
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(852, 70);
+            txtAddress.Size = new Size(848, 70);
             txtAddress.TabIndex = 5;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label3.Location = new Point(23, 411);
+            label3.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            label3.Location = new Point(24, 423);
             label3.Name = "label3";
-            label3.Size = new Size(67, 20);
+            label3.Size = new Size(75, 23);
             label3.TabIndex = 4;
             label3.Text = "Address:";
             // 
             // txtFirstName
             // 
+            txtFirstName.BorderStyle = BorderStyle.FixedSingle;
             txtFirstName.Font = new Font("Segoe UI", 10F);
-            txtFirstName.Location = new Point(27, 292);
+            txtFirstName.Location = new Point(28, 304);
             txtFirstName.Margin = new Padding(3, 4, 3, 4);
             txtFirstName.Name = "txtFirstName";
             txtFirstName.Size = new Size(337, 30);
@@ -519,10 +495,10 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label2.Location = new Point(27, 268);
+            label2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            label2.Location = new Point(28, 280);
             label2.Name = "label2";
-            label2.Size = new Size(87, 20);
+            label2.Size = new Size(98, 23);
             label2.TabIndex = 2;
             label2.Text = "First Name:";
             // 
@@ -530,8 +506,8 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            label1.ForeColor = Color.DimGray;
-            label1.Location = new Point(27, 22);
+            label1.ForeColor = Color.FromArgb(30, 60, 90);
+            label1.Location = new Point(28, 62);
             label1.Name = "label1";
             label1.Size = new Size(135, 23);
             label1.TabIndex = 1;
@@ -539,12 +515,12 @@
             // 
             // picCustomerPhoto
             // 
-            picCustomerPhoto.BackColor = Color.WhiteSmoke;
+            picCustomerPhoto.BackColor = Color.White;
             picCustomerPhoto.BorderStyle = BorderStyle.FixedSingle;
-            picCustomerPhoto.Location = new Point(27, 56);
+            picCustomerPhoto.Location = new Point(28, 96);
             picCustomerPhoto.Margin = new Padding(3, 4, 3, 4);
             picCustomerPhoto.Name = "picCustomerPhoto";
-            picCustomerPhoto.Size = new Size(226, 204);
+            picCustomerPhoto.Size = new Size(226, 180);
             picCustomerPhoto.SizeMode = PictureBoxSizeMode.Zoom;
             picCustomerPhoto.TabIndex = 0;
             picCustomerPhoto.TabStop = false;
@@ -552,29 +528,29 @@
             // tabPage2
             // 
             tabPage2.AutoScroll = true;
+            tabPage2.BackColor = Color.White;
             tabPage2.Controls.Add(groupBox3);
             tabPage2.Controls.Add(groupBox2);
-            tabPage2.Location = new Point(4, 49);
+            tabPage2.Location = new Point(4, 30);
             tabPage2.Margin = new Padding(3, 4, 3, 4);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(10, 12, 10, 12);
-            tabPage2.Size = new Size(918, 841);
+            tabPage2.Padding = new Padding(20, 20, 20, 20);
+            tabPage2.Size = new Size(920, 860);
             tabPage2.TabIndex = 1;
-            tabPage2.Text = "Driver's License & Verification";
-            tabPage2.UseVisualStyleBackColor = true;
+            tabPage2.Text = "Driver's License";
             // 
             // groupBox3
             // 
             groupBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBox3.Controls.Add(checkBox1);
-            groupBox3.Controls.Add(button1);
+            groupBox3.Controls.Add(btnCheckDrivingRecord);
             groupBox3.Controls.Add(btnCaptureLicense);
-            groupBox3.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            groupBox3.Location = new Point(27, 349);
+            groupBox3.Font = new Font("Segoe UI Semibold", 10.5F, FontStyle.Bold);
+            groupBox3.Location = new Point(27, 361);
             groupBox3.Margin = new Padding(3, 4, 3, 4);
             groupBox3.Name = "groupBox3";
-            groupBox3.Padding = new Padding(3, 4, 3, 4);
-            groupBox3.Size = new Size(860, 249);
+            groupBox3.Padding = new Padding(20, 20, 20, 20);
+            groupBox3.Size = new Size(860, 260);
             groupBox3.TabIndex = 1;
             groupBox3.TabStop = false;
             groupBox3.Text = "Verification Actions";
@@ -582,36 +558,44 @@
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Font = new Font("Segoe UI", 9F);
+            checkBox1.Font = new Font("Segoe UI", 10F);
             checkBox1.Location = new Point(44, 180);
             checkBox1.Margin = new Padding(3, 4, 3, 4);
             checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(174, 24);
+            checkBox1.Size = new Size(202, 27);
             checkBox1.TabIndex = 2;
             checkBox1.Text = "International License?";
             checkBox1.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnCheckDrivingRecord
             // 
-            button1.Font = new Font("Segoe UI", 9F);
-            button1.Location = new Point(44, 120);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(268, 49);
-            button1.TabIndex = 1;
-            button1.Text = "🛡️ Check Driving Record";
-            button1.UseVisualStyleBackColor = true;
+            btnCheckDrivingRecord.BackColor = Color.FromArgb(243, 156, 18);
+            btnCheckDrivingRecord.FlatAppearance.BorderSize = 0;
+            btnCheckDrivingRecord.FlatStyle = FlatStyle.Flat;
+            btnCheckDrivingRecord.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
+            btnCheckDrivingRecord.ForeColor = Color.White;
+            btnCheckDrivingRecord.Location = new Point(44, 120);
+            btnCheckDrivingRecord.Margin = new Padding(3, 4, 3, 4);
+            btnCheckDrivingRecord.Name = "btnCheckDrivingRecord";
+            btnCheckDrivingRecord.Size = new Size(268, 52);
+            btnCheckDrivingRecord.TabIndex = 1;
+            btnCheckDrivingRecord.Text = "🛡️ Check Driving Record";
+            btnCheckDrivingRecord.UseVisualStyleBackColor = false;
             // 
             // btnCaptureLicense
             // 
-            btnCaptureLicense.Font = new Font("Segoe UI", 9F);
+            btnCaptureLicense.BackColor = Color.FromArgb(52, 152, 219);
+            btnCaptureLicense.FlatAppearance.BorderSize = 0;
+            btnCaptureLicense.FlatStyle = FlatStyle.Flat;
+            btnCaptureLicense.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
+            btnCaptureLicense.ForeColor = Color.White;
             btnCaptureLicense.Location = new Point(44, 54);
             btnCaptureLicense.Margin = new Padding(3, 4, 3, 4);
             btnCaptureLicense.Name = "btnCaptureLicense";
             btnCaptureLicense.Size = new Size(268, 52);
             btnCaptureLicense.TabIndex = 0;
             btnCaptureLicense.Text = "📷 Capture License Photo";
-            btnCaptureLicense.UseVisualStyleBackColor = true;
+            btnCaptureLicense.UseVisualStyleBackColor = false;
             // 
             // groupBox2
             // 
@@ -624,12 +608,12 @@
             groupBox2.Controls.Add(label8);
             groupBox2.Controls.Add(dtpExpiryDate);
             groupBox2.Controls.Add(dtpIssueDate);
-            groupBox2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            groupBox2.Font = new Font("Segoe UI Semibold", 10.5F, FontStyle.Bold);
             groupBox2.Location = new Point(27, 31);
             groupBox2.Margin = new Padding(3, 4, 3, 4);
             groupBox2.Name = "groupBox2";
-            groupBox2.Padding = new Padding(3, 4, 3, 4);
-            groupBox2.Size = new Size(860, 298);
+            groupBox2.Padding = new Padding(20, 20, 20, 20);
+            groupBox2.Size = new Size(860, 310);
             groupBox2.TabIndex = 0;
             groupBox2.TabStop = false;
             groupBox2.Text = "License Details";
@@ -637,15 +621,16 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label11.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             label11.Location = new Point(31, 49);
             label11.Name = "label11";
-            label11.Size = new Size(124, 20);
+            label11.Size = new Size(142, 23);
             label11.TabIndex = 7;
             label11.Text = "License Number:";
             // 
             // txtLicenseNum
             // 
+            txtLicenseNum.BorderStyle = BorderStyle.FixedSingle;
             txtLicenseNum.Font = new Font("Segoe UI", 10F);
             txtLicenseNum.Location = new Point(44, 80);
             txtLicenseNum.Margin = new Padding(3, 4, 3, 4);
@@ -656,15 +641,16 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label10.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             label10.Location = new Point(31, 195);
             label10.Name = "label10";
-            label10.Size = new Size(109, 20);
+            label10.Size = new Size(127, 23);
             label10.TabIndex = 5;
             label10.Text = "State/Country:";
             // 
             // txtLicenseState
             // 
+            txtLicenseState.BorderStyle = BorderStyle.FixedSingle;
             txtLicenseState.Font = new Font("Segoe UI", 10F);
             txtLicenseState.Location = new Point(44, 225);
             txtLicenseState.Margin = new Padding(3, 4, 3, 4);
@@ -675,20 +661,20 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label9.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             label9.Location = new Point(332, 122);
             label9.Name = "label9";
-            label9.Size = new Size(93, 20);
+            label9.Size = new Size(109, 23);
             label9.TabIndex = 3;
             label9.Text = "Expiry Date:";
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label8.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             label8.Location = new Point(27, 122);
             label8.Name = "label8";
-            label8.Size = new Size(82, 20);
+            label8.Size = new Size(96, 23);
             label8.TabIndex = 2;
             label8.Text = "Issue Date:";
             // 
@@ -713,17 +699,17 @@
             // tabPage3
             // 
             tabPage3.AutoScroll = true;
+            tabPage3.BackColor = Color.White;
             tabPage3.Controls.Add(dgvHistory);
             tabPage3.Controls.Add(groupBox5);
             tabPage3.Controls.Add(groupBox4);
-            tabPage3.Location = new Point(4, 49);
+            tabPage3.Location = new Point(4, 30);
             tabPage3.Margin = new Padding(3, 4, 3, 4);
             tabPage3.Name = "tabPage3";
-            tabPage3.Padding = new Padding(10, 12, 10, 12);
-            tabPage3.Size = new Size(918, 841);
+            tabPage3.Padding = new Padding(20, 20, 20, 20);
+            tabPage3.Size = new Size(920, 860);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "History & Status";
-            tabPage3.UseVisualStyleBackColor = true;
             // 
             // dgvHistory
             // 
@@ -733,31 +719,31 @@
             dgvHistory.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvHistory.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(26, 188, 156);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(30, 60, 90);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(30, 60, 90);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             dgvHistory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            dgvHistory.ColumnHeadersHeight = 35;
+            dgvHistory.ColumnHeadersHeight = 50;
             dgvHistory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.BackColor = Color.White;
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(236, 240, 241);
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(240, 245, 250);
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(30, 60, 90);
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
             dgvHistory.DefaultCellStyle = dataGridViewCellStyle4;
             dgvHistory.EnableHeadersVisualStyles = false;
-            dgvHistory.Location = new Point(28, 429);
+            dgvHistory.GridColor = Color.FromArgb(240, 240, 240);
+            dgvHistory.Location = new Point(28, 441);
             dgvHistory.Margin = new Padding(3, 4, 3, 4);
             dgvHistory.Name = "dgvHistory";
-            dgvHistory.ReadOnly = true;
             dgvHistory.RowHeadersVisible = false;
             dgvHistory.RowHeadersWidth = 51;
-            dgvHistory.RowTemplate.Height = 30;
+            dgvHistory.RowTemplate.Height = 40;
             dgvHistory.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvHistory.Size = new Size(860, 388);
             dgvHistory.TabIndex = 2;
@@ -768,12 +754,12 @@
             groupBox5.Controls.Add(lblDamageHistory);
             groupBox5.Controls.Add(lblTotalSpent);
             groupBox5.Controls.Add(lblTotalRentals);
-            groupBox5.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            groupBox5.Font = new Font("Segoe UI Semibold", 10.5F, FontStyle.Bold);
             groupBox5.Location = new Point(27, 251);
             groupBox5.Margin = new Padding(3, 4, 3, 4);
             groupBox5.Name = "groupBox5";
-            groupBox5.Padding = new Padding(3, 4, 3, 4);
-            groupBox5.Size = new Size(860, 169);
+            groupBox5.Padding = new Padding(20, 20, 20, 20);
+            groupBox5.Size = new Size(860, 180);
             groupBox5.TabIndex = 1;
             groupBox5.TabStop = false;
             groupBox5.Text = "Rental History";
@@ -781,28 +767,31 @@
             // lblDamageHistory
             // 
             lblDamageHistory.AutoSize = true;
-            lblDamageHistory.ForeColor = Color.FromArgb(192, 57, 43);
+            lblDamageHistory.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblDamageHistory.ForeColor = Color.FromArgb(231, 76, 60);
             lblDamageHistory.Location = new Point(32, 132);
             lblDamageHistory.Name = "lblDamageHistory";
-            lblDamageHistory.Size = new Size(166, 23);
+            lblDamageHistory.Size = new Size(198, 23);
             lblDamageHistory.TabIndex = 2;
             lblDamageHistory.Text = "Damage Incidents: 0";
             // 
             // lblTotalSpent
             // 
             lblTotalSpent.AutoSize = true;
+            lblTotalSpent.Font = new Font("Segoe UI", 10F);
             lblTotalSpent.Location = new Point(32, 86);
             lblTotalSpent.Name = "lblTotalSpent";
-            lblTotalSpent.Size = new Size(150, 23);
+            lblTotalSpent.Size = new Size(172, 23);
             lblTotalSpent.TabIndex = 1;
             lblTotalSpent.Text = "Total Spent:  ₱0.00";
             // 
             // lblTotalRentals
             // 
             lblTotalRentals.AutoSize = true;
+            lblTotalRentals.Font = new Font("Segoe UI", 10F);
             lblTotalRentals.Location = new Point(32, 39);
             lblTotalRentals.Name = "lblTotalRentals";
-            lblTotalRentals.Size = new Size(104, 23);
+            lblTotalRentals.Size = new Size(120, 23);
             lblTotalRentals.TabIndex = 0;
             lblTotalRentals.Text = "Total Trips: 0";
             // 
@@ -812,11 +801,11 @@
             groupBox4.Controls.Add(chkBlacklist);
             groupBox4.Controls.Add(chkLoyalty);
             groupBox4.Controls.Add(cbCustomerType);
-            groupBox4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            groupBox4.Font = new Font("Segoe UI Semibold", 10.5F, FontStyle.Bold);
             groupBox4.Location = new Point(27, 31);
             groupBox4.Margin = new Padding(3, 4, 3, 4);
             groupBox4.Name = "groupBox4";
-            groupBox4.Padding = new Padding(3, 4, 3, 4);
+            groupBox4.Padding = new Padding(20, 20, 20, 20);
             groupBox4.Size = new Size(860, 211);
             groupBox4.TabIndex = 0;
             groupBox4.TabStop = false;
@@ -825,8 +814,8 @@
             // chkBlacklist
             // 
             chkBlacklist.AutoSize = true;
-            chkBlacklist.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            chkBlacklist.ForeColor = Color.Red;
+            chkBlacklist.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            chkBlacklist.ForeColor = Color.FromArgb(231, 76, 60);
             chkBlacklist.Location = new Point(32, 161);
             chkBlacklist.Margin = new Padding(3, 4, 3, 4);
             chkBlacklist.Name = "chkBlacklist";
@@ -838,16 +827,18 @@
             // chkLoyalty
             // 
             chkLoyalty.AutoSize = true;
+            chkLoyalty.Font = new Font("Segoe UI", 9.75F);
             chkLoyalty.Location = new Point(32, 106);
             chkLoyalty.Margin = new Padding(3, 4, 3, 4);
             chkLoyalty.Name = "chkLoyalty";
-            chkLoyalty.Size = new Size(228, 27);
+            chkLoyalty.Size = new Size(235, 27);
             chkLoyalty.TabIndex = 1;
             chkLoyalty.Text = "Frequent Renter Program";
             chkLoyalty.UseVisualStyleBackColor = true;
             // 
             // cbCustomerType
             // 
+            cbCustomerType.FlatStyle = FlatStyle.Flat;
             cbCustomerType.Font = new Font("Segoe UI", 10F);
             cbCustomerType.FormattingEnabled = true;
             cbCustomerType.Location = new Point(27, 39);
@@ -866,6 +857,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             Controls.Add(splitContainer1);
             Margin = new Padding(3, 4, 3, 4);
             Name = "CustomersView";
@@ -881,8 +873,6 @@
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picCustomerPhoto).EndInit();
             tabPage2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
@@ -896,7 +886,6 @@
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
             ResumeLayout(false);
-
         }
 
         #endregion
@@ -915,16 +904,11 @@
         private System.Windows.Forms.TextBox txtFirstName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtPhone;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtEmergencyPhone;
-        private System.Windows.Forms.TextBox txtEmergencyName;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DateTimePicker dtpExpiryDate;
         private System.Windows.Forms.DateTimePicker dtpIssueDate;
@@ -934,7 +918,7 @@
         private System.Windows.Forms.TextBox txtLicenseState;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCheckDrivingRecord;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox chkLoyalty;
@@ -959,5 +943,7 @@
         private System.Windows.Forms.Label lblAgeCheck;
         private System.Windows.Forms.DateTimePicker dtpDOB;
         private System.Windows.Forms.DataGridView dgvHistory;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button btnManageEmergencyContacts;
     }
 }
