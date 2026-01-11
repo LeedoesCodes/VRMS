@@ -30,7 +30,6 @@ namespace VRMS.UI.Forms.Rentals
             cbVehicle.SelectedIndexChanged += CbVehicle_SelectedIndexChanged;
 
             Load += NewRentalForm_Load;
-            btnSave.Click += btnSave_Click;
             btnCancel.Click += (_, __) => Close();
         }
 

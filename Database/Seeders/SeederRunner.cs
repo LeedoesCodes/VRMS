@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using VRMS.Repositories.Billing;
 using VRMS.Services.Account;
 using VRMS.Services.Customer;
 using VRMS.Services.Fleet;
@@ -17,6 +18,10 @@ public static class SeederRunner
                 services.GetRequiredService<UserService>()
             ),
             new Vehicle.VehicleSeeder(
+                services.GetRequiredService<VehicleService>()
+            ),
+            new Billing.RateSeeder(
+                services.GetRequiredService<RateConfigurationRepository>(),
                 services.GetRequiredService<VehicleService>()
             ),
             new Customer.CustomerSeeder(
