@@ -53,8 +53,6 @@
             panelSpecs = new Panel();
             grpSpecifications = new GroupBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            lblDailyRate = new Label();
-            numRate = new NumericUpDown();
             lblTransmission = new Label();
             cbTransmission = new ComboBox();
             lblFuel = new Label();
@@ -104,7 +102,6 @@
             panelSpecs.SuspendLayout();
             grpSpecifications.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numSeats).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numMileage).BeginInit();
             tabFeatures.SuspendLayout();
@@ -398,7 +395,6 @@
             btnAddCategory.TabIndex = 12;
             btnAddCategory.Text = "+ Add";
             btnAddCategory.UseVisualStyleBackColor = false;
-            btnAddCategory.Click += BtnAddCategory_Click;
             // 
             // tabSpecifications
             // 
@@ -440,59 +436,31 @@
             tableLayoutPanel2.ColumnCount = 2;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
-            tableLayoutPanel2.Controls.Add(lblDailyRate, 0, 0);
-            tableLayoutPanel2.Controls.Add(numRate, 1, 0);
-            tableLayoutPanel2.Controls.Add(lblTransmission, 0, 1);
-            tableLayoutPanel2.Controls.Add(cbTransmission, 1, 1);
-            tableLayoutPanel2.Controls.Add(lblFuel, 0, 2);
-            tableLayoutPanel2.Controls.Add(cbFuel, 1, 2);
-            tableLayoutPanel2.Controls.Add(lblSeats, 0, 3);
-            tableLayoutPanel2.Controls.Add(numSeats, 1, 3);
-            tableLayoutPanel2.Controls.Add(lblMileage, 0, 4);
-            tableLayoutPanel2.Controls.Add(numMileage, 1, 4);
-            tableLayoutPanel2.Controls.Add(lblVIN, 0, 5);
-            tableLayoutPanel2.Controls.Add(txtVIN, 1, 5);
-            tableLayoutPanel2.Controls.Add(lblStatus, 0, 6);
-            tableLayoutPanel2.Controls.Add(cbStatus, 1, 6);
+            tableLayoutPanel2.Controls.Add(lblTransmission, 0, 0);
+            tableLayoutPanel2.Controls.Add(cbTransmission, 1, 0);
+            tableLayoutPanel2.Controls.Add(lblFuel, 0, 1);
+            tableLayoutPanel2.Controls.Add(cbFuel, 1, 1);
+            tableLayoutPanel2.Controls.Add(lblSeats, 0, 2);
+            tableLayoutPanel2.Controls.Add(numSeats, 1, 2);
+            tableLayoutPanel2.Controls.Add(lblMileage, 0, 3);
+            tableLayoutPanel2.Controls.Add(numMileage, 1, 3);
+            tableLayoutPanel2.Controls.Add(lblVIN, 0, 4);
+            tableLayoutPanel2.Controls.Add(txtVIN, 1, 4);
+            tableLayoutPanel2.Controls.Add(lblStatus, 0, 5);
+            tableLayoutPanel2.Controls.Add(cbStatus, 1, 5);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(3, 25);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.Padding = new Padding(20, 10, 20, 10);
-            tableLayoutPanel2.RowCount = 7;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.28571F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.28571F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.28571F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.28571F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.28571F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.28571F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.28571F));
+            tableLayoutPanel2.RowCount = 6;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             tableLayoutPanel2.Size = new Size(770, 328);
             tableLayoutPanel2.TabIndex = 0;
-            // 
-            // lblDailyRate
-            // 
-            lblDailyRate.AutoSize = true;
-            lblDailyRate.Dock = DockStyle.Fill;
-            lblDailyRate.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            lblDailyRate.ForeColor = Color.FromArgb(30, 60, 90);
-            lblDailyRate.Location = new Point(23, 10);
-            lblDailyRate.Name = "lblDailyRate";
-            lblDailyRate.Size = new Size(213, 44);
-            lblDailyRate.TabIndex = 0;
-            lblDailyRate.Text = "Daily Rate ($):";
-            lblDailyRate.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // numRate
-            // 
-            numRate.BorderStyle = BorderStyle.FixedSingle;
-            numRate.DecimalPlaces = 2;
-            numRate.Dock = DockStyle.Fill;
-            numRate.Font = new Font("Segoe UI", 9.75F);
-            numRate.Location = new Point(242, 13);
-            numRate.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
-            numRate.Name = "numRate";
-            numRate.Size = new Size(505, 29);
-            numRate.TabIndex = 1;
             // 
             // lblTransmission
             // 
@@ -500,10 +468,10 @@
             lblTransmission.Dock = DockStyle.Fill;
             lblTransmission.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             lblTransmission.ForeColor = Color.FromArgb(30, 60, 90);
-            lblTransmission.Location = new Point(23, 54);
+            lblTransmission.Location = new Point(23, 10);
             lblTransmission.Name = "lblTransmission";
-            lblTransmission.Size = new Size(213, 44);
-            lblTransmission.TabIndex = 2;
+            lblTransmission.Size = new Size(213, 51);
+            lblTransmission.TabIndex = 0;
             lblTransmission.Text = "Transmission:";
             lblTransmission.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -514,10 +482,10 @@
             cbTransmission.Font = new Font("Segoe UI", 9.75F);
             cbTransmission.FormattingEnabled = true;
             cbTransmission.Items.AddRange(new object[] { "Manual", "Automatic" });
-            cbTransmission.Location = new Point(242, 57);
+            cbTransmission.Location = new Point(242, 13);
             cbTransmission.Name = "cbTransmission";
             cbTransmission.Size = new Size(505, 29);
-            cbTransmission.TabIndex = 3;
+            cbTransmission.TabIndex = 1;
             // 
             // lblFuel
             // 
@@ -525,10 +493,10 @@
             lblFuel.Dock = DockStyle.Fill;
             lblFuel.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             lblFuel.ForeColor = Color.FromArgb(30, 60, 90);
-            lblFuel.Location = new Point(23, 98);
+            lblFuel.Location = new Point(23, 61);
             lblFuel.Name = "lblFuel";
-            lblFuel.Size = new Size(213, 44);
-            lblFuel.TabIndex = 4;
+            lblFuel.Size = new Size(213, 51);
+            lblFuel.TabIndex = 2;
             lblFuel.Text = "Fuel Type:";
             lblFuel.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -539,10 +507,10 @@
             cbFuel.Font = new Font("Segoe UI", 9.75F);
             cbFuel.FormattingEnabled = true;
             cbFuel.Items.AddRange(new object[] { "Gasoline", "Diesel", "Electric", "Hybrid" });
-            cbFuel.Location = new Point(242, 101);
+            cbFuel.Location = new Point(242, 64);
             cbFuel.Name = "cbFuel";
             cbFuel.Size = new Size(505, 29);
-            cbFuel.TabIndex = 5;
+            cbFuel.TabIndex = 3;
             // 
             // lblSeats
             // 
@@ -550,10 +518,10 @@
             lblSeats.Dock = DockStyle.Fill;
             lblSeats.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             lblSeats.ForeColor = Color.FromArgb(30, 60, 90);
-            lblSeats.Location = new Point(23, 142);
+            lblSeats.Location = new Point(23, 112);
             lblSeats.Name = "lblSeats";
-            lblSeats.Size = new Size(213, 44);
-            lblSeats.TabIndex = 6;
+            lblSeats.Size = new Size(213, 51);
+            lblSeats.TabIndex = 4;
             lblSeats.Text = "Seats:";
             lblSeats.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -562,12 +530,12 @@
             numSeats.BorderStyle = BorderStyle.FixedSingle;
             numSeats.Dock = DockStyle.Fill;
             numSeats.Font = new Font("Segoe UI", 9.75F);
-            numSeats.Location = new Point(242, 145);
+            numSeats.Location = new Point(242, 115);
             numSeats.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             numSeats.Minimum = new decimal(new int[] { 2, 0, 0, 0 });
             numSeats.Name = "numSeats";
             numSeats.Size = new Size(505, 29);
-            numSeats.TabIndex = 7;
+            numSeats.TabIndex = 5;
             numSeats.Value = new decimal(new int[] { 4, 0, 0, 0 });
             // 
             // lblMileage
@@ -576,10 +544,10 @@
             lblMileage.Dock = DockStyle.Fill;
             lblMileage.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             lblMileage.ForeColor = Color.FromArgb(30, 60, 90);
-            lblMileage.Location = new Point(23, 186);
+            lblMileage.Location = new Point(23, 163);
             lblMileage.Name = "lblMileage";
-            lblMileage.Size = new Size(213, 44);
-            lblMileage.TabIndex = 8;
+            lblMileage.Size = new Size(213, 51);
+            lblMileage.TabIndex = 6;
             lblMileage.Text = "Current Mileage (km):";
             lblMileage.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -588,11 +556,11 @@
             numMileage.BorderStyle = BorderStyle.FixedSingle;
             numMileage.Dock = DockStyle.Fill;
             numMileage.Font = new Font("Segoe UI", 9.75F);
-            numMileage.Location = new Point(242, 189);
+            numMileage.Location = new Point(242, 166);
             numMileage.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             numMileage.Name = "numMileage";
             numMileage.Size = new Size(505, 29);
-            numMileage.TabIndex = 9;
+            numMileage.TabIndex = 7;
             // 
             // lblVIN
             // 
@@ -600,10 +568,10 @@
             lblVIN.Dock = DockStyle.Fill;
             lblVIN.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             lblVIN.ForeColor = Color.FromArgb(30, 60, 90);
-            lblVIN.Location = new Point(23, 230);
+            lblVIN.Location = new Point(23, 214);
             lblVIN.Name = "lblVIN";
-            lblVIN.Size = new Size(213, 44);
-            lblVIN.TabIndex = 10;
+            lblVIN.Size = new Size(213, 51);
+            lblVIN.TabIndex = 8;
             lblVIN.Text = "VIN (Vehicle ID):";
             lblVIN.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -612,10 +580,10 @@
             txtVIN.BorderStyle = BorderStyle.FixedSingle;
             txtVIN.Dock = DockStyle.Fill;
             txtVIN.Font = new Font("Segoe UI", 9.75F);
-            txtVIN.Location = new Point(242, 233);
+            txtVIN.Location = new Point(242, 217);
             txtVIN.Name = "txtVIN";
             txtVIN.Size = new Size(505, 29);
-            txtVIN.TabIndex = 11;
+            txtVIN.TabIndex = 9;
             // 
             // lblStatus
             // 
@@ -623,10 +591,10 @@
             lblStatus.Dock = DockStyle.Fill;
             lblStatus.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             lblStatus.ForeColor = Color.FromArgb(30, 60, 90);
-            lblStatus.Location = new Point(23, 274);
+            lblStatus.Location = new Point(23, 265);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(213, 44);
-            lblStatus.TabIndex = 12;
+            lblStatus.Size = new Size(213, 53);
+            lblStatus.TabIndex = 10;
             lblStatus.Text = "Status:";
             lblStatus.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -637,10 +605,10 @@
             cbStatus.Font = new Font("Segoe UI", 9.75F);
             cbStatus.FormattingEnabled = true;
             cbStatus.Items.AddRange(new object[] { "Available for rent", "Currently rented", "Reserved", "Under maintenance", "Out of service", "Retired/Sold" });
-            cbStatus.Location = new Point(242, 277);
+            cbStatus.Location = new Point(242, 268);
             cbStatus.Name = "cbStatus";
             cbStatus.Size = new Size(505, 29);
-            cbStatus.TabIndex = 13;
+            cbStatus.TabIndex = 11;
             // 
             // tabFeatures
             // 
@@ -995,7 +963,6 @@
             grpSpecifications.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)numSeats).EndInit();
             ((System.ComponentModel.ISupportInitialize)numMileage).EndInit();
             tabFeatures.ResumeLayout(false);
@@ -1041,8 +1008,6 @@
         private Panel panelSpecs;
         private GroupBox grpSpecifications;
         private TableLayoutPanel tableLayoutPanel2;
-        private Label lblDailyRate;
-        private NumericUpDown numRate;
         private Label lblTransmission;
         private ComboBox cbTransmission;
         private Label lblFuel;
