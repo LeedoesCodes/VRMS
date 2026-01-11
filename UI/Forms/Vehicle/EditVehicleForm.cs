@@ -58,12 +58,17 @@ namespace VRMS.Forms
         {
             btnSave.Click += BtnSave_Click;
             btnCancel.Click += (_, __) => Close();
+            btnAddCategory.Click += BtnAddCategory_Click;
+            btnSelectImage.Click += BtnSelectImage_Click;
+            btnRemoveImage.Click += BtnRemoveImage_Click;
+            lstImages.SelectedIndexChanged += LstImages_SelectedIndexChanged;
 
             txtColor.TextChanged += (_, __) => UpdateSaveButtonState();
             numMileage.ValueChanged += (_, __) => UpdateSaveButtonState();
             txtFuelEfficiency.TextChanged += (_, __) => UpdateSaveButtonState();
             numCargoCapacity.ValueChanged += (_, __) => UpdateSaveButtonState();
             cbStatus.SelectedIndexChanged += (_, __) => UpdateSaveButtonState();
+            cbCategory.SelectedIndexChanged += (_, __) => UpdateSaveButtonState();
 
             chkAC.CheckedChanged += (_, __) => UpdateSaveButtonState();
             chkGPS.CheckedChanged += (_, __) => UpdateSaveButtonState();
@@ -82,8 +87,10 @@ namespace VRMS.Forms
                 _vehicle = _vehicleService.GetVehicleFull(_vehicleId);
 
                 ConfigureEnums();
+                LoadCategories();
                 PopulateForm();
                 LoadFeatures();
+                LoadVehicleImages();
 
                 LockImmutableFields();
 
@@ -112,6 +119,31 @@ namespace VRMS.Forms
                 Enum.GetValues(typeof(FuelType));
             cbStatus.DataSource =
                 Enum.GetValues(typeof(VehicleStatus));
+        }
+
+        private void LoadCategories()
+        {
+            try
+            {
+                var categories = _vehicleService.GetAllCategories();
+                cbCategory.DataSource = categories;
+                cbCategory.DisplayMember = "Name";
+                cbCategory.ValueMember = "Id";
+
+                // Set the current vehicle's category
+                if (_vehicle != null && _vehicle.VehicleCategoryId > 0)
+                {
+                    cbCategory.SelectedValue = _vehicle.VehicleCategoryId;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error loading categories: {ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
         }
 
         private void PopulateForm()
@@ -151,26 +183,56 @@ namespace VRMS.Forms
         }
 
         // =========================
-        // FEATURES
+        // FEATURES - FIXED VERSION
         // =========================
         private void LoadFeatures()
         {
-            var features =
-                _vehicleService.GetVehicleFeatures(_vehicleId);
+            try
+            {
+                var features = _vehicleService.GetVehicleFeatures(_vehicleId);
+                _originalFeatureIds = features.Select(f => f.Id).ToHashSet();
 
-            _originalFeatureIds =
-                features.Select(f => f.Id).ToHashSet();
+                // Reset all checkboxes first
+                chkAC.Checked = false;
+                chkGPS.Checked = false;
+                chkBluetooth.Checked = false;
+                chkChildSeat.Checked = false;
+                chkInsuranceIncluded.Checked = false;
 
-            chkAC.Checked =
-                features.Any(f => f.Name == "Air Conditioning");
-            chkGPS.Checked =
-                features.Any(f => f.Name == "GPS Navigation");
-            chkBluetooth.Checked =
-                features.Any(f => f.Name == "Bluetooth Connectivity");
-            chkChildSeat.Checked =
-                features.Any(f => f.Name == "Child Seat Availability");
-            chkInsuranceIncluded.Checked =
-                features.Any(f => f.Name == "Insurance Coverage Included");
+                // Set checkboxes based on exact feature names from your database
+                foreach (var feature in features)
+                {
+                    switch (feature.Name)
+                    {
+                        case "Air Conditioning":
+                            chkAC.Checked = true;
+                            break;
+                        case "GPS Navigation":
+                            chkGPS.Checked = true;
+                            break;
+                        case "Bluetooth":  // Fixed: This is the exact name in your database
+                            chkBluetooth.Checked = true;
+                            break;
+                        case "Child Seat Availability":
+                            chkChildSeat.Checked = true;
+                            break;
+                        case "Insurance Coverage Included":
+                            chkInsuranceIncluded.Checked = true;
+                            break;
+                        default:
+                            // Handle any other features that might exist
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error loading features: {ex.Message}",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
         }
 
         private HashSet<int> GetSelectedFeatureIds()
@@ -178,17 +240,30 @@ namespace VRMS.Forms
             var all = _vehicleService.GetAllFeatures();
             var selected = new HashSet<int>();
 
-            void Add(string name)
+            // Find features by their exact names from your database
+            foreach (var feature in all)
             {
-                var f = all.FirstOrDefault(x => x.Name == name);
-                if (f != null) selected.Add(f.Id);
+                if (chkAC.Checked && feature.Name == "Air Conditioning")
+                {
+                    selected.Add(feature.Id);
+                }
+                if (chkGPS.Checked && feature.Name == "GPS Navigation")
+                {
+                    selected.Add(feature.Id);
+                }
+                if (chkBluetooth.Checked && feature.Name == "Bluetooth")  // Fixed: Exact name match
+                {
+                    selected.Add(feature.Id);
+                }
+                if (chkChildSeat.Checked && feature.Name == "Child Seat Availability")
+                {
+                    selected.Add(feature.Id);
+                }
+                if (chkInsuranceIncluded.Checked && feature.Name == "Insurance Coverage Included")
+                {
+                    selected.Add(feature.Id);
+                }
             }
-
-            if (chkAC.Checked) Add("Air Conditioning");
-            if (chkGPS.Checked) Add("GPS Navigation");
-            if (chkBluetooth.Checked) Add("Bluetooth Connectivity");
-            if (chkChildSeat.Checked) Add("Child Seat Availability");
-            if (chkInsuranceIncluded.Checked) Add("Insurance Coverage Included");
 
             return selected;
         }
@@ -197,6 +272,163 @@ namespace VRMS.Forms
         {
             return !_originalFeatureIds
                 .SetEquals(GetSelectedFeatureIds());
+        }
+
+        // =========================
+        // IMAGES
+        // =========================
+        private void LoadVehicleImages()
+        {
+            try
+            {
+                var images = _vehicleService.GetVehicleImages(_vehicleId);
+                lstImages.Items.Clear();
+
+                foreach (var image in images)
+                {
+                    lstImages.Items.Add(new ImageListItem
+                    {
+                        Id = image.Id,
+                        FileName = System.IO.Path.GetFileName(image.ImagePath),
+                        FullPath = System.IO.Path.Combine(
+                            AppContext.BaseDirectory,
+                            "Storage",
+                            image.ImagePath)
+                    });
+                }
+
+                if (lstImages.Items.Count > 0)
+                {
+                    lstImages.SelectedIndex = 0;
+                }
+                else
+                {
+                    picVehicle.Image = null;
+                    lblImageStatus.Text = "No images available";
+                }
+            }
+            catch (Exception ex)
+            {
+                lblImageStatus.Text = $"Error loading images: {ex.Message}";
+            }
+        }
+
+        private void LstImages_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            if (lstImages.SelectedItem is ImageListItem item)
+            {
+                try
+                {
+                    if (System.IO.File.Exists(item.FullPath))
+                    {
+                        picVehicle.Image = Image.FromFile(item.FullPath);
+                        lblImageStatus.Text = $"Image: {item.FileName}";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    picVehicle.Image = null;
+                    lblImageStatus.Text = $"Error loading image: {ex.Message}";
+                }
+            }
+        }
+
+        private void BtnSelectImage_Click(object? sender, EventArgs e)
+        {
+            using (var dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+                dialog.Title = "Select Vehicle Image";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        using (var stream = dialog.OpenFile())
+                        {
+                            _vehicleService.AddVehicleImage(
+                                _vehicleId,
+                                stream,
+                                dialog.FileName);
+                        }
+
+                        LoadVehicleImages();
+                        MessageBox.Show("Image added successfully!", "Success",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error adding image: {ex.Message}",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void BtnRemoveImage_Click(object? sender, EventArgs e)
+        {
+            if (lstImages.SelectedItem is ImageListItem item)
+            {
+                var result = MessageBox.Show(
+                    $"Are you sure you want to remove '{item.FileName}'?",
+                    "Confirm Removal",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        _vehicleService.RemoveVehicleImage(item.Id);
+                        LoadVehicleImages();
+                        MessageBox.Show("Image removed successfully!", "Success",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error removing image: {ex.Message}",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an image to remove.",
+                    "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        // =========================
+        // CATEGORIES
+        // =========================
+        private void BtnAddCategory_Click(object? sender, EventArgs e)
+        {
+            using (var dialog = new SimpleInputDialog("Add New Category", "Category Name:"))
+            {
+                if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.InputText))
+                {
+                    try
+                    {
+                        int newCategoryId = _vehicleService.CreateCategory(
+                            dialog.InputText.Trim(),
+                            null);
+
+                        // Refresh categories
+                        LoadCategories();
+
+                        // Select the newly created category
+                        cbCategory.SelectedValue = newCategoryId;
+
+                        MessageBox.Show("Category added successfully!", "Success",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error adding category: {ex.Message}",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
 
         // =========================
@@ -225,33 +457,33 @@ namespace VRMS.Forms
 
             try
             {
+                // Get the selected category ID
+                int selectedCategoryId = cbCategory.SelectedValue != null ?
+                    (int)cbCategory.SelectedValue : _vehicle.VehicleCategoryId;
+
                 _vehicleService.UpdateVehicle(
                     vehicleId: _vehicleId,
                     color: txtColor.Text.Trim(),
                     newOdometer: (int)numMileage.Value,
-                    fuelEfficiency:
-                        decimal.Parse(txtFuelEfficiency.Text),
-                    cargoCapacity:
-                        (int)numCargoCapacity.Value,
-                    categoryId: _vehicle.VehicleCategoryId
+                    fuelEfficiency: decimal.Parse(txtFuelEfficiency.Text),
+                    cargoCapacity: (int)numCargoCapacity.Value,
+                    categoryId: selectedCategoryId
                 );
 
-                var newStatus =
-                    (VehicleStatus)cbStatus.SelectedItem!;
+                var newStatus = (VehicleStatus)cbStatus.SelectedItem!;
 
                 if (newStatus != _vehicle.Status)
-                    _vehicleService.UpdateVehicleStatus(
-                        _vehicleId, newStatus);
+                    _vehicleService.UpdateVehicleStatus(_vehicleId, newStatus);
 
                 var newFeatures = GetSelectedFeatureIds();
 
+                // Remove features that are no longer selected
                 foreach (var id in _originalFeatureIds.Except(newFeatures))
-                    _vehicleService.RemoveFeatureFromVehicle(
-                        _vehicleId, id);
+                    _vehicleService.RemoveFeatureFromVehicle(_vehicleId, id);
 
+                // Add newly selected features
                 foreach (var id in newFeatures.Except(_originalFeatureIds))
-                    _vehicleService.AddFeatureToVehicle(
-                        _vehicleId, id);
+                    _vehicleService.AddFeatureToVehicle(_vehicleId, id);
 
                 DialogResult = DialogResult.OK;
                 Close();
@@ -324,11 +556,18 @@ namespace VRMS.Forms
         // =========================
         private bool HasChanges()
         {
+            if (!_isLoaded) return false;
+
+            // Get current category ID from combobox
+            int currentCategoryId = cbCategory.SelectedValue != null ?
+                (int)cbCategory.SelectedValue : 0;
+
             return
                 txtColor.Text.Trim() != _vehicle.Color ||
                 numMileage.Value != _vehicle.Odometer ||
                 decimal.Parse(txtFuelEfficiency.Text) != _originalFuelEfficiency ||
                 numCargoCapacity.Value != _originalCargoCapacity ||
+                currentCategoryId != _vehicle.VehicleCategoryId ||
                 (VehicleStatus)cbStatus.SelectedItem! != _vehicle.Status ||
                 FeaturesChanged();
         }
@@ -367,6 +606,82 @@ namespace VRMS.Forms
             btnSave.BackColor = _saveDisabledColor;
             btnSave.ForeColor = _saveDisabledTextColor;
             btnSave.Cursor = Cursors.Default;
+        }
+
+        // =========================
+        // HELPER CLASSES
+        // =========================
+        private class ImageListItem
+        {
+            public int Id { get; set; }
+            public string FileName { get; set; } = string.Empty;
+            public string FullPath { get; set; } = string.Empty;
+
+            public override string ToString() => FileName;
+        }
+    }
+
+    // =========================
+    // SIMPLE INPUT DIALOG
+    // =========================
+    public class SimpleInputDialog : Form
+    {
+        public string InputText => txtInput.Text;
+
+        private TextBox txtInput;
+        private Button btnOK;
+        private Button btnCancel;
+
+        public SimpleInputDialog(string title, string prompt)
+        {
+            InitializeComponents(title, prompt);
+        }
+
+        private void InitializeComponents(string title, string prompt)
+        {
+            this.Text = title;
+            this.Size = new Size(400, 180);
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+
+            var lblPrompt = new Label
+            {
+                Text = prompt,
+                Location = new Point(20, 20),
+                Size = new Size(350, 25),
+                Font = new Font("Segoe UI", 10F)
+            };
+
+            txtInput = new TextBox
+            {
+                Location = new Point(20, 50),
+                Size = new Size(340, 30),
+                Font = new Font("Segoe UI", 10F)
+            };
+
+            btnOK = new Button
+            {
+                Text = "OK",
+                DialogResult = DialogResult.OK,
+                Location = new Point(180, 90),
+                Size = new Size(80, 30),
+                Font = new Font("Segoe UI", 9F)
+            };
+
+            btnCancel = new Button
+            {
+                Text = "Cancel",
+                DialogResult = DialogResult.Cancel,
+                Location = new Point(280, 90),
+                Size = new Size(80, 30),
+                Font = new Font("Segoe UI", 9F)
+            };
+
+            this.Controls.AddRange(new Control[] { lblPrompt, txtInput, btnOK, btnCancel });
+            this.AcceptButton = btnOK;
+            this.CancelButton = btnCancel;
         }
     }
 }

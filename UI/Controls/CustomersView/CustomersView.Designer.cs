@@ -164,6 +164,7 @@
             dgvCustomers.Location = new Point(0, 92);
             dgvCustomers.Margin = new Padding(4, 5, 4, 5);
             dgvCustomers.Name = "dgvCustomers";
+            dgvCustomers.ReadOnly = true;
             dgvCustomers.RowHeadersVisible = false;
             dgvCustomers.RowHeadersWidth = 51;
             dgvCustomers.RowTemplate.Height = 40;
@@ -300,7 +301,7 @@
             tabControl1.Margin = new Padding(4, 5, 4, 5);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(920, 894);
+            tabControl1.Size = new Size(919, 894);
             tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -329,7 +330,7 @@
             tabPage1.Margin = new Padding(3, 4, 3, 4);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(20);
-            tabPage1.Size = new Size(912, 858);
+            tabPage1.Size = new Size(911, 858);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Personal Information";
             // 
@@ -533,7 +534,7 @@
             tabPage2.Margin = new Padding(3, 4, 3, 4);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(20);
-            tabPage2.Size = new Size(912, 858);
+            tabPage2.Size = new Size(911, 858);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Driver's License";
             // 
@@ -747,7 +748,7 @@
             tabPage3.Margin = new Padding(3, 4, 3, 4);
             tabPage3.Name = "tabPage3";
             tabPage3.Padding = new Padding(20);
-            tabPage3.Size = new Size(912, 858);
+            tabPage3.Size = new Size(911, 858);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "History & Status";
             // 

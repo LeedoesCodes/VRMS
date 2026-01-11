@@ -76,10 +76,16 @@ namespace VRMS.UI.Forms
                     // For now, setting default values
                     chkDailyEnabled.Checked = true;
                     nudDailyRate.Value = 0;
+
                     chkWeeklyEnabled.Checked = true;
                     nudWeeklyRate.Value = 0;
+
                     chkMonthlyEnabled.Checked = true;
                     nudMonthlyRate.Value = 0;
+
+                    // Load security deposit if available
+                    chkSecurityDepositEnabled.Checked = true;
+                    nudSecurityDeposit.Value = 0;
 
                     // Update UI to indicate edit mode
                     lblTitle.Text = "Edit Vehicle Category";
@@ -100,6 +106,9 @@ namespace VRMS.UI.Forms
 
         private void chkMonthlyEnabled_CheckedChanged(object sender, EventArgs e)
             => nudMonthlyRate.Enabled = chkMonthlyEnabled.Checked;
+
+        private void chkSecurityDepositEnabled_CheckedChanged(object sender, EventArgs e)
+            => nudSecurityDeposit.Enabled = chkSecurityDepositEnabled.Checked;
 
         // =====================================================
         // CRUD LOGIC
@@ -130,6 +139,9 @@ namespace VRMS.UI.Forms
                         string.IsNullOrWhiteSpace(description) ? null : description
                     );
 
+                    // Save rates and security deposit
+                    SaveRates(_currentCategory.Id);
+
                     MessageBox.Show("Category updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -140,11 +152,11 @@ namespace VRMS.UI.Forms
                         string.IsNullOrWhiteSpace(description) ? null : description
                     );
 
+                    // Save rates and security deposit
+                    SaveRates(CreatedCategoryId);
+
                     MessageBox.Show("Category added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                // Placeholder for saving rates from tabRates
-                // Example: SaveRates(_currentCategory?.Id ?? CreatedCategoryId);
 
                 // Reset form and reload categories
                 ClearFields();
@@ -153,6 +165,45 @@ namespace VRMS.UI.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to save category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SaveRates(int categoryId)
+        {
+            try
+            {
+                // Save daily rate if enabled
+                if (chkDailyEnabled.Checked)
+                {
+                    // TODO: Implement saving daily rate to database
+                    // _vehicleService.SaveDailyRate(categoryId, nudDailyRate.Value);
+                }
+
+                // Save weekly rate if enabled
+                if (chkWeeklyEnabled.Checked)
+                {
+                    // TODO: Implement saving weekly rate to database
+                    // _vehicleService.SaveWeeklyRate(categoryId, nudWeeklyRate.Value);
+                }
+
+                // Save monthly rate if enabled
+                if (chkMonthlyEnabled.Checked)
+                {
+                    // TODO: Implement saving monthly rate to database
+                    // _vehicleService.SaveMonthlyRate(categoryId, nudMonthlyRate.Value);
+                }
+
+                // Save security deposit if enabled
+                if (chkSecurityDepositEnabled.Checked)
+                {
+                    // TODO: Implement saving security deposit to database
+                    // _vehicleService.SaveSecurityDeposit(categoryId, nudSecurityDeposit.Value);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the error but don't fail the entire save operation
+                Console.WriteLine($"Error saving rates: {ex.Message}");
             }
         }
 
@@ -193,10 +244,16 @@ namespace VRMS.UI.Forms
             // Reset rates to defaults
             chkDailyEnabled.Checked = true;
             nudDailyRate.Value = 0;
+
             chkWeeklyEnabled.Checked = true;
             nudWeeklyRate.Value = 0;
+
             chkMonthlyEnabled.Checked = true;
             nudMonthlyRate.Value = 0;
+
+            // Reset security deposit to defaults
+            chkSecurityDepositEnabled.Checked = true;
+            nudSecurityDeposit.Value = 0;
 
             // Reset UI to indicate add mode
             lblTitle.Text = "Vehicle Category";

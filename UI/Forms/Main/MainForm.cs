@@ -14,7 +14,7 @@ namespace VRMS.Forms
     public partial class MainForm : Form
     {
         private Button activeButton = null;
-        
+
         private readonly UserService _userService;
 
         // THEME COLORS (match NewRentalForm)
@@ -165,12 +165,24 @@ namespace VRMS.Forms
                     break;
 
                 case "btnAdmin":
+                    if (Program.CurrentUserRole != "Admin")
+                    {
+                        MessageBox.Show(
+                            "You do not have permission to access this section.",
+                            "Access Denied",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                        return;
+                    }
+
                     ShowView(
                         new AdminView(_userService),
-                        "Admin",
-                        "System Management"
+                        "Administration",
+                        "User & System Management"
                     );
                     break;
+
             }
         }
 

@@ -40,6 +40,10 @@
             this.lblCategoryName = new System.Windows.Forms.Label();
             this.tabRates = new System.Windows.Forms.TabPage();
             this.panelRates = new System.Windows.Forms.Panel();
+            this.grpSecurityDeposit = new System.Windows.Forms.GroupBox();
+            this.nudSecurityDeposit = new System.Windows.Forms.NumericUpDown();
+            this.lblSecurityDeposit = new System.Windows.Forms.Label();
+            this.chkSecurityDepositEnabled = new System.Windows.Forms.CheckBox();
             this.grpMonthly = new System.Windows.Forms.GroupBox();
             this.nudMonthlyRate = new System.Windows.Forms.NumericUpDown();
             this.lblMonthly = new System.Windows.Forms.Label();
@@ -66,12 +70,14 @@
             this.grpCategoryInfo.SuspendLayout();
             this.tabRates.SuspendLayout();
             this.panelRates.SuspendLayout();
+            this.grpSecurityDeposit.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSecurityDeposit)).BeginInit();
             this.grpMonthly.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)this.nudMonthlyRate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMonthlyRate)).BeginInit();
             this.grpWeekly.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)this.nudWeeklyRate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudWeeklyRate)).BeginInit();
             this.grpDaily.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)this.nudDailyRate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDailyRate)).BeginInit();
             this.grpExistingCategories.SuspendLayout();
             this.panelListButtons.SuspendLayout();
             this.panelFooter.SuspendLayout();
@@ -84,17 +90,17 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(750, 80);
+            this.panelHeader.Size = new System.Drawing.Size(800, 80);
             this.panelHeader.TabIndex = 0;
             // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 20F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblTitle.ForeColor = System.Drawing.Color.White;
             this.lblTitle.Location = new System.Drawing.Point(25, 20);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(333, 46);
+            this.lblTitle.Size = new System.Drawing.Size(256, 46);
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "Vehicle Category";
             // 
@@ -107,7 +113,7 @@
             this.panelContent.Location = new System.Drawing.Point(0, 80);
             this.panelContent.Name = "panelContent";
             this.panelContent.Padding = new System.Windows.Forms.Padding(25);
-            this.panelContent.Size = new System.Drawing.Size(750, 600);
+            this.panelContent.Size = new System.Drawing.Size(800, 650);
             this.panelContent.TabIndex = 1;
             // 
             // tabControl
@@ -115,11 +121,11 @@
             this.tabControl.Controls.Add(this.tabCategoryInfo);
             this.tabControl.Controls.Add(this.tabRates);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tabControl.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.tabControl.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.tabControl.Location = new System.Drawing.Point(25, 25);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(700, 280);
+            this.tabControl.Size = new System.Drawing.Size(750, 320);
             this.tabControl.TabIndex = 2;
             // 
             // tabCategoryInfo
@@ -129,7 +135,7 @@
             this.tabCategoryInfo.Location = new System.Drawing.Point(4, 31);
             this.tabCategoryInfo.Name = "tabCategoryInfo";
             this.tabCategoryInfo.Padding = new System.Windows.Forms.Padding(15);
-            this.tabCategoryInfo.Size = new System.Drawing.Size(692, 245);
+            this.tabCategoryInfo.Size = new System.Drawing.Size(742, 285);
             this.tabCategoryInfo.TabIndex = 0;
             this.tabCategoryInfo.Text = "Category Information";
             // 
@@ -141,11 +147,11 @@
             this.grpCategoryInfo.Controls.Add(this.txtCategoryName);
             this.grpCategoryInfo.Controls.Add(this.lblCategoryName);
             this.grpCategoryInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grpCategoryInfo.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.grpCategoryInfo.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.grpCategoryInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
             this.grpCategoryInfo.Location = new System.Drawing.Point(15, 15);
             this.grpCategoryInfo.Name = "grpCategoryInfo";
-            this.grpCategoryInfo.Size = new System.Drawing.Size(662, 215);
+            this.grpCategoryInfo.Size = new System.Drawing.Size(712, 255);
             this.grpCategoryInfo.TabIndex = 0;
             this.grpCategoryInfo.TabStop = false;
             this.grpCategoryInfo.Text = "Basic Information";
@@ -153,16 +159,16 @@
             // txtDescription
             // 
             this.txtDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDescription.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtDescription.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtDescription.Location = new System.Drawing.Point(25, 135);
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(610, 32);
+            this.txtDescription.Size = new System.Drawing.Size(660, 32);
             this.txtDescription.TabIndex = 3;
             // 
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
-            this.lblDescription.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.lblDescription.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
             this.lblDescription.Location = new System.Drawing.Point(25, 105);
             this.lblDescription.Name = "lblDescription";
@@ -173,16 +179,16 @@
             // txtCategoryName
             // 
             this.txtCategoryName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCategoryName.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtCategoryName.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtCategoryName.Location = new System.Drawing.Point(25, 65);
             this.txtCategoryName.Name = "txtCategoryName";
-            this.txtCategoryName.Size = new System.Drawing.Size(610, 32);
+            this.txtCategoryName.Size = new System.Drawing.Size(660, 32);
             this.txtCategoryName.TabIndex = 1;
             // 
             // lblCategoryName
             // 
             this.lblCategoryName.AutoSize = true;
-            this.lblCategoryName.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.lblCategoryName.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblCategoryName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
             this.lblCategoryName.Location = new System.Drawing.Point(25, 35);
             this.lblCategoryName.Name = "lblCategoryName";
@@ -197,21 +203,78 @@
             this.tabRates.Location = new System.Drawing.Point(4, 31);
             this.tabRates.Name = "tabRates";
             this.tabRates.Padding = new System.Windows.Forms.Padding(15);
-            this.tabRates.Size = new System.Drawing.Size(692, 245);
+            this.tabRates.Size = new System.Drawing.Size(742, 285);
             this.tabRates.TabIndex = 1;
-            this.tabRates.Text = "Rental Rates";
+            this.tabRates.Text = "Rental Rates & Deposit";
             // 
             // panelRates
             // 
             this.panelRates.BackColor = System.Drawing.Color.White;
+            this.panelRates.Controls.Add(this.grpSecurityDeposit);
             this.panelRates.Controls.Add(this.grpMonthly);
             this.panelRates.Controls.Add(this.grpWeekly);
             this.panelRates.Controls.Add(this.grpDaily);
             this.panelRates.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelRates.Location = new System.Drawing.Point(15, 15);
             this.panelRates.Name = "panelRates";
-            this.panelRates.Size = new System.Drawing.Size(662, 215);
+            this.panelRates.Size = new System.Drawing.Size(712, 255);
             this.panelRates.TabIndex = 0;
+            // 
+            // grpSecurityDeposit
+            // 
+            this.grpSecurityDeposit.BackColor = System.Drawing.Color.White;
+            this.grpSecurityDeposit.Controls.Add(this.nudSecurityDeposit);
+            this.grpSecurityDeposit.Controls.Add(this.lblSecurityDeposit);
+            this.grpSecurityDeposit.Controls.Add(this.chkSecurityDepositEnabled);
+            this.grpSecurityDeposit.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.grpSecurityDeposit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
+            this.grpSecurityDeposit.Location = new System.Drawing.Point(470, 10);
+            this.grpSecurityDeposit.Name = "grpSecurityDeposit";
+            this.grpSecurityDeposit.Size = new System.Drawing.Size(220, 230);
+            this.grpSecurityDeposit.TabIndex = 3;
+            this.grpSecurityDeposit.TabStop = false;
+            this.grpSecurityDeposit.Text = "Security Deposit";
+            // 
+            // nudSecurityDeposit
+            // 
+            this.nudSecurityDeposit.DecimalPlaces = 2;
+            this.nudSecurityDeposit.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.nudSecurityDeposit.Location = new System.Drawing.Point(25, 120);
+            this.nudSecurityDeposit.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.nudSecurityDeposit.Name = "nudSecurityDeposit";
+            this.nudSecurityDeposit.Size = new System.Drawing.Size(170, 32);
+            this.nudSecurityDeposit.TabIndex = 2;
+            this.nudSecurityDeposit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudSecurityDeposit.ThousandsSeparator = true;
+            // 
+            // lblSecurityDeposit
+            // 
+            this.lblSecurityDeposit.AutoSize = true;
+            this.lblSecurityDeposit.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblSecurityDeposit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblSecurityDeposit.Location = new System.Drawing.Point(25, 90);
+            this.lblSecurityDeposit.Name = "lblSecurityDeposit";
+            this.lblSecurityDeposit.Size = new System.Drawing.Size(57, 25);
+            this.lblSecurityDeposit.TabIndex = 1;
+            this.lblSecurityDeposit.Text = "Rate:";
+            // 
+            // chkSecurityDepositEnabled
+            // 
+            this.chkSecurityDepositEnabled.AutoSize = true;
+            this.chkSecurityDepositEnabled.Checked = true;
+            this.chkSecurityDepositEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSecurityDepositEnabled.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkSecurityDepositEnabled.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.chkSecurityDepositEnabled.Location = new System.Drawing.Point(25, 50);
+            this.chkSecurityDepositEnabled.Name = "chkSecurityDepositEnabled";
+            this.chkSecurityDepositEnabled.Size = new System.Drawing.Size(95, 29);
+            this.chkSecurityDepositEnabled.TabIndex = 0;
+            this.chkSecurityDepositEnabled.Text = "Enabled";
+            this.chkSecurityDepositEnabled.UseVisualStyleBackColor = true;
             // 
             // grpMonthly
             // 
@@ -219,11 +282,11 @@
             this.grpMonthly.Controls.Add(this.nudMonthlyRate);
             this.grpMonthly.Controls.Add(this.lblMonthly);
             this.grpMonthly.Controls.Add(this.chkMonthlyEnabled);
-            this.grpMonthly.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.grpMonthly.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.grpMonthly.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            this.grpMonthly.Location = new System.Drawing.Point(440, 10);
+            this.grpMonthly.Location = new System.Drawing.Point(320, 10);
             this.grpMonthly.Name = "grpMonthly";
-            this.grpMonthly.Size = new System.Drawing.Size(200, 190);
+            this.grpMonthly.Size = new System.Drawing.Size(140, 230);
             this.grpMonthly.TabIndex = 2;
             this.grpMonthly.TabStop = false;
             this.grpMonthly.Text = "Monthly Rate";
@@ -231,15 +294,15 @@
             // nudMonthlyRate
             // 
             this.nudMonthlyRate.DecimalPlaces = 2;
-            this.nudMonthlyRate.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.nudMonthlyRate.Location = new System.Drawing.Point(25, 120);
+            this.nudMonthlyRate.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.nudMonthlyRate.Location = new System.Drawing.Point(15, 120);
             this.nudMonthlyRate.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
             this.nudMonthlyRate.Name = "nudMonthlyRate";
-            this.nudMonthlyRate.Size = new System.Drawing.Size(150, 32);
+            this.nudMonthlyRate.Size = new System.Drawing.Size(110, 32);
             this.nudMonthlyRate.TabIndex = 2;
             this.nudMonthlyRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudMonthlyRate.ThousandsSeparator = true;
@@ -247,9 +310,9 @@
             // lblMonthly
             // 
             this.lblMonthly.AutoSize = true;
-            this.lblMonthly.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblMonthly.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblMonthly.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblMonthly.Location = new System.Drawing.Point(25, 90);
+            this.lblMonthly.Location = new System.Drawing.Point(15, 90);
             this.lblMonthly.Name = "lblMonthly";
             this.lblMonthly.Size = new System.Drawing.Size(57, 25);
             this.lblMonthly.TabIndex = 1;
@@ -260,15 +323,14 @@
             this.chkMonthlyEnabled.AutoSize = true;
             this.chkMonthlyEnabled.Checked = true;
             this.chkMonthlyEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkMonthlyEnabled.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.chkMonthlyEnabled.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.chkMonthlyEnabled.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.chkMonthlyEnabled.Location = new System.Drawing.Point(25, 50);
+            this.chkMonthlyEnabled.Location = new System.Drawing.Point(15, 50);
             this.chkMonthlyEnabled.Name = "chkMonthlyEnabled";
             this.chkMonthlyEnabled.Size = new System.Drawing.Size(95, 29);
             this.chkMonthlyEnabled.TabIndex = 0;
             this.chkMonthlyEnabled.Text = "Enabled";
             this.chkMonthlyEnabled.UseVisualStyleBackColor = true;
-            this.chkMonthlyEnabled.CheckedChanged += new System.EventHandler(this.chkMonthlyEnabled_CheckedChanged);
             // 
             // grpWeekly
             // 
@@ -276,11 +338,11 @@
             this.grpWeekly.Controls.Add(this.nudWeeklyRate);
             this.grpWeekly.Controls.Add(this.lblWeekly);
             this.grpWeekly.Controls.Add(this.chkWeeklyEnabled);
-            this.grpWeekly.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.grpWeekly.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.grpWeekly.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            this.grpWeekly.Location = new System.Drawing.Point(230, 10);
+            this.grpWeekly.Location = new System.Drawing.Point(170, 10);
             this.grpWeekly.Name = "grpWeekly";
-            this.grpWeekly.Size = new System.Drawing.Size(200, 190);
+            this.grpWeekly.Size = new System.Drawing.Size(140, 230);
             this.grpWeekly.TabIndex = 1;
             this.grpWeekly.TabStop = false;
             this.grpWeekly.Text = "Weekly Rate";
@@ -288,15 +350,15 @@
             // nudWeeklyRate
             // 
             this.nudWeeklyRate.DecimalPlaces = 2;
-            this.nudWeeklyRate.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.nudWeeklyRate.Location = new System.Drawing.Point(25, 120);
+            this.nudWeeklyRate.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.nudWeeklyRate.Location = new System.Drawing.Point(15, 120);
             this.nudWeeklyRate.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
             this.nudWeeklyRate.Name = "nudWeeklyRate";
-            this.nudWeeklyRate.Size = new System.Drawing.Size(150, 32);
+            this.nudWeeklyRate.Size = new System.Drawing.Size(110, 32);
             this.nudWeeklyRate.TabIndex = 2;
             this.nudWeeklyRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudWeeklyRate.ThousandsSeparator = true;
@@ -304,9 +366,9 @@
             // lblWeekly
             // 
             this.lblWeekly.AutoSize = true;
-            this.lblWeekly.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblWeekly.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblWeekly.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblWeekly.Location = new System.Drawing.Point(25, 90);
+            this.lblWeekly.Location = new System.Drawing.Point(15, 90);
             this.lblWeekly.Name = "lblWeekly";
             this.lblWeekly.Size = new System.Drawing.Size(57, 25);
             this.lblWeekly.TabIndex = 1;
@@ -317,15 +379,14 @@
             this.chkWeeklyEnabled.AutoSize = true;
             this.chkWeeklyEnabled.Checked = true;
             this.chkWeeklyEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkWeeklyEnabled.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.chkWeeklyEnabled.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.chkWeeklyEnabled.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.chkWeeklyEnabled.Location = new System.Drawing.Point(25, 50);
+            this.chkWeeklyEnabled.Location = new System.Drawing.Point(15, 50);
             this.chkWeeklyEnabled.Name = "chkWeeklyEnabled";
             this.chkWeeklyEnabled.Size = new System.Drawing.Size(95, 29);
             this.chkWeeklyEnabled.TabIndex = 0;
             this.chkWeeklyEnabled.Text = "Enabled";
             this.chkWeeklyEnabled.UseVisualStyleBackColor = true;
-            this.chkWeeklyEnabled.CheckedChanged += new System.EventHandler(this.chkWeeklyEnabled_CheckedChanged);
             // 
             // grpDaily
             // 
@@ -333,11 +394,11 @@
             this.grpDaily.Controls.Add(this.nudDailyRate);
             this.grpDaily.Controls.Add(this.lblDaily);
             this.grpDaily.Controls.Add(this.chkDailyEnabled);
-            this.grpDaily.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.grpDaily.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.grpDaily.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
             this.grpDaily.Location = new System.Drawing.Point(20, 10);
             this.grpDaily.Name = "grpDaily";
-            this.grpDaily.Size = new System.Drawing.Size(200, 190);
+            this.grpDaily.Size = new System.Drawing.Size(140, 230);
             this.grpDaily.TabIndex = 0;
             this.grpDaily.TabStop = false;
             this.grpDaily.Text = "Daily Rate";
@@ -345,15 +406,15 @@
             // nudDailyRate
             // 
             this.nudDailyRate.DecimalPlaces = 2;
-            this.nudDailyRate.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.nudDailyRate.Location = new System.Drawing.Point(25, 120);
+            this.nudDailyRate.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.nudDailyRate.Location = new System.Drawing.Point(15, 120);
             this.nudDailyRate.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
             this.nudDailyRate.Name = "nudDailyRate";
-            this.nudDailyRate.Size = new System.Drawing.Size(150, 32);
+            this.nudDailyRate.Size = new System.Drawing.Size(110, 32);
             this.nudDailyRate.TabIndex = 2;
             this.nudDailyRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudDailyRate.ThousandsSeparator = true;
@@ -361,9 +422,9 @@
             // lblDaily
             // 
             this.lblDaily.AutoSize = true;
-            this.lblDaily.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblDaily.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblDaily.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblDaily.Location = new System.Drawing.Point(25, 90);
+            this.lblDaily.Location = new System.Drawing.Point(15, 90);
             this.lblDaily.Name = "lblDaily";
             this.lblDaily.Size = new System.Drawing.Size(57, 25);
             this.lblDaily.TabIndex = 1;
@@ -374,15 +435,14 @@
             this.chkDailyEnabled.AutoSize = true;
             this.chkDailyEnabled.Checked = true;
             this.chkDailyEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkDailyEnabled.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.chkDailyEnabled.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.chkDailyEnabled.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.chkDailyEnabled.Location = new System.Drawing.Point(25, 50);
+            this.chkDailyEnabled.Location = new System.Drawing.Point(15, 50);
             this.chkDailyEnabled.Name = "chkDailyEnabled";
             this.chkDailyEnabled.Size = new System.Drawing.Size(95, 29);
             this.chkDailyEnabled.TabIndex = 0;
             this.chkDailyEnabled.Text = "Enabled";
             this.chkDailyEnabled.UseVisualStyleBackColor = true;
-            this.chkDailyEnabled.CheckedChanged += new System.EventHandler(this.chkDailyEnabled_CheckedChanged);
             // 
             // grpExistingCategories
             // 
@@ -390,11 +450,11 @@
             this.grpExistingCategories.Controls.Add(this.panelListButtons);
             this.grpExistingCategories.Controls.Add(this.lstCategories);
             this.grpExistingCategories.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.grpExistingCategories.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.grpExistingCategories.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.grpExistingCategories.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(60)))), ((int)(((byte)(90)))));
-            this.grpExistingCategories.Location = new System.Drawing.Point(25, 320);
+            this.grpExistingCategories.Location = new System.Drawing.Point(25, 360);
             this.grpExistingCategories.Name = "grpExistingCategories";
-            this.grpExistingCategories.Size = new System.Drawing.Size(700, 255);
+            this.grpExistingCategories.Size = new System.Drawing.Size(750, 265);
             this.grpExistingCategories.TabIndex = 1;
             this.grpExistingCategories.TabStop = false;
             this.grpExistingCategories.Text = "Existing Categories";
@@ -403,10 +463,10 @@
             // 
             this.panelListButtons.Controls.Add(this.btnDelete);
             this.panelListButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelListButtons.Location = new System.Drawing.Point(3, 217);
+            this.panelListButtons.Location = new System.Drawing.Point(3, 227);
             this.panelListButtons.Name = "panelListButtons";
             this.panelListButtons.Padding = new System.Windows.Forms.Padding(10);
-            this.panelListButtons.Size = new System.Drawing.Size(694, 35);
+            this.panelListButtons.Size = new System.Drawing.Size(744, 35);
             this.panelListButtons.TabIndex = 1;
             // 
             // btnDelete
@@ -414,7 +474,7 @@
             this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
             this.btnDelete.FlatAppearance.BorderSize = 0;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDelete.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.btnDelete.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnDelete.ForeColor = System.Drawing.Color.White;
             this.btnDelete.Location = new System.Drawing.Point(10, 5);
             this.btnDelete.Name = "btnDelete";
@@ -427,14 +487,13 @@
             // 
             this.lstCategories.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lstCategories.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstCategories.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lstCategories.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lstCategories.FormattingEnabled = true;
             this.lstCategories.ItemHeight = 25;
             this.lstCategories.Location = new System.Drawing.Point(3, 25);
             this.lstCategories.Name = "lstCategories";
-            this.lstCategories.Size = new System.Drawing.Size(694, 227);
+            this.lstCategories.Size = new System.Drawing.Size(744, 237);
             this.lstCategories.TabIndex = 0;
-            this.lstCategories.SelectedIndexChanged += new System.EventHandler(this.lstCategories_SelectedIndexChanged);
             // 
             // panelFooter
             // 
@@ -442,10 +501,10 @@
             this.panelFooter.Controls.Add(this.btnCancel);
             this.panelFooter.Controls.Add(this.btnSave);
             this.panelFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelFooter.Location = new System.Drawing.Point(0, 680);
+            this.panelFooter.Location = new System.Drawing.Point(0, 730);
             this.panelFooter.Name = "panelFooter";
             this.panelFooter.Padding = new System.Windows.Forms.Padding(25, 15, 25, 15);
-            this.panelFooter.Size = new System.Drawing.Size(750, 100);
+            this.panelFooter.Size = new System.Drawing.Size(800, 100);
             this.panelFooter.TabIndex = 2;
             // 
             // btnCancel
@@ -454,9 +513,9 @@
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatAppearance.BorderSize = 0;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(360, 15);
+            this.btnCancel.Location = new System.Drawing.Point(385, 15);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(140, 55);
             this.btnCancel.TabIndex = 1;
@@ -468,9 +527,9 @@
             this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
             this.btnSave.FlatAppearance.BorderSize = 0;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSave.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.btnSave.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(510, 15);
+            this.btnSave.Location = new System.Drawing.Point(535, 15);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(200, 55);
             this.btnSave.TabIndex = 0;
@@ -483,11 +542,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(750, 780);
+            this.ClientSize = new System.Drawing.Size(800, 830);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelFooter);
             this.Controls.Add(this.panelHeader);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -503,15 +562,18 @@
             this.grpCategoryInfo.PerformLayout();
             this.tabRates.ResumeLayout(false);
             this.panelRates.ResumeLayout(false);
+            this.grpSecurityDeposit.ResumeLayout(false);
+            this.grpSecurityDeposit.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSecurityDeposit)).EndInit();
             this.grpMonthly.ResumeLayout(false);
             this.grpMonthly.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)this.nudMonthlyRate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMonthlyRate)).EndInit();
             this.grpWeekly.ResumeLayout(false);
             this.grpWeekly.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)this.nudWeeklyRate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudWeeklyRate)).EndInit();
             this.grpDaily.ResumeLayout(false);
             this.grpDaily.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)this.nudDailyRate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDailyRate)).EndInit();
             this.grpExistingCategories.ResumeLayout(false);
             this.panelListButtons.ResumeLayout(false);
             this.panelFooter.ResumeLayout(false);
@@ -552,5 +614,9 @@
         private System.Windows.Forms.NumericUpDown nudMonthlyRate;
         private System.Windows.Forms.Label lblMonthly;
         private System.Windows.Forms.CheckBox chkMonthlyEnabled;
+        private System.Windows.Forms.GroupBox grpSecurityDeposit;
+        private System.Windows.Forms.NumericUpDown nudSecurityDeposit;
+        private System.Windows.Forms.Label lblSecurityDeposit;
+        private System.Windows.Forms.CheckBox chkSecurityDepositEnabled;
     }
 }

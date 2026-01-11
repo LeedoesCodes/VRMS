@@ -425,23 +425,33 @@
             // 
             // panelFeatures
             // 
+            panelFeatures.AutoScroll = true;
             panelFeatures.BackColor = Color.White;
             panelFeatures.Controls.Add(flowLayoutPanelFeatures);
             panelFeatures.Controls.Add(lblFeaturesTitle);
             panelFeatures.Dock = DockStyle.Fill;
             panelFeatures.Location = new Point(0, 530);
             panelFeatures.Name = "panelFeatures";
-            panelFeatures.Padding = new Padding(10);
+            panelFeatures.Padding = new Padding(10, 10, 10, 5);
             panelFeatures.Size = new Size(350, 120);
             panelFeatures.TabIndex = 7;
             // 
             // flowLayoutPanelFeatures
             // 
             flowLayoutPanelFeatures.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            flowLayoutPanelFeatures.Location = new Point(10, 40);
+            flowLayoutPanelFeatures.AutoScroll = true;
+            flowLayoutPanelFeatures.AutoSize = true;
+            flowLayoutPanelFeatures.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayoutPanelFeatures.BackColor = Color.Transparent;
+            flowLayoutPanelFeatures.FlowDirection = FlowDirection.LeftToRight;
+            flowLayoutPanelFeatures.Location = new Point(10, 35);
+            flowLayoutPanelFeatures.MaximumSize = new Size(330, 80);
+            flowLayoutPanelFeatures.MinimumSize = new Size(330, 30);
             flowLayoutPanelFeatures.Name = "flowLayoutPanelFeatures";
-            flowLayoutPanelFeatures.Size = new Size(480, 70);
+            flowLayoutPanelFeatures.Padding = new Padding(0, 0, 0, 5);
+            flowLayoutPanelFeatures.Size = new Size(330, 30);
             flowLayoutPanelFeatures.TabIndex = 1;
+            flowLayoutPanelFeatures.WrapContents = true;
             // 
             // lblFeaturesTitle
             // 

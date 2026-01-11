@@ -18,12 +18,12 @@ namespace VRMS.Controls
         // UI controls added programmatically
         private CheckBox chkShowInactive;
         private ComboBox cmbRoleFilter;
-        
+
         public AdminView()
             : this(new UserService(new UserRepository()))
         {
         }
-        
+
         public AdminView(UserService userService)
         {
             InitializeComponent();
@@ -42,11 +42,8 @@ namespace VRMS.Controls
 
         private void SetupGrids()
         {
-            dgvUsers.AlternatingRowsDefaultCellStyle.BackColor =
-                Color.FromArgb(245, 245, 245);
-
-            dgvLogs.AlternatingRowsDefaultCellStyle.BackColor =
-                Color.FromArgb(245, 245, 245);
+            dgvUsers.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+            dgvLogs.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
 
             dgvUsers.AutoGenerateColumns = false;
             dgvUsers.Columns.Clear();

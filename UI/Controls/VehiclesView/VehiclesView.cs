@@ -88,6 +88,10 @@ namespace VRMS.Controls
             // -------------------------
             Load += VehiclesView_Load;
             dgvVehicles.SelectionChanged += DgvVehicles_SelectionChanged;
+
+            // Fix the FlowLayoutPanel size
+            flowLayoutPanelFeatures.AutoSize = true;
+            flowLayoutPanelFeatures.WrapContents = true;
         }
 
         // =========================
@@ -192,23 +196,47 @@ namespace VRMS.Controls
         // =========================
         private void LoadVehiclePreview(Vehicle vehicle)
         {
+            // Load basic vehicle info
             lblMakeModel.Text = $"{vehicle.Make} {vehicle.Model}";
             lblPlateValue.Text = vehicle.LicensePlate;
             lblMileageValue.Text = $"{vehicle.Odometer:N0} km";
             lblYearColorValue.Text = $"{vehicle.Year}/{vehicle.Color}";
             lblDailyRateValue.Text = vehicle.FuelEfficiency.ToString("N2");
 
-            lblStatusValue.Text = vehicle.Status.ToString();
-            lblStatusValue.ForeColor = vehicle.Status switch
+            // Load category
+            try
             {
-                VehicleStatus.Available => Color.FromArgb(46, 204, 113),
-                VehicleStatus.Rented => Color.FromArgb(231, 76, 60),
-                VehicleStatus.UnderMaintenance => Color.FromArgb(243, 156, 18),
-                VehicleStatus.Reserved => Color.FromArgb(155, 89, 182),
+                var category = _vehicleService.GetCategoryById(vehicle.VehicleCategoryId);
+                lblCategoryValue.Text = category.Name;
+            }
+            catch
+            {
+                lblCategoryValue.Text = "Unknown";
+            }
+
+            // Set status with color
+            lblStatusValue.Text = vehicle.Status.ToString();
+            lblStatusValue.ForeColor = GetStatusColor(vehicle.Status);
+
+            // Load vehicle image
+            LoadVehicleImage(vehicle.Id);
+
+            // Load vehicle features
+            LoadVehicleFeatures(vehicle.Id);
+        }
+
+        private Color GetStatusColor(VehicleStatus status)
+        {
+            return status switch
+            {
+                VehicleStatus.Available => Color.FromArgb(46, 204, 113),      // Green
+                VehicleStatus.Rented => Color.FromArgb(231, 76, 60),          // Red
+                VehicleStatus.UnderMaintenance => Color.FromArgb(243, 156, 18), // Orange
+                VehicleStatus.Reserved => Color.FromArgb(155, 89, 182),       // Purple
+                VehicleStatus.OutOfService => Color.FromArgb(149, 165, 166),  // Gray
+                VehicleStatus.Retired => Color.FromArgb(52, 73, 94),          // Dark blue
                 _ => Color.Gray
             };
-
-            LoadVehicleImage(vehicle.Id);
         }
 
         private void LoadVehicleImage(int vehicleId)
@@ -253,16 +281,133 @@ namespace VRMS.Controls
             }
         }
 
+        // =========================
+        // FEATURES DISPLAY
+        // =========================
+        private void LoadVehicleFeatures(int vehicleId)
+        {
+            // Clear existing features
+            flowLayoutPanelFeatures.Controls.Clear();
+
+            try
+            {
+                // Get features for this vehicle
+                var features = _vehicleService.GetVehicleFeatures(vehicleId);
+
+                if (features == null || features.Count == 0)
+                {
+                    // Show "No features" message
+                    var noFeaturesLabel = new Label
+                    {
+                        Text = "No features available",
+                        ForeColor = Color.Gray,
+                        Font = new Font("Segoe UI", 8F, FontStyle.Italic),
+                        AutoSize = true,
+                        Margin = new Padding(5, 3, 5, 3)
+                    };
+                    flowLayoutPanelFeatures.Controls.Add(noFeaturesLabel);
+                    return;
+                }
+
+                // Display each feature as a badge
+                foreach (var feature in features)
+                {
+                    var featureBadge = CreateFeatureBadge(feature.Name);
+                    flowLayoutPanelFeatures.Controls.Add(featureBadge);
+                }
+
+                // Update features title with count
+                lblFeaturesTitle.Text = $"Features ({features.Count})";
+            }
+            catch (Exception ex)
+            {
+                // Show error message
+                var errorLabel = new Label
+                {
+                    Text = $"Error loading features: {ex.Message}",
+                    ForeColor = Color.Red,
+                    Font = new Font("Segoe UI", 8F),
+                    AutoSize = true,
+                    Margin = new Padding(5, 3, 5, 3)
+                };
+                flowLayoutPanelFeatures.Controls.Add(errorLabel);
+                lblFeaturesTitle.Text = "Features (Error)";
+            }
+        }
+
+        private Control CreateFeatureBadge(string featureName)
+        {
+            // Create a panel as the badge container
+            var badgePanel = new Panel
+            {
+                BackColor = Color.FromArgb(236, 240, 241), // Light gray background
+                ForeColor = Color.FromArgb(52, 73, 94),    // Dark blue text
+                Padding = new Padding(6, 3, 6, 3),
+                Margin = new Padding(2, 2, 2, 2),
+                AutoSize = true,
+                MinimumSize = new Size(100, 26)
+            };
+
+            // Add a label inside the panel
+            var badgeLabel = new Label
+            {
+                Text = GetFeatureIcon(featureName) + " " + featureName,
+                Font = new Font("Segoe UI", 8F, FontStyle.Regular),
+                ForeColor = Color.FromArgb(52, 73, 94),
+                AutoSize = true,
+                TextAlign = ContentAlignment.MiddleLeft,
+                Dock = DockStyle.Fill,
+                Padding = new Padding(0, 0, 0, 0)
+            };
+
+            badgePanel.Controls.Add(badgeLabel);
+            return badgePanel;
+        }
+
+        private string GetFeatureIcon(string featureName)
+        {
+            // Map feature names to appropriate icons
+            return featureName.ToLower() switch
+            {
+                string f when f.Contains("air conditioning") || f.Contains("ac") => "❄",
+                string f when f.Contains("gps") || f.Contains("navigation") => "📍",
+                string f when f.Contains("bluetooth") => "📱",
+                string f when f.Contains("child") || f.Contains("seat") => "👶",
+                string f when f.Contains("insurance") => "🛡",
+                string f when f.Contains("camera") => "📷",
+                string f when f.Contains("heated") || f.Contains("seat") => "🔥",
+                string f when f.Contains("sunroof") || f.Contains("moonroof") => "☀",
+                string f when f.Contains("leather") => "💺",
+                _ => "✓"
+            };
+        }
+
         private void ClearVehiclePreview()
         {
+            // Clear image
             picVehiclePreview.Image = null;
 
+            // Clear labels
             lblMakeModel.Text = "—";
             lblPlateValue.Text = "—";
             lblMileageValue.Text = "—";
             lblYearColorValue.Text = "—";
             lblDailyRateValue.Text = "—";
             lblStatusValue.Text = "—";
+            lblCategoryValue.Text = "—";
+
+            // Clear features
+            flowLayoutPanelFeatures.Controls.Clear();
+            var noSelectionLabel = new Label
+            {
+                Text = "Select a vehicle to view features",
+                ForeColor = Color.Gray,
+                Font = new Font("Segoe UI", 8F, FontStyle.Italic),
+                AutoSize = true,
+                Margin = new Padding(5, 3, 5, 3)
+            };
+            flowLayoutPanelFeatures.Controls.Add(noSelectionLabel);
+            lblFeaturesTitle.Text = "Features";
         }
 
         // =========================
