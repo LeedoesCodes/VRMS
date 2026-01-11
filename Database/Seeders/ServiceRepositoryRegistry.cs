@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using VRMS.Repositories.Accounts;
+using VRMS.Repositories.Billing;
 using VRMS.Repositories.Customers;
 using VRMS.Repositories.Fleet;
 using VRMS.Services.Account;
@@ -30,6 +31,9 @@ public static class ServiceRepositoryRegistry
         // Customers
         services.AddSingleton<CustomerRepository>();
         services.AddSingleton<DriversLicenseRepository>();
+        
+        // Billing
+        services.AddSingleton<RateConfigurationRepository>();
 
         // ----------------------------
         // SERVICES

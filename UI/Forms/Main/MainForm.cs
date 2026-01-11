@@ -14,7 +14,7 @@ namespace VRMS.Forms
     public partial class MainForm : Form
     {
         private Button activeButton = null;
-        
+
         private readonly UserService _userService;
 
         // THEME COLORS (match NewRentalForm)
@@ -165,7 +165,6 @@ namespace VRMS.Forms
                     break;
 
                 case "btnAdmin":
-                    
                     if (Program.CurrentUserRole != "Admin")
                     {
                         MessageBox.Show(
@@ -178,7 +177,7 @@ namespace VRMS.Forms
                     }
 
                     ShowView(
-                        new AdminView(),
+                        new AdminView(_userService),
                         "Administration",
                         "User & System Management"
                     );
