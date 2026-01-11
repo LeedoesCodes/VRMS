@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using VRMS.Database;
+using VRMS.Enums;
 using VRMS.Models.Damages;
 
 namespace VRMS.Repositories.Damages;
@@ -12,10 +13,14 @@ public class DamageRepository
     // DAMAGE CATALOG (CRUD)
     // ----------------------------
 
-    public int Create(string description, decimal estimatedCost)
+    public int Create(
+        DamageType damageType,
+        string description,
+        decimal estimatedCost)
     {
         var table = DB.Query(
-            "CALL sp_damages_create(@desc, @cost);",
+            "CALL sp_damages_create(@type, @desc, @cost);",
+            ("@type", damageType.ToString()),
             ("@desc", description),
             ("@cost", estimatedCost)
         );
@@ -23,11 +28,16 @@ public class DamageRepository
         return Convert.ToInt32(table.Rows[0]["damage_id"]);
     }
 
-    public void Update(int damageId, string description, decimal estimatedCost)
+    public void Update(
+        int damageId,
+        DamageType damageType,
+        string description,
+        decimal estimatedCost)
     {
         DB.Execute(
-            "CALL sp_damages_update(@id, @desc, @cost);",
+            "CALL sp_damages_update(@id, @type, @desc, @cost);",
             ("@id", damageId),
+            ("@type", damageType.ToString()),
             ("@desc", description),
             ("@cost", estimatedCost)
         );
@@ -70,6 +80,9 @@ public class DamageRepository
         return new Damage
         {
             Id = Convert.ToInt32(row["id"]),
+            DamageType = Enum.Parse<DamageType>(
+                row["damage_type"].ToString()!,
+                ignoreCase: true),
             Description = row["description"].ToString()!,
             EstimatedCost = Convert.ToDecimal(row["estimated_cost"])
         };
