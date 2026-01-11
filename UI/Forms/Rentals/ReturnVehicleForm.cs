@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Windows.Forms;
+using VRMS.Services.Rental;
 
 namespace VRMS.Forms
 {
     public partial class ReturnVehicleForm : Form
     {
-        public ReturnVehicleForm()
+        private readonly int _rentalId;
+        private readonly RentalService _rentalService;
+
+        public ReturnVehicleForm(
+            int rentalId,
+            RentalService rentalService)
         {
             InitializeComponent();
+
+            _rentalId = rentalId;
+            _rentalService = rentalService;
         }
 
         // Logic placeholders

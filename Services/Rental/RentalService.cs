@@ -203,6 +203,11 @@ public class RentalService
     /// </summary>
     public Models.Rentals.Rental GetRentalById(int rentalId)
         => _rentalRepo.GetById(rentalId);
+    
+    public IReadOnlyList<Models.Rentals.Rental> GetAllRentals()
+    {
+        return _rentalRepo.GetAll();
+    }
 
     /// <summary>
     /// Retrieves a rental associated with a reservation, if any.

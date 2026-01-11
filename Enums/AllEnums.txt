@@ -68,4 +68,13 @@
         Unpaid,
         Paid
     }
+    
+    public enum DamageType
+    {
+        Scratch,
+        Dent,
+        Stain,
+        Broken,
+        Missing
+    }
 }

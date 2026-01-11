@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using VRMS.Enums;
 using VRMS.Forms;
 using VRMS.Models.Rentals;
 
@@ -19,6 +20,7 @@ using VRMS.Services.Customer;
 using VRMS.Services.Fleet;
 using VRMS.Services.Rental;
 using VRMS.Services.Billing;
+using VRMS.UI.Forms.Rentals;
 
 namespace VRMS.Controls
 {
@@ -130,33 +132,46 @@ namespace VRMS.Controls
             dgvRentals.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Rental ID",
-                DataPropertyName = "Id"
+                DataPropertyName = "Id",
+                Width = 80
             });
 
             dgvRentals.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Pickup Date",
-                DataPropertyName = "PickupDate"
+                DataPropertyName = "PickupDate",
+                DefaultCellStyle = { Format = "MMM dd, yyyy" },
+                Width = 140
             });
 
             dgvRentals.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Expected Return",
-                DataPropertyName = "ExpectedReturnDate"
+                DataPropertyName = "ExpectedReturnDate",
+                DefaultCellStyle = { Format = "MMM dd, yyyy" },
+                Width = 140
             });
 
             dgvRentals.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Status",
-                DataPropertyName = "Status"
+                DataPropertyName = "Status",
+                Width = 100
             });
+
+            // -----------------------------
+            // STATUS COLOR CODING
+            // -----------------------------
+            dgvRentals.CellFormatting -= DgvRentals_CellFormatting;
+            dgvRentals.CellFormatting += DgvRentals_CellFormatting;
         }
+
 
         private void LoadRentals()
         {
-            // TEMP until GetAllRentals() exists
             dgvRentals.DataSource = null;
-            dgvRentals.DataSource = Array.Empty<Rental>();
+            dgvRentals.DataSource =
+                _rentalService.GetAllRentals();
         }
 
         // =========================
@@ -164,25 +179,54 @@ namespace VRMS.Controls
         // =========================
         private void DgvRentals_SelectionChanged(object? sender, EventArgs e)
         {
-            bool hasSelection = dgvRentals.SelectedRows.Count > 0;
-
-            btnReturn.Enabled = hasSelection;
-            btnViewDetails.Enabled = hasSelection;
-
-            if (!hasSelection)
+            if (dgvRentals.SelectedRows.Count == 0)
+            {
+                btnReturn.Enabled = false;
+                btnViewDetails.Enabled = false;
                 return;
+            }
 
             if (dgvRentals.SelectedRows[0].DataBoundItem is not Rental rental)
                 return;
 
-            lblDetailVehicle.Text = $"Rental #{rental.Id}";
-            lblDetailCustomer.Text = "Customer: (loaded later)";
+            // -----------------------------
+            // BUTTON STATE
+            // -----------------------------
+            btnViewDetails.Enabled = true;
+            btnReturn.Enabled = rental.Status == RentalStatus.Active;
+
+            // -----------------------------
+            // LOAD RELATED DATA (SERVICES)
+            // -----------------------------
+            var reservation =
+                _reservationService.GetReservationById(
+                    rental.ReservationId);
+
+            var vehicle =
+                _vehicleService.GetVehicleById(
+                    reservation.VehicleId);
+
+            var customer =
+                _customerService.GetCustomerById(
+                    reservation.CustomerId);
+
+            // -----------------------------
+            // UI DETAILS (REAL FIELDS ONLY)
+            // -----------------------------
+            lblDetailVehicle.Text =
+                $"{vehicle.Year} {vehicle.Make} {vehicle.Model}";
+
+            lblDetailCustomer.Text =
+                $"{customer.FirstName} {customer.LastName}";
+
             lblDetailDates.Text =
                 $"From {rental.PickupDate:d} to {rental.ExpectedReturnDate:d}";
-            lblDetailAmount.Text = "Total: ₱ --";
 
-            pbVehicle.Image = null;
+            lblDetailAmount.Text = "Total: ₱ --"; // billing wired next
+
+            pbVehicle.Image = null; // vehicle image wiring later
         }
+
 
         // =========================
         // BUTTONS
@@ -191,10 +235,12 @@ namespace VRMS.Controls
         {
             using var form = new NewRentalForm(
                 _customerService,
-                _vehicleService
+                _vehicleService,
+                _reservationService,
+                _rentalService
             );
 
-            if (form.ShowDialog(this) == DialogResult.OK)
+            if (form.ShowDialog(FindForm()) == DialogResult.OK)
                 LoadRentals();
         }
 
@@ -203,8 +249,16 @@ namespace VRMS.Controls
             if (dgvRentals.SelectedRows.Count == 0)
                 return;
 
-            using var form = new ReturnVehicleForm();
-            form.ShowDialog(this);
+            if (dgvRentals.SelectedRows[0].DataBoundItem is not Rental rental)
+                return;
+
+            using var form = new ReturnVehicleForm(
+                rental.Id,
+                _rentalService
+            );
+
+            if (form.ShowDialog(FindForm()) == DialogResult.OK)
+                LoadRentals();
         }
 
         private void BtnViewDetails_Click(object sender, EventArgs e)
@@ -212,5 +266,27 @@ namespace VRMS.Controls
             using var form = new RentalDetailsForm();
             form.ShowDialog(this);
         }
+        
+        private void DgvRentals_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvRentals.Columns[e.ColumnIndex].DataPropertyName != "Status")
+                return;
+
+            if (e.Value is not RentalStatus status)
+                return;
+
+            e.CellStyle.Font = new Font(
+                dgvRentals.Font,
+                FontStyle.Bold);
+
+            e.CellStyle.ForeColor = status switch
+            {
+                RentalStatus.Active => Color.Green,
+                RentalStatus.Late => Color.OrangeRed,
+                RentalStatus.Completed => Color.Gray,
+                _ => e.CellStyle.ForeColor
+            };
+        }
+
     }
 }

@@ -96,6 +96,33 @@ public class RentalRepository
 
         return Map(table.Rows[0]);
     }
+    
+    public List<Rental> GetAll()
+    {
+        var rentals = new List<Rental>();
+
+        var table = DB.Query(
+            "CALL sp_rentals_get_all();");
+
+        foreach (DataRow row in table.Rows)
+        {
+            rentals.Add(new Rental
+            {
+                Id = (int)row["id"],
+                ReservationId = (int)row["reservation_id"],
+                PickupDate = (DateTime)row["pickup_date"],
+                ExpectedReturnDate = (DateTime)row["expected_return_date"],
+                ActualReturnDate = row["actual_return_date"] as DateTime?,
+                StartOdometer = (int)row["start_odometer"],
+                EndOdometer = row["end_odometer"] as int?,
+                Status = Enum.Parse<RentalStatus>(
+                    row["status"].ToString()!)
+            });
+        }
+
+        return rentals;
+    }
+
 
     // -------------------------------------------------
     // MAPPING

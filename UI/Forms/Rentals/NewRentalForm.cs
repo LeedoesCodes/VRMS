@@ -1,30 +1,33 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using VRMS.Enums;
 using VRMS.Forms.Payments;
+using VRMS.Models.Fleet;
 using VRMS.Services.Customer;
 using VRMS.Services.Fleet;
-using VRMS.Models.Customers;
-using VRMS.Models.Fleet;
-using VRMS.Enums;
+using VRMS.Services.Rental;
 
-namespace VRMS.Forms
+namespace VRMS.UI.Forms.Rentals
 {
     public partial class NewRentalForm : Form
     {
         private readonly CustomerService _customerService;
         private readonly VehicleService _vehicleService;
+        private readonly ReservationService _reservationService;
+        private readonly RentalService _rentalService;
 
         public NewRentalForm(
             CustomerService customerService,
-            VehicleService vehicleService)
+            VehicleService vehicleService,
+            ReservationService reservationService,
+            RentalService rentalService)
         {
             InitializeComponent();
 
             _customerService = customerService;
             _vehicleService = vehicleService;
+            _reservationService = reservationService;
+            _rentalService = rentalService;
 
             Load += NewRentalForm_Load;
-
             btnSave.Click += btnSave_Click;
             btnCancel.Click += (_, __) => Close();
         }
@@ -65,7 +68,7 @@ namespace VRMS.Forms
         {
             try
             {
-                if (cbCustomer.SelectedItem is not Customer customer)
+                if (cbCustomer.SelectedItem is not Models.Customers.Customer customer)
                     throw new InvalidOperationException(
                         "Please select a customer.");
 
@@ -102,8 +105,27 @@ namespace VRMS.Forms
 
                 if (paymentForm.ShowDialog() == DialogResult.OK)
                 {
+                    // Create reservation (Pending)
+                    int reservationId =
+                        _reservationService.CreateReservation(
+                            customer.Id,
+                            vehicle.Id,
+                            dtPickup.Value.Date,
+                            dtReturn.Value.Date
+                        );
+
+                    // Confirm reservation
+                    _reservationService.ConfirmReservation(reservationId);
+
+                    // Start rental
+                    int rentalId =
+                        _rentalService.StartRental(
+                            reservationId,
+                            dtPickup.Value
+                        );
+
                     MessageBox.Show(
-                        "Rental record created (pending backend integration).",
+                        "Rental successfully created.",
                         "Success",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
@@ -111,6 +133,8 @@ namespace VRMS.Forms
                     DialogResult = DialogResult.OK;
                     Close();
                 }
+
+
             }
             catch (Exception ex)
             {
