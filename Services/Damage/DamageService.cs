@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using VRMS.Enums;
 using VRMS.Helpers.Storage;
 using VRMS.Models.Damages;
 using VRMS.Repositories.Damages;
@@ -50,9 +51,13 @@ public class DamageService
     // ----------------------------
 
     public int CreateDamage(
+        DamageType damageType,
         string description,
         decimal estimatedCost)
     {
+        if (!Enum.IsDefined(typeof(DamageType), damageType))
+            throw new InvalidOperationException("Invalid damage type.");
+
         if (string.IsNullOrWhiteSpace(description))
             throw new InvalidOperationException(
                 "Damage description is required.");
@@ -62,15 +67,20 @@ public class DamageService
                 "Estimated cost cannot be negative.");
 
         return _damageRepo.Create(
+            damageType,
             description,
             estimatedCost);
     }
 
     public void UpdateDamage(
         int damageId,
+        DamageType damageType,
         string description,
         decimal estimatedCost)
     {
+        if (!Enum.IsDefined(typeof(DamageType), damageType))
+            throw new InvalidOperationException("Invalid damage type.");
+
         if (string.IsNullOrWhiteSpace(description))
             throw new InvalidOperationException(
                 "Damage description is required.");
@@ -83,6 +93,7 @@ public class DamageService
 
         _damageRepo.Update(
             damageId,
+            damageType,
             description,
             estimatedCost);
     }

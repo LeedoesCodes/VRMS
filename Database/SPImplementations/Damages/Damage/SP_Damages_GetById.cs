@@ -11,6 +11,7 @@ public static class SP_Damages_GetById
                                   BEGIN
                                       SELECT
                                           id,
+                                          damage_type,
                                           description,
                                           estimated_cost
                                       FROM damages
