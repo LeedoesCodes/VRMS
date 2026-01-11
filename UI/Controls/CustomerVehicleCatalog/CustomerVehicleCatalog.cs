@@ -9,7 +9,6 @@ namespace VRMS.UI.Controls.CustomerVehicleCatalog
     public partial class CustomerVehicleCatalog : UserControl
     {
         private List<VehicleItem> _vehicles = new();
-        private string _currentStatus = "All";
 
         public CustomerVehicleCatalog()
         {
@@ -19,37 +18,86 @@ namespace VRMS.UI.Controls.CustomerVehicleCatalog
             Render();
         }
 
+        // =========================
+        // Mock data lang ni for UI testing
+        // =========================
         private void LoadMockData()
         {
             _vehicles = new List<VehicleItem>
             {
-                new("Toyota Vios", "Sedan", "Available", 1800),
-                new("Ford Ranger", "Pickup", "Rented", 3200),
-                new("Honda Click 125", "Motorcycle", "Available", 700),
-                new("Mitsubishi Xpander", "MPV", "Rented", 2500),
+                new VehicleItem("Toyota Vios", "Sedan", "Available", 1800),
+                new VehicleItem("Ford Ranger", "Pickup", "Rented", 3200),
+                new VehicleItem("Honda Click 125", "Motorcycle", "Available", 700),
+                new VehicleItem("Mitsubishi Xpander", "MPV", "Rented", 2500),
+                new VehicleItem("Toyota HiAce", "Van", "Maintenance", 2800),
             };
         }
 
+        // =========================
+        // I-wire tanan dropdowns ug checkbox
+        // =========================
         private void WireEvents()
         {
-            btnAll.Click += (_, _) => { _currentStatus = "All"; Render(); };
-            btnAvailable.Click += (_, _) => { _currentStatus = "Available"; Render(); };
-            btnRented.Click += (_, _) => { _currentStatus = "Rented"; Render(); };
+            txtSearch.TextChanged += FilterVehicles;
+            cbStatus.SelectedIndexChanged += FilterVehicles;
+            cbCategory.SelectedIndexChanged += FilterVehicles;
+            cbSort.SelectedIndexChanged += FilterVehicles;
+            chkAvailableOnly.CheckedChanged += FilterVehicles;
         }
 
+        // =========================
+        // Main render sa catalog
+        // =========================
         private void Render()
         {
             flpCatalog.Controls.Clear();
 
-            var filtered = _vehicles.Where(v =>
-                (_currentStatus == "All" || v.Status == _currentStatus) &&
-                v.Name.ToLower().Contains(txtSearch.Text.ToLower())
-            );
+            string status = cbStatus.SelectedItem?.ToString() ?? "All";
+            string category = cbCategory.SelectedItem?.ToString() ?? "All";
+
+            IEnumerable<VehicleItem> filtered = _vehicles;
+
+            // Filter by status
+            if (status != "All")
+                filtered = filtered.Where(v => v.Status == status);
+
+            // Filter by category
+            if (category != "All")
+                filtered = filtered.Where(v => v.Category == category);
+
+            // Available only checkbox
+            if (chkAvailableOnly.Checked)
+                filtered = filtered.Where(v => v.Status == "Available");
+
+            // Search filter
+            filtered = filtered.Where(v =>
+                v.Name.Contains(txtSearch.Text, StringComparison.OrdinalIgnoreCase));
+
+            // Sorting
+            filtered = cbSort.SelectedIndex switch
+            {
+                1 => filtered.OrderBy(v => v.Rate),
+                2 => filtered.OrderByDescending(v => v.Rate),
+                _ => filtered.OrderBy(v => v.Name)
+            };
 
             foreach (var v in filtered)
+            {
                 flpCatalog.Controls.Add(CreateCard(v));
+            }
         }
 
+        // =========================
+        // Shared event handler
+        // =========================
+        private void FilterVehicles(object sender, EventArgs e)
+        {
+            Render();
+        }
+
+        // =========================
+        // Vehicle card UI
+        // =========================
         private Panel CreateCard(VehicleItem v)
         {
             var card = new Panel
@@ -69,18 +117,30 @@ namespace VRMS.UI.Controls.CustomerVehicleCatalog
                 AutoSize = true
             };
 
+            Color statusColor = v.Status switch
+            {
+                "Available" => Color.FromArgb(46, 204, 113),
+                "Rented" => Color.FromArgb(231, 76, 60),
+                "Maintenance" => Color.FromArgb(243, 156, 18),
+                _ => Color.Gray
+            };
+
             var lblStatus = new Label
             {
                 Text = v.Status,
-                ForeColor = v.Status == "Available" ? Color.Green : Color.Red,
-                Location = new Point(10, 40)
+                ForeColor = statusColor,
+                Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                Location = new Point(10, 40),
+                AutoSize = true
             };
 
             var lblRate = new Label
             {
-                Text = $"₱ {v.Rate}/day",
+                Text = $"₱ {v.Rate:N0} / day",
                 Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                Location = new Point(10, 70)
+                ForeColor = Color.FromArgb(30, 60, 90),
+                Location = new Point(10, 70),
+                AutoSize = true
             };
 
             var btnView = new Button
@@ -93,27 +153,34 @@ namespace VRMS.UI.Controls.CustomerVehicleCatalog
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat
             };
+            btnView.FlatAppearance.BorderSize = 0;
 
             btnView.Click += (_, _) =>
             {
                 MessageBox.Show(
-                    $"{v.Name}\nStatus: {v.Status}\nRate: ₱{v.Rate}",
-                    "Vehicle Details"
+                    $"{v.Name}\n" +
+                    $"Category: {v.Category}\n" +
+                    $"Status: {v.Status}\n" +
+                    $"Rate: ₱ {v.Rate:N0} / day",
+                    "Vehicle Details",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
                 );
             };
 
-            card.Controls.AddRange(new Control[]
-            {
-                lblName, lblStatus, lblRate, btnView
-            });
+            card.Controls.Add(lblName);
+            card.Controls.Add(lblStatus);
+            card.Controls.Add(lblRate);
+            card.Controls.Add(btnView);
 
             return card;
         }
-
-        private void FilterVehicles(object sender, EventArgs e) => Render();
     }
 
-    class VehicleItem
+    // =========================
+    // Simple vehicle model
+    // =========================
+    internal class VehicleItem
     {
         public string Name { get; }
         public string Category { get; }
