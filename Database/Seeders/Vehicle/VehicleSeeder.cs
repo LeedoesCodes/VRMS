@@ -17,12 +17,12 @@ public class VehicleSeeder : ISeeder
 
     public void Run()
     {
-        // Categories
-        var sedan   = EnsureCategory("Sedan", "Passenger sedan");
-        var suv     = EnsureCategory("SUV", "Sport utility vehicle");
-        var mpv     = EnsureCategory("MPV", "Multi-purpose vehicle");
-        var van     = EnsureCategory("Van", "Passenger / cargo van");
-        var pickup  = EnsureCategory("Pickup", "Utility pickup truck");
+        // Categories with security deposits
+        var sedan  = EnsureCategory("Sedan",  "Passenger sedan",        5000m);
+        var suv    = EnsureCategory("SUV",    "Sport utility vehicle",  8000m);
+        var mpv    = EnsureCategory("MPV",    "Multi-purpose vehicle",  7000m);
+        var van    = EnsureCategory("Van",    "Passenger / cargo van", 10000m);
+        var pickup = EnsureCategory("Pickup", "Utility pickup truck",   9000m);
 
         // Features
         var ac   = EnsureFeature("Air Conditioning");
@@ -217,14 +217,20 @@ public class VehicleSeeder : ISeeder
     // HELPERS
     // -------------------------------------------------
 
-    private int EnsureCategory(string name, string description)
+    private int EnsureCategory(
+        string name,
+        string description,
+        decimal securityDeposit)
     {
         return _vehicleService
                    .GetAllCategories()
                    .FirstOrDefault(c =>
                        c.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                    ?.Id
-               ?? _vehicleService.CreateCategory(name, description);
+               ?? _vehicleService.CreateCategory(
+                   name,
+                   description,
+                   securityDeposit);
     }
 
     private int EnsureFeature(string name)

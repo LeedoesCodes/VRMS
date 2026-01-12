@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using VRMS.Enums;
 using VRMS.Forms;
 using VRMS.Models.Fleet;
+using VRMS.Repositories.Billing;
 
 // Repositories
 using VRMS.Repositories.Fleet;
@@ -52,6 +53,7 @@ namespace VRMS.Controls
 
             var reservationRepo = new ReservationRepository();
             var rentalRepo = new RentalRepository();
+            var rateConfigRepo = new RateConfigurationRepository();
 
             _vehicleImageRepo = imageRepo;
 
@@ -64,7 +66,8 @@ namespace VRMS.Controls
                 featureRepo,
                 featureMapRepo,
                 imageRepo,
-                maintenanceRepo
+                maintenanceRepo,
+                rateConfigRepo
             );
 
             _driversLicenseService = new DriversLicenseService();

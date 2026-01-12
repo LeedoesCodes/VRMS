@@ -85,7 +85,7 @@ namespace VRMS.UI.Forms
 
                     // Load security deposit if available
                     chkSecurityDepositEnabled.Checked = true;
-                    nudSecurityDeposit.Value = 0;
+                    nudSecurityDeposit.Value = _currentCategory.SecurityDeposit;
 
                     // Update UI to indicate edit mode
                     lblTitle.Text = "Edit Vehicle Category";
@@ -133,27 +133,41 @@ namespace VRMS.UI.Forms
                 if (_currentCategory != null)
                 {
                     // Update existing category
+                    var securityDeposit =
+                        chkSecurityDepositEnabled.Checked
+                            ? nudSecurityDeposit.Value
+                            : 0m;
+
                     _vehicleService.UpdateCategory(
                         _currentCategory.Id,
                         name,
-                        string.IsNullOrWhiteSpace(description) ? null : description
+                        string.IsNullOrWhiteSpace(description) ? null : description,
+                        securityDeposit
                     );
 
-                    // Save rates and security deposit
+                    SaveSecurityDeposit(_currentCategory.Id);
                     SaveRates(_currentCategory.Id);
+
 
                     MessageBox.Show("Category updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     // Create new category
+                    var securityDeposit =
+                        chkSecurityDepositEnabled.Checked
+                            ? nudSecurityDeposit.Value
+                            : 0m;
+
                     CreatedCategoryId = _vehicleService.CreateCategory(
                         name,
-                        string.IsNullOrWhiteSpace(description) ? null : description
+                        string.IsNullOrWhiteSpace(description) ? null : description,
+                        securityDeposit
                     );
 
-                    // Save rates and security deposit
+                    SaveSecurityDeposit(CreatedCategoryId);
                     SaveRates(CreatedCategoryId);
+
 
                     MessageBox.Show("Category added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -170,41 +184,45 @@ namespace VRMS.UI.Forms
 
         private void SaveRates(int categoryId)
         {
-            try
-            {
-                // Save daily rate if enabled
-                if (chkDailyEnabled.Checked)
-                {
-                    // TODO: Implement saving daily rate to database
-                    // _vehicleService.SaveDailyRate(categoryId, nudDailyRate.Value);
-                }
+            if (!chkDailyEnabled.Checked &&
+                !chkWeeklyEnabled.Checked &&
+                !chkMonthlyEnabled.Checked)
+                return;
 
-                // Save weekly rate if enabled
-                if (chkWeeklyEnabled.Checked)
-                {
-                    // TODO: Implement saving weekly rate to database
-                    // _vehicleService.SaveWeeklyRate(categoryId, nudWeeklyRate.Value);
-                }
+            // Business rule:
+            // disabled rate = 0 (RateService will naturally ignore it)
+            var daily   = chkDailyEnabled.Checked   ? nudDailyRate.Value   : 0m;
+            var weekly  = chkWeeklyEnabled.Checked  ? nudWeeklyRate.Value  : 0m;
+            var monthly = chkMonthlyEnabled.Checked ? nudMonthlyRate.Value : 0m;
 
-                // Save monthly rate if enabled
-                if (chkMonthlyEnabled.Checked)
-                {
-                    // TODO: Implement saving monthly rate to database
-                    // _vehicleService.SaveMonthlyRate(categoryId, nudMonthlyRate.Value);
-                }
+            // Hourly is REQUIRED by RateService (late penalty logic)
+            // For now, derive a sane default if not exposed in UI
+            var hourly =
+                daily > 0 ? decimal.Round(daily / 24m, 2) : 0m;
 
-                // Save security deposit if enabled
-                if (chkSecurityDepositEnabled.Checked)
-                {
-                    // TODO: Implement saving security deposit to database
-                    // _vehicleService.SaveSecurityDeposit(categoryId, nudSecurityDeposit.Value);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log the error but don't fail the entire save operation
-                Console.WriteLine($"Error saving rates: {ex.Message}");
-            }
+            // Mileage — safe defaults for now
+            var includedMileagePerDay = 0m;
+            var excessMileageRate = 0m;
+
+            _vehicleService.UpsertCategoryRates(
+                categoryId,
+                daily,
+                weekly,
+                monthly,
+                hourly,
+                includedMileagePerDay,
+                excessMileageRate);
+        }
+
+        
+        private void SaveSecurityDeposit(int categoryId)
+        {
+            if (!chkSecurityDepositEnabled.Checked)
+                return;
+
+            _vehicleService.UpdateCategorySecurityDeposit(
+                categoryId,
+                nudSecurityDeposit.Value);
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
@@ -253,7 +271,7 @@ namespace VRMS.UI.Forms
 
             // Reset security deposit to defaults
             chkSecurityDepositEnabled.Checked = true;
-            nudSecurityDeposit.Value = 0;
+            nudSecurityDeposit.Value = 0m;
 
             // Reset UI to indicate add mode
             lblTitle.Text = "Vehicle Category";

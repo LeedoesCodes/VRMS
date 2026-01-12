@@ -1,5 +1,6 @@
 ﻿using VRMS.Enums;
 using VRMS.Models.Fleet;
+using VRMS.Repositories.Billing;
 using VRMS.Repositories.Fleet;
 
 namespace VRMS.Services.Fleet;
@@ -44,6 +45,9 @@ public class VehicleService
 
     /// <summary>Maintenance record repository</summary>
     private readonly MaintenanceRepository _maintenanceRepo;
+    
+    /// <summary>Rate configuration repository</summary>
+    private readonly RateConfigurationRepository _rateRepo;
 
     /// <summary>
     /// Initializes the vehicle service with required repositories.
@@ -54,7 +58,8 @@ public class VehicleService
         VehicleFeatureRepository featureRepo,
         VehicleFeatureMappingRepository featureMapRepo,
         VehicleImageRepository imageRepo,
-        MaintenanceRepository maintenanceRepo)
+        MaintenanceRepository maintenanceRepo,
+        RateConfigurationRepository rateRepo)
     {
         _vehicleRepo = vehicleRepo;
         _categoryRepo = categoryRepo;
@@ -62,6 +67,7 @@ public class VehicleService
         _featureMapRepo = featureMapRepo;
         _imageRepo = imageRepo;
         _maintenanceRepo = maintenanceRepo;
+        _rateRepo = rateRepo;
     }
 
     // -------------------------------------------------
@@ -259,8 +265,9 @@ public class VehicleService
     /// </summary>
     public int CreateCategory(
         string name,
-        string? description)
-        => _categoryRepo.Create(name, description);
+        string? description,
+        decimal securityDeposit)
+        => _categoryRepo.Create(name, description, securityDeposit);
 
     /// <summary>
     /// Updates a vehicle category.
@@ -268,11 +275,13 @@ public class VehicleService
     public void UpdateCategory(
         int categoryId,
         string name,
-        string? description)
+        string? description,
+        decimal securityDeposit)
         => _categoryRepo.Update(
             categoryId,
             name,
-            description);
+            description,
+            securityDeposit);
 
     /// <summary>
     /// Deletes a vehicle category.
@@ -292,6 +301,72 @@ public class VehicleService
     public VehicleCategory GetCategoryById(
         int categoryId)
         => _categoryRepo.GetById(categoryId);
+    
+    /// <summary>
+    /// Updates only the security deposit of a vehicle category.
+    /// </summary>
+    public void UpdateCategorySecurityDeposit(
+        int categoryId,
+        decimal securityDeposit)
+    {
+        if (securityDeposit < 0)
+            throw new InvalidOperationException(
+                "Security deposit cannot be negative.");
+
+        var category = _categoryRepo.GetById(categoryId);
+
+        _categoryRepo.Update(
+            categoryId,
+            category.Name,
+            category.Description,
+            securityDeposit);
+    }
+    
+    public void UpsertCategoryRates(
+        int categoryId,
+        decimal daily,
+        decimal weekly,
+        decimal monthly,
+        decimal hourly,
+        decimal includedMileagePerDay,
+        decimal excessMileageRate)
+    {
+        if (daily < 0 || weekly < 0 || monthly < 0 || hourly < 0)
+            throw new InvalidOperationException(
+                "Rates cannot be negative.");
+
+        if (includedMileagePerDay < 0 || excessMileageRate < 0)
+            throw new InvalidOperationException(
+                "Mileage values cannot be negative.");
+
+        try
+        {
+            // Try update first
+            var existing =
+                _rateRepo.GetByCategory(categoryId);
+
+            _rateRepo.Update(
+                existing.Id,
+                daily,
+                weekly,
+                monthly,
+                hourly,
+                includedMileagePerDay,
+                excessMileageRate);
+        }
+        catch (InvalidOperationException)
+        {
+            // No existing rate → create
+            _rateRepo.Create(
+                categoryId,
+                daily,
+                weekly,
+                monthly,
+                hourly,
+                includedMileagePerDay,
+                excessMileageRate);
+        }
+    }
 
     // -------------------------------------------------
     // FEATURES

@@ -84,7 +84,8 @@ namespace VRMS.Controls
                 featureRepo,
                 featureMapRepo,
                 imageRepo,
-                maintenanceRepo
+                maintenanceRepo,
+                rateConfigRepo
             );
 
             _reservationService = new ReservationService(

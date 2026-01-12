@@ -411,7 +411,9 @@ namespace VRMS.Forms
                     {
                         int newCategoryId = _vehicleService.CreateCategory(
                             dialog.InputText.Trim(),
-                            null);
+                            null,
+                            0m
+                        );
 
                         // Refresh categories
                         LoadCategories();
