@@ -8,6 +8,9 @@ using VRMS.Models.Customers;
 using VRMS.Services.Customer;
 using VRMS.UI.Forms.Customer;
 using VRMS.Forms;
+using VRMS.UI.Services;
+using VRMS.UI.State;
+using VRMS.UI.Validation;
 
 namespace VRMS.Controls
 {
@@ -15,15 +18,12 @@ namespace VRMS.Controls
     {
         private readonly DriversLicenseService _driversLicenseService;
         private readonly CustomerService _customerService;
+        private readonly CustomerImageService _imageService = new();
+        
+        private readonly CustomerFormState _state = new();
+        
 
         private List<Customer> _allCustomers = new();
-
-        private Customer? _selectedCustomer;
-        private DriversLicense? _currentLicense;
-
-        private Image? _profilePreviewImage;
-        private MemoryStream? _licenseFrontStream;
-        private MemoryStream? _licenseBackStream;
 
         public CustomersView()
         {
@@ -167,12 +167,12 @@ namespace VRMS.Controls
             if (dgvCustomers.SelectedRows.Count == 0)
                 return;
 
-            _selectedCustomer =
+            _state.SelectedCustomer =
                 dgvCustomers.SelectedRows[0].DataBoundItem as Customer;
 
-            if (_selectedCustomer != null)
+            if (_state.SelectedCustomer != null)
             {
-                PopulateForm(_selectedCustomer);
+                PopulateForm(_state.SelectedCustomer);
                 btnEmergencyContacts.Enabled = true;
             }
         }
@@ -183,18 +183,30 @@ namespace VRMS.Controls
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            if (!ValidateForm())
+            try
+            {
+                CustomerFormValidator.ValidateBasicInfo(
+                    txtFirstName.Text,
+                    txtLastName.Text,
+                    dtpDOB.Value,
+                    dtpIssueDate.Value,
+                    dtpExpiryDate.Value);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Validation Error");
                 return;
+            }
 
             try
             {
                 int? updatedId = null;
 
-                if (_selectedCustomer == null)
+                if (_state.SelectedCustomer == null)
                     CreateCustomer();
                 else
                 {
-                    updatedId = _selectedCustomer.Id;
+                    updatedId = _state.SelectedCustomer.Id;
                     UpdateCustomer();
                 }
 
@@ -214,7 +226,7 @@ namespace VRMS.Controls
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (_selectedCustomer == null)
+            if (_state.SelectedCustomer == null)
                 return;
 
             if (MessageBox.Show("Delete this customer?",
@@ -222,7 +234,7 @@ namespace VRMS.Controls
                 MessageBoxIcon.Warning) != DialogResult.Yes)
                 return;
 
-            _customerService.DeleteCustomer(_selectedCustomer.Id);
+            _customerService.DeleteCustomer(_state.SelectedCustomer.Id);
             LoadCustomers();
             ClearForm();
         }
@@ -260,23 +272,27 @@ namespace VRMS.Controls
                 licenseId
             );
 
-            SaveProfilePhoto(customerId);
+            if (_state.ProfileImage != null)
+            {
+                using var ms = _imageService.ImageToStream(_state.ProfileImage);
+                _customerService.SetCustomerPhoto(customerId, ms, "profile.jpg");
+            }
         }
 
         private void UpdateCustomer()
         {
             _driversLicenseService.SaveDriversLicense(
-                _selectedCustomer!.DriversLicenseId,
+                _state.SelectedCustomer!.DriversLicenseId,
                 txtLicenseNum.Text.Trim(),
                 dtpIssueDate.Value.Date,
                 dtpExpiryDate.Value.Date,
                 txtLicenseState.Text.Trim(),
-                _licenseFrontStream, "front.jpg",
-                _licenseBackStream, "back.jpg"
+                _state.LicenseFrontStream, "front.jpg",
+                _state.LicenseBackStream, "back.jpg"
             );
 
             _customerService.UpdateCustomer(
-                _selectedCustomer.Id,
+                _state.SelectedCustomer.Id,
                 txtFirstName.Text.Trim(),
                 txtLastName.Text.Trim(),
                 txtEmail.Text.Trim(),
@@ -288,7 +304,14 @@ namespace VRMS.Controls
                 chkBlacklist.Checked
             );
 
-            SaveProfilePhoto(_selectedCustomer.Id);
+            if (_state.ProfileImage != null)
+            {
+                using var ms = _imageService.ImageToStream(_state.ProfileImage);
+                _customerService.SetCustomerPhoto(
+                    _state.SelectedCustomer.Id,
+                    ms,
+                    "profile.jpg");
+            }
         }
 
         // =====================================================
@@ -308,27 +331,33 @@ namespace VRMS.Controls
             chkLoyalty.Checked = c.IsFrequent;
             chkBlacklist.Checked = c.IsBlacklisted;
 
-            _currentLicense =
+            _state.License =
                 _driversLicenseService.GetDriversLicenseById(c.DriversLicenseId);
 
-            if (_currentLicense != null)
+            if (_state.License != null)
             {
-                txtLicenseNum.Text = _currentLicense.LicenseNumber;
-                dtpIssueDate.Value = _currentLicense.IssueDate;
-                dtpExpiryDate.Value = _currentLicense.ExpiryDate;
-                txtLicenseState.Text = _currentLicense.IssuingCountry;
+                txtLicenseNum.Text = _state.License.LicenseNumber;
+                dtpIssueDate.Value = _state.License.IssueDate;
+                dtpExpiryDate.Value = _state.License.ExpiryDate;
+                txtLicenseState.Text = _state.License.IssuingCountry;
 
-                LoadLicenseImages(_currentLicense);
+                _imageService.SetPictureBoxImage(
+                    picLicenseFront,
+                    _state.License.FrontPhotoPath);
+
+                _imageService.SetPictureBoxImage(
+                    picLicenseBack,
+                    _state.License.BackPhotoPath);
+
             }
 
-            LoadProfilePhoto(c.PhotoPath);
+            picCustomerPhoto.Image = _imageService.LoadImage(c.PhotoPath);
             UpdateAgeLabel();
         }
 
         private void ClearForm()
         {
-            _selectedCustomer = null;
-            _currentLicense = null;
+            _state.Reset();
 
             ClearTextBoxes(this);
 
@@ -344,15 +373,12 @@ namespace VRMS.Controls
             picLicenseFront.Image = null;
             picLicenseBack.Image = null;
 
-            _profilePreviewImage = null;
-            _licenseFrontStream = null;
-            _licenseBackStream = null;
-
             dgvCustomers.ClearSelection();
             btnEmergencyContacts.Enabled = false;
 
             UpdateSaveButtonState();
         }
+
 
         private void ClearTextBoxes(Control parent)
         {
@@ -378,8 +404,8 @@ namespace VRMS.Controls
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                _profilePreviewImage = Image.FromFile(dialog.FileName);
-                picCustomerPhoto.Image = _profilePreviewImage;
+                _state.ProfileImage = Image.FromFile(dialog.FileName);
+                picCustomerPhoto.Image = _state.ProfileImage;
             }
         }
 
@@ -388,65 +414,9 @@ namespace VRMS.Controls
             using var form = new CameraForm("Capture Profile Photo");
             if (form.ShowDialog() == DialogResult.OK)
             {
-                _profilePreviewImage = (Image)form.CapturedImage.Clone();
-                picCustomerPhoto.Image = _profilePreviewImage;
+                _state.ProfileImage = (Image)form.CapturedImage.Clone();
+                picCustomerPhoto.Image = _state.ProfileImage;
             }
-        }
-
-        private void SaveProfilePhoto(int customerId)
-        {
-            if (_profilePreviewImage == null)
-                return;
-
-            using var ms = new MemoryStream();
-            _profilePreviewImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-            ms.Position = 0;
-
-            _customerService.SetCustomerPhoto(customerId, ms, "profile.jpg");
-        }
-
-        private void LoadProfilePhoto(string relativePath)
-        {
-            picCustomerPhoto.Image = null;
-
-            if (string.IsNullOrWhiteSpace(relativePath) ||
-                relativePath.StartsWith("Assets/", StringComparison.OrdinalIgnoreCase))
-                return;
-
-            var fullPath = Path.Combine("Storage", relativePath);
-            if (!File.Exists(fullPath))
-                return;
-
-            using var fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
-            using var img = Image.FromStream(fs);
-            picCustomerPhoto.Image = new Bitmap(img);
-        }
-
-        // =====================================================
-        // LICENSE IMAGES
-        // =====================================================
-
-        private void LoadLicenseImages(DriversLicense license)
-        {
-            LoadImage(picLicenseFront, license.FrontPhotoPath);
-            LoadImage(picLicenseBack, license.BackPhotoPath);
-        }
-
-        private void LoadImage(PictureBox pb, string relativePath)
-        {
-            pb.Image = null;
-
-            if (string.IsNullOrWhiteSpace(relativePath) ||
-                relativePath.StartsWith("Assets/", StringComparison.OrdinalIgnoreCase))
-                return;
-
-            var fullPath = Path.Combine("Storage", relativePath);
-            if (!File.Exists(fullPath))
-                return;
-
-            using var fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
-            using var img = Image.FromStream(fs);
-            pb.Image = new Bitmap(img);
         }
 
         // =====================================================
@@ -455,36 +425,42 @@ namespace VRMS.Controls
 
         private void BtnCaptureLicense_Click(object sender, EventArgs e)
         {
-            if (_selectedCustomer == null)
+            if (_state.SelectedCustomer == null)
                 return;
 
             using var form = new DriverLicenseCaptureForm();
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            _licenseFrontStream = form.GetFrontImageStream();
-            _licenseBackStream = form.GetBackImageStream();
+            _state.LicenseFrontStream = form.GetFrontImageStream();
+            _state.LicenseBackStream = form.GetBackImageStream();
 
             _driversLicenseService.SaveDriversLicense(
-                _selectedCustomer.DriversLicenseId,
+                _state.SelectedCustomer.DriversLicenseId,
                 txtLicenseNum.Text.Trim(),
                 dtpIssueDate.Value.Date,
                 dtpExpiryDate.Value.Date,
                 txtLicenseState.Text.Trim(),
-                _licenseFrontStream, "front.jpg",
-                _licenseBackStream, "back.jpg"
+                _state.LicenseFrontStream, "front.jpg",
+                _state.LicenseBackStream, "back.jpg"
             );
 
-            _currentLicense =
+            _state.License =
                 _driversLicenseService.GetDriversLicenseById(
-                    _selectedCustomer.DriversLicenseId);
+                    _state.SelectedCustomer.DriversLicenseId);
 
-            LoadLicenseImages(_currentLicense);
+            _imageService.SetPictureBoxImage(
+                picLicenseFront,
+                _state.License.FrontPhotoPath);
+
+            _imageService.SetPictureBoxImage(
+                picLicenseBack,
+                _state.License.BackPhotoPath);
         }
 
         private void BtnCheckDrivingRecord_Click(object sender, EventArgs e)
         {
-            if (_selectedCustomer == null)
+            if (_state.SelectedCustomer == null)
                 return;
 
             using var dialog = new DrivingRecordVerificationDialog();
@@ -493,40 +469,13 @@ namespace VRMS.Controls
 
         private void BtnEmergencyContacts_Click(object sender, EventArgs e)
         {
-            if (_selectedCustomer == null)
+            if (_state.SelectedCustomer == null)
                 return;
 
             using var form = new EmergencyContactsForm(
-                _selectedCustomer.Id,
-                $"{_selectedCustomer.FirstName} {_selectedCustomer.LastName}");
+                _state.SelectedCustomer.Id,
+                $"{_state.SelectedCustomer.FirstName} {_state.SelectedCustomer.LastName}");
             form.ShowDialog();
-        }
-
-        // =====================================================
-        // VALIDATION
-        // =====================================================
-
-        private bool ValidateForm()
-        {
-            if (string.IsNullOrWhiteSpace(txtFirstName.Text))
-                return Fail("First name required");
-
-            if (string.IsNullOrWhiteSpace(txtLastName.Text))
-                return Fail("Last name required");
-
-            if (GetAge() < 21)
-                return Fail("Customer must be at least 21");
-
-            if (dtpExpiryDate.Value <= dtpIssueDate.Value)
-                return Fail("License expiry must be after issue date");
-
-            return true;
-        }
-
-        private bool Fail(string msg)
-        {
-            MessageBox.Show(msg, "Validation Error");
-            return false;
         }
 
         private void UpdateSaveButtonState()
@@ -538,18 +487,12 @@ namespace VRMS.Controls
 
         private void UpdateAgeLabel()
         {
-            lblAgeCheck.Text = $"Age: {GetAge()}";
-            lblAgeCheck.ForeColor =
-                GetAge() >= 21 ? Color.Green : Color.Red;
-        }
+            int age = DateTime.Today.Year - dtpDOB.Value.Year;
+            if (dtpDOB.Value.Date > DateTime.Today.AddYears(-age))
+                age--;
 
-        private int GetAge()
-        {
-            var dob = dtpDOB.Value.Date;
-            var today = DateTime.Today;
-            int age = today.Year - dob.Year;
-            if (dob > today.AddYears(-age)) age--;
-            return age;
+            lblAgeCheck.Text = $"Age: {age}";
+            lblAgeCheck.ForeColor = age >= 21 ? Color.Green : Color.Red;
         }
     }
 }
