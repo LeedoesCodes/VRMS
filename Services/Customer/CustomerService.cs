@@ -191,8 +191,6 @@ namespace VRMS.Services.Customer
             );
 
             _repo.Delete(customerId);
-
-            _repo.Delete(customerId);
         }
 
         // =====================================================

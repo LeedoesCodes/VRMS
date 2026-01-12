@@ -44,7 +44,7 @@ public class VehicleSeeder : ISeeder
             Transmission = TransmissionType.Automatic,
             FuelType = FuelType.Gasoline,
             SeatingCapacity = 5,
-            Odometer = 0,
+            Odometer = 32000,
             FuelEfficiency = 17.0m,
             CargoCapacity = 400,
             VehicleCategoryId = sedan
@@ -62,7 +62,7 @@ public class VehicleSeeder : ISeeder
             Transmission = TransmissionType.Automatic,
             FuelType = FuelType.Diesel,
             SeatingCapacity = 7,
-            Odometer = 0,
+            Odometer = 58000,
             FuelEfficiency = 12.5m,
             CargoCapacity = 550,
             VehicleCategoryId = mpv
@@ -80,7 +80,7 @@ public class VehicleSeeder : ISeeder
             Transmission = TransmissionType.Automatic,
             FuelType = FuelType.Gasoline,
             SeatingCapacity = 5,
-            Odometer = 0,
+            Odometer = 27000,
             FuelEfficiency = 22.0m,
             CargoCapacity = 300,
             VehicleCategoryId = sedan
@@ -98,7 +98,7 @@ public class VehicleSeeder : ISeeder
             Transmission = TransmissionType.Manual,
             FuelType = FuelType.Diesel,
             SeatingCapacity = 15,
-            Odometer = 0,
+            Odometer = 118000,
             FuelEfficiency = 9.5m,
             CargoCapacity = 900,
             VehicleCategoryId = van
@@ -116,7 +116,7 @@ public class VehicleSeeder : ISeeder
             Transmission = TransmissionType.Manual,
             FuelType = FuelType.Diesel,
             SeatingCapacity = 15,
-            Odometer = 0,
+            Odometer = 142000,
             FuelEfficiency = 9.0m,
             CargoCapacity = 900,
             VehicleCategoryId = van
@@ -134,7 +134,7 @@ public class VehicleSeeder : ISeeder
             Transmission = TransmissionType.Automatic,
             FuelType = FuelType.Diesel,
             SeatingCapacity = 7,
-            Odometer = 0,
+            Odometer = 36000,
             FuelEfficiency = 11.0m,
             CargoCapacity = 600,
             VehicleCategoryId = suv
@@ -152,7 +152,7 @@ public class VehicleSeeder : ISeeder
             Transmission = TransmissionType.Automatic,
             FuelType = FuelType.Diesel,
             SeatingCapacity = 7,
-            Odometer = 0,
+            Odometer = 52000,
             FuelEfficiency = 11.5m,
             CargoCapacity = 600,
             VehicleCategoryId = suv
@@ -170,7 +170,7 @@ public class VehicleSeeder : ISeeder
             Transmission = TransmissionType.Automatic,
             FuelType = FuelType.Gasoline,
             SeatingCapacity = 7,
-            Odometer = 0,
+            Odometer = 30000,
             FuelEfficiency = 14.0m,
             CargoCapacity = 500,
             VehicleCategoryId = mpv
@@ -188,7 +188,7 @@ public class VehicleSeeder : ISeeder
             Transmission = TransmissionType.Automatic,
             FuelType = FuelType.Gasoline,
             SeatingCapacity = 7,
-            Odometer = 0,
+            Odometer = 47000,
             FuelEfficiency = 13.5m,
             CargoCapacity = 500,
             VehicleCategoryId = mpv
@@ -206,7 +206,7 @@ public class VehicleSeeder : ISeeder
             Transmission = TransmissionType.Manual,
             FuelType = FuelType.Diesel,
             SeatingCapacity = 5,
-            Odometer = 0,
+            Odometer = 42000,
             FuelEfficiency = 12.0m,
             CargoCapacity = 1000,
             VehicleCategoryId = pickup

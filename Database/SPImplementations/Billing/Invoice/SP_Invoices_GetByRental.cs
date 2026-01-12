@@ -13,7 +13,8 @@ public static class SP_Invoices_GetByRental
                                           id,
                                           rental_id,
                                           total_amount,
-                                          generated_date
+                                          generated_date,
+                                          status
                                       FROM invoices
                                       WHERE rental_id = p_rental_id
                                       ORDER BY generated_date DESC;

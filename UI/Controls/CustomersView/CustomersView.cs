@@ -104,6 +104,13 @@ namespace VRMS.Controls
                 DataPropertyName = "LastName",
                 FillWeight = 30
             });
+            
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Email",
+                DataPropertyName = "Email",
+                FillWeight = 30
+            });
 
             dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -118,6 +125,8 @@ namespace VRMS.Controls
                 DataPropertyName = "Phone",
                 FillWeight = 20
             });
+            
+            
         }
 
 

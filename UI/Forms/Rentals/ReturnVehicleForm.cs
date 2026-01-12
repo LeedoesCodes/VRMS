@@ -33,13 +33,9 @@ namespace VRMS.Forms
             _customerService = customerService;
 
             Load += ReturnVehicleForm_Load;
-
-            btnConfirms.Click += btnConfirm_Click;
-            btnCancels.Click += btnCancel_Click;
-            btnAddDamage.Click += BtnAddDamage_Click;
         }
 
-        
+
         private void ReturnVehicleForm_Load(object? sender, EventArgs e)
         {
             _rental = _rentalService.GetRentalById(_rentalId);
@@ -70,7 +66,7 @@ namespace VRMS.Forms
             ConfigureDamageGrid();
         }
 
-        
+
         private void ConfigureDamageGrid()
         {
             dgvDamages.AutoGenerateColumns = false;
@@ -120,7 +116,7 @@ namespace VRMS.Forms
             fuelLevel = (FuelLevel)cbFuels.SelectedIndex;
             return true;
         }
-        
+
         private void btnCancel_Click(object? sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
@@ -134,8 +130,8 @@ namespace VRMS.Forms
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
-        
-        private void btnConfirm_Click(object? sender, EventArgs e)
+
+        private void btnCompleteReturn_Click(object sender, EventArgs e)
         {
             if (!ValidateInput(out var endOdometer, out var fuelLevel))
                 return;
@@ -161,6 +157,5 @@ namespace VRMS.Forms
                     MessageBoxIcon.Error);
             }
         }
-
     }
 }

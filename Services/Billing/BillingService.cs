@@ -89,10 +89,6 @@ public class BillingService
         if (existing != null)
             return existing;
 
-        if (existing != null && existing.Status == InvoiceStatus.Paid)
-            throw new InvalidOperationException(
-                "Paid invoice already exists for this rental.");
-
         var id = _invoiceRepo.Create(
             rentalId,
             0m,
@@ -100,6 +96,7 @@ public class BillingService
 
         return _invoiceRepo.GetById(id);
     }
+
 
     // ---------------- PRICING ENFORCEMENT ----------------
 

@@ -12,7 +12,7 @@ public static class SP_Invoices_MarkPaid
                                   )
                                   BEGIN
                                       UPDATE invoices
-                                      SET status = {InvoiceStatus.Paid}
+                                      SET status = '{InvoiceStatus.Paid}'
                                       WHERE id = p_invoice_id;
                                   END;
                                   """;

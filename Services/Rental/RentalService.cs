@@ -140,12 +140,13 @@ public class RentalService
         int endOdometer,
         FuelLevel endFuelLevel)
     {
-        var rental =
-            _rentalRepo.GetById(rentalId);
+        // ---------------- VALIDATION ----------------
+
+        var rental = _rentalRepo.GetById(rentalId);
 
         if (rental.Status != RentalStatus.Active)
             throw new InvalidOperationException(
-                "Only active rentals can be completed.");
+                "Only active rentals can be returned.");
 
         if (actualReturnDate < rental.PickupDate)
             throw new InvalidOperationException(
@@ -155,11 +156,20 @@ public class RentalService
             throw new InvalidOperationException(
                 "End odometer must be greater than start odometer.");
 
+        // ---------------- INVOICE (MUST BE CREATED FIRST) ----------------
+        // BillingService REQUIRES rental to be Active
+
+        _billingService.GetOrCreateInvoice(rentalId);
+
+        // ---------------- PERSIST RETURN DATA ----------------
+
         _rentalRepo.Complete(
             rentalId,
             actualReturnDate,
             endOdometer,
             endFuelLevel);
+
+        // ---------------- STATUS TRANSITION ----------------
 
         if (actualReturnDate > rental.ExpectedReturnDate)
         {
@@ -167,6 +177,14 @@ public class RentalService
                 rentalId,
                 RentalStatus.Late);
         }
+        else
+        {
+            _rentalRepo.UpdateStatus(
+                rentalId,
+                RentalStatus.Completed);
+        }
+
+        // ---------------- VEHICLE UPDATE ----------------
 
         var reservation =
             _reservationService.GetReservationById(
@@ -177,19 +195,23 @@ public class RentalService
                 reservation.VehicleId);
 
         _vehicleService.UpdateVehicle(
-            vehicleId: reservation.VehicleId,
-            color: vehicle.Color,
-            newOdometer: endOdometer,
-            fuelEfficiency: vehicle.FuelEfficiency,
-            cargoCapacity: vehicle.CargoCapacity,
-            categoryId: vehicle.VehicleCategoryId);
+            vehicle.Id,
+            vehicle.Color,
+            endOdometer,
+            vehicle.FuelEfficiency,
+            vehicle.CargoCapacity,
+            vehicle.VehicleCategoryId);
 
         _vehicleService.UpdateVehicleStatus(
-            reservation.VehicleId,
+            vehicle.Id,
             VehicleStatus.Available);
+
+        // ---------------- FINALIZE BILLING ----------------
 
         _billingService.FinalizeInvoice(rentalId);
     }
+
+
 
 
     // -------------------------------------------------

@@ -15,12 +15,16 @@
 
         #region Windows Form Designer generated code
 
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             pnlHeader = new Panel();
             lblFormTitle = new Label();
             pnlRentalSummary = new Panel();
@@ -50,7 +54,7 @@
             numLateFee = new NumericUpDown();
             lblLateFees = new Label();
             pnlActionBar = new Panel();
-            btnConfirms = new Button();
+            btnCompleteReturn = new Button();
             btnCancels = new Button();
             pnlHeader.SuspendLayout();
             pnlRentalSummary.SuspendLayout();
@@ -280,6 +284,7 @@
             btnAddDamage.TabIndex = 1;
             btnAddDamage.Text = "+ Add Damage";
             btnAddDamage.UseVisualStyleBackColor = false;
+            btnAddDamage.Click += BtnAddDamage_Click;
             // 
             // dgvDamages
             // 
@@ -289,44 +294,44 @@
             dgvDamages.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvDamages.BackgroundColor = Color.White;
             dgvDamages.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 249, 250);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = Color.FromArgb(73, 80, 87);
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvDamages.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(248, 249, 250);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(73, 80, 87);
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dgvDamages.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dgvDamages.ColumnHeadersHeight = 40;
             dgvDamages.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(229, 244, 255);
-            dataGridViewCellStyle2.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvDamages.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Window;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(229, 244, 255);
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dgvDamages.DefaultCellStyle = dataGridViewCellStyle6;
             dgvDamages.EnableHeadersVisualStyles = false;
             dgvDamages.Location = new Point(20, 75);
             dgvDamages.Margin = new Padding(3, 4, 3, 4);
             dgvDamages.MultiSelect = false;
             dgvDamages.Name = "dgvDamages";
             dgvDamages.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dgvDamages.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = SystemColors.Control;
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dgvDamages.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
             dgvDamages.RowHeadersVisible = false;
             dgvDamages.RowHeadersWidth = 51;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.Padding = new Padding(5);
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(229, 244, 255);
-            dgvDamages.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle8.Padding = new Padding(5);
+            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(229, 244, 255);
+            dgvDamages.RowsDefaultCellStyle = dataGridViewCellStyle8;
             dgvDamages.RowTemplate.Height = 35;
             dgvDamages.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvDamages.Size = new Size(500, 425);
@@ -433,7 +438,7 @@
             // pnlActionBar
             // 
             pnlActionBar.BackColor = Color.White;
-            pnlActionBar.Controls.Add(btnConfirms);
+            pnlActionBar.Controls.Add(btnCompleteReturn);
             pnlActionBar.Controls.Add(btnCancels);
             pnlActionBar.Dock = DockStyle.Bottom;
             pnlActionBar.Location = new Point(0, 900);
@@ -443,21 +448,22 @@
             pnlActionBar.Size = new Size(1150, 125);
             pnlActionBar.TabIndex = 5;
             // 
-            // btnConfirms
+            // btnCompleteReturn
             // 
-            btnConfirms.BackColor = Color.FromArgb(41, 128, 185);
-            btnConfirms.Dock = DockStyle.Right;
-            btnConfirms.FlatAppearance.BorderSize = 0;
-            btnConfirms.FlatStyle = FlatStyle.Flat;
-            btnConfirms.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnConfirms.ForeColor = Color.White;
-            btnConfirms.Location = new Point(680, 25);
-            btnConfirms.Margin = new Padding(3, 4, 3, 4);
-            btnConfirms.Name = "btnConfirms";
-            btnConfirms.Size = new Size(450, 75);
-            btnConfirms.TabIndex = 1;
-            btnConfirms.Text = "Complete Return Process";
-            btnConfirms.UseVisualStyleBackColor = false;
+            btnCompleteReturn.BackColor = Color.FromArgb(41, 128, 185);
+            btnCompleteReturn.Dock = DockStyle.Right;
+            btnCompleteReturn.FlatAppearance.BorderSize = 0;
+            btnCompleteReturn.FlatStyle = FlatStyle.Flat;
+            btnCompleteReturn.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnCompleteReturn.ForeColor = Color.White;
+            btnCompleteReturn.Location = new Point(680, 25);
+            btnCompleteReturn.Margin = new Padding(3, 4, 3, 4);
+            btnCompleteReturn.Name = "btnCompleteReturn";
+            btnCompleteReturn.Size = new Size(450, 75);
+            btnCompleteReturn.TabIndex = 1;
+            btnCompleteReturn.Text = "Complete Return Process";
+            btnCompleteReturn.UseVisualStyleBackColor = false;
+            btnCompleteReturn.Click += btnCompleteReturn_Click;
             // 
             // btnCancels
             // 
@@ -473,6 +479,7 @@
             btnCancels.TabIndex = 0;
             btnCancels.Text = "Cancel";
             btnCancels.UseVisualStyleBackColor = false;
+            btnCancels.Click += btnCancel_Click;
             // 
             // ReturnVehicleForm
             // 
@@ -508,7 +515,6 @@
             ((System.ComponentModel.ISupportInitialize)numLateFee).EndInit();
             pnlActionBar.ResumeLayout(false);
             ResumeLayout(false);
-
         }
 
         #endregion
@@ -542,7 +548,7 @@
         private System.Windows.Forms.NumericUpDown numLateFee;
         private System.Windows.Forms.Label lblLateFees;
         private System.Windows.Forms.Panel pnlActionBar;
-        private System.Windows.Forms.Button btnConfirms;
+        private System.Windows.Forms.Button btnCompleteReturn;
         private System.Windows.Forms.Button btnCancels;
     }
 }
