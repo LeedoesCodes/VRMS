@@ -98,10 +98,9 @@
             pnlHeader.Controls.Add(lblDashboardTitle);
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Margin = new Padding(4, 4, 4, 4);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Padding = new Padding(18, 20, 18, 20);
-            pnlHeader.Size = new Size(1500, 100);
+            pnlHeader.Padding = new Padding(14, 16, 14, 16);
+            pnlHeader.Size = new Size(1200, 80);
             pnlHeader.TabIndex = 0;
             // 
             // dateRangePicker
@@ -109,10 +108,9 @@
             dateRangePicker.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             dateRangePicker.Font = new Font("Segoe UI", 9F);
             dateRangePicker.Format = DateTimePickerFormat.Short;
-            dateRangePicker.Location = new Point(986, 26);
-            dateRangePicker.Margin = new Padding(4, 4, 4, 4);
+            dateRangePicker.Location = new Point(789, 21);
             dateRangePicker.Name = "dateRangePicker";
-            dateRangePicker.Size = new Size(175, 31);
+            dateRangePicker.Size = new Size(141, 27);
             dateRangePicker.TabIndex = 2;
             // 
             // btnRefresh
@@ -123,10 +121,9 @@
             btnRefresh.FlatStyle = FlatStyle.Flat;
             btnRefresh.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnRefresh.ForeColor = Color.White;
-            btnRefresh.Location = new Point(1171, 20);
-            btnRefresh.Margin = new Padding(4, 4, 4, 4);
+            btnRefresh.Location = new Point(937, 16);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(142, 54);
+            btnRefresh.Size = new Size(114, 43);
             btnRefresh.TabIndex = 1;
             btnRefresh.Text = "Refresh";
             btnRefresh.UseVisualStyleBackColor = false;
@@ -136,10 +133,9 @@
             lblDashboardTitle.AutoSize = true;
             lblDashboardTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblDashboardTitle.ForeColor = Color.FromArgb(44, 62, 80);
-            lblDashboardTitle.Location = new Point(18, 20);
-            lblDashboardTitle.Margin = new Padding(4, 0, 4, 0);
+            lblDashboardTitle.Location = new Point(14, 16);
             lblDashboardTitle.Name = "lblDashboardTitle";
-            lblDashboardTitle.Size = new Size(315, 48);
+            lblDashboardTitle.Size = new Size(265, 41);
             lblDashboardTitle.TabIndex = 0;
             lblDashboardTitle.Text = "VRMS Dashboard";
             // 
@@ -148,28 +144,25 @@
             mainContainer.Controls.Add(rightPanel);
             mainContainer.Controls.Add(leftPanel);
             mainContainer.Dock = DockStyle.Fill;
-            mainContainer.Location = new Point(0, 100);
-            mainContainer.Margin = new Padding(4, 4, 4, 4);
+            mainContainer.Location = new Point(0, 80);
             mainContainer.Name = "mainContainer";
-            mainContainer.Padding = new Padding(14, 16, 14, 16);
-            mainContainer.Size = new Size(1500, 1034);
+            mainContainer.Padding = new Padding(11, 13, 11, 13);
+            mainContainer.Size = new Size(1200, 827);
             mainContainer.TabIndex = 1;
             // 
             // rightPanel
             // 
             rightPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             rightPanel.Controls.Add(splitRight);
-            rightPanel.Location = new Point(986, 16);
-            rightPanel.Margin = new Padding(4, 4, 4, 4);
+            rightPanel.Location = new Point(789, 13);
             rightPanel.Name = "rightPanel";
-            rightPanel.Size = new Size(500, 1000);
+            rightPanel.Size = new Size(400, 800);
             rightPanel.TabIndex = 1;
             // 
             // splitRight
             // 
             splitRight.Dock = DockStyle.Fill;
             splitRight.Location = new Point(0, 0);
-            splitRight.Margin = new Padding(4, 4, 4, 4);
             splitRight.Name = "splitRight";
             splitRight.Orientation = Orientation.Horizontal;
             // 
@@ -182,9 +175,9 @@
             // 
             splitRight.Panel2.Controls.Add(pnlAlerts);
             splitRight.Panel2MinSize = 150;
-            splitRight.Size = new Size(500, 1000);
-            splitRight.SplitterDistance = 500;
-            splitRight.SplitterWidth = 16;
+            splitRight.Size = new Size(400, 800);
+            splitRight.SplitterDistance = 400;
+            splitRight.SplitterWidth = 13;
             splitRight.TabIndex = 0;
             // 
             // pnlTodaySchedule
@@ -194,10 +187,9 @@
             pnlTodaySchedule.Controls.Add(lblTodayScheduleTitle);
             pnlTodaySchedule.Dock = DockStyle.Fill;
             pnlTodaySchedule.Location = new Point(0, 0);
-            pnlTodaySchedule.Margin = new Padding(4, 4, 4, 4);
             pnlTodaySchedule.Name = "pnlTodaySchedule";
-            pnlTodaySchedule.Padding = new Padding(14, 16, 14, 16);
-            pnlTodaySchedule.Size = new Size(500, 500);
+            pnlTodaySchedule.Padding = new Padding(11, 13, 11, 13);
+            pnlTodaySchedule.Size = new Size(400, 400);
             pnlTodaySchedule.TabIndex = 0;
             // 
             // dgvTodaySchedule
@@ -229,15 +221,14 @@
             dgvTodaySchedule.DefaultCellStyle = dataGridViewCellStyle2;
             dgvTodaySchedule.EnableHeadersVisualStyles = false;
             dgvTodaySchedule.GridColor = Color.WhiteSmoke;
-            dgvTodaySchedule.Location = new Point(14, 59);
-            dgvTodaySchedule.Margin = new Padding(4, 4, 4, 4);
+            dgvTodaySchedule.Location = new Point(11, 47);
             dgvTodaySchedule.Name = "dgvTodaySchedule";
             dgvTodaySchedule.ReadOnly = true;
             dgvTodaySchedule.RowHeadersVisible = false;
             dgvTodaySchedule.RowHeadersWidth = 51;
             dgvTodaySchedule.RowTemplate.Height = 28;
             dgvTodaySchedule.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvTodaySchedule.Size = new Size(471, 425);
+            dgvTodaySchedule.Size = new Size(377, 340);
             dgvTodaySchedule.TabIndex = 0;
             // 
             // lblTodayScheduleTitle
@@ -246,11 +237,11 @@
             lblTodayScheduleTitle.Dock = DockStyle.Top;
             lblTodayScheduleTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             lblTodayScheduleTitle.ForeColor = Color.FromArgb(41, 128, 185);
-            lblTodayScheduleTitle.Location = new Point(14, 16);
-            lblTodayScheduleTitle.Margin = new Padding(4, 0, 4, 15);
+            lblTodayScheduleTitle.Location = new Point(11, 13);
+            lblTodayScheduleTitle.Margin = new Padding(3, 0, 3, 12);
             lblTodayScheduleTitle.Name = "lblTodayScheduleTitle";
-            lblTodayScheduleTitle.Padding = new Padding(0, 0, 0, 9);
-            lblTodayScheduleTitle.Size = new Size(301, 39);
+            lblTodayScheduleTitle.Padding = new Padding(0, 0, 0, 7);
+            lblTodayScheduleTitle.Size = new Size(256, 32);
             lblTodayScheduleTitle.TabIndex = 1;
             lblTodayScheduleTitle.Text = "📅 Today's Pickups/Returns";
             // 
@@ -261,10 +252,9 @@
             pnlAlerts.Controls.Add(lblAlertsTitle);
             pnlAlerts.Dock = DockStyle.Fill;
             pnlAlerts.Location = new Point(0, 0);
-            pnlAlerts.Margin = new Padding(4, 4, 4, 4);
             pnlAlerts.Name = "pnlAlerts";
-            pnlAlerts.Padding = new Padding(14, 16, 14, 16);
-            pnlAlerts.Size = new Size(500, 484);
+            pnlAlerts.Padding = new Padding(11, 13, 11, 13);
+            pnlAlerts.Size = new Size(400, 387);
             pnlAlerts.TabIndex = 0;
             // 
             // dgvAlerts
@@ -296,15 +286,14 @@
             dgvAlerts.DefaultCellStyle = dataGridViewCellStyle4;
             dgvAlerts.EnableHeadersVisualStyles = false;
             dgvAlerts.GridColor = Color.WhiteSmoke;
-            dgvAlerts.Location = new Point(14, 59);
-            dgvAlerts.Margin = new Padding(4, 4, 4, 4);
+            dgvAlerts.Location = new Point(11, 47);
             dgvAlerts.Name = "dgvAlerts";
             dgvAlerts.ReadOnly = true;
             dgvAlerts.RowHeadersVisible = false;
             dgvAlerts.RowHeadersWidth = 51;
             dgvAlerts.RowTemplate.Height = 28;
             dgvAlerts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvAlerts.Size = new Size(471, 409);
+            dgvAlerts.Size = new Size(377, 327);
             dgvAlerts.TabIndex = 0;
             // 
             // lblAlertsTitle
@@ -313,11 +302,11 @@
             lblAlertsTitle.Dock = DockStyle.Top;
             lblAlertsTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             lblAlertsTitle.ForeColor = Color.FromArgb(192, 57, 43);
-            lblAlertsTitle.Location = new Point(14, 16);
-            lblAlertsTitle.Margin = new Padding(4, 0, 4, 15);
+            lblAlertsTitle.Location = new Point(11, 13);
+            lblAlertsTitle.Margin = new Padding(3, 0, 3, 12);
             lblAlertsTitle.Name = "lblAlertsTitle";
-            lblAlertsTitle.Padding = new Padding(0, 0, 0, 9);
-            lblAlertsTitle.Size = new Size(112, 39);
+            lblAlertsTitle.Padding = new Padding(0, 0, 0, 7);
+            lblAlertsTitle.Size = new Size(91, 32);
             lblAlertsTitle.TabIndex = 2;
             lblAlertsTitle.Text = "⚠️ Alerts";
             // 
@@ -326,10 +315,9 @@
             leftPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             leftPanel.Controls.Add(pnlChartArea);
             leftPanel.Controls.Add(pnlCards);
-            leftPanel.Location = new Point(14, 16);
-            leftPanel.Margin = new Padding(4, 4, 4, 4);
+            leftPanel.Location = new Point(11, 13);
             leftPanel.Name = "leftPanel";
-            leftPanel.Size = new Size(964, 1000);
+            leftPanel.Size = new Size(771, 800);
             leftPanel.TabIndex = 0;
             // 
             // pnlChartArea
@@ -337,11 +325,10 @@
             pnlChartArea.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlChartArea.BackColor = Color.White;
             pnlChartArea.Controls.Add(lblChartTitle);
-            pnlChartArea.Location = new Point(0, 242);
-            pnlChartArea.Margin = new Padding(4, 4, 4, 4);
+            pnlChartArea.Location = new Point(0, 194);
             pnlChartArea.Name = "pnlChartArea";
-            pnlChartArea.Padding = new Padding(14, 16, 14, 16);
-            pnlChartArea.Size = new Size(964, 758);
+            pnlChartArea.Padding = new Padding(11, 13, 11, 13);
+            pnlChartArea.Size = new Size(771, 606);
             pnlChartArea.TabIndex = 1;
             // 
             // lblChartTitle
@@ -350,11 +337,11 @@
             lblChartTitle.Dock = DockStyle.Top;
             lblChartTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblChartTitle.ForeColor = Color.FromArgb(44, 62, 80);
-            lblChartTitle.Location = new Point(14, 16);
-            lblChartTitle.Margin = new Padding(4, 0, 4, 15);
+            lblChartTitle.Location = new Point(11, 13);
+            lblChartTitle.Margin = new Padding(3, 0, 3, 12);
             lblChartTitle.Name = "lblChartTitle";
-            lblChartTitle.Padding = new Padding(0, 0, 0, 11);
-            lblChartTitle.Size = new Size(344, 43);
+            lblChartTitle.Padding = new Padding(0, 0, 0, 9);
+            lblChartTitle.Size = new Size(286, 37);
             lblChartTitle.TabIndex = 0;
             lblChartTitle.Text = "📊 Fleet Performance Trends";
             // 
@@ -369,9 +356,8 @@
             pnlCards.Controls.Add(pnlCardOverdue);
             pnlCards.Controls.Add(pnlCardMaintenance);
             pnlCards.Location = new Point(0, 0);
-            pnlCards.Margin = new Padding(4, 4, 4, 4);
             pnlCards.Name = "pnlCards";
-            pnlCards.Size = new Size(964, 252);
+            pnlCards.Size = new Size(771, 202);
             pnlCards.TabIndex = 0;
             // 
             // pnlCardTotal
@@ -381,21 +367,20 @@
             pnlCardTotal.Controls.Add(lblTotalTitle);
             pnlCardTotal.Cursor = Cursors.Hand;
             pnlCardTotal.ForeColor = Color.White;
-            pnlCardTotal.Location = new Point(8, 9);
-            pnlCardTotal.Margin = new Padding(8, 9, 8, 9);
+            pnlCardTotal.Location = new Point(6, 7);
+            pnlCardTotal.Margin = new Padding(6, 7, 6, 7);
             pnlCardTotal.Name = "pnlCardTotal";
-            pnlCardTotal.Padding = new Padding(14, 16, 14, 16);
-            pnlCardTotal.Size = new Size(186, 216);
+            pnlCardTotal.Padding = new Padding(11, 13, 11, 13);
+            pnlCardTotal.Size = new Size(149, 173);
             pnlCardTotal.TabIndex = 0;
             // 
             // lblTotalValue
             // 
             lblTotalValue.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblTotalValue.Font = new Font("Segoe UI", 28F, FontStyle.Bold);
-            lblTotalValue.Location = new Point(14, 84);
-            lblTotalValue.Margin = new Padding(4, 0, 4, 0);
+            lblTotalValue.Location = new Point(11, 67);
             lblTotalValue.Name = "lblTotalValue";
-            lblTotalValue.Size = new Size(158, 84);
+            lblTotalValue.Size = new Size(126, 67);
             lblTotalValue.TabIndex = 0;
             lblTotalValue.Text = "0";
             lblTotalValue.TextAlign = ContentAlignment.MiddleLeft;
@@ -405,10 +390,9 @@
             lblTotalTitle.AutoSize = true;
             lblTotalTitle.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
             lblTotalTitle.ForeColor = Color.Gainsboro;
-            lblTotalTitle.Location = new Point(14, 16);
-            lblTotalTitle.Margin = new Padding(4, 0, 4, 0);
+            lblTotalTitle.Location = new Point(11, 13);
             lblTotalTitle.Name = "lblTotalTitle";
-            lblTotalTitle.Size = new Size(100, 25);
+            lblTotalTitle.Size = new Size(85, 21);
             lblTotalTitle.TabIndex = 1;
             lblTotalTitle.Text = "Total Fleet";
             // 
@@ -419,21 +403,20 @@
             pnlCardAvailable.Controls.Add(lblAvailableTitle);
             pnlCardAvailable.Cursor = Cursors.Hand;
             pnlCardAvailable.ForeColor = Color.White;
-            pnlCardAvailable.Location = new Point(210, 9);
-            pnlCardAvailable.Margin = new Padding(8, 9, 8, 9);
+            pnlCardAvailable.Location = new Point(167, 7);
+            pnlCardAvailable.Margin = new Padding(6, 7, 6, 7);
             pnlCardAvailable.Name = "pnlCardAvailable";
-            pnlCardAvailable.Padding = new Padding(14, 16, 14, 16);
-            pnlCardAvailable.Size = new Size(186, 216);
+            pnlCardAvailable.Padding = new Padding(11, 13, 11, 13);
+            pnlCardAvailable.Size = new Size(149, 173);
             pnlCardAvailable.TabIndex = 1;
             // 
             // lblAvailableValue
             // 
             lblAvailableValue.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblAvailableValue.Font = new Font("Segoe UI", 28F, FontStyle.Bold);
-            lblAvailableValue.Location = new Point(14, 84);
-            lblAvailableValue.Margin = new Padding(4, 0, 4, 0);
+            lblAvailableValue.Location = new Point(11, 67);
             lblAvailableValue.Name = "lblAvailableValue";
-            lblAvailableValue.Size = new Size(158, 84);
+            lblAvailableValue.Size = new Size(126, 67);
             lblAvailableValue.TabIndex = 0;
             lblAvailableValue.Text = "0";
             lblAvailableValue.TextAlign = ContentAlignment.MiddleLeft;
@@ -443,10 +426,9 @@
             lblAvailableTitle.AutoSize = true;
             lblAvailableTitle.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
             lblAvailableTitle.ForeColor = Color.Gainsboro;
-            lblAvailableTitle.Location = new Point(14, 16);
-            lblAvailableTitle.Margin = new Padding(4, 0, 4, 0);
+            lblAvailableTitle.Location = new Point(11, 13);
             lblAvailableTitle.Name = "lblAvailableTitle";
-            lblAvailableTitle.Size = new Size(157, 25);
+            lblAvailableTitle.Size = new Size(132, 21);
             lblAvailableTitle.TabIndex = 1;
             lblAvailableTitle.Text = "Vehicle Available";
             // 
@@ -457,21 +439,20 @@
             pnlCardRented.Controls.Add(lblRentedTitle);
             pnlCardRented.Cursor = Cursors.Hand;
             pnlCardRented.ForeColor = Color.White;
-            pnlCardRented.Location = new Point(412, 9);
-            pnlCardRented.Margin = new Padding(8, 9, 8, 9);
+            pnlCardRented.Location = new Point(328, 7);
+            pnlCardRented.Margin = new Padding(6, 7, 6, 7);
             pnlCardRented.Name = "pnlCardRented";
-            pnlCardRented.Padding = new Padding(14, 16, 14, 16);
-            pnlCardRented.Size = new Size(186, 216);
+            pnlCardRented.Padding = new Padding(11, 13, 11, 13);
+            pnlCardRented.Size = new Size(149, 173);
             pnlCardRented.TabIndex = 2;
             // 
             // lblRentedValue
             // 
             lblRentedValue.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblRentedValue.Font = new Font("Segoe UI", 28F, FontStyle.Bold);
-            lblRentedValue.Location = new Point(14, 84);
-            lblRentedValue.Margin = new Padding(4, 0, 4, 0);
+            lblRentedValue.Location = new Point(11, 67);
             lblRentedValue.Name = "lblRentedValue";
-            lblRentedValue.Size = new Size(158, 84);
+            lblRentedValue.Size = new Size(126, 67);
             lblRentedValue.TabIndex = 0;
             lblRentedValue.Text = "0";
             lblRentedValue.TextAlign = ContentAlignment.MiddleLeft;
@@ -481,10 +462,9 @@
             lblRentedTitle.AutoSize = true;
             lblRentedTitle.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
             lblRentedTitle.ForeColor = Color.Gainsboro;
-            lblRentedTitle.Location = new Point(14, 16);
-            lblRentedTitle.Margin = new Padding(4, 0, 4, 0);
+            lblRentedTitle.Location = new Point(11, 13);
             lblRentedTitle.Name = "lblRentedTitle";
-            lblRentedTitle.Size = new Size(118, 25);
+            lblRentedTitle.Size = new Size(101, 21);
             lblRentedTitle.TabIndex = 1;
             lblRentedTitle.Text = "Active Rents";
             // 
@@ -495,21 +475,20 @@
             pnlCardRevenue.Controls.Add(lblRevenueTitle);
             pnlCardRevenue.Cursor = Cursors.Hand;
             pnlCardRevenue.ForeColor = Color.White;
-            pnlCardRevenue.Location = new Point(614, 9);
-            pnlCardRevenue.Margin = new Padding(8, 9, 8, 9);
+            pnlCardRevenue.Location = new Point(489, 7);
+            pnlCardRevenue.Margin = new Padding(6, 7, 6, 7);
             pnlCardRevenue.Name = "pnlCardRevenue";
-            pnlCardRevenue.Padding = new Padding(14, 16, 14, 16);
-            pnlCardRevenue.Size = new Size(186, 216);
+            pnlCardRevenue.Padding = new Padding(11, 13, 11, 13);
+            pnlCardRevenue.Size = new Size(149, 173);
             pnlCardRevenue.TabIndex = 3;
             // 
             // lblRevenueValue
             // 
             lblRevenueValue.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblRevenueValue.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
-            lblRevenueValue.Location = new Point(14, 91);
-            lblRevenueValue.Margin = new Padding(4, 0, 4, 0);
+            lblRevenueValue.Location = new Point(11, 73);
             lblRevenueValue.Name = "lblRevenueValue";
-            lblRevenueValue.Size = new Size(158, 75);
+            lblRevenueValue.Size = new Size(126, 60);
             lblRevenueValue.TabIndex = 0;
             lblRevenueValue.Text = "₱0";
             lblRevenueValue.TextAlign = ContentAlignment.MiddleLeft;
@@ -519,10 +498,9 @@
             lblRevenueTitle.AutoSize = true;
             lblRevenueTitle.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
             lblRevenueTitle.ForeColor = Color.Gainsboro;
-            lblRevenueTitle.Location = new Point(14, 16);
-            lblRevenueTitle.Margin = new Padding(4, 0, 4, 0);
+            lblRevenueTitle.Location = new Point(11, 13);
             lblRevenueTitle.Name = "lblRevenueTitle";
-            lblRevenueTitle.Size = new Size(160, 25);
+            lblRevenueTitle.Size = new Size(136, 21);
             lblRevenueTitle.TabIndex = 1;
             lblRevenueTitle.Text = "Revenue (Month)";
             // 
@@ -533,21 +511,20 @@
             pnlCardOverdue.Controls.Add(lblOverdueTitle);
             pnlCardOverdue.Cursor = Cursors.Hand;
             pnlCardOverdue.ForeColor = Color.White;
-            pnlCardOverdue.Location = new Point(8, 243);
-            pnlCardOverdue.Margin = new Padding(8, 9, 8, 9);
+            pnlCardOverdue.Location = new Point(6, 194);
+            pnlCardOverdue.Margin = new Padding(6, 7, 6, 7);
             pnlCardOverdue.Name = "pnlCardOverdue";
-            pnlCardOverdue.Padding = new Padding(14, 16, 14, 16);
-            pnlCardOverdue.Size = new Size(186, 216);
+            pnlCardOverdue.Padding = new Padding(11, 13, 11, 13);
+            pnlCardOverdue.Size = new Size(149, 173);
             pnlCardOverdue.TabIndex = 4;
             // 
             // lblOverdueValue
             // 
             lblOverdueValue.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblOverdueValue.Font = new Font("Segoe UI", 26F, FontStyle.Bold);
-            lblOverdueValue.Location = new Point(14, 84);
-            lblOverdueValue.Margin = new Padding(4, 0, 4, 0);
+            lblOverdueValue.Location = new Point(11, 67);
             lblOverdueValue.Name = "lblOverdueValue";
-            lblOverdueValue.Size = new Size(158, 84);
+            lblOverdueValue.Size = new Size(126, 67);
             lblOverdueValue.TabIndex = 0;
             lblOverdueValue.Text = "₱0";
             lblOverdueValue.TextAlign = ContentAlignment.MiddleLeft;
@@ -557,10 +534,9 @@
             lblOverdueTitle.AutoSize = true;
             lblOverdueTitle.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
             lblOverdueTitle.ForeColor = Color.Gainsboro;
-            lblOverdueTitle.Location = new Point(14, 16);
-            lblOverdueTitle.Margin = new Padding(4, 0, 4, 0);
+            lblOverdueTitle.Location = new Point(11, 13);
             lblOverdueTitle.Name = "lblOverdueTitle";
-            lblOverdueTitle.Size = new Size(85, 25);
+            lblOverdueTitle.Size = new Size(73, 21);
             lblOverdueTitle.TabIndex = 1;
             lblOverdueTitle.Text = "Overdue";
             // 
@@ -571,21 +547,20 @@
             pnlCardMaintenance.Controls.Add(lblMaintenanceTitle);
             pnlCardMaintenance.Cursor = Cursors.Hand;
             pnlCardMaintenance.ForeColor = Color.White;
-            pnlCardMaintenance.Location = new Point(210, 243);
-            pnlCardMaintenance.Margin = new Padding(8, 9, 8, 9);
+            pnlCardMaintenance.Location = new Point(167, 194);
+            pnlCardMaintenance.Margin = new Padding(6, 7, 6, 7);
             pnlCardMaintenance.Name = "pnlCardMaintenance";
-            pnlCardMaintenance.Padding = new Padding(14, 16, 14, 16);
-            pnlCardMaintenance.Size = new Size(186, 216);
+            pnlCardMaintenance.Padding = new Padding(11, 13, 11, 13);
+            pnlCardMaintenance.Size = new Size(149, 173);
             pnlCardMaintenance.TabIndex = 5;
             // 
             // lblMaintenanceValue
             // 
             lblMaintenanceValue.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblMaintenanceValue.Font = new Font("Segoe UI", 28F, FontStyle.Bold);
-            lblMaintenanceValue.Location = new Point(14, 84);
-            lblMaintenanceValue.Margin = new Padding(4, 0, 4, 0);
+            lblMaintenanceValue.Location = new Point(11, 67);
             lblMaintenanceValue.Name = "lblMaintenanceValue";
-            lblMaintenanceValue.Size = new Size(158, 84);
+            lblMaintenanceValue.Size = new Size(126, 67);
             lblMaintenanceValue.TabIndex = 0;
             lblMaintenanceValue.Text = "0";
             lblMaintenanceValue.TextAlign = ContentAlignment.MiddleLeft;
@@ -595,24 +570,22 @@
             lblMaintenanceTitle.AutoSize = true;
             lblMaintenanceTitle.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
             lblMaintenanceTitle.ForeColor = Color.Gainsboro;
-            lblMaintenanceTitle.Location = new Point(0, 16);
-            lblMaintenanceTitle.Margin = new Padding(4, 0, 4, 0);
+            lblMaintenanceTitle.Location = new Point(0, 13);
             lblMaintenanceTitle.Name = "lblMaintenanceTitle";
-            lblMaintenanceTitle.Size = new Size(181, 25);
+            lblMaintenanceTitle.Size = new Size(153, 21);
             lblMaintenanceTitle.TabIndex = 1;
             lblMaintenanceTitle.Text = "Under Maintenance";
             // 
             // DashboardView
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(240, 243, 244);
             Controls.Add(mainContainer);
             Controls.Add(pnlHeader);
-            Margin = new Padding(4, 4, 4, 4);
-            MinimumSize = new Size(1286, 1000);
+            MinimumSize = new Size(1029, 800);
             Name = "DashboardView";
-            Size = new Size(1500, 1134);
+            Size = new Size(1200, 907);
             pnlHeader.ResumeLayout(false);
             pnlHeader.PerformLayout();
             mainContainer.ResumeLayout(false);
