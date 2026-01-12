@@ -15,32 +15,24 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             pnlHeader = new Panel();
             lblFormTitle = new Label();
             pnlRentalSummary = new Panel();
-            lblCustomerInfo = new Label();
             lblVehicleInfo = new Label();
+            lblCustomerInfo = new Label();
             lblRentalId = new Label();
             pnlReturnDetails = new Panel();
             lblSectionTitleReturn = new Label();
-            txtConditions = new TextBox();
-            lblConditionNotes = new Label();
-            cbFuels = new ComboBox();
-            lblFuelLevel = new Label();
-            txtOdometers = new TextBox();
-            lblOdometer = new Label();
-            dtReturns = new DateTimePicker();
             lblReturnDate = new Label();
+            dtReturns = new DateTimePicker();
+            lblOdometer = new Label();
+            numOdometer = new NumericUpDown();
+            lblFuelLevel = new Label();
+            cbFuels = new ComboBox();
+            lblConditionNotes = new Label();
+            txtConditions = new TextBox();
             pnlDamageAssessment = new Panel();
             lblSectionTitleDamage = new Label();
             btnAddDamage = new Button();
@@ -59,6 +51,7 @@
             pnlHeader.SuspendLayout();
             pnlRentalSummary.SuspendLayout();
             pnlReturnDetails.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numOdometer).BeginInit();
             pnlDamageAssessment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDamages).BeginInit();
             pnlBillingSummary.SuspendLayout();
@@ -73,7 +66,6 @@
             pnlHeader.Controls.Add(lblFormTitle);
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Margin = new Padding(3, 4, 3, 4);
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Padding = new Padding(30, 25, 30, 25);
             pnlHeader.Size = new Size(1150, 100);
@@ -94,24 +86,13 @@
             // 
             pnlRentalSummary.BackColor = Color.FromArgb(236, 240, 241);
             pnlRentalSummary.BorderStyle = BorderStyle.FixedSingle;
-            pnlRentalSummary.Controls.Add(lblCustomerInfo);
             pnlRentalSummary.Controls.Add(lblVehicleInfo);
+            pnlRentalSummary.Controls.Add(lblCustomerInfo);
             pnlRentalSummary.Controls.Add(lblRentalId);
             pnlRentalSummary.Location = new Point(30, 125);
-            pnlRentalSummary.Margin = new Padding(3, 4, 3, 4);
             pnlRentalSummary.Name = "pnlRentalSummary";
             pnlRentalSummary.Size = new Size(530, 124);
             pnlRentalSummary.TabIndex = 1;
-            // 
-            // lblCustomerInfo
-            // 
-            lblCustomerInfo.AutoSize = true;
-            lblCustomerInfo.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblCustomerInfo.Location = new Point(20, 56);
-            lblCustomerInfo.Name = "lblCustomerInfo";
-            lblCustomerInfo.Size = new Size(93, 23);
-            lblCustomerInfo.TabIndex = 2;
-            lblCustomerInfo.Text = "Customer: ";
             // 
             // lblVehicleInfo
             // 
@@ -120,38 +101,44 @@
             lblVehicleInfo.ForeColor = Color.FromArgb(41, 128, 185);
             lblVehicleInfo.Location = new Point(20, 19);
             lblVehicleInfo.Name = "lblVehicleInfo";
-            lblVehicleInfo.Size = new Size(73, 23);
-            lblVehicleInfo.TabIndex = 1;
-            lblVehicleInfo.Text = "Vehicle: ";
+            lblVehicleInfo.Size = new Size(0, 23);
+            lblVehicleInfo.TabIndex = 0;
+            // 
+            // lblCustomerInfo
+            // 
+            lblCustomerInfo.AutoSize = true;
+            lblCustomerInfo.Font = new Font("Segoe UI", 10F);
+            lblCustomerInfo.Location = new Point(20, 56);
+            lblCustomerInfo.Name = "lblCustomerInfo";
+            lblCustomerInfo.Size = new Size(0, 23);
+            lblCustomerInfo.TabIndex = 1;
             // 
             // lblRentalId
             // 
             lblRentalId.AutoSize = true;
-            lblRentalId.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblRentalId.Font = new Font("Segoe UI", 9F);
             lblRentalId.ForeColor = Color.Gray;
             lblRentalId.Location = new Point(20, 94);
             lblRentalId.Name = "lblRentalId";
-            lblRentalId.Size = new Size(134, 20);
-            lblRentalId.TabIndex = 0;
-            lblRentalId.Text = "Rental #: Loading...";
+            lblRentalId.Size = new Size(0, 20);
+            lblRentalId.TabIndex = 2;
             // 
             // pnlReturnDetails
             // 
             pnlReturnDetails.BackColor = Color.White;
             pnlReturnDetails.BorderStyle = BorderStyle.FixedSingle;
             pnlReturnDetails.Controls.Add(lblSectionTitleReturn);
-            pnlReturnDetails.Controls.Add(txtConditions);
-            pnlReturnDetails.Controls.Add(lblConditionNotes);
-            pnlReturnDetails.Controls.Add(cbFuels);
-            pnlReturnDetails.Controls.Add(lblFuelLevel);
-            pnlReturnDetails.Controls.Add(txtOdometers);
-            pnlReturnDetails.Controls.Add(lblOdometer);
-            pnlReturnDetails.Controls.Add(dtReturns);
             pnlReturnDetails.Controls.Add(lblReturnDate);
+            pnlReturnDetails.Controls.Add(dtReturns);
+            pnlReturnDetails.Controls.Add(lblOdometer);
+            pnlReturnDetails.Controls.Add(numOdometer);
+            pnlReturnDetails.Controls.Add(lblFuelLevel);
+            pnlReturnDetails.Controls.Add(cbFuels);
+            pnlReturnDetails.Controls.Add(lblConditionNotes);
+            pnlReturnDetails.Controls.Add(txtConditions);
             pnlReturnDetails.Location = new Point(30, 275);
-            pnlReturnDetails.Margin = new Padding(3, 4, 3, 4);
             pnlReturnDetails.Name = "pnlReturnDetails";
-            pnlReturnDetails.Size = new Size(530, 374);
+            pnlReturnDetails.Size = new Size(530, 500);
             pnlReturnDetails.TabIndex = 2;
             // 
             // lblSectionTitleReturn
@@ -164,88 +151,87 @@
             lblSectionTitleReturn.TabIndex = 0;
             lblSectionTitleReturn.Text = "Return Details";
             // 
-            // txtConditions
+            // lblReturnDate
             // 
-            txtConditions.Font = new Font("Segoe UI", 10F);
-            txtConditions.Location = new Point(20, 288);
-            txtConditions.Margin = new Padding(3, 4, 3, 4);
-            txtConditions.Multiline = true;
-            txtConditions.Name = "txtConditions";
-            txtConditions.Size = new Size(490, 62);
-            txtConditions.TabIndex = 3;
+            lblReturnDate.AutoSize = true;
+            lblReturnDate.Font = new Font("Segoe UI", 9F);
+            lblReturnDate.ForeColor = Color.DimGray;
+            lblReturnDate.Location = new Point(17, 60);
+            lblReturnDate.Name = "lblReturnDate";
+            lblReturnDate.Size = new Size(91, 20);
+            lblReturnDate.TabIndex = 1;
+            lblReturnDate.Text = "Return Date:";
             // 
-            // lblConditionNotes
+            // dtReturns
             // 
-            lblConditionNotes.AutoSize = true;
-            lblConditionNotes.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblConditionNotes.ForeColor = Color.DimGray;
-            lblConditionNotes.Location = new Point(17, 262);
-            lblConditionNotes.Name = "lblConditionNotes";
-            lblConditionNotes.Size = new Size(165, 20);
-            lblConditionNotes.TabIndex = 6;
-            lblConditionNotes.Text = "Final Condition / Notes:";
+            dtReturns.Font = new Font("Segoe UI", 10F);
+            dtReturns.Location = new Point(20, 85);
+            dtReturns.Name = "dtReturns";
+            dtReturns.Size = new Size(490, 30);
+            dtReturns.TabIndex = 2;
+            // 
+            // lblOdometer
+            // 
+            lblOdometer.AutoSize = true;
+            lblOdometer.Font = new Font("Segoe UI", 9F);
+            lblOdometer.ForeColor = Color.DimGray;
+            lblOdometer.Location = new Point(17, 140);
+            lblOdometer.Name = "lblOdometer";
+            lblOdometer.Size = new Size(174, 20);
+            lblOdometer.TabIndex = 3;
+            lblOdometer.Text = "Final Odometer Reading:";
+            // 
+            // numOdometer
+            // 
+            numOdometer.Font = new Font("Segoe UI", 10F);
+            numOdometer.Location = new Point(20, 165);
+            numOdometer.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
+            numOdometer.Name = "numOdometer";
+            numOdometer.Size = new Size(195, 30);
+            numOdometer.TabIndex = 4;
+            numOdometer.TextAlign = HorizontalAlignment.Right;
+            numOdometer.ThousandsSeparator = true;
+            // 
+            // lblFuelLevel
+            // 
+            lblFuelLevel.AutoSize = true;
+            lblFuelLevel.Font = new Font("Segoe UI", 9F);
+            lblFuelLevel.ForeColor = Color.DimGray;
+            lblFuelLevel.Location = new Point(17, 220);
+            lblFuelLevel.Name = "lblFuelLevel";
+            lblFuelLevel.Size = new Size(77, 20);
+            lblFuelLevel.TabIndex = 5;
+            lblFuelLevel.Text = "Fuel Level:";
             // 
             // cbFuels
             // 
             cbFuels.DropDownStyle = ComboBoxStyle.DropDownList;
             cbFuels.Font = new Font("Segoe UI", 10F);
             cbFuels.Items.AddRange(new object[] { "Empty", "1/4", "1/2", "3/4", "Full" });
-            cbFuels.Location = new Point(20, 206);
-            cbFuels.Margin = new Padding(3, 4, 3, 4);
+            cbFuels.Location = new Point(20, 245);
             cbFuels.Name = "cbFuels";
-            cbFuels.Size = new Size(490, 31);
-            cbFuels.TabIndex = 2;
+            cbFuels.Size = new Size(195, 31);
+            cbFuels.TabIndex = 6;
             // 
-            // lblFuelLevel
+            // lblConditionNotes
             // 
-            lblFuelLevel.AutoSize = true;
-            lblFuelLevel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblFuelLevel.ForeColor = Color.DimGray;
-            lblFuelLevel.Location = new Point(17, 181);
-            lblFuelLevel.Name = "lblFuelLevel";
-            lblFuelLevel.Size = new Size(77, 20);
-            lblFuelLevel.TabIndex = 4;
-            lblFuelLevel.Text = "Fuel Level:";
+            lblConditionNotes.AutoSize = true;
+            lblConditionNotes.Font = new Font("Segoe UI", 9F);
+            lblConditionNotes.ForeColor = Color.DimGray;
+            lblConditionNotes.Location = new Point(17, 302);
+            lblConditionNotes.Name = "lblConditionNotes";
+            lblConditionNotes.Size = new Size(165, 20);
+            lblConditionNotes.TabIndex = 7;
+            lblConditionNotes.Text = "Final Condition / Notes:";
             // 
-            // txtOdometers
+            // txtConditions
             // 
-            txtOdometers.Font = new Font("Segoe UI", 10F);
-            txtOdometers.Location = new Point(20, 125);
-            txtOdometers.Margin = new Padding(3, 4, 3, 4);
-            txtOdometers.Name = "txtOdometers";
-            txtOdometers.Size = new Size(490, 30);
-            txtOdometers.TabIndex = 1;
-            // 
-            // lblOdometer
-            // 
-            lblOdometer.AutoSize = true;
-            lblOdometer.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblOdometer.ForeColor = Color.DimGray;
-            lblOdometer.Location = new Point(17, 100);
-            lblOdometer.Name = "lblOdometer";
-            lblOdometer.Size = new Size(174, 20);
-            lblOdometer.TabIndex = 2;
-            lblOdometer.Text = "Final Odometer Reading:";
-            // 
-            // dtReturns
-            // 
-            dtReturns.Font = new Font("Segoe UI", 10F);
-            dtReturns.Location = new Point(20, 44);
-            dtReturns.Margin = new Padding(3, 4, 3, 4);
-            dtReturns.Name = "dtReturns";
-            dtReturns.Size = new Size(490, 30);
-            dtReturns.TabIndex = 0;
-            // 
-            // lblReturnDate
-            // 
-            lblReturnDate.AutoSize = true;
-            lblReturnDate.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblReturnDate.ForeColor = Color.DimGray;
-            lblReturnDate.Location = new Point(17, 19);
-            lblReturnDate.Name = "lblReturnDate";
-            lblReturnDate.Size = new Size(91, 20);
-            lblReturnDate.TabIndex = 0;
-            lblReturnDate.Text = "Return Date:";
+            txtConditions.Font = new Font("Segoe UI", 10F);
+            txtConditions.Location = new Point(20, 328);
+            txtConditions.Multiline = true;
+            txtConditions.Name = "txtConditions";
+            txtConditions.Size = new Size(490, 146);
+            txtConditions.TabIndex = 8;
             // 
             // pnlDamageAssessment
             // 
@@ -254,10 +240,9 @@
             pnlDamageAssessment.Controls.Add(lblSectionTitleDamage);
             pnlDamageAssessment.Controls.Add(btnAddDamage);
             pnlDamageAssessment.Controls.Add(dgvDamages);
-            pnlDamageAssessment.Location = new Point(580, 125);
-            pnlDamageAssessment.Margin = new Padding(3, 4, 3, 4);
+            pnlDamageAssessment.Location = new Point(585, 125);
             pnlDamageAssessment.Name = "pnlDamageAssessment";
-            pnlDamageAssessment.Size = new Size(540, 524);
+            pnlDamageAssessment.Size = new Size(530, 300);
             pnlDamageAssessment.TabIndex = 3;
             // 
             // lblSectionTitleDamage
@@ -272,69 +257,21 @@
             // 
             // btnAddDamage
             // 
-            btnAddDamage.BackColor = Color.FromArgb(231, 76, 60);
-            btnAddDamage.FlatAppearance.BorderSize = 0;
-            btnAddDamage.FlatStyle = FlatStyle.Flat;
-            btnAddDamage.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnAddDamage.ForeColor = Color.White;
-            btnAddDamage.Location = new Point(380, 12);
-            btnAddDamage.Margin = new Padding(3, 4, 3, 4);
+            btnAddDamage.Location = new Point(20, 250);
             btnAddDamage.Name = "btnAddDamage";
-            btnAddDamage.Size = new Size(150, 44);
+            btnAddDamage.Size = new Size(490, 30);
             btnAddDamage.TabIndex = 1;
-            btnAddDamage.Text = "+ Add Damage";
-            btnAddDamage.UseVisualStyleBackColor = false;
+            btnAddDamage.Text = "Add Damage";
             btnAddDamage.Click += BtnAddDamage_Click;
             // 
             // dgvDamages
             // 
-            dgvDamages.AllowUserToAddRows = false;
-            dgvDamages.AllowUserToDeleteRows = false;
-            dgvDamages.AllowUserToResizeRows = false;
             dgvDamages.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvDamages.BackgroundColor = Color.White;
-            dgvDamages.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(248, 249, 250);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(73, 80, 87);
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvDamages.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            dgvDamages.ColumnHeadersHeight = 40;
-            dgvDamages.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = SystemColors.Window;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(229, 244, 255);
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            dgvDamages.DefaultCellStyle = dataGridViewCellStyle6;
-            dgvDamages.EnableHeadersVisualStyles = false;
-            dgvDamages.Location = new Point(20, 75);
-            dgvDamages.Margin = new Padding(3, 4, 3, 4);
-            dgvDamages.MultiSelect = false;
+            dgvDamages.ColumnHeadersHeight = 29;
+            dgvDamages.Location = new Point(20, 50);
             dgvDamages.Name = "dgvDamages";
-            dgvDamages.ReadOnly = true;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = SystemColors.Control;
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            dgvDamages.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            dgvDamages.RowHeadersVisible = false;
             dgvDamages.RowHeadersWidth = 51;
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle8.Padding = new Padding(5);
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(229, 244, 255);
-            dgvDamages.RowsDefaultCellStyle = dataGridViewCellStyle8;
-            dgvDamages.RowTemplate.Height = 35;
-            dgvDamages.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvDamages.Size = new Size(500, 425);
+            dgvDamages.Size = new Size(490, 190);
             dgvDamages.TabIndex = 2;
             // 
             // pnlBillingSummary
@@ -348,17 +285,16 @@
             pnlBillingSummary.Controls.Add(lblDamageFees);
             pnlBillingSummary.Controls.Add(numLateFee);
             pnlBillingSummary.Controls.Add(lblLateFees);
-            pnlBillingSummary.Location = new Point(30, 675);
-            pnlBillingSummary.Margin = new Padding(3, 4, 3, 4);
+            pnlBillingSummary.Location = new Point(585, 450);
             pnlBillingSummary.Name = "pnlBillingSummary";
-            pnlBillingSummary.Size = new Size(530, 200);
+            pnlBillingSummary.Size = new Size(530, 325);
             pnlBillingSummary.TabIndex = 4;
             // 
             // lblSectionTitleBilling
             // 
             lblSectionTitleBilling.AutoSize = true;
             lblSectionTitleBilling.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
-            lblSectionTitleBilling.Location = new Point(15, 6);
+            lblSectionTitleBilling.Location = new Point(15, 19);
             lblSectionTitleBilling.Name = "lblSectionTitleBilling";
             lblSectionTitleBilling.Size = new Size(153, 25);
             lblSectionTitleBilling.TabIndex = 0;
@@ -368,71 +304,66 @@
             // 
             lblTotalValue.AutoSize = true;
             lblTotalValue.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblTotalValue.ForeColor = Color.FromArgb(46, 204, 113);
-            lblTotalValue.Location = new Point(240, 144);
+            lblTotalValue.ForeColor = Color.FromArgb(41, 128, 185);
+            lblTotalValue.Location = new Point(20, 165);
             lblTotalValue.Name = "lblTotalValue";
             lblTotalValue.Size = new Size(85, 32);
-            lblTotalValue.TabIndex = 6;
+            lblTotalValue.TabIndex = 1;
             lblTotalValue.Text = "₱ 0.00";
             // 
             // lblTotalLabel
             // 
             lblTotalLabel.AutoSize = true;
-            lblTotalLabel.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
-            lblTotalLabel.Location = new Point(15, 150);
+            lblTotalLabel.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblTotalLabel.ForeColor = Color.FromArgb(44, 62, 80);
+            lblTotalLabel.Location = new Point(17, 140);
             lblTotalLabel.Name = "lblTotalLabel";
-            lblTotalLabel.Size = new Size(115, 25);
-            lblTotalLabel.TabIndex = 5;
-            lblTotalLabel.Text = "Grand Total:";
+            lblTotalLabel.Size = new Size(117, 23);
+            lblTotalLabel.TabIndex = 2;
+            lblTotalLabel.Text = "Total Charges:";
             // 
             // numDamages
             // 
             numDamages.DecimalPlaces = 2;
             numDamages.Font = new Font("Segoe UI", 10F);
-            numDamages.Location = new Point(290, 56);
-            numDamages.Margin = new Padding(3, 4, 3, 4);
-            numDamages.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            numDamages.Location = new Point(270, 85);
+            numDamages.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numDamages.Name = "numDamages";
-            numDamages.ReadOnly = true;
-            numDamages.Size = new Size(220, 30);
-            numDamages.TabIndex = 2;
+            numDamages.Size = new Size(240, 30);
+            numDamages.TabIndex = 3;
             numDamages.TextAlign = HorizontalAlignment.Right;
-            numDamages.ThousandsSeparator = true;
             // 
             // lblDamageFees
             // 
             lblDamageFees.AutoSize = true;
-            lblDamageFees.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDamageFees.Font = new Font("Segoe UI", 9F);
             lblDamageFees.ForeColor = Color.DimGray;
-            lblDamageFees.Location = new Point(287, 31);
+            lblDamageFees.Location = new Point(275, 60);
             lblDamageFees.Name = "lblDamageFees";
             lblDamageFees.Size = new Size(102, 20);
-            lblDamageFees.TabIndex = 3;
+            lblDamageFees.TabIndex = 4;
             lblDamageFees.Text = "Damage Fees:";
             // 
             // numLateFee
             // 
             numLateFee.DecimalPlaces = 2;
             numLateFee.Font = new Font("Segoe UI", 10F);
-            numLateFee.Location = new Point(20, 56);
-            numLateFee.Margin = new Padding(3, 4, 3, 4);
-            numLateFee.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            numLateFee.Location = new Point(20, 85);
+            numLateFee.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numLateFee.Name = "numLateFee";
-            numLateFee.ReadOnly = true;
-            numLateFee.Size = new Size(220, 30);
-            numLateFee.TabIndex = 1;
+            numLateFee.Size = new Size(240, 30);
+            numLateFee.TabIndex = 5;
             numLateFee.TextAlign = HorizontalAlignment.Right;
-            numLateFee.ThousandsSeparator = true;
             // 
             // lblLateFees
             // 
             lblLateFees.AutoSize = true;
-            lblLateFees.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblLateFees.Font = new Font("Segoe UI", 9F);
             lblLateFees.ForeColor = Color.DimGray;
-            lblLateFees.Location = new Point(17, 31);
+            lblLateFees.Location = new Point(17, 60);
             lblLateFees.Name = "lblLateFees";
             lblLateFees.Size = new Size(73, 20);
-            lblLateFees.TabIndex = 0;
+            lblLateFees.TabIndex = 6;
             lblLateFees.Text = "Late Fees:";
             // 
             // pnlActionBar
@@ -441,26 +372,23 @@
             pnlActionBar.Controls.Add(btnCompleteReturn);
             pnlActionBar.Controls.Add(btnCancels);
             pnlActionBar.Dock = DockStyle.Bottom;
-            pnlActionBar.Location = new Point(0, 900);
-            pnlActionBar.Margin = new Padding(3, 4, 3, 4);
+            pnlActionBar.Location = new Point(0, 778);
             pnlActionBar.Name = "pnlActionBar";
             pnlActionBar.Padding = new Padding(20, 25, 20, 25);
-            pnlActionBar.Size = new Size(1150, 125);
+            pnlActionBar.Size = new Size(1150, 101);
             pnlActionBar.TabIndex = 5;
             // 
             // btnCompleteReturn
             // 
             btnCompleteReturn.BackColor = Color.FromArgb(41, 128, 185);
             btnCompleteReturn.Dock = DockStyle.Right;
-            btnCompleteReturn.FlatAppearance.BorderSize = 0;
             btnCompleteReturn.FlatStyle = FlatStyle.Flat;
             btnCompleteReturn.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnCompleteReturn.ForeColor = Color.White;
             btnCompleteReturn.Location = new Point(680, 25);
-            btnCompleteReturn.Margin = new Padding(3, 4, 3, 4);
             btnCompleteReturn.Name = "btnCompleteReturn";
-            btnCompleteReturn.Size = new Size(450, 75);
-            btnCompleteReturn.TabIndex = 1;
+            btnCompleteReturn.Size = new Size(450, 51);
+            btnCompleteReturn.TabIndex = 0;
             btnCompleteReturn.Text = "Complete Return Process";
             btnCompleteReturn.UseVisualStyleBackColor = false;
             btnCompleteReturn.Click += btnCompleteReturn_Click;
@@ -469,32 +397,27 @@
             // 
             btnCancels.BackColor = Color.FromArgb(189, 195, 199);
             btnCancels.Dock = DockStyle.Left;
-            btnCancels.FlatAppearance.BorderSize = 0;
             btnCancels.FlatStyle = FlatStyle.Flat;
             btnCancels.Font = new Font("Segoe UI", 11F);
+            btnCancels.ForeColor = Color.White;
             btnCancels.Location = new Point(20, 25);
-            btnCancels.Margin = new Padding(3, 4, 3, 4);
             btnCancels.Name = "btnCancels";
-            btnCancels.Size = new Size(450, 75);
-            btnCancels.TabIndex = 0;
+            btnCancels.Size = new Size(450, 51);
+            btnCancels.TabIndex = 1;
             btnCancels.Text = "Cancel";
             btnCancels.UseVisualStyleBackColor = false;
             btnCancels.Click += btnCancel_Click;
             // 
             // ReturnVehicleForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(1150, 1025);
-            Controls.Add(pnlActionBar);
-            Controls.Add(pnlBillingSummary);
-            Controls.Add(pnlDamageAssessment);
-            Controls.Add(pnlReturnDetails);
-            Controls.Add(pnlRentalSummary);
+            ClientSize = new Size(1150, 879);
             Controls.Add(pnlHeader);
+            Controls.Add(pnlRentalSummary);
+            Controls.Add(pnlReturnDetails);
+            Controls.Add(pnlDamageAssessment);
+            Controls.Add(pnlBillingSummary);
+            Controls.Add(pnlActionBar);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "ReturnVehicleForm";
@@ -506,6 +429,7 @@
             pnlRentalSummary.PerformLayout();
             pnlReturnDetails.ResumeLayout(false);
             pnlReturnDetails.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numOdometer).EndInit();
             pnlDamageAssessment.ResumeLayout(false);
             pnlDamageAssessment.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDamages).EndInit();
@@ -519,36 +443,36 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblFormTitle;
-        private System.Windows.Forms.Panel pnlRentalSummary;
-        private System.Windows.Forms.Label lblCustomerInfo;
-        private System.Windows.Forms.Label lblVehicleInfo;
-        private System.Windows.Forms.Label lblRentalId;
-        private System.Windows.Forms.Panel pnlReturnDetails;
-        private System.Windows.Forms.Label lblSectionTitleReturn;
-        private System.Windows.Forms.TextBox txtConditions;
-        private System.Windows.Forms.Label lblConditionNotes;
-        private System.Windows.Forms.ComboBox cbFuels;
-        private System.Windows.Forms.Label lblFuelLevel;
-        private System.Windows.Forms.TextBox txtOdometers;
-        private System.Windows.Forms.Label lblOdometer;
-        private System.Windows.Forms.DateTimePicker dtReturns;
-        private System.Windows.Forms.Label lblReturnDate;
-        private System.Windows.Forms.Panel pnlDamageAssessment;
-        private System.Windows.Forms.Label lblSectionTitleDamage;
-        private System.Windows.Forms.Button btnAddDamage;
-        private System.Windows.Forms.DataGridView dgvDamages;
-        private System.Windows.Forms.Panel pnlBillingSummary;
-        private System.Windows.Forms.Label lblSectionTitleBilling;
-        private System.Windows.Forms.Label lblTotalValue;
-        private System.Windows.Forms.Label lblTotalLabel;
-        private System.Windows.Forms.NumericUpDown numDamages;
-        private System.Windows.Forms.Label lblDamageFees;
-        private System.Windows.Forms.NumericUpDown numLateFee;
-        private System.Windows.Forms.Label lblLateFees;
-        private System.Windows.Forms.Panel pnlActionBar;
-        private System.Windows.Forms.Button btnCompleteReturn;
-        private System.Windows.Forms.Button btnCancels;
+        private Panel pnlHeader;
+        private Label lblFormTitle;
+        private Panel pnlRentalSummary;
+        private Label lblCustomerInfo;
+        private Label lblVehicleInfo;
+        private Label lblRentalId;
+        private Panel pnlReturnDetails;
+        private Label lblSectionTitleReturn;
+        private TextBox txtConditions;
+        private Label lblConditionNotes;
+        private ComboBox cbFuels;
+        private Label lblFuelLevel;
+        private NumericUpDown numOdometer;
+        private Label lblOdometer;
+        private DateTimePicker dtReturns;
+        private Label lblReturnDate;
+        private Panel pnlDamageAssessment;
+        private Label lblSectionTitleDamage;
+        private Button btnAddDamage;
+        private DataGridView dgvDamages;
+        private Panel pnlBillingSummary;
+        private Label lblSectionTitleBilling;
+        private Label lblTotalValue;
+        private Label lblTotalLabel;
+        private NumericUpDown numDamages;
+        private Label lblDamageFees;
+        private NumericUpDown numLateFee;
+        private Label lblLateFees;
+        private Panel pnlActionBar;
+        private Button btnCompleteReturn;
+        private Button btnCancels;
     }
 }

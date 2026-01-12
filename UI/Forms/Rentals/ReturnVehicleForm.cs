@@ -15,6 +15,7 @@ namespace VRMS.Forms
         private readonly ReservationService _reservationService;
         private readonly VehicleService _vehicleService;
         private readonly CustomerService _customerService;
+
         private Rental _rental = null!;
 
         public ReturnVehicleForm(
@@ -33,30 +34,29 @@ namespace VRMS.Forms
             _customerService = customerService;
 
             Load += ReturnVehicleForm_Load;
+            numOdometer.ValueChanged += NumOdometer_ValueChanged;
         }
-
 
         private void ReturnVehicleForm_Load(object? sender, EventArgs e)
         {
             _rental = _rentalService.GetRentalById(_rentalId);
 
-            var reservation =
-                _reservationService.GetReservationById(_rental.ReservationId);
-
-            var vehicle =
-                _vehicleService.GetVehicleById(reservation.VehicleId);
-
-            var customer =
-                _customerService.GetCustomerById(reservation.CustomerId);
+            var reservation = _reservationService.GetReservationById(_rental.ReservationId);
+            var vehicle = _vehicleService.GetVehicleById(reservation.VehicleId);
+            var customer = _customerService.GetCustomerById(reservation.CustomerId);
 
             lblRentalId.Text = $"Rental #: {_rental.Id}";
-            lblVehicleInfo.Text =
-                $"Vehicle: {vehicle.Year} {vehicle.Make} {vehicle.Model}";
-            lblCustomerInfo.Text =
-                $"Customer: {customer.FirstName} {customer.LastName}";
+            lblVehicleInfo.Text = $"Vehicle: {vehicle.Year} {vehicle.Make} {vehicle.Model}";
+            lblCustomerInfo.Text = $"Customer: {customer.FirstName} {customer.LastName}";
 
             dtReturns.Value = DateTime.Now;
-            txtOdometers.Text = _rental.StartOdometer.ToString();
+
+            
+            numOdometer.Minimum = _rental.StartOdometer + 1;
+            numOdometer.Maximum = 10_000_000;
+            numOdometer.Value = _rental.StartOdometer + 1;
+            numOdometer.Increment = 1;
+
             cbFuels.SelectedIndex = (int)_rental.StartFuelLevel;
 
             numLateFee.Value = 0;
@@ -66,6 +66,16 @@ namespace VRMS.Forms
             ConfigureDamageGrid();
         }
 
+        private void NumOdometer_ValueChanged(object? sender, EventArgs e)
+        {
+            if (_rental == null) return;
+
+            var minAllowed = _rental.StartOdometer + 1;
+            if (numOdometer.Value < minAllowed)
+            {
+                numOdometer.Value = minAllowed;
+            }
+        }
 
         private void ConfigureDamageGrid()
         {
@@ -88,20 +98,16 @@ namespace VRMS.Forms
 
         private bool ValidateInput(out int endOdometer, out FuelLevel fuelLevel)
         {
-            endOdometer = 0;
+            endOdometer = (int)numOdometer.Value;
             fuelLevel = FuelLevel.Empty;
-
-            if (!int.TryParse(txtOdometers.Text, out endOdometer))
-            {
-                MessageBox.Show("Invalid odometer value.", "Validation Error");
-                return false;
-            }
 
             if (endOdometer <= _rental.StartOdometer)
             {
                 MessageBox.Show(
-                    "End odometer must be greater than start odometer.",
-                    "Validation Error");
+                    "End odometer must be greater than the starting odometer.",
+                    "Validation Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return false;
             }
 
@@ -109,26 +115,14 @@ namespace VRMS.Forms
             {
                 MessageBox.Show(
                     "Please select fuel level.",
-                    "Validation Error");
+                    "Validation Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return false;
             }
 
             fuelLevel = (FuelLevel)cbFuels.SelectedIndex;
             return true;
-        }
-
-        private void btnCancel_Click(object? sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
-        private void BtnAddDamage_Click(object? sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "Damage entry will be implemented next.",
-                "Not Implemented",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
         }
 
         private void btnCompleteReturn_Click(object sender, EventArgs e)
@@ -156,6 +150,21 @@ namespace VRMS.Forms
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+        }
+
+        private void btnCancel_Click(object? sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void BtnAddDamage_Click(object? sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "Damage entry will be implemented next.",
+                "Not Implemented",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
     }
 }
