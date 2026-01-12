@@ -73,6 +73,7 @@
             panelPreviewHeader = new Panel();
             lblVehicleDetails = new Label();
             picVehiclePreview = new PictureBox();
+            button1 = new Button();
             panelHeader.SuspendLayout();
             panelToolbar.SuspendLayout();
             panelSearch.SuspendLayout();
@@ -127,6 +128,7 @@
             // panelToolbar
             // 
             panelToolbar.BackColor = Color.White;
+            panelToolbar.Controls.Add(button1);
             panelToolbar.Controls.Add(panelSearch);
             panelToolbar.Controls.Add(btnFilter);
             panelToolbar.Controls.Add(btnExport);
@@ -443,7 +445,6 @@
             flowLayoutPanelFeatures.AutoSize = true;
             flowLayoutPanelFeatures.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             flowLayoutPanelFeatures.BackColor = Color.Transparent;
-            flowLayoutPanelFeatures.FlowDirection = FlowDirection.LeftToRight;
             flowLayoutPanelFeatures.Location = new Point(10, 35);
             flowLayoutPanelFeatures.MaximumSize = new Size(330, 80);
             flowLayoutPanelFeatures.MinimumSize = new Size(330, 30);
@@ -451,7 +452,6 @@
             flowLayoutPanelFeatures.Padding = new Padding(0, 0, 0, 5);
             flowLayoutPanelFeatures.Size = new Size(330, 30);
             flowLayoutPanelFeatures.TabIndex = 1;
-            flowLayoutPanelFeatures.WrapContents = true;
             // 
             // lblFeaturesTitle
             // 
@@ -675,6 +675,21 @@
             picVehiclePreview.TabIndex = 0;
             picVehiclePreview.TabStop = false;
             // 
+            // button1
+            // 
+            button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button1.BackColor = Color.FromArgb(128, 128, 255);
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(920, 10);
+            button1.Name = "button1";
+            button1.Size = new Size(119, 40);
+            button1.TabIndex = 7;
+            button1.Text = "➕ Categories";
+            button1.UseVisualStyleBackColor = false;
+            // 
             // VehiclesView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -753,5 +768,6 @@
         private Panel panelFeatures;
         private Label lblFeaturesTitle;
         private FlowLayoutPanel flowLayoutPanelFeatures;
+        private Button button1;
     }
 }
