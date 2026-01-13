@@ -6,6 +6,7 @@ using VRMS.Repositories.Damages;
 using VRMS.Repositories.Inspections;
 using VRMS.Repositories.Rentals;
 using VRMS.Services.Billing;
+using VRMS.Services.Customer;
 using VRMS.Services.Fleet;
 
 namespace VRMS.Services.Rental;
@@ -31,6 +32,7 @@ public class RentalService
     private readonly VehicleService _vehicleService;
     private readonly RentalRepository _rentalRepo;
     private readonly BillingService _billingService;
+    private readonly CustomerService _customerService;
 
     private readonly VehicleInspectionRepository _inspectionRepo;
     private readonly DamageRepository _damageRepo;
@@ -43,6 +45,7 @@ public class RentalService
     public RentalService(
         ReservationService reservationService,
         VehicleService vehicleService,
+        CustomerService customerService,   
         RentalRepository rentalRepo,
         BillingService billingService,
         VehicleInspectionRepository inspectionRepo,
@@ -53,7 +56,7 @@ public class RentalService
         _vehicleService = vehicleService;
         _rentalRepo = rentalRepo;
         _billingService = billingService;
-
+        _customerService = customerService;
         _inspectionRepo = inspectionRepo;
         _damageRepo = damageRepo;
         _damageReportRepo = damageReportRepo;
@@ -64,7 +67,20 @@ public class RentalService
     // START RENTAL (PICKUP)
     // -------------------------------------------------
 
+    [Obsolete("Use StartRentalFromReservation or StartWalkInRental")]
     public int StartRental(
+        int reservationId,
+        DateTime pickupDate,
+        FuelLevel startFuelLevel)
+    {
+        return StartRentalFromReservation(
+            reservationId,
+            pickupDate,
+            startFuelLevel);
+    }
+
+    
+    public int StartRentalFromReservation(
         int reservationId,
         DateTime pickupDate,
         FuelLevel startFuelLevel)
@@ -74,11 +90,7 @@ public class RentalService
 
         if (reservation.Status != ReservationStatus.Confirmed)
             throw new InvalidOperationException(
-                "Reservation must be confirmed before starting a rental.");
-
-        if (pickupDate < reservation.StartDate)
-            throw new InvalidOperationException(
-                "Pickup date cannot be before reservation start date.");
+                "Reservation must be confirmed.");
 
         if (_rentalRepo.GetByReservation(reservationId) != null)
             throw new InvalidOperationException(
@@ -89,11 +101,12 @@ public class RentalService
 
         if (vehicle.Status != VehicleStatus.Reserved)
             throw new InvalidOperationException(
-                "Vehicle must be reserved before starting rental.");
+                "Vehicle must be reserved.");
 
         var rentalId =
             _rentalRepo.Create(
                 reservationId,
+                vehicle.Id,
                 pickupDate,
                 reservation.EndDate,
                 vehicle.Odometer,
@@ -101,13 +114,46 @@ public class RentalService
                 RentalStatus.Active);
 
         _rentalRepo.MarkStarted(rentalId);
-
-        _vehicleService.UpdateVehicleStatus(
-            reservation.VehicleId,
-            VehicleStatus.Rented);
+        _vehicleService.UpdateVehicleStatus(vehicle.Id, VehicleStatus.Rented);
 
         return rentalId;
     }
+
+
+    
+    public int StartWalkInRental(
+        int customerId,
+        int vehicleId,
+        DateTime pickupDate,
+        DateTime expectedReturnDate,
+        FuelLevel startFuelLevel)
+    {
+        _customerService.EnsureCustomerCanRent(customerId, pickupDate);
+
+        var vehicle = _vehicleService.GetVehicleById(vehicleId);
+
+        if (vehicle.Status != VehicleStatus.Available)
+            throw new InvalidOperationException("Vehicle not available.");
+
+        var rentalId =
+            _rentalRepo.Create(
+                reservationId: null,
+                vehicleId: vehicleId,
+                pickupDate,
+                expectedReturnDate,
+                vehicle.Odometer,
+                startFuelLevel,
+                RentalStatus.Active);
+
+        _rentalRepo.MarkStarted(rentalId);
+
+        _vehicleService.UpdateVehicleStatus(vehicleId, VehicleStatus.Rented);
+
+        return rentalId;
+    }
+
+
+
 
     // -------------------------------------------------
     // RETURN INSPECTION
@@ -211,13 +257,10 @@ public class RentalService
 
         // ---------------- VEHICLE UPDATE ----------------
 
-        var reservation =
-            _reservationService.GetReservationById(
-                rental.ReservationId);
-
         var vehicle =
             _vehicleService.GetVehicleById(
-                reservation.VehicleId);
+                rental.VehicleId);
+
 
         _vehicleService.UpdateVehicle(
             vehicle.Id,

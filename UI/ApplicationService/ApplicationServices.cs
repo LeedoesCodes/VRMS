@@ -124,10 +124,12 @@ public static class ApplicationServices
         new RentalService(
             ReservationService,
             VehicleService,
+            CustomerService,
             _rentalRepo,
             BillingService,
             _inspectionRepo,
             _damageRepo,
             _damageReportRepo
         );
+
 }

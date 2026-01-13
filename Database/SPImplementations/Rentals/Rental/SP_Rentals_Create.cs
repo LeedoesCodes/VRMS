@@ -1,10 +1,13 @@
-﻿public static class SP_Rentals_Create
+﻿namespace VRMS.Database.SPImplementations.Rentals.Rental;
+
+public static class SP_Rentals_Create
 {
     public static string Sql() => """
                                   DROP PROCEDURE IF EXISTS sp_rentals_create;
 
                                   CREATE PROCEDURE sp_rentals_create (
                                       IN p_reservation_id INT,
+                                      IN p_vehicle_id INT,
                                       IN p_pickup_date DATETIME,
                                       IN p_expected_return_date DATETIME,
                                       IN p_start_odometer INT,
@@ -14,6 +17,7 @@
                                   BEGIN
                                       INSERT INTO rentals (
                                           reservation_id,
+                                          vehicle_id,
                                           pickup_date,
                                           expected_return_date,
                                           start_odometer,
@@ -21,7 +25,8 @@
                                           status
                                       )
                                       VALUES (
-                                          p_reservation_id,
+                                          p_reservation_id, -- may be NULL
+                                          p_vehicle_id,
                                           p_pickup_date,
                                           p_expected_return_date,
                                           p_start_odometer,

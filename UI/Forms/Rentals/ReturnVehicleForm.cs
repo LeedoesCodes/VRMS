@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using VRMS.Enums;
+using VRMS.Models.Customers;
 using VRMS.Models.Rentals;
 using VRMS.Services.Customer;
 using VRMS.Services.Fleet;
@@ -41,13 +42,24 @@ namespace VRMS.Forms
         {
             _rental = _rentalService.GetRentalById(_rentalId);
 
-            var reservation = _reservationService.GetReservationById(_rental.ReservationId);
-            var vehicle = _vehicleService.GetVehicleById(reservation.VehicleId);
-            var customer = _customerService.GetCustomerById(reservation.CustomerId);
+            var vehicle = _vehicleService.GetVehicleById(_rental.VehicleId);
+            Customer? customer = null;
+
+            if (_rental.ReservationId.HasValue)
+            {
+                var reservation =
+                    _reservationService.GetReservationById(_rental.ReservationId.Value);
+
+                customer =
+                    _customerService.GetCustomerById(reservation.CustomerId);
+            }
 
             lblRentalId.Text = $"Rental #: {_rental.Id}";
             lblVehicleInfo.Text = $"Vehicle: {vehicle.Year} {vehicle.Make} {vehicle.Model}";
-            lblCustomerInfo.Text = $"Customer: {customer.FirstName} {customer.LastName}";
+            lblCustomerInfo.Text =
+                customer == null
+                    ? "Customer: Walk-in"
+                    : $"Customer: {customer.FirstName} {customer.LastName}";
 
             dtReturns.Value = DateTime.Now;
 

@@ -87,12 +87,14 @@ namespace VRMS.Controls
             _rentalService = new RentalService(
                 _reservationService,
                 _vehicleService,
+                _customerService,
                 rentalRepo,
                 _billingService,
                 inspectionRepo,
                 damageRepo,
                 damageReportRepo
             );
+
 
             // =========================
             // EVENTS
@@ -133,21 +135,36 @@ namespace VRMS.Controls
         private void LoadRentals()
         {
             var rentals = _rentalService.GetAllRentals();
+
             _allRows = rentals.Select(r =>
             {
-                var reservation = _reservationService.GetReservationById(r.ReservationId);
-                var customer = _customerService.GetCustomerById(reservation.CustomerId);
+                string customerName = "Walk-in";
+
+                if (r.ReservationId.HasValue)
+                {
+                    var reservation =
+                        _reservationService.GetReservationById(r.ReservationId.Value);
+
+                    var customer =
+                        _customerService.GetCustomerById(reservation.CustomerId);
+
+                    customerName = $"{customer.FirstName} {customer.LastName}";
+                }
+
                 return new RentalGridRow
                 {
                     RentalId = r.Id,
                     PickupDate = r.PickupDate,
                     ExpectedReturnDate = r.ExpectedReturnDate,
                     Status = r.Status,
-                    CustomerName = $"{customer.FirstName} {customer.LastName}"
+                    CustomerName = customerName
                 };
             }).ToList();
+
             ApplyFilters();
         }
+
+
 
         private void LoadStatusFilter()
         {
@@ -177,10 +194,10 @@ namespace VRMS.Controls
                 new NewRentalForm(
                     _customerService,
                     _vehicleService,
-                    _reservationService,
                     _rentalService,
                     _billingService,
                     _rateService);
+
 
             if (form.ShowDialog(FindForm()) == DialogResult.OK)
                 LoadRentals();
@@ -232,13 +249,27 @@ namespace VRMS.Controls
             if (dgvRentals.SelectedRows[0].DataBoundItem is not RentalGridRow row) return;
 
             var rental = _rentalService.GetRentalById(row.RentalId);
-            var reservation = _reservationService.GetReservationById(rental.ReservationId);
-            var vehicle = _vehicleService.GetVehicleById(reservation.VehicleId);
-            var customer = _customerService.GetCustomerById(reservation.CustomerId);
+
+            var vehicle =
+                _vehicleService.GetVehicleById(rental.VehicleId);
+
+            string customerName = "Walk-in";
+
+            if (rental.ReservationId.HasValue)
+            {
+                var reservation =
+                    _reservationService.GetReservationById(rental.ReservationId.Value);
+
+                var customer =
+                    _customerService.GetCustomerById(reservation.CustomerId);
+
+                customerName = $"{customer.FirstName} {customer.LastName}";
+            }
 
             lblDetailVehicle.Text = $"{vehicle.Year} {vehicle.Make} {vehicle.Model}";
-            lblDetailCustomer.Text = $"{customer.FirstName} {customer.LastName}";
-            lblDetailDates.Text = $"From {rental.PickupDate:d} to {rental.ExpectedReturnDate:d}";
+            lblDetailCustomer.Text = customerName;
+            lblDetailDates.Text =
+                $"From {rental.PickupDate:d} to {rental.ExpectedReturnDate:d}";
             lblDetailAmount.Text = "Total: ₱ --";
 
             LoadVehicleImage(vehicle.Id);
