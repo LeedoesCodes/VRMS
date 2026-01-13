@@ -1,22 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using VRMS.DTOs.Rental;
+﻿using VRMS.DTOs.Rental;
 using VRMS.Enums;
 using VRMS.Forms;
 using VRMS.Models.Customers;
-using VRMS.Repositories.Accounts;
-using VRMS.Repositories.Billing;
-using VRMS.Repositories.Damages;
-using VRMS.Repositories.Fleet;
-using VRMS.Repositories.Inspections;
-using VRMS.Repositories.Rentals;
 using VRMS.Services.Account;
-using VRMS.Services.Billing;
 using VRMS.Services.Customer;
-using VRMS.Services.Fleet;
 using VRMS.Services.Rental;
 using VRMS.UI.Config.ApplicationService;
 using VRMS.UI.Config.State;
@@ -25,7 +12,7 @@ using VRMS.UI.Forms.Customer;
 using VRMS.UI.Forms.Customers;
 using VRMS.UI.Services;
 
-namespace VRMS.Controls
+namespace VRMS.UI.Controls.CustomersView
 {
     public partial class CustomersView : UserControl
     {
@@ -195,6 +182,7 @@ namespace VRMS.Controls
             PopulateForm(_state.SelectedCustomer);
             LoadRentalHistory(_state.SelectedCustomer.Id);
             btnEmergencyContacts.Enabled = true;
+            UpdateDeleteButtonState();
         }
 
         
@@ -581,6 +569,33 @@ namespace VRMS.Controls
             lblAgeCheck.Text = $"Age: {age}";
             lblAgeCheck.ForeColor = age >= 21 ? Color.Green : Color.Red;
         }
+        
+        private void UpdateDeleteButtonState()
+        {
+            if (_state.SelectedCustomer == null)
+            {
+                btnDelete.Enabled = false;
+                return;
+            }
+
+            var hasAccount =
+                _customerService.HasLoginAccount(
+                    _state.SelectedCustomer.Id);
+
+            btnDelete.Enabled = !hasAccount;
+
+            if (hasAccount)
+            {
+                btnDelete.BackColor = Color.FromArgb(180, 180, 180); // grey
+                btnDelete.ForeColor = Color.White;
+            }
+            else
+            {
+                btnDelete.BackColor = Color.FromArgb(231, 76, 60); // red
+                btnDelete.ForeColor = Color.White;
+            }
+        }
+
 
         private void btnManageAccount_Click(object sender, EventArgs e)
         {

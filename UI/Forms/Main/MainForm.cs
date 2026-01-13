@@ -7,6 +7,7 @@ using VRMS.Forms;
 using VRMS.Controls.UserProfile;
 using VRMS.Repositories.Accounts;
 using VRMS.Services.Account;
+using VRMS.UI.Controls.CustomersView;
 using VRMS.UI.Forms;
 using VRMS.UI.Controls.CustomerVehicleCatalog;
 using VRMS.UI.Controls.Reports;

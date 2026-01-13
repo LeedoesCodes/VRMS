@@ -1,4 +1,4 @@
-﻿namespace VRMS.Controls
+﻿namespace VRMS.UI.Controls.CustomersView
 {
     partial class CustomersView
     {

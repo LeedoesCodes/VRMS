@@ -189,6 +189,10 @@ namespace VRMS.Services.Customer
         /// </summary>
         public void DeleteCustomer(int customerId)
         {
+            if (HasLoginAccount(customerId))
+                throw new InvalidOperationException(
+                    "Customer has a user account. Delete the user account first.");
+
             FileStorageHelper.DeleteDirectory(
                 Path.Combine(
                     CustomerPhotoFolder,
@@ -198,6 +202,7 @@ namespace VRMS.Services.Customer
 
             _repo.Delete(customerId);
         }
+
 
         // =====================================================
         // CUSTOMER PHOTO (FILE SYSTEM + DB)
