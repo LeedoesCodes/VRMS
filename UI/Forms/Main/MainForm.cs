@@ -96,11 +96,7 @@ namespace VRMS.Forms
             if (IsCustomer())
             {
                 ActivateButton(btnVehicles);
-                ShowView(
-                    new CustomerVehicleCatalog(),
-                    "Vehicle Catalog",
-                    "Browse & rent available vehicles"
-                );
+                return;
             }
             else
             {
@@ -206,12 +202,10 @@ namespace VRMS.Forms
                 case "btnVehicles":
                     if (IsCustomer())
                     {
-                        ShowView(
-                            new CustomerVehicleCatalog(),
-                            "Vehicle Catalog",
-                            "Browse & rent available vehicles"
-                        );
+                        ActivateButton(btnVehicles);
+                        return;
                     }
+
                     else
                     {
                         ShowView(

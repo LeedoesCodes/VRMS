@@ -7,6 +7,11 @@ using VRMS.Services.Account;
 using VRMS.Repositories.Accounts;
 using VRMS.UI.Controls.CustomerVehicleCatalog;
 using VRMS.Controls;
+using VRMS.Repositories.Billing;
+using VRMS.Repositories.Fleet;
+using VRMS.Repositories.Rentals;
+using VRMS.Services.Fleet;
+using VRMS.Services.Rental;
 
 namespace VRMS.UI.Forms.Main
 {
@@ -59,9 +64,33 @@ namespace VRMS.UI.Forms.Main
 
         private void LoadVehiclesView()
         {
-            LoadView(new CustomerVehicleCatalog());
+            var vehicleService = new VehicleService(
+                new VehicleRepository(),
+                new VehicleCategoryRepository(),
+                new VehicleFeatureRepository(),
+                new VehicleFeatureMappingRepository(),
+                new VehicleImageRepository(),
+                new MaintenanceRepository(),
+                new RateConfigurationRepository()
+            );
+
+            var reservationService = new ReservationService(
+                _customerService,
+                vehicleService,
+                new ReservationRepository()
+            );
+
+            LoadView(
+                new CustomerVehicleCatalog(
+                    vehicleService,
+                    reservationService,
+                    _customer!
+                )
+            );
+
             HighlightActiveButton(btnVehicles);
         }
+
 
         private void LoadRentalsView()
         {

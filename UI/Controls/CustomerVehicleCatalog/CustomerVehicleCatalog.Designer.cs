@@ -16,7 +16,6 @@
         private TextBox txtSearch;
         private ComboBox cbSort;
         private CheckBox chkAvailableOnly;
-        private Button btnAddNew;
 
         // ===== FILTER BAR =====
         private Panel panelFilterBar;
@@ -65,31 +64,22 @@
 
         private void InitializeComponent()
         {
-            // Modern colors
-            Color primaryColor = Color.FromArgb(30, 60, 90);
-            Color secondaryColor = Color.FromArgb(70, 130, 180);
-            Color accentColor = Color.FromArgb(0, 120, 215);
-            Color lightGray = Color.FromArgb(248, 249, 250);
-            Color borderColor = Color.FromArgb(222, 226, 230);
-            Color successColor = Color.FromArgb(40, 167, 69);
-            Color warningColor = Color.FromArgb(255, 193, 7);
-
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomerVehicleCatalog));
             panelHeader = new Panel();
-            lblTitle = new Label();
             btnRefresh = new Button();
+            lblTitle = new Label();
             panelToolbar = new Panel();
             panelSearch = new Panel();
             picSearchIcon = new PictureBox();
             txtSearch = new TextBox();
             cbSort = new ComboBox();
             chkAvailableOnly = new CheckBox();
-            btnAddNew = new Button();
             panelFilterBar = new Panel();
+            btnClearFilters = new Button();
             lblStatus = new Label();
             cbStatus = new ComboBox();
             lblCategory = new Label();
             cbCategory = new ComboBox();
-            btnClearFilters = new Button();
             splitMain = new SplitContainer();
             lvVehicles = new ListView();
             colName = new ColumnHeader();
@@ -127,13 +117,11 @@
             panelPreviewContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picVehicle).BeginInit();
             panelDetails.SuspendLayout();
-            panelNoSelection.SuspendLayout();
             SuspendLayout();
-
             // 
             // panelHeader
             // 
-            panelHeader.BackColor = primaryColor;
+            panelHeader.BackColor = Color.FromArgb(30, 60, 90);
             panelHeader.Controls.Add(btnRefresh);
             panelHeader.Controls.Add(lblTitle);
             panelHeader.Dock = DockStyle.Top;
@@ -141,17 +129,6 @@
             panelHeader.Name = "panelHeader";
             panelHeader.Size = new Size(1200, 70);
             panelHeader.TabIndex = 3;
-            // 
-            // lblTitle
-            // 
-            lblTitle.Font = new Font("Segoe UI Semibold", 20F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(20, 15);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(300, 40);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "🚗 Vehicle Catalog";
-            lblTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // btnRefresh
             // 
@@ -170,10 +147,20 @@
             btnRefresh.Text = "Refresh";
             btnRefresh.UseVisualStyleBackColor = false;
             // 
+            // lblTitle
+            // 
+            lblTitle.Font = new Font("Segoe UI Semibold", 20F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(20, 15);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(300, 40);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "🚗 Vehicle Catalog";
+            lblTitle.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // panelToolbar
             // 
             panelToolbar.BackColor = Color.White;
-            panelToolbar.Controls.Add(btnAddNew);
             panelToolbar.Controls.Add(panelSearch);
             panelToolbar.Controls.Add(cbSort);
             panelToolbar.Controls.Add(chkAvailableOnly);
@@ -186,7 +173,7 @@
             // 
             // panelSearch
             // 
-            panelSearch.BackColor = lightGray;
+            panelSearch.BackColor = Color.FromArgb(248, 249, 250);
             panelSearch.BorderStyle = BorderStyle.FixedSingle;
             panelSearch.Controls.Add(picSearchIcon);
             panelSearch.Controls.Add(txtSearch);
@@ -197,7 +184,7 @@
             // 
             // picSearchIcon
             // 
-            picSearchIcon.Image = SystemIcons.Information.ToBitmap(); // Placeholder
+            picSearchIcon.Image = (Image)resources.GetObject("picSearchIcon.Image");
             picSearchIcon.Location = new Point(10, 10);
             picSearchIcon.Name = "picSearchIcon";
             picSearchIcon.Size = new Size(20, 20);
@@ -207,15 +194,14 @@
             // 
             // txtSearch
             // 
-            txtSearch.BackColor = lightGray;
+            txtSearch.BackColor = Color.FromArgb(248, 249, 250);
             txtSearch.BorderStyle = BorderStyle.None;
             txtSearch.Font = new Font("Segoe UI", 11F);
             txtSearch.Location = new Point(36, 10);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Search vehicles...";
-            txtSearch.Size = new Size(295, 30);
+            txtSearch.Size = new Size(295, 25);
             txtSearch.TabIndex = 0;
-            
             // 
             // cbSort
             // 
@@ -234,24 +220,8 @@
             chkAvailableOnly.Name = "chkAvailableOnly";
             chkAvailableOnly.Size = new Size(180, 35);
             chkAvailableOnly.TabIndex = 2;
-            chkAvailableOnly.Text = "✅ Available only";
+            chkAvailableOnly.Text = "Available only";
             chkAvailableOnly.UseVisualStyleBackColor = true;
-            // 
-            // btnAddNew
-            // 
-            btnAddNew.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAddNew.BackColor = Color.FromArgb(23, 162, 184);
-            btnAddNew.FlatAppearance.BorderSize = 0;
-            btnAddNew.FlatStyle = FlatStyle.Flat;
-            btnAddNew.Font = new Font("Segoe UI Semibold", 10F);
-            btnAddNew.ForeColor = Color.White;
-            btnAddNew.Location = new Point(1050, 15);
-            btnAddNew.Name = "btnAddNew";
-            btnAddNew.Padding = new Padding(12, 0, 12, 0);
-            btnAddNew.Size = new Size(130, 40);
-            btnAddNew.TabIndex = 3;
-            btnAddNew.Text = "Add New";
-            btnAddNew.UseVisualStyleBackColor = false;
             // 
             // panelFilterBar
             // 
@@ -267,6 +237,21 @@
             panelFilterBar.Padding = new Padding(20, 10, 20, 10);
             panelFilterBar.Size = new Size(1200, 55);
             panelFilterBar.TabIndex = 1;
+            // 
+            // btnClearFilters
+            // 
+            btnClearFilters.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnClearFilters.FlatAppearance.BorderColor = Color.FromArgb(222, 226, 230);
+            btnClearFilters.FlatStyle = FlatStyle.Flat;
+            btnClearFilters.Font = new Font("Segoe UI", 10F);
+            btnClearFilters.ForeColor = Color.FromArgb(108, 117, 125);
+            btnClearFilters.Location = new Point(1050, 10);
+            btnClearFilters.Name = "btnClearFilters";
+            btnClearFilters.Padding = new Padding(8, 0, 8, 0);
+            btnClearFilters.Size = new Size(130, 35);
+            btnClearFilters.TabIndex = 4;
+            btnClearFilters.Text = "Clear Filters";
+            btnClearFilters.UseVisualStyleBackColor = true;
             // 
             // lblStatus
             // 
@@ -308,27 +293,18 @@
             cbCategory.Size = new Size(180, 31);
             cbCategory.TabIndex = 3;
             // 
-            // btnClearFilters
-            // 
-            btnClearFilters.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnClearFilters.FlatAppearance.BorderColor = borderColor;
-            btnClearFilters.FlatStyle = FlatStyle.Flat;
-            btnClearFilters.Font = new Font("Segoe UI", 10F);
-            btnClearFilters.ForeColor = Color.FromArgb(108, 117, 125);
-            btnClearFilters.Location = new Point(1050, 10);
-            btnClearFilters.Name = "btnClearFilters";
-            btnClearFilters.Padding = new Padding(8, 0, 8, 0);
-            btnClearFilters.Size = new Size(130, 35);
-            btnClearFilters.TabIndex = 4;
-            btnClearFilters.Text = "Clear Filters";
-            btnClearFilters.UseVisualStyleBackColor = true;
-            // 
             // splitMain
             // 
             splitMain.Dock = DockStyle.Fill;
             splitMain.Location = new Point(0, 195);
             splitMain.Name = "splitMain";
+            // 
+            // splitMain.Panel1
+            // 
             splitMain.Panel1.Controls.Add(lvVehicles);
+            // 
+            // splitMain.Panel2
+            // 
             splitMain.Panel2.Controls.Add(panelPreview);
             splitMain.Size = new Size(1200, 605);
             splitMain.SplitterDistance = 850;
@@ -404,10 +380,10 @@
             // 
             // picVehicle
             // 
-            picVehicle.BackColor = lightGray;
+            picVehicle.BackColor = Color.FromArgb(248, 249, 250);
             picVehicle.BorderStyle = BorderStyle.FixedSingle;
             picVehicle.Dock = DockStyle.Top;
-            picVehicle.Location = new Point(15, 15);
+            picVehicle.Location = new Point(15, 325);
             picVehicle.Name = "picVehicle";
             picVehicle.Size = new Size(319, 220);
             picVehicle.SizeMode = PictureBoxSizeMode.Zoom;
@@ -418,7 +394,7 @@
             // 
             lblName.Dock = DockStyle.Top;
             lblName.Font = new Font("Segoe UI Semibold", 16F, FontStyle.Bold);
-            lblName.Location = new Point(15, 235);
+            lblName.Location = new Point(15, 265);
             lblName.Name = "lblName";
             lblName.Padding = new Padding(0, 10, 0, 10);
             lblName.Size = new Size(319, 60);
@@ -439,7 +415,7 @@
             panelDetails.Controls.Add(lblYearTitle);
             panelDetails.Controls.Add(lblYearValue);
             panelDetails.Dock = DockStyle.Top;
-            panelDetails.Location = new Point(15, 295);
+            panelDetails.Location = new Point(15, 15);
             panelDetails.Name = "panelDetails";
             panelDetails.Size = new Size(319, 250);
             panelDetails.TabIndex = 2;
@@ -497,7 +473,7 @@
             // lblRateValue
             // 
             lblRateValue.Font = new Font("Segoe UI Semibold", 10F);
-            lblRateValue.ForeColor = accentColor;
+            lblRateValue.ForeColor = Color.FromArgb(0, 120, 215);
             lblRateValue.Location = new Point(100, 80);
             lblRateValue.Name = "lblRateValue";
             lblRateValue.Size = new Size(200, 25);
@@ -547,7 +523,7 @@
             // 
             // btnRent
             // 
-            btnRent.BackColor = successColor;
+            btnRent.BackColor = Color.FromArgb(40, 167, 69);
             btnRent.Dock = DockStyle.Bottom;
             btnRent.FlatAppearance.BorderSize = 0;
             btnRent.FlatStyle = FlatStyle.Flat;
@@ -557,20 +533,12 @@
             btnRent.Name = "btnRent";
             btnRent.Size = new Size(319, 40);
             btnRent.TabIndex = 3;
-            btnRent.Text = "🛒 Rent This Vehicle";
+            btnRent.Text = "\U0001f6d2 Rent This Vehicle";
             btnRent.UseVisualStyleBackColor = false;
             // 
             // panelNoSelection
             // 
-            panelNoSelection.BackColor = lightGray;
-            panelNoSelection.Controls.Add(new Label()
-            {
-                Text = "👈 Select a vehicle to view details",
-                Font = new Font("Segoe UI", 12F),
-                ForeColor = Color.FromArgb(108, 117, 125),
-                TextAlign = ContentAlignment.MiddleCenter,
-                Dock = DockStyle.Fill
-            });
+            panelNoSelection.BackColor = Color.FromArgb(248, 249, 250);
             panelNoSelection.Dock = DockStyle.Fill;
             panelNoSelection.Location = new Point(0, 0);
             panelNoSelection.Name = "panelNoSelection";
@@ -601,7 +569,6 @@
             panelPreviewContent.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picVehicle).EndInit();
             panelDetails.ResumeLayout(false);
-            panelNoSelection.ResumeLayout(false);
             ResumeLayout(false);
         }
     }

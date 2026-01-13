@@ -1,4 +1,4 @@
-﻿namespace VRMS.DTOs
+﻿namespace VRMS.DTOs.Damage
 {
     public class DamageDto
     {
