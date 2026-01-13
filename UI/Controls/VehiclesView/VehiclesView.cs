@@ -72,11 +72,12 @@ namespace VRMS.Controls
             _rentalService = new RentalService(
                 _reservationService,
                 _vehicleService,
+                _customerService,
                 rentalRepo,
-                null,               // BillingService
-                inspectionRepo,     // Added
-                damageRepo,         // Added
-                damageReportRepo    // Added
+                null,               // BillingService (still null here)
+                inspectionRepo,
+                damageRepo,
+                damageReportRepo
             );
 
             Load += VehiclesView_Load;

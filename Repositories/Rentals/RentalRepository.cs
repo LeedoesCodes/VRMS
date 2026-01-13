@@ -12,7 +12,8 @@ public class RentalRepository
     // -------------------------------------------------
 
     public int Create(
-        int reservationId,
+        int? reservationId,
+        int vehicleId,
         DateTime pickupDate,
         DateTime expectedReturnDate,
         int startOdometer,
@@ -20,8 +21,9 @@ public class RentalRepository
         RentalStatus status)
     {
         var table = DB.Query(
-            "CALL sp_rentals_create(@rid,@pickup,@expected,@odo,@fuel,@status);",
+            "CALL sp_rentals_create(@rid,@vid,@pickup,@expected,@odo,@fuel,@status);",
             ("@rid", reservationId),
+            ("@vid", vehicleId),
             ("@pickup", pickupDate),
             ("@expected", expectedReturnDate),
             ("@odo", startOdometer),
@@ -31,6 +33,9 @@ public class RentalRepository
 
         return Convert.ToInt32(table.Rows[0]["rental_id"]);
     }
+
+
+
 
     public void MarkStarted(int rentalId)
     {
@@ -110,18 +115,7 @@ public class RentalRepository
 
         foreach (DataRow row in table.Rows)
         {
-            rentals.Add(new Rental
-            {
-                Id = (int)row["id"],
-                ReservationId = (int)row["reservation_id"],
-                PickupDate = (DateTime)row["pickup_date"],
-                ExpectedReturnDate = (DateTime)row["expected_return_date"],
-                ActualReturnDate = row["actual_return_date"] as DateTime?,
-                StartOdometer = (int)row["start_odometer"],
-                EndOdometer = row["end_odometer"] as int?,
-                Status = Enum.Parse<RentalStatus>(
-                    row["status"].ToString()!)
-            });
+            rentals.Add(Map(row));
         }
 
         return rentals;
@@ -164,7 +158,12 @@ public class RentalRepository
         {
             Id = Convert.ToInt32(row["id"]),
             ReservationId =
-                Convert.ToInt32(row["reservation_id"]),
+                row["reservation_id"] == DBNull.Value
+                    ? null
+                    : Convert.ToInt32(row["reservation_id"]),
+
+            VehicleId =
+                Convert.ToInt32(row["vehicle_id"]),
             PickupDate =
                 Convert.ToDateTime(row["pickup_date"]),
             ExpectedReturnDate =

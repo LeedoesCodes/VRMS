@@ -12,6 +12,7 @@ public static class SP_Rentals_GetByReservation
                                       SELECT
                                           id,
                                           reservation_id,
+                                          vehicle_id,
                                           pickup_date,
                                           expected_return_date,
                                           actual_return_date,
@@ -22,6 +23,7 @@ public static class SP_Rentals_GetByReservation
                                           status
                                       FROM rentals
                                       WHERE reservation_id = p_reservation_id;
+                                  
                                   END;
                                   """;
 }

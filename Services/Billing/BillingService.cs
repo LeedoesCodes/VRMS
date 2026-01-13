@@ -1,5 +1,6 @@
 ﻿using VRMS.Enums;
 using VRMS.Models.Billing;
+using VRMS.Models.Rentals;
 using VRMS.Repositories.Billing;
 using VRMS.Repositories.Damages;
 using VRMS.Repositories.Rentals;
@@ -136,9 +137,14 @@ public class BillingService
             throw new InvalidOperationException(
                 "Paid invoices cannot be modified.");
 
-        var reservation =
-            _reservationService.GetReservationById(
-                rental.ReservationId);
+        Reservation? reservation = null;
+
+        if (rental.ReservationId.HasValue)
+        {
+            reservation =
+                _reservationService.GetReservationById(
+                    rental.ReservationId.Value);
+        }
 
         var vehicle =
             _vehicleService.GetVehicleById(

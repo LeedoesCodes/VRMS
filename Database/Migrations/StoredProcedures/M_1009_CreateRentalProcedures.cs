@@ -14,7 +14,19 @@ public static class M_1009_CreateRentalProcedures
                                       {SP_Rentals_GetAll.Sql()}
                                       {SP_Rentals_GetByCustomer.Sql()}
                                       """;
-
+    /*
+    public static IEnumerable<string> Create()
+    {
+        yield return SP_Rentals_Create.Sql();
+        yield return SP_Rentals_GetById.Sql();
+        yield return SP_Rentals_GetByReservation.Sql();
+        yield return SP_Rentals_Start.Sql();
+        yield return SP_Rentals_Complete.Sql();
+        yield return SP_Rentals_UpdateStatus.Sql();
+        yield return SP_Rentals_GetAll.Sql();
+        yield return SP_Rentals_GetByCustomer.Sql();
+    }
+*/
     public static string Drop() => """
                                    DROP PROCEDURE IF EXISTS sp_rentals_create;
                                    DROP PROCEDURE IF EXISTS sp_rentals_get_by_id;

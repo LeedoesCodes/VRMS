@@ -559,6 +559,7 @@ public class VehicleService
         {
             VehicleStatus.Available =>
                 next is VehicleStatus.Reserved
+                    or VehicleStatus.Rented        // ✅ WALK-IN RENTAL
                     or VehicleStatus.UnderMaintenance
                     or VehicleStatus.OutOfService,
 
@@ -585,6 +586,7 @@ public class VehicleService
             throw new InvalidOperationException(
                 $"Illegal vehicle status transition: {current} → {next}");
     }
+
 
     /// <summary>
     /// Resolves the directory for storing vehicle images.

@@ -18,7 +18,6 @@ namespace VRMS.UI.Forms.Rentals
 
         private readonly CustomerService _customerService;
         private readonly VehicleService _vehicleService;
-        private readonly ReservationService _reservationService;
         private readonly RentalService _rentalService;
         private readonly RateService _rateService;
         private readonly BillingService _billingService;
@@ -26,16 +25,15 @@ namespace VRMS.UI.Forms.Rentals
         public NewRentalForm(
             CustomerService customerService,
             VehicleService vehicleService,
-            ReservationService reservationService,
             RentalService rentalService,
             BillingService billingService,
             RateService rateService)
+
         {
             InitializeComponent();
 
             _customerService = customerService;
             _vehicleService = vehicleService;
-            _reservationService = reservationService;
             _rentalService = rentalService;
             _billingService = billingService;
             _rateService = rateService;
@@ -223,25 +221,17 @@ namespace VRMS.UI.Forms.Rentals
                 if (odometer < _selectedVehicle.Odometer)
                     throw new InvalidOperationException(
                         $"Odometer cannot be less than {_selectedVehicle.Odometer}");
-
-                // ---------------- RESERVATION ----------------
-
-                int reservationId =
-                    _reservationService.CreateReservation(
-                        _selectedCustomer.Id,
-                        _selectedVehicle.Id,
-                        dtPickup.Value.Date,
-                        dtReturn.Value.Date);
-
-                _reservationService.ConfirmReservation(reservationId);
-
-                // ---------------- RENTAL ----------------
+                
+                // ---------------- RENTAL (WALK-IN) ----------------
 
                 int rentalId =
-                    _rentalService.StartRental(
-                        reservationId,
+                    _rentalService.StartWalkInRental(
+                        _selectedCustomer.Id,
+                        _selectedVehicle.Id,
                         dtPickup.Value,
+                        dtReturn.Value,
                         (FuelLevel)cbFuel.SelectedValue);
+
 
                 // ---------------- PRICING ----------------
 

@@ -12,6 +12,7 @@ public static class SP_Rentals_GetByCustomer
                                       SELECT
                                           r.id,
                                           r.reservation_id,
+                                          r.vehicle_id,
                                           r.pickup_date,
                                           r.expected_return_date,
                                           r.actual_return_date,
@@ -22,11 +23,12 @@ public static class SP_Rentals_GetByCustomer
                                           r.status,
                                           i.total_amount
                                       FROM rentals r
-                                      INNER JOIN reservations res
+                                      LEFT JOIN reservations res
                                           ON res.id = r.reservation_id
                                       LEFT JOIN invoices i
                                           ON i.rental_id = r.id
-                                      WHERE res.customer_id = p_customer_id
+                                      WHERE
+                                          res.customer_id = p_customer_id
                                       ORDER BY r.pickup_date DESC;
                                   END;
                                   """;
