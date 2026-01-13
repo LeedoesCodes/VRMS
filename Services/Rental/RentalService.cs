@@ -1,4 +1,5 @@
 using VRMS.DTOs;
+using VRMS.DTOs.Damage;
 using VRMS.Enums;
 using VRMS.Repositories.Damages;
 using VRMS.Repositories.Inspections;
