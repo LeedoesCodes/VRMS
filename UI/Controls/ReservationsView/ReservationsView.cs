@@ -353,7 +353,11 @@ namespace VRMS.Controls
         }
         private void BtnNewReservation_Click(object sender, EventArgs e)
         {
-            using var form = new AddReservationForm();
+            using var form = new AddReservationForm(
+            _customerService,
+            _vehicleService
+            );
+
 
             if (form.ShowDialog(FindForm()) == DialogResult.OK)
                 LoadReservations();

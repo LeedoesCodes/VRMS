@@ -65,8 +65,6 @@
             btnAddPhone = new Button();
             lblPhoneNumbers = new Label();
             panelContactForm = new Panel();
-            txtNotes = new TextBox();
-            lblNotes = new Label();
             cmbRelationship = new ComboBox();
             lblRelationship = new Label();
             txtLastName = new TextBox();
@@ -103,7 +101,7 @@
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(1324, 80);
+            panelHeader.Size = new Size(1450, 80);
             panelHeader.TabIndex = 0;
             // 
             // lblTitle
@@ -125,7 +123,7 @@
             panelContent.Location = new Point(0, 80);
             panelContent.Name = "panelContent";
             panelContent.Padding = new Padding(25);
-            panelContent.Size = new Size(1324, 676);
+            panelContent.Size = new Size(1450, 714);
             panelContent.TabIndex = 1;
             // 
             // splitContainer
@@ -144,8 +142,8 @@
             // 
             splitContainer.Panel2.Controls.Add(panelContactDetails);
             splitContainer.Panel2.Padding = new Padding(10, 0, 0, 0);
-            splitContainer.Size = new Size(1274, 626);
-            splitContainer.SplitterDistance = 664;
+            splitContainer.Size = new Size(1400, 664);
+            splitContainer.SplitterDistance = 850;
             splitContainer.SplitterWidth = 15;
             splitContainer.TabIndex = 0;
             // 
@@ -155,7 +153,7 @@
             panelContactList.Dock = DockStyle.Fill;
             panelContactList.Location = new Point(0, 70);
             panelContactList.Name = "panelContactList";
-            panelContactList.Size = new Size(654, 556);
+            panelContactList.Size = new Size(840, 594);
             panelContactList.TabIndex = 1;
             // 
             // dgvContacts
@@ -207,7 +205,7 @@
             dgvContacts.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dgvContacts.RowTemplate.Height = 50;
             dgvContacts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvContacts.Size = new Size(654, 556);
+            dgvContacts.Size = new Size(840, 594);
             dgvContacts.TabIndex = 0;
             // 
             // colId
@@ -225,8 +223,8 @@
             colFullName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             colFullName.DataPropertyName = "FullName";
             colFullName.FillWeight = 40F;
-            colFullName.HeaderText = "CONTACT NAME";
-            colFullName.MinimumWidth = 250;
+            colFullName.HeaderText = "Contact Name";
+            colFullName.MinimumWidth = 300;
             colFullName.Name = "colFullName";
             colFullName.ReadOnly = true;
             colFullName.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -236,8 +234,8 @@
             colRelationship.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             colRelationship.DataPropertyName = "Relationship";
             colRelationship.FillWeight = 30F;
-            colRelationship.HeaderText = "RELATIONSHIP";
-            colRelationship.MinimumWidth = 180;
+            colRelationship.HeaderText = "Relationship";
+            colRelationship.MinimumWidth = 220;
             colRelationship.Name = "colRelationship";
             colRelationship.ReadOnly = true;
             colRelationship.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -247,8 +245,8 @@
             colPhoneCount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             colPhoneCount.DataPropertyName = "PhoneCount";
             colPhoneCount.FillWeight = 20F;
-            colPhoneCount.HeaderText = "PHONE NUMBERS";
-            colPhoneCount.MinimumWidth = 150;
+            colPhoneCount.HeaderText = "Phone count";
+            colPhoneCount.MinimumWidth = 180;
             colPhoneCount.Name = "colPhoneCount";
             colPhoneCount.ReadOnly = true;
             colPhoneCount.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -257,14 +255,14 @@
             // 
             colActions.FillWeight = 10F;
             colActions.HeaderText = "";
-            colActions.MinimumWidth = 80;
+            colActions.MinimumWidth = 120;
             colActions.Name = "colActions";
             colActions.ReadOnly = true;
             colActions.Resizable = DataGridViewTriState.True;
             colActions.SortMode = DataGridViewColumnSortMode.Automatic;
             colActions.Text = "Select";
             colActions.UseColumnTextForButtonValue = true;
-            colActions.Width = 125;
+            colActions.Width = 150;
             // 
             // panelListHeader
             // 
@@ -275,7 +273,7 @@
             panelListHeader.Location = new Point(0, 0);
             panelListHeader.Name = "panelListHeader";
             panelListHeader.Padding = new Padding(0, 0, 10, 0);
-            panelListHeader.Size = new Size(654, 70);
+            panelListHeader.Size = new Size(840, 70);
             panelListHeader.TabIndex = 0;
             // 
             // lblContactCount
@@ -309,7 +307,7 @@
             panelContactDetails.Dock = DockStyle.Fill;
             panelContactDetails.Location = new Point(10, 0);
             panelContactDetails.Name = "panelContactDetails";
-            panelContactDetails.Size = new Size(585, 626);
+            panelContactDetails.Size = new Size(525, 664);
             panelContactDetails.TabIndex = 0;
             // 
             // panelContactActions
@@ -320,10 +318,10 @@
             panelContactActions.Controls.Add(btnUpdateContact);
             panelContactActions.Controls.Add(btnSaveContact);
             panelContactActions.Dock = DockStyle.Bottom;
-            panelContactActions.Location = new Point(0, 536);
+            panelContactActions.Location = new Point(0, 574);
             panelContactActions.Name = "panelContactActions";
             panelContactActions.Padding = new Padding(15, 10, 15, 10);
-            panelContactActions.Size = new Size(585, 90);
+            panelContactActions.Size = new Size(525, 90);
             panelContactActions.TabIndex = 3;
             // 
             // btnClear
@@ -389,10 +387,10 @@
             panelPhoneNumbers.Controls.Add(btnAddPhone);
             panelPhoneNumbers.Controls.Add(lblPhoneNumbers);
             panelPhoneNumbers.Dock = DockStyle.Top;
-            panelPhoneNumbers.Location = new Point(0, 280);
+            panelPhoneNumbers.Location = new Point(0, 241);
             panelPhoneNumbers.Name = "panelPhoneNumbers";
             panelPhoneNumbers.Padding = new Padding(15, 15, 15, 10);
-            panelPhoneNumbers.Size = new Size(585, 247);
+            panelPhoneNumbers.Size = new Size(525, 308);
             panelPhoneNumbers.TabIndex = 2;
             // 
             // dgvPhoneNumbers
@@ -430,16 +428,25 @@
             dgvPhoneNumbers.GridColor = Color.FromArgb(240, 240, 240);
             dgvPhoneNumbers.Location = new Point(15, 55);
             dgvPhoneNumbers.Name = "dgvPhoneNumbers";
-            dgvPhoneNumbers.EditMode = DataGridViewEditMode.EditOnEnter;
             dgvPhoneNumbers.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dgvPhoneNumbers.RowHeadersVisible = false;
             dgvPhoneNumbers.RowHeadersWidth = 51;
             dataGridViewCellStyle7.Padding = new Padding(10);
             dgvPhoneNumbers.RowsDefaultCellStyle = dataGridViewCellStyle7;
+            dgvPhoneNumbers.RowTemplate.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvPhoneNumbers.RowTemplate.DefaultCellStyle.BackColor = Color.White;
+            dgvPhoneNumbers.RowTemplate.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvPhoneNumbers.RowTemplate.DefaultCellStyle.ForeColor = Color.FromArgb(64, 64, 64);
+            dgvPhoneNumbers.RowTemplate.DefaultCellStyle.Padding = new Padding(10);
+            dgvPhoneNumbers.RowTemplate.DefaultCellStyle.SelectionBackColor = Color.FromArgb(240, 245, 250);
+            dgvPhoneNumbers.RowTemplate.DefaultCellStyle.SelectionForeColor = Color.FromArgb(30, 60, 90);
             dgvPhoneNumbers.RowTemplate.Height = 40;
             dgvPhoneNumbers.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dgvPhoneNumbers.Size = new Size(555, 132);
+            dgvPhoneNumbers.Size = new Size(495, 193);
             dgvPhoneNumbers.TabIndex = 2;
+            dgvPhoneNumbers.CellContentClick += DgvPhoneNumbers_CellContentClick;
+            dgvPhoneNumbers.CellValueChanged += DgvPhoneNumbers_CellValueChanged;
+            dgvPhoneNumbers.CurrentCellDirtyStateChanged += DgvPhoneNumbers_CurrentCellDirtyStateChanged;
             // 
             // colPhoneId
             // 
@@ -454,7 +461,7 @@
             // 
             colPhoneType.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             colPhoneType.DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox;
-            colPhoneType.FillWeight = 30F;
+            colPhoneType.FillWeight = 35F;
             colPhoneType.FlatStyle = FlatStyle.Flat;
             colPhoneType.HeaderText = "TYPE";
             colPhoneType.Items.AddRange(new object[] { "Mobile", "Home", "Work", "Other" });
@@ -466,35 +473,36 @@
             colPhoneNumber.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCellStyle5.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             colPhoneNumber.DefaultCellStyle = dataGridViewCellStyle5;
-            colPhoneNumber.FillWeight = 50F;
+            colPhoneNumber.FillWeight = 55F;
             colPhoneNumber.HeaderText = "PHONE NUMBER";
-            colPhoneNumber.MinimumWidth = 200;
+            colPhoneNumber.MinimumWidth = 180;
             colPhoneNumber.Name = "colPhoneNumber";
             // 
             // colPrimary
             // 
-            colPrimary = new DataGridViewCheckBoxColumn();
-            colPrimary.Name = "colPrimary";
-            colPrimary.HeaderText = "Primary";
-            colPrimary.Width = 80;
-            colPrimary.TrueValue = true;
-            colPrimary.FalseValue = false;
-            colPrimary.IndeterminateValue = false;
-            colPrimary.ThreeState = false;
             colPrimary.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            colPrimary.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colPrimary.FlatStyle = FlatStyle.Standard;
+            colPrimary.FalseValue = "false";
+            colPrimary.FlatStyle = FlatStyle.Flat;
+            colPrimary.HeaderText = "PRIMARY";
+            colPrimary.IndeterminateValue = "false";
+            colPrimary.MinimumWidth = 100;
+            colPrimary.Name = "colPrimary";
+            colPrimary.Resizable = DataGridViewTriState.True;
+            colPrimary.SortMode = DataGridViewColumnSortMode.Automatic;
+            colPrimary.TrueValue = "true";
+            colPrimary.Width = 125;
             // 
             // colRemovePhone
             // 
-            colRemovePhone.FillWeight = 10F;
+            colRemovePhone.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colRemovePhone.FlatStyle = FlatStyle.Flat;
             colRemovePhone.HeaderText = "";
             colRemovePhone.MinimumWidth = 60;
             colRemovePhone.Name = "colRemovePhone";
             colRemovePhone.ReadOnly = true;
-            colRemovePhone.Text = "X";
+            colRemovePhone.Text = "✕";
             colRemovePhone.UseColumnTextForButtonValue = true;
-            colRemovePhone.Width = 125;
+            colRemovePhone.Width = 60;
             // 
             // btnAddPhone
             // 
@@ -504,9 +512,9 @@
             btnAddPhone.FlatStyle = FlatStyle.Flat;
             btnAddPhone.Font = new Font("Segoe UI", 10F);
             btnAddPhone.ForeColor = Color.White;
-            btnAddPhone.Location = new Point(15, 187);
+            btnAddPhone.Location = new Point(15, 248);
             btnAddPhone.Name = "btnAddPhone";
-            btnAddPhone.Size = new Size(555, 50);
+            btnAddPhone.Size = new Size(495, 50);
             btnAddPhone.TabIndex = 1;
             btnAddPhone.Text = "➕ Add Phone Number";
             btnAddPhone.UseVisualStyleBackColor = false;
@@ -518,7 +526,7 @@
             lblPhoneNumbers.ForeColor = Color.FromArgb(30, 60, 90);
             lblPhoneNumbers.Location = new Point(15, 15);
             lblPhoneNumbers.Name = "lblPhoneNumbers";
-            lblPhoneNumbers.Size = new Size(555, 40);
+            lblPhoneNumbers.Size = new Size(495, 40);
             lblPhoneNumbers.TabIndex = 0;
             lblPhoneNumbers.Text = "Phone Numbers";
             lblPhoneNumbers.TextAlign = ContentAlignment.MiddleLeft;
@@ -526,8 +534,6 @@
             // panelContactForm
             // 
             panelContactForm.BackColor = Color.White;
-            panelContactForm.Controls.Add(txtNotes);
-            panelContactForm.Controls.Add(lblNotes);
             panelContactForm.Controls.Add(cmbRelationship);
             panelContactForm.Controls.Add(lblRelationship);
             panelContactForm.Controls.Add(txtLastName);
@@ -538,32 +544,8 @@
             panelContactForm.Location = new Point(0, 50);
             panelContactForm.Name = "panelContactForm";
             panelContactForm.Padding = new Padding(15);
-            panelContactForm.Size = new Size(585, 230);
+            panelContactForm.Size = new Size(525, 191);
             panelContactForm.TabIndex = 1;
-            // 
-            // txtNotes
-            // 
-            txtNotes.BorderStyle = BorderStyle.FixedSingle;
-            txtNotes.Dock = DockStyle.Top;
-            txtNotes.Font = new Font("Segoe UI", 10F);
-            txtNotes.Location = new Point(15, 198);
-            txtNotes.Multiline = true;
-            txtNotes.Name = "txtNotes";
-            txtNotes.PlaceholderText = "Additional information (optional)";
-            txtNotes.Size = new Size(555, 35);
-            txtNotes.TabIndex = 7;
-            // 
-            // lblNotes
-            // 
-            lblNotes.AutoSize = true;
-            lblNotes.Dock = DockStyle.Top;
-            lblNotes.Font = new Font("Segoe UI", 10F);
-            lblNotes.ForeColor = Color.FromArgb(64, 64, 64);
-            lblNotes.Location = new Point(15, 175);
-            lblNotes.Name = "lblNotes";
-            lblNotes.Size = new Size(59, 23);
-            lblNotes.TabIndex = 6;
-            lblNotes.Text = "Notes:";
             // 
             // cmbRelationship
             // 
@@ -575,7 +557,7 @@
             cmbRelationship.Items.AddRange(new object[] { "Spouse", "Parent", "Child", "Sibling", "Friend", "Colleague", "Other" });
             cmbRelationship.Location = new Point(15, 144);
             cmbRelationship.Name = "cmbRelationship";
-            cmbRelationship.Size = new Size(555, 31);
+            cmbRelationship.Size = new Size(495, 31);
             cmbRelationship.TabIndex = 5;
             // 
             // lblRelationship
@@ -597,8 +579,7 @@
             txtLastName.Font = new Font("Segoe UI", 10F);
             txtLastName.Location = new Point(15, 91);
             txtLastName.Name = "txtLastName";
-            txtLastName.PlaceholderText = "Last name";
-            txtLastName.Size = new Size(555, 30);
+            txtLastName.Size = new Size(495, 30);
             txtLastName.TabIndex = 3;
             // 
             // lblLastName
@@ -620,8 +601,7 @@
             txtFirstName.Font = new Font("Segoe UI", 10F);
             txtFirstName.Location = new Point(15, 38);
             txtFirstName.Name = "txtFirstName";
-            txtFirstName.PlaceholderText = "First name";
-            txtFirstName.Size = new Size(555, 30);
+            txtFirstName.Size = new Size(495, 30);
             txtFirstName.TabIndex = 1;
             // 
             // lblFirstName
@@ -644,7 +624,7 @@
             panelDetailsHeader.Location = new Point(0, 0);
             panelDetailsHeader.Name = "panelDetailsHeader";
             panelDetailsHeader.Padding = new Padding(15, 10, 15, 10);
-            panelDetailsHeader.Size = new Size(585, 50);
+            panelDetailsHeader.Size = new Size(525, 50);
             panelDetailsHeader.TabIndex = 0;
             // 
             // lblDetailsTitle
@@ -664,10 +644,10 @@
             panelFooter.Controls.Add(btnAddNew);
             panelFooter.Controls.Add(btnClose);
             panelFooter.Dock = DockStyle.Bottom;
-            panelFooter.Location = new Point(0, 756);
+            panelFooter.Location = new Point(0, 794);
             panelFooter.Name = "panelFooter";
             panelFooter.Padding = new Padding(25, 15, 25, 15);
-            panelFooter.Size = new Size(1324, 90);
+            panelFooter.Size = new Size(1450, 71);
             panelFooter.TabIndex = 2;
             // 
             // btnAddNew
@@ -677,9 +657,9 @@
             btnAddNew.FlatStyle = FlatStyle.Flat;
             btnAddNew.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
             btnAddNew.ForeColor = Color.White;
-            btnAddNew.Location = new Point(25, 15);
+            btnAddNew.Location = new Point(1025, 15);
             btnAddNew.Name = "btnAddNew";
-            btnAddNew.Size = new Size(180, 55);
+            btnAddNew.Size = new Size(180, 44);
             btnAddNew.TabIndex = 0;
             btnAddNew.Text = "➕ New Contact";
             btnAddNew.UseVisualStyleBackColor = false;
@@ -692,9 +672,9 @@
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
             btnClose.ForeColor = Color.White;
-            btnClose.Location = new Point(1055, 15);
+            btnClose.Location = new Point(1230, 15);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(120, 55);
+            btnClose.Size = new Size(120, 44);
             btnClose.TabIndex = 1;
             btnClose.Text = "Close";
             btnClose.UseVisualStyleBackColor = false;
@@ -705,7 +685,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             CancelButton = btnClose;
-            ClientSize = new Size(1324, 846);
+            ClientSize = new Size(1450, 865);
             Controls.Add(panelContent);
             Controls.Add(panelFooter);
             Controls.Add(panelHeader);
@@ -737,53 +717,50 @@
             panelDetailsHeader.PerformLayout();
             panelFooter.ResumeLayout(false);
             ResumeLayout(false);
-
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panelHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Panel panelContent;
-        private System.Windows.Forms.SplitContainer splitContainer;
-        private System.Windows.Forms.Panel panelContactList;
-        private System.Windows.Forms.DataGridView dgvContacts;
-        private System.Windows.Forms.Panel panelListHeader;
-        private System.Windows.Forms.Label lblContactCount;
-        private System.Windows.Forms.Label lblCustomerName;
-        private System.Windows.Forms.Panel panelContactDetails;
-        private System.Windows.Forms.Panel panelContactActions;
-        private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Button btnDeleteContact;
-        private System.Windows.Forms.Button btnUpdateContact;
-        private System.Windows.Forms.Button btnSaveContact;
-        private System.Windows.Forms.Panel panelPhoneNumbers;
-        private System.Windows.Forms.DataGridView dgvPhoneNumbers;
-        private System.Windows.Forms.Button btnAddPhone;
-        private System.Windows.Forms.Label lblPhoneNumbers;
-        private System.Windows.Forms.Panel panelContactForm;
-        private System.Windows.Forms.TextBox txtNotes;
-        private System.Windows.Forms.Label lblNotes;
-        private System.Windows.Forms.ComboBox cmbRelationship;
-        private System.Windows.Forms.Label lblRelationship;
-        private System.Windows.Forms.TextBox txtLastName;
-        private System.Windows.Forms.Label lblLastName;
-        private System.Windows.Forms.TextBox txtFirstName;
-        private System.Windows.Forms.Label lblFirstName;
-        private System.Windows.Forms.Panel panelDetailsHeader;
-        private System.Windows.Forms.Label lblDetailsTitle;
-        private System.Windows.Forms.Panel panelFooter;
-        private System.Windows.Forms.Button btnAddNew;
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colFullName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colRelationship;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPhoneCount;
-        private System.Windows.Forms.DataGridViewButtonColumn colActions;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPhoneId;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colPhoneType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPhoneNumber;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colPrimary;
-        private System.Windows.Forms.DataGridViewButtonColumn colRemovePhone;
+        private Panel panelHeader;
+        private Label lblTitle;
+        private Panel panelContent;
+        private SplitContainer splitContainer;
+        private Panel panelContactList;
+        private DataGridView dgvContacts;
+        private Panel panelListHeader;
+        private Label lblContactCount;
+        private Label lblCustomerName;
+        private Panel panelContactDetails;
+        private Panel panelContactActions;
+        private Button btnClear;
+        private Button btnDeleteContact;
+        private Button btnUpdateContact;
+        private Button btnSaveContact;
+        private Panel panelPhoneNumbers;
+        private DataGridView dgvPhoneNumbers;
+        private Button btnAddPhone;
+        private Label lblPhoneNumbers;
+        private Panel panelContactForm;
+        private ComboBox cmbRelationship;
+        private Label lblRelationship;
+        private TextBox txtLastName;
+        private TextBox txtFirstName;
+        private Panel panelDetailsHeader;
+        private Label lblDetailsTitle;
+        private Panel panelFooter;
+        private Button btnAddNew;
+        private Button btnClose;
+        private DataGridViewTextBoxColumn colPhoneId;
+        private DataGridViewComboBoxColumn colPhoneType;
+        private DataGridViewTextBoxColumn colPhoneNumber;
+        private DataGridViewCheckBoxColumn colPrimary;
+        private DataGridViewButtonColumn colRemovePhone;
+        private DataGridViewTextBoxColumn colId;
+        private DataGridViewTextBoxColumn colFullName;
+        private DataGridViewTextBoxColumn colRelationship;
+        private DataGridViewTextBoxColumn colPhoneCount;
+        private DataGridViewButtonColumn colActions;
+        private Label lblLastName;
+        private Label lblFirstName;
     }
 }
