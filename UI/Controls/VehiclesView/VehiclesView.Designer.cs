@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             panelHeader = new Panel();
             label1 = new Label();
             lblVehicleCount = new Label();
@@ -39,7 +39,6 @@
             txtSearch = new TextBox();
             cmbStatusFilter = new ComboBox();
             btnRetire = new Button();
-            btnExport = new Button();
             btnDelete = new Button();
             btnEdit = new Button();
             btnAdd = new Button();
@@ -71,6 +70,7 @@
             panelPreviewHeader = new Panel();
             lblVehicleDetails = new Label();
             picVehiclePreview = new PictureBox();
+            button1 = new Button();
             panelHeader.SuspendLayout();
             panelToolbar.SuspendLayout();
             panelSearch.SuspendLayout();
@@ -125,11 +125,11 @@
             // panelToolbar
             // 
             panelToolbar.BackColor = Color.White;
+            panelToolbar.Controls.Add(button1);
             panelToolbar.Controls.Add(btnAddCategory);
             panelToolbar.Controls.Add(panelSearch);
             panelToolbar.Controls.Add(cmbStatusFilter);
             panelToolbar.Controls.Add(btnRetire);
-            panelToolbar.Controls.Add(btnExport);
             panelToolbar.Controls.Add(btnDelete);
             panelToolbar.Controls.Add(btnEdit);
             panelToolbar.Controls.Add(btnAdd);
@@ -148,7 +148,7 @@
             btnAddCategory.FlatStyle = FlatStyle.Flat;
             btnAddCategory.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnAddCategory.ForeColor = Color.White;
-            btnAddCategory.Location = new Point(1187, 10);
+            btnAddCategory.Location = new Point(1329, 11);
             btnAddCategory.Name = "btnAddCategory";
             btnAddCategory.Size = new Size(119, 40);
             btnAddCategory.TabIndex = 7;
@@ -198,27 +198,12 @@
             btnRetire.FlatStyle = FlatStyle.Flat;
             btnRetire.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnRetire.ForeColor = Color.White;
-            btnRetire.Location = new Point(657, 10);
+            btnRetire.Location = new Point(637, 10);
             btnRetire.Name = "btnRetire";
             btnRetire.Size = new Size(100, 40);
             btnRetire.TabIndex = 8;
             btnRetire.Text = "♻ Retire";
             btnRetire.UseVisualStyleBackColor = false;
-            // 
-            // btnExport
-            // 
-            btnExport.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnExport.BackColor = Color.FromArgb(155, 89, 182);
-            btnExport.FlatAppearance.BorderSize = 0;
-            btnExport.FlatStyle = FlatStyle.Flat;
-            btnExport.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            btnExport.ForeColor = Color.White;
-            btnExport.Location = new Point(763, 10);
-            btnExport.Name = "btnExport";
-            btnExport.Size = new Size(100, 40);
-            btnExport.TabIndex = 4;
-            btnExport.Text = "📤 Export";
-            btnExport.UseVisualStyleBackColor = false;
             // 
             // btnDelete
             // 
@@ -228,7 +213,7 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(869, 10);
+            btnDelete.Location = new Point(1008, 10);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(100, 40);
             btnDelete.TabIndex = 3;
@@ -243,7 +228,7 @@
             btnEdit.FlatStyle = FlatStyle.Flat;
             btnEdit.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnEdit.ForeColor = Color.White;
-            btnEdit.Location = new Point(975, 10);
+            btnEdit.Location = new Point(1116, 10);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(90, 40);
             btnEdit.TabIndex = 2;
@@ -259,7 +244,7 @@
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnAdd.ForeColor = Color.White;
-            btnAdd.Location = new Point(1071, 10);
+            btnAdd.Location = new Point(1213, 11);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(110, 40);
             btnAdd.TabIndex = 1;
@@ -309,26 +294,26 @@
             dgvVehicles.BorderStyle = BorderStyle.None;
             dgvVehicles.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvVehicles.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(30, 60, 90);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.Padding = new Padding(8, 0, 0, 0);
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(30, 60, 90);
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvVehicles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(30, 60, 90);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.Padding = new Padding(8, 0, 0, 0);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(30, 60, 90);
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvVehicles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvVehicles.ColumnHeadersHeight = 40;
             dgvVehicles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle2.Padding = new Padding(8, 0, 0, 0);
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(236, 240, 241);
-            dataGridViewCellStyle2.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvVehicles.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle4.Padding = new Padding(8, 0, 0, 0);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(236, 240, 241);
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvVehicles.DefaultCellStyle = dataGridViewCellStyle4;
             dgvVehicles.Dock = DockStyle.Fill;
             dgvVehicles.EnableHeadersVisualStyles = false;
             dgvVehicles.GridColor = Color.WhiteSmoke;
@@ -640,6 +625,21 @@
             picVehiclePreview.TabIndex = 0;
             picVehiclePreview.TabStop = false;
             // 
+            // button1
+            // 
+            button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button1.BackColor = Color.Gold;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(756, 10);
+            button1.Name = "button1";
+            button1.Size = new Size(184, 40);
+            button1.TabIndex = 9;
+            button1.Text = "🔧 Under Maintenance";
+            button1.UseVisualStyleBackColor = false;
+            // 
             // VehiclesView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -689,7 +689,6 @@
         private Button btnDelete;
         private Button btnEdit;
         private ComboBox cmbStatusFilter;
-        private Button btnExport;
         private Panel panelSearch;
         private TextBox txtSearch;
         private Label lblVehicleCount;
@@ -716,5 +715,6 @@
         private Button btnAddCategory;
         private Button btnRetire;
         private ComboBox cmbAdvancedFilter;
+        private Button button1;
     }
 }
