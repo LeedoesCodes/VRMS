@@ -11,6 +11,7 @@ using VRMS.UI.Controls.CustomersView;
 using VRMS.UI.Forms;
 using VRMS.UI.Controls.CustomerVehicleCatalog;
 using VRMS.UI.Controls.Reports;
+using VRMS.UI.Controls.History; // ✅ HISTORY
 
 namespace VRMS.Forms
 {
@@ -99,15 +100,13 @@ namespace VRMS.Forms
                 ActivateButton(btnVehicles);
                 return;
             }
-            else
-            {
-                ActivateButton(btnDashboard);
-                ShowView(
-                    new DashboardView(),
-                    "Dashboard",
-                    "Overview and Key Metrics"
-                );
-            }
+
+            ActivateButton(btnDashboard);
+            ShowView(
+                new DashboardView(),
+                "Dashboard",
+                "Overview and Key Metrics"
+            );
         }
 
         // =====================================================
@@ -120,7 +119,7 @@ namespace VRMS.Forms
         }
 
         // =====================================================
-        // NAVIGATION BUTTONS
+        // NAVIGATION SETUP
         // =====================================================
 
         private void SetupButtonEvents()
@@ -132,6 +131,7 @@ namespace VRMS.Forms
                 btnCustomers,
                 btnReservation,
                 btnRentals,
+                btnHistory,   // ✅ HISTORY
                 btnReports,
                 btnAdmin
             };
@@ -185,7 +185,7 @@ namespace VRMS.Forms
         }
 
         // =====================================================
-        // ROLE-BASED NAVIGATION
+        // NAVIGATION LOGIC
         // =====================================================
 
         private void HandleNavigation(Button button)
@@ -207,14 +207,11 @@ namespace VRMS.Forms
                         return;
                     }
 
-                    else
-                    {
-                        ShowView(
-                            new VehiclesView(),
-                            "Vehicles",
-                            "Manage Fleet Inventory"
-                        );
-                    }
+                    ShowView(
+                        new VehiclesView(),
+                        "Vehicles",
+                        "Manage Fleet Inventory"
+                    );
                     break;
 
                 case "btnCustomers":
@@ -238,6 +235,14 @@ namespace VRMS.Forms
                         new RentalsView(),
                         "Rentals",
                         "Active and Completed Rentals"
+                    );
+                    break;
+
+                case "btnHistory": // ✅ HISTORY NAVIGATION
+                    ShowView(
+                        new History(),
+                        "History",
+                        "Reservations & Rental Records"
                     );
                     break;
 

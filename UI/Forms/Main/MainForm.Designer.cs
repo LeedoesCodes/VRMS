@@ -32,6 +32,7 @@
             logoPictureBox = new PictureBox();
             contentPanel = new Panel();
             mainHeader = new VRMS.Controls.MainHeaderControl();
+            btnHistory = new Button();
             sidePanel.SuspendLayout();
             navButtonsPanel.SuspendLayout();
             headerPanel.SuspendLayout();
@@ -45,9 +46,9 @@
             sidePanel.Controls.Add(headerPanel);
             sidePanel.Dock = DockStyle.Left;
             sidePanel.Location = new Point(0, 0);
-            sidePanel.Margin = new Padding(4, 3, 4, 3);
+            sidePanel.Margin = new Padding(5, 4, 5, 4);
             sidePanel.Name = "sidePanel";
-            sidePanel.Size = new Size(260, 900);
+            sidePanel.Size = new Size(297, 1055);
             sidePanel.TabIndex = 0;
             // 
             // navButtonsPanel
@@ -59,15 +60,16 @@
             navButtonsPanel.Controls.Add(btnReservation);
             navButtonsPanel.Controls.Add(btnRentals);
             navButtonsPanel.Controls.Add(btnReports);
+            navButtonsPanel.Controls.Add(btnHistory);
             navButtonsPanel.Controls.Add(btnAdmin);
             navButtonsPanel.Controls.Add(btnLogout);
             navButtonsPanel.Dock = DockStyle.Fill;
             navButtonsPanel.FlowDirection = FlowDirection.TopDown;
-            navButtonsPanel.Location = new Point(0, 100);
-            navButtonsPanel.Margin = new Padding(4, 3, 4, 3);
+            navButtonsPanel.Location = new Point(0, 133);
+            navButtonsPanel.Margin = new Padding(5, 4, 5, 4);
             navButtonsPanel.Name = "navButtonsPanel";
-            navButtonsPanel.Padding = new Padding(12);
-            navButtonsPanel.Size = new Size(260, 800);
+            navButtonsPanel.Padding = new Padding(14, 16, 14, 16);
+            navButtonsPanel.Size = new Size(297, 922);
             navButtonsPanel.TabIndex = 1;
             navButtonsPanel.WrapContents = false;
             // 
@@ -79,10 +81,10 @@
             btnDashboard.FlatStyle = FlatStyle.Flat;
             btnDashboard.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnDashboard.ForeColor = Color.White;
-            btnDashboard.Location = new Point(16, 15);
-            btnDashboard.Margin = new Padding(4, 3, 4, 3);
+            btnDashboard.Location = new Point(19, 20);
+            btnDashboard.Margin = new Padding(5, 4, 5, 4);
             btnDashboard.Name = "btnDashboard";
-            btnDashboard.Size = new Size(220, 50);
+            btnDashboard.Size = new Size(251, 67);
             btnDashboard.TabIndex = 0;
             btnDashboard.Text = "🏠 Dashboard";
             btnDashboard.TextAlign = ContentAlignment.MiddleLeft;
@@ -96,10 +98,10 @@
             btnVehicles.FlatStyle = FlatStyle.Flat;
             btnVehicles.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnVehicles.ForeColor = Color.White;
-            btnVehicles.Location = new Point(16, 71);
-            btnVehicles.Margin = new Padding(4, 3, 4, 3);
+            btnVehicles.Location = new Point(19, 95);
+            btnVehicles.Margin = new Padding(5, 4, 5, 4);
             btnVehicles.Name = "btnVehicles";
-            btnVehicles.Size = new Size(220, 50);
+            btnVehicles.Size = new Size(251, 67);
             btnVehicles.TabIndex = 1;
             btnVehicles.Text = "🚗 Vehicles";
             btnVehicles.TextAlign = ContentAlignment.MiddleLeft;
@@ -113,10 +115,10 @@
             btnCustomers.FlatStyle = FlatStyle.Flat;
             btnCustomers.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnCustomers.ForeColor = Color.White;
-            btnCustomers.Location = new Point(16, 127);
-            btnCustomers.Margin = new Padding(4, 3, 4, 3);
+            btnCustomers.Location = new Point(19, 170);
+            btnCustomers.Margin = new Padding(5, 4, 5, 4);
             btnCustomers.Name = "btnCustomers";
-            btnCustomers.Size = new Size(220, 50);
+            btnCustomers.Size = new Size(251, 67);
             btnCustomers.TabIndex = 2;
             btnCustomers.Text = "👥 Customers";
             btnCustomers.TextAlign = ContentAlignment.MiddleLeft;
@@ -130,10 +132,10 @@
             btnReservation.FlatStyle = FlatStyle.Flat;
             btnReservation.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnReservation.ForeColor = Color.White;
-            btnReservation.Location = new Point(16, 183);
-            btnReservation.Margin = new Padding(4, 3, 4, 3);
+            btnReservation.Location = new Point(19, 245);
+            btnReservation.Margin = new Padding(5, 4, 5, 4);
             btnReservation.Name = "btnReservation";
-            btnReservation.Size = new Size(220, 50);
+            btnReservation.Size = new Size(251, 67);
             btnReservation.TabIndex = 7;
             btnReservation.Text = "✏ Reservation";
             btnReservation.TextAlign = ContentAlignment.MiddleLeft;
@@ -147,10 +149,10 @@
             btnRentals.FlatStyle = FlatStyle.Flat;
             btnRentals.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnRentals.ForeColor = Color.White;
-            btnRentals.Location = new Point(16, 239);
-            btnRentals.Margin = new Padding(4, 3, 4, 3);
+            btnRentals.Location = new Point(19, 320);
+            btnRentals.Margin = new Padding(5, 4, 5, 4);
             btnRentals.Name = "btnRentals";
-            btnRentals.Size = new Size(220, 50);
+            btnRentals.Size = new Size(251, 67);
             btnRentals.TabIndex = 3;
             btnRentals.Text = "📋 Rentals";
             btnRentals.TextAlign = ContentAlignment.MiddleLeft;
@@ -164,10 +166,10 @@
             btnReports.FlatStyle = FlatStyle.Flat;
             btnReports.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnReports.ForeColor = Color.White;
-            btnReports.Location = new Point(16, 295);
-            btnReports.Margin = new Padding(4, 3, 4, 3);
+            btnReports.Location = new Point(19, 395);
+            btnReports.Margin = new Padding(5, 4, 5, 4);
             btnReports.Name = "btnReports";
-            btnReports.Size = new Size(220, 50);
+            btnReports.Size = new Size(251, 67);
             btnReports.TabIndex = 4;
             btnReports.Text = "📊 Reports";
             btnReports.TextAlign = ContentAlignment.MiddleLeft;
@@ -181,10 +183,10 @@
             btnAdmin.FlatStyle = FlatStyle.Flat;
             btnAdmin.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnAdmin.ForeColor = Color.White;
-            btnAdmin.Location = new Point(16, 351);
-            btnAdmin.Margin = new Padding(4, 3, 4, 3);
+            btnAdmin.Location = new Point(19, 545);
+            btnAdmin.Margin = new Padding(5, 4, 5, 4);
             btnAdmin.Name = "btnAdmin";
-            btnAdmin.Size = new Size(220, 50);
+            btnAdmin.Size = new Size(251, 67);
             btnAdmin.TabIndex = 5;
             btnAdmin.Text = "👑 Admin";
             btnAdmin.TextAlign = ContentAlignment.MiddleLeft;
@@ -198,10 +200,10 @@
             btnLogout.FlatStyle = FlatStyle.Flat;
             btnLogout.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnLogout.ForeColor = Color.White;
-            btnLogout.Location = new Point(16, 407);
-            btnLogout.Margin = new Padding(4, 3, 4, 3);
+            btnLogout.Location = new Point(19, 620);
+            btnLogout.Margin = new Padding(5, 4, 5, 4);
             btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(220, 50);
+            btnLogout.Size = new Size(251, 67);
             btnLogout.TabIndex = 6;
             btnLogout.Text = "🚪 Logout";
             btnLogout.TextAlign = ContentAlignment.MiddleLeft;
@@ -214,29 +216,29 @@
             headerPanel.Controls.Add(logoPictureBox);
             headerPanel.Dock = DockStyle.Top;
             headerPanel.Location = new Point(0, 0);
-            headerPanel.Margin = new Padding(4, 3, 4, 3);
+            headerPanel.Margin = new Padding(5, 4, 5, 4);
             headerPanel.Name = "headerPanel";
-            headerPanel.Size = new Size(260, 100);
+            headerPanel.Size = new Size(297, 133);
             headerPanel.TabIndex = 0;
             // 
             // lbluserInfo
             // 
             lbluserInfo.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             lbluserInfo.ForeColor = Color.White;
-            lbluserInfo.Location = new Point(85, 15);
-            lbluserInfo.Margin = new Padding(4, 0, 4, 0);
+            lbluserInfo.Location = new Point(97, 20);
+            lbluserInfo.Margin = new Padding(5, 0, 5, 0);
             lbluserInfo.Name = "lbluserInfo";
-            lbluserInfo.Size = new Size(160, 70);
+            lbluserInfo.Size = new Size(183, 93);
             lbluserInfo.TabIndex = 1;
             lbluserInfo.Text = "Welcome,\r\nUser Name\r\n(Role)";
             lbluserInfo.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // logoPictureBox
             // 
-            logoPictureBox.Location = new Point(15, 15);
-            logoPictureBox.Margin = new Padding(4, 3, 4, 3);
+            logoPictureBox.Location = new Point(17, 20);
+            logoPictureBox.Margin = new Padding(5, 4, 5, 4);
             logoPictureBox.Name = "logoPictureBox";
-            logoPictureBox.Size = new Size(60, 70);
+            logoPictureBox.Size = new Size(69, 93);
             logoPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             logoPictureBox.TabIndex = 0;
             logoPictureBox.TabStop = false;
@@ -245,33 +247,51 @@
             // 
             contentPanel.BackColor = Color.White;
             contentPanel.Dock = DockStyle.Fill;
-            contentPanel.Location = new Point(260, 100);
-            contentPanel.Margin = new Padding(4, 3, 4, 3);
+            contentPanel.Location = new Point(297, 133);
+            contentPanel.Margin = new Padding(5, 4, 5, 4);
             contentPanel.Name = "contentPanel";
-            contentPanel.Size = new Size(1132, 800);
+            contentPanel.Size = new Size(1294, 922);
             contentPanel.TabIndex = 2;
             // 
             // mainHeader
             // 
             mainHeader.BackColor = Color.FromArgb(52, 73, 94);
             mainHeader.Dock = DockStyle.Top;
-            mainHeader.Location = new Point(260, 0);
-            mainHeader.Margin = new Padding(5, 3, 5, 3);
+            mainHeader.Location = new Point(297, 0);
+            mainHeader.Margin = new Padding(6, 4, 6, 4);
             mainHeader.Name = "mainHeader";
-            mainHeader.Size = new Size(1132, 100);
+            mainHeader.Size = new Size(1294, 133);
             mainHeader.TabIndex = 3;
+            // 
+            // btnHistory
+            // 
+            btnHistory.BackColor = Color.Transparent;
+            btnHistory.FlatAppearance.BorderSize = 0;
+            btnHistory.FlatAppearance.MouseOverBackColor = Color.FromArgb(44, 62, 80);
+            btnHistory.FlatStyle = FlatStyle.Flat;
+            btnHistory.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnHistory.ForeColor = Color.White;
+            btnHistory.Location = new Point(19, 470);
+            btnHistory.Margin = new Padding(5, 4, 5, 4);
+            btnHistory.Name = "btnHistory";
+            btnHistory.Size = new Size(251, 67);
+            btnHistory.TabIndex = 8;
+            btnHistory.Text = "⏱️ History";
+            btnHistory.TextAlign = ContentAlignment.MiddleLeft;
+            btnHistory.UseVisualStyleBackColor = false;
+            
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1392, 900);
+            ClientSize = new Size(1591, 1055);
             Controls.Add(contentPanel);
             Controls.Add(mainHeader);
             Controls.Add(sidePanel);
-            Margin = new Padding(4, 3, 4, 3);
-            MinimumSize = new Size(1000, 700);
+            Margin = new Padding(5, 4, 5, 4);
+            MinimumSize = new Size(1140, 918);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Vehicle Rental System";
@@ -300,5 +320,6 @@
         private System.Windows.Forms.Button btnAdmin;
         private System.Windows.Forms.Button btnLogout;
         private VRMS.Controls.MainHeaderControl mainHeader;
+        private Button btnHistory;
     }
 }
