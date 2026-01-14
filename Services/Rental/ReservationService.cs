@@ -182,6 +182,24 @@ public class ReservationService
             reservationId,
             ReservationStatus.Confirmed);
     }
+    
+    /// <summary>
+    /// Marks a confirmed reservation as rented.
+    /// Called when a rental is successfully started.
+    /// </summary>
+    public void MarkReservationAsRented(int reservationId)
+    {
+        var reservation =
+            _reservationRepo.GetById(reservationId);
+
+        EnsureStatusTransition(
+            reservation.Status,
+            ReservationStatus.Rented);
+
+        _reservationRepo.UpdateStatus(
+            reservationId,
+            ReservationStatus.Rented);
+    }
 
     /// <summary>
     /// Cancels a reservation.
@@ -270,7 +288,11 @@ public class ReservationService
                     or ReservationStatus.Cancelled,
 
             ReservationStatus.Confirmed =>
-                next is ReservationStatus.Cancelled,
+                next is ReservationStatus.Rented
+                    or ReservationStatus.Cancelled,
+
+            ReservationStatus.Rented =>
+                false, // terminal state
 
             ReservationStatus.Cancelled =>
                 false,
@@ -282,6 +304,7 @@ public class ReservationService
             throw new InvalidOperationException(
                 $"Illegal reservation status transition: {current} → {next}");
     }
+
 
     /// <summary>
     /// Ensures that a reservation does not overlap with existing

@@ -89,7 +89,9 @@ public class RentalService
             _reservationService.GetReservationById(reservationId);
 
         if (reservation.Status != ReservationStatus.Confirmed)
-            throw new InvalidOperationException("Reservation must be confirmed.");
+            throw new InvalidOperationException(
+                "Reservation must be confirmed before starting rental.");
+
 
         if (_rentalRepo.GetByReservation(reservationId) != null)
             throw new InvalidOperationException("A rental already exists for this reservation.");
@@ -113,6 +115,8 @@ public class RentalService
 
         _rentalRepo.MarkStarted(rentalId);
         _vehicleService.UpdateVehicleStatus(vehicle.Id, VehicleStatus.Rented);
+        _reservationService
+            .MarkReservationAsRented(reservation.Id);
 
         return rentalId;
     }

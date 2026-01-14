@@ -2,7 +2,8 @@
 
 public enum ReservationStatus
 {
-    Pending,
-    Confirmed,
+    Pending,     // created, NOT paid
+    Confirmed,   // reservation fee paid, vehicle reserved
+    Rented,      // reservation has been converted into a rental
     Cancelled
 }
