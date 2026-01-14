@@ -124,7 +124,7 @@
             mainPanel.Margin = new Padding(3, 4, 3, 4);
             mainPanel.Name = "mainPanel";
             mainPanel.Padding = new Padding(11, 13, 11, 13);
-            mainPanel.Size = new Size(1125, 881);
+            mainPanel.Size = new Size(1125, 980);
             mainPanel.TabIndex = 0;
             // 
             // tabControlMain
@@ -138,7 +138,7 @@
             tabControlMain.Margin = new Padding(3, 4, 3, 4);
             tabControlMain.Name = "tabControlMain";
             tabControlMain.SelectedIndex = 0;
-            tabControlMain.Size = new Size(1103, 762);
+            tabControlMain.Size = new Size(1103, 861);
             tabControlMain.TabIndex = 1;
             // 
             // tabNew
@@ -150,7 +150,7 @@
             tabNew.Margin = new Padding(3, 4, 3, 4);
             tabNew.Name = "tabNew";
             tabNew.Padding = new Padding(3, 4, 3, 4);
-            tabNew.Size = new Size(1095, 724);
+            tabNew.Size = new Size(1095, 823);
             tabNew.TabIndex = 0;
             tabNew.Text = "New Maintenance Record";
             // 
@@ -163,7 +163,7 @@
             panel3.Margin = new Padding(3, 4, 3, 4);
             panel3.Name = "panel3";
             panel3.Padding = new Padding(11, 13, 11, 13);
-            panel3.Size = new Size(867, 716);
+            panel3.Size = new Size(867, 815);
             panel3.TabIndex = 0;
             // 
             // grpMaintenanceInfo
@@ -189,7 +189,7 @@
             grpMaintenanceInfo.Margin = new Padding(3, 4, 3, 4);
             grpMaintenanceInfo.Name = "grpMaintenanceInfo";
             grpMaintenanceInfo.Padding = new Padding(3, 4, 3, 4);
-            grpMaintenanceInfo.Size = new Size(837, 525);
+            grpMaintenanceInfo.Size = new Size(837, 624);
             grpMaintenanceInfo.TabIndex = 1;
             grpMaintenanceInfo.TabStop = false;
             grpMaintenanceInfo.Text = "Maintenance Information";
@@ -407,7 +407,7 @@
             panel4.Margin = new Padding(3, 4, 3, 4);
             panel4.Name = "panel4";
             panel4.Padding = new Padding(11, 13, 11, 13);
-            panel4.Size = new Size(222, 716);
+            panel4.Size = new Size(222, 815);
             panel4.TabIndex = 1;
             // 
             // btnMarkAvailable
@@ -893,7 +893,7 @@
             // 
             statusStrip1.ImageScalingSize = new Size(20, 20);
             statusStrip1.Items.AddRange(new ToolStripItem[] { lblStatusMessage, lblRecordCount });
-            statusStrip1.Location = new Point(0, 855);
+            statusStrip1.Location = new Point(0, 954);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new Padding(1, 0, 16, 0);
             statusStrip1.Size = new Size(1125, 26);
@@ -919,7 +919,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1125, 881);
+            ClientSize = new Size(1125, 980);
             Controls.Add(statusStrip1);
             Controls.Add(mainPanel);
             Font = new Font("Segoe UI", 9F);

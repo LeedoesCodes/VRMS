@@ -34,6 +34,7 @@
             lblConditionNotes = new Label();
             txtConditions = new TextBox();
             pnlDamageAssessment = new Panel();
+            btnInspectionChecklist = new Button();
             lblSectionTitleDamage = new Label();
             btnAddDamage = new Button();
             dgvDamages = new DataGridView();
@@ -41,10 +42,14 @@
             lblSectionTitleBilling = new Label();
             lblTotalValue = new Label();
             lblTotalLabel = new Label();
-            numDamages = new NumericUpDown();
+            lblDamageFeesValue = new Label();
             lblDamageFees = new Label();
-            numLateFee = new NumericUpDown();
+            lblLateFeesValue = new Label();
             lblLateFees = new Label();
+            lblSubtotal = new Label();
+            lblSubtotalValue = new Label();
+            lblBaseRental = new Label();
+            lblBaseRentalValue = new Label();
             pnlActionBar = new Panel();
             btnCompleteReturn = new Button();
             btnCancels = new Button();
@@ -55,8 +60,6 @@
             pnlDamageAssessment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDamages).BeginInit();
             pnlBillingSummary.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numDamages).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numLateFee).BeginInit();
             pnlActionBar.SuspendLayout();
             SuspendLayout();
             // 
@@ -68,7 +71,7 @@
             pnlHeader.Location = new Point(0, 0);
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Padding = new Padding(30, 25, 30, 25);
-            pnlHeader.Size = new Size(1150, 100);
+            pnlHeader.Size = new Size(1300, 100);
             pnlHeader.TabIndex = 0;
             // 
             // lblFormTitle
@@ -91,7 +94,7 @@
             pnlRentalSummary.Controls.Add(lblRentalId);
             pnlRentalSummary.Location = new Point(30, 125);
             pnlRentalSummary.Name = "pnlRentalSummary";
-            pnlRentalSummary.Size = new Size(530, 124);
+            pnlRentalSummary.Size = new Size(600, 124);
             pnlRentalSummary.TabIndex = 1;
             // 
             // lblVehicleInfo
@@ -138,7 +141,7 @@
             pnlReturnDetails.Controls.Add(txtConditions);
             pnlReturnDetails.Location = new Point(30, 275);
             pnlReturnDetails.Name = "pnlReturnDetails";
-            pnlReturnDetails.Size = new Size(530, 500);
+            pnlReturnDetails.Size = new Size(600, 500);
             pnlReturnDetails.TabIndex = 2;
             // 
             // lblSectionTitleReturn
@@ -167,7 +170,7 @@
             dtReturns.Font = new Font("Segoe UI", 10F);
             dtReturns.Location = new Point(20, 85);
             dtReturns.Name = "dtReturns";
-            dtReturns.Size = new Size(490, 30);
+            dtReturns.Size = new Size(560, 30);
             dtReturns.TabIndex = 2;
             // 
             // lblOdometer
@@ -187,7 +190,7 @@
             numOdometer.Location = new Point(20, 165);
             numOdometer.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
             numOdometer.Name = "numOdometer";
-            numOdometer.Size = new Size(195, 30);
+            numOdometer.Size = new Size(250, 30);
             numOdometer.TabIndex = 4;
             numOdometer.TextAlign = HorizontalAlignment.Right;
             numOdometer.ThousandsSeparator = true;
@@ -210,7 +213,7 @@
             cbFuels.Items.AddRange(new object[] { "Empty", "1/4", "1/2", "3/4", "Full" });
             cbFuels.Location = new Point(20, 245);
             cbFuels.Name = "cbFuels";
-            cbFuels.Size = new Size(195, 31);
+            cbFuels.Size = new Size(250, 31);
             cbFuels.TabIndex = 6;
             // 
             // lblConditionNotes
@@ -230,20 +233,36 @@
             txtConditions.Location = new Point(20, 328);
             txtConditions.Multiline = true;
             txtConditions.Name = "txtConditions";
-            txtConditions.Size = new Size(490, 146);
+            txtConditions.Size = new Size(560, 146);
             txtConditions.TabIndex = 8;
             // 
             // pnlDamageAssessment
             // 
             pnlDamageAssessment.BackColor = Color.White;
             pnlDamageAssessment.BorderStyle = BorderStyle.FixedSingle;
+            pnlDamageAssessment.Controls.Add(btnInspectionChecklist);
             pnlDamageAssessment.Controls.Add(lblSectionTitleDamage);
             pnlDamageAssessment.Controls.Add(btnAddDamage);
             pnlDamageAssessment.Controls.Add(dgvDamages);
-            pnlDamageAssessment.Location = new Point(585, 125);
+            pnlDamageAssessment.Location = new Point(655, 125);
             pnlDamageAssessment.Name = "pnlDamageAssessment";
-            pnlDamageAssessment.Size = new Size(530, 300);
+            pnlDamageAssessment.Size = new Size(615, 350);
             pnlDamageAssessment.TabIndex = 3;
+            // 
+            // btnInspectionChecklist
+            // 
+            btnInspectionChecklist.BackColor = Color.FromArgb(155, 89, 182);
+            btnInspectionChecklist.FlatStyle = FlatStyle.Flat;
+            btnInspectionChecklist.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnInspectionChecklist.ForeColor = Color.White;
+            btnInspectionChecklist.ImageAlign = ContentAlignment.MiddleLeft;
+            btnInspectionChecklist.Location = new Point(380, 15);
+            btnInspectionChecklist.Name = "btnInspectionChecklist";
+            btnInspectionChecklist.Size = new Size(220, 35);
+            btnInspectionChecklist.TabIndex = 3;
+            btnInspectionChecklist.Text = "Inspection Checklist";
+            btnInspectionChecklist.UseVisualStyleBackColor = false;
+            btnInspectionChecklist.Click += BtnInspectionChecklist_Click;
             // 
             // lblSectionTitleDamage
             // 
@@ -257,11 +276,17 @@
             // 
             // btnAddDamage
             // 
-            btnAddDamage.Location = new Point(20, 250);
+            btnAddDamage.BackColor = Color.FromArgb(39, 174, 96);
+            btnAddDamage.FlatStyle = FlatStyle.Flat;
+            btnAddDamage.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnAddDamage.ForeColor = Color.White;
+            btnAddDamage.ImageAlign = ContentAlignment.MiddleLeft;
+            btnAddDamage.Location = new Point(20, 305);
             btnAddDamage.Name = "btnAddDamage";
-            btnAddDamage.Size = new Size(490, 30);
+            btnAddDamage.Size = new Size(580, 35);
             btnAddDamage.TabIndex = 1;
-            btnAddDamage.Text = "Add Damage";
+            btnAddDamage.Text = "Add Damage Record";
+            btnAddDamage.UseVisualStyleBackColor = false;
             btnAddDamage.Click += BtnAddDamage_Click;
             // 
             // dgvDamages
@@ -271,7 +296,7 @@
             dgvDamages.Location = new Point(20, 50);
             dgvDamages.Name = "dgvDamages";
             dgvDamages.RowHeadersWidth = 51;
-            dgvDamages.Size = new Size(490, 190);
+            dgvDamages.Size = new Size(580, 240);
             dgvDamages.TabIndex = 2;
             // 
             // pnlBillingSummary
@@ -281,13 +306,17 @@
             pnlBillingSummary.Controls.Add(lblSectionTitleBilling);
             pnlBillingSummary.Controls.Add(lblTotalValue);
             pnlBillingSummary.Controls.Add(lblTotalLabel);
-            pnlBillingSummary.Controls.Add(numDamages);
+            pnlBillingSummary.Controls.Add(lblDamageFeesValue);
             pnlBillingSummary.Controls.Add(lblDamageFees);
-            pnlBillingSummary.Controls.Add(numLateFee);
+            pnlBillingSummary.Controls.Add(lblLateFeesValue);
             pnlBillingSummary.Controls.Add(lblLateFees);
-            pnlBillingSummary.Location = new Point(585, 450);
+            pnlBillingSummary.Controls.Add(lblSubtotal);
+            pnlBillingSummary.Controls.Add(lblSubtotalValue);
+            pnlBillingSummary.Controls.Add(lblBaseRental);
+            pnlBillingSummary.Controls.Add(lblBaseRentalValue);
+            pnlBillingSummary.Location = new Point(655, 495);
             pnlBillingSummary.Name = "pnlBillingSummary";
-            pnlBillingSummary.Size = new Size(530, 325);
+            pnlBillingSummary.Size = new Size(615, 280);
             pnlBillingSummary.TabIndex = 4;
             // 
             // lblSectionTitleBilling
@@ -303,68 +332,96 @@
             // lblTotalValue
             // 
             lblTotalValue.AutoSize = true;
-            lblTotalValue.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblTotalValue.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             lblTotalValue.ForeColor = Color.FromArgb(41, 128, 185);
-            lblTotalValue.Location = new Point(20, 165);
+            lblTotalValue.Location = new Point(420, 225);
             lblTotalValue.Name = "lblTotalValue";
-            lblTotalValue.Size = new Size(85, 32);
+            lblTotalValue.Size = new Size(89, 37);
             lblTotalValue.TabIndex = 1;
-            lblTotalValue.Text = "₱ 0.00";
+            lblTotalValue.Text = "₱0.00";
             // 
             // lblTotalLabel
             // 
             lblTotalLabel.AutoSize = true;
-            lblTotalLabel.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblTotalLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             lblTotalLabel.ForeColor = Color.FromArgb(44, 62, 80);
-            lblTotalLabel.Location = new Point(17, 140);
+            lblTotalLabel.Location = new Point(20, 230);
             lblTotalLabel.Name = "lblTotalLabel";
-            lblTotalLabel.Size = new Size(117, 23);
+            lblTotalLabel.Size = new Size(139, 28);
             lblTotalLabel.TabIndex = 2;
             lblTotalLabel.Text = "Total Charges:";
             // 
-            // numDamages
+            // lblDamageFeesValue
             // 
-            numDamages.DecimalPlaces = 2;
-            numDamages.Font = new Font("Segoe UI", 10F);
-            numDamages.Location = new Point(270, 85);
-            numDamages.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
-            numDamages.Name = "numDamages";
-            numDamages.Size = new Size(240, 30);
-            numDamages.TabIndex = 3;
-            numDamages.TextAlign = HorizontalAlignment.Right;
+            lblDamageFeesValue.AutoSize = true;
+            lblDamageFeesValue.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblDamageFeesValue.ForeColor = Color.FromArgb(231, 76, 60);
+            lblDamageFeesValue.Location = new Point(420, 160);
+            lblDamageFeesValue.Name = "lblDamageFeesValue";
+            lblDamageFeesValue.Size = new Size(62, 25);
+            lblDamageFeesValue.TabIndex = 3;
+            lblDamageFeesValue.Text = "₱0.00";
             // 
             // lblDamageFees
             // 
             lblDamageFees.AutoSize = true;
-            lblDamageFees.Font = new Font("Segoe UI", 9F);
+            lblDamageFees.Font = new Font("Segoe UI", 10F);
             lblDamageFees.ForeColor = Color.DimGray;
-            lblDamageFees.Location = new Point(275, 60);
+            lblDamageFees.Location = new Point(20, 163);
             lblDamageFees.Name = "lblDamageFees";
-            lblDamageFees.Size = new Size(102, 20);
+            lblDamageFees.Size = new Size(116, 23);
             lblDamageFees.TabIndex = 4;
             lblDamageFees.Text = "Damage Fees:";
             // 
-            // numLateFee
+            // lblLateFeesValue
             // 
-            numLateFee.DecimalPlaces = 2;
-            numLateFee.Font = new Font("Segoe UI", 10F);
-            numLateFee.Location = new Point(20, 85);
-            numLateFee.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
-            numLateFee.Name = "numLateFee";
-            numLateFee.Size = new Size(240, 30);
-            numLateFee.TabIndex = 5;
-            numLateFee.TextAlign = HorizontalAlignment.Right;
+            lblLateFeesValue.AutoSize = true;
+            lblLateFeesValue.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblLateFeesValue.ForeColor = Color.FromArgb(243, 156, 18);
+            lblLateFeesValue.Location = new Point(420, 120);
+            lblLateFeesValue.Name = "lblLateFeesValue";
+            lblLateFeesValue.Size = new Size(62, 25);
+            lblLateFeesValue.TabIndex = 5;
+            lblLateFeesValue.Text = "₱0.00";
             // 
             // lblLateFees
             // 
             lblLateFees.AutoSize = true;
-            lblLateFees.Font = new Font("Segoe UI", 9F);
+            lblLateFees.Font = new Font("Segoe UI", 10F);
             lblLateFees.ForeColor = Color.DimGray;
-            lblLateFees.Location = new Point(17, 60);
+            lblLateFees.Location = new Point(20, 123);
             lblLateFees.Name = "lblLateFees";
-            lblLateFees.Size = new Size(73, 20);
+            lblLateFees.Size = new Size(84, 23);
             lblLateFees.TabIndex = 6;
             lblLateFees.Text = "Late Fees:";
+            // 
+            // lblSubtotal
+            // 
+            lblSubtotal.Location = new Point(0, 0);
+            lblSubtotal.Name = "lblSubtotal";
+            lblSubtotal.Size = new Size(100, 23);
+            lblSubtotal.TabIndex = 7;
+            // 
+            // lblSubtotalValue
+            // 
+            lblSubtotalValue.Location = new Point(0, 0);
+            lblSubtotalValue.Name = "lblSubtotalValue";
+            lblSubtotalValue.Size = new Size(100, 23);
+            lblSubtotalValue.TabIndex = 8;
+            // 
+            // lblBaseRental
+            // 
+            lblBaseRental.Location = new Point(0, 0);
+            lblBaseRental.Name = "lblBaseRental";
+            lblBaseRental.Size = new Size(100, 23);
+            lblBaseRental.TabIndex = 9;
+            // 
+            // lblBaseRentalValue
+            // 
+            lblBaseRentalValue.Location = new Point(0, 0);
+            lblBaseRentalValue.Name = "lblBaseRentalValue";
+            lblBaseRentalValue.Size = new Size(100, 23);
+            lblBaseRentalValue.TabIndex = 10;
             // 
             // pnlActionBar
             // 
@@ -372,10 +429,10 @@
             pnlActionBar.Controls.Add(btnCompleteReturn);
             pnlActionBar.Controls.Add(btnCancels);
             pnlActionBar.Dock = DockStyle.Bottom;
-            pnlActionBar.Location = new Point(0, 778);
+            pnlActionBar.Location = new Point(0, 788);
             pnlActionBar.Name = "pnlActionBar";
             pnlActionBar.Padding = new Padding(20, 25, 20, 25);
-            pnlActionBar.Size = new Size(1150, 101);
+            pnlActionBar.Size = new Size(1300, 101);
             pnlActionBar.TabIndex = 5;
             // 
             // btnCompleteReturn
@@ -385,7 +442,7 @@
             btnCompleteReturn.FlatStyle = FlatStyle.Flat;
             btnCompleteReturn.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnCompleteReturn.ForeColor = Color.White;
-            btnCompleteReturn.Location = new Point(680, 25);
+            btnCompleteReturn.Location = new Point(830, 25);
             btnCompleteReturn.Name = "btnCompleteReturn";
             btnCompleteReturn.Size = new Size(450, 51);
             btnCompleteReturn.TabIndex = 0;
@@ -410,7 +467,7 @@
             // 
             // ReturnVehicleForm
             // 
-            ClientSize = new Size(1150, 879);
+            ClientSize = new Size(1300, 889);
             Controls.Add(pnlHeader);
             Controls.Add(pnlRentalSummary);
             Controls.Add(pnlReturnDetails);
@@ -435,8 +492,6 @@
             ((System.ComponentModel.ISupportInitialize)dgvDamages).EndInit();
             pnlBillingSummary.ResumeLayout(false);
             pnlBillingSummary.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numDamages).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numLateFee).EndInit();
             pnlActionBar.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -467,12 +522,17 @@
         private Label lblSectionTitleBilling;
         private Label lblTotalValue;
         private Label lblTotalLabel;
-        private NumericUpDown numDamages;
+        private Label lblDamageFeesValue;
         private Label lblDamageFees;
-        private NumericUpDown numLateFee;
+        private Label lblLateFeesValue;
         private Label lblLateFees;
         private Panel pnlActionBar;
         private Button btnCompleteReturn;
         private Button btnCancels;
+        private Button btnInspectionChecklist;
+        private Label lblSubtotal;
+        private Label lblSubtotalValue;
+        private Label lblBaseRental;
+        private Label lblBaseRentalValue;
     }
 }

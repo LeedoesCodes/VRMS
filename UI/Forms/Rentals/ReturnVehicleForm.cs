@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
 using VRMS.Enums;
-using VRMS.Models.Billing;
 using VRMS.Models.Customers;
 using VRMS.Models.Rentals;
-using VRMS.Services.Billing;
 using VRMS.Services.Customer;
 using VRMS.Services.Fleet;
 using VRMS.Services.Rental;
+using VRMS.UI.Forms.Payments;
+using VRMS.UI.Forms.Rentals; // InspectionChecklistForm
+using VRMS.Forms;            // AddDamageForm
 
 namespace VRMS.Forms
 {
@@ -18,10 +19,13 @@ namespace VRMS.Forms
         private readonly ReservationService _reservationService;
         private readonly VehicleService _vehicleService;
         private readonly CustomerService _customerService;
-        private readonly BillingService _billingService;
-        private Invoice _invoice = null!;
 
         private Rental _rental = null!;
+
+        // UI-only billing preview (NOT authoritative)
+        private decimal _baseRentalAmount = 0m;
+        private decimal _lateFees = 0m;
+        private decimal _damageFees = 0m;
 
         public ReturnVehicleForm(
             int rentalId,
@@ -42,13 +46,15 @@ namespace VRMS.Forms
             numOdometer.ValueChanged += NumOdometer_ValueChanged;
         }
 
+        // =====================================================
+        // FORM LOAD
+        // =====================================================
         private void ReturnVehicleForm_Load(object? sender, EventArgs e)
         {
             _rental = _rentalService.GetRentalById(_rentalId);
-
             var vehicle = _vehicleService.GetVehicleById(_rental.VehicleId);
-            Customer? customer = null;
 
+            Customer? customer = null;
             if (_rental.ReservationId.HasValue)
             {
                 var reservation =
@@ -60,39 +66,43 @@ namespace VRMS.Forms
 
             lblRentalId.Text = $"Rental #: {_rental.Id}";
             lblVehicleInfo.Text = $"Vehicle: {vehicle.Year} {vehicle.Make} {vehicle.Model}";
-            lblCustomerInfo.Text =
-                customer == null
-                    ? "Customer: Walk-in"
-                    : $"Customer: {customer.FirstName} {customer.LastName}";
+            lblCustomerInfo.Text = customer == null
+                ? "Customer: Walk-in"
+                : $"Customer: {customer.FirstName} {customer.LastName}";
 
             dtReturns.Value = DateTime.Now;
 
-            
+            // Odometer rules
             numOdometer.Minimum = _rental.StartOdometer + 1;
             numOdometer.Maximum = 10_000_000;
             numOdometer.Value = _rental.StartOdometer + 1;
-            numOdometer.Increment = 1;
 
+            // Fuel
             cbFuels.SelectedIndex = (int)_rental.StartFuelLevel;
 
-            numLateFee.Value = 0;
-            numDamages.Value = 0;
-            lblTotalValue.Text = "₱ 0.00";
+            // Billing preview starts at ZERO
+            _baseRentalAmount = 0m;
+            _lateFees = 0m;
+            _damageFees = 0m;
 
             ConfigureDamageGrid();
+            UpdateBillingUI();
         }
 
+        // =====================================================
+        // ODOMETER VALIDATION
+        // =====================================================
         private void NumOdometer_ValueChanged(object? sender, EventArgs e)
         {
-            if (_rental == null) return;
-
-            var minAllowed = _rental.StartOdometer + 1;
-            if (numOdometer.Value < minAllowed)
+            if (numOdometer.Value <= _rental.StartOdometer)
             {
-                numOdometer.Value = minAllowed;
+                numOdometer.Value = _rental.StartOdometer + 1;
             }
         }
 
+        // =====================================================
+        // DAMAGE GRID
+        // =====================================================
         private void ConfigureDamageGrid()
         {
             dgvDamages.AutoGenerateColumns = false;
@@ -100,73 +110,123 @@ namespace VRMS.Forms
 
             dgvDamages.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Description",
-                DataPropertyName = "Description"
+                Name = "Description",
+                HeaderText = "Description"
             });
 
             dgvDamages.Columns.Add(new DataGridViewTextBoxColumn
             {
+                Name = "EstimatedCost",
                 HeaderText = "Estimated Cost",
-                DataPropertyName = "EstimatedCost",
                 DefaultCellStyle = { Format = "₱ #,##0.00" }
             });
         }
 
-        private bool ValidateInput(out int endOdometer, out FuelLevel fuelLevel)
+        // =====================================================
+        // BILLING PREVIEW (UI ONLY)
+        // =====================================================
+        private void UpdateBillingUI()
         {
-            endOdometer = (int)numOdometer.Value;
-            fuelLevel = FuelLevel.Empty;
+            decimal subtotal = _baseRentalAmount + _lateFees + _damageFees;
 
-            if (endOdometer <= _rental.StartOdometer)
-            {
-                MessageBox.Show(
-                    "End odometer must be greater than the starting odometer.",
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-                return false;
-            }
-
-            if (cbFuels.SelectedIndex < 0)
-            {
-                MessageBox.Show(
-                    "Please select fuel level.",
-                    "Validation Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-                return false;
-            }
-
-            fuelLevel = (FuelLevel)cbFuels.SelectedIndex;
-            return true;
+            lblBaseRentalValue.Text = $"₱ {_baseRentalAmount:N2}";
+            lblLateFeesValue.Text = $"₱ {_lateFees:N2}";
+            lblDamageFeesValue.Text = $"₱ {_damageFees:N2}";
+            lblSubtotalValue.Text = $"₱ {subtotal:N2}";
+            lblTotalValue.Text = $"₱ {subtotal:N2}";
         }
 
+        // =====================================================
+        // QUICK CALCULATIONS (DISABLED FOR NOW)
+        // =====================================================
+        private void BtnCalculateLateFees_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "Late fee preview not implemented yet.",
+                "Info",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
+        private void BtnCalculateDamage_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "Damage preview not implemented yet.",
+                "Info",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
+        // =====================================================
+        // ADD DAMAGE (LINKED)
+        // =====================================================
+        private void BtnAddDamage_Click(object? sender, EventArgs e)
+        {
+            try
+            {
+                // Ensure return inspection exists
+                int inspectionId =
+                    _rentalService.CreateOrGetReturnInspection(_rentalId);
+
+                using (var form = new AddDamageForm(inspectionId))
+                {
+                    if (form.ShowDialog(this) == DialogResult.OK)
+                    {
+                        // Future:
+                        // - Reload damage grid
+                        // - Update preview
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Cannot Add Damage",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        // =====================================================
+        // INSPECTION CHECKLIST (LINKED)
+        // =====================================================
+        private void BtnInspectionChecklist_Click(object sender, EventArgs e)
+        {
+            using (var form = new InspectionChecklistForm())
+            {
+                form.ShowDialog(this);
+            }
+        }
+
+        // =====================================================
+        // COMPLETE RETURN (AUTHORITATIVE)
+        // =====================================================
         private void btnCompleteReturn_Click(object sender, EventArgs e)
         {
-            if (!ValidateInput(out var endOdometer, out var fuelLevel))
+            if (cbFuels.SelectedIndex < 0)
+            {
+                MessageBox.Show("Please select fuel level.");
                 return;
+            }
 
             try
             {
                 _rentalService.CompleteRental(
                     rentalId: _rentalId,
                     actualReturnDate: dtReturns.Value,
-                    endOdometer: endOdometer,
-                    endFuelLevel: fuelLevel
+                    endOdometer: (int)numOdometer.Value,
+                    endFuelLevel: (FuelLevel)cbFuels.SelectedIndex
                 );
 
-                // 🔽 NEW: open payment settlement
                 using (var paymentForm = new PaymentForm(_rentalId))
                 {
-                    var result = paymentForm.ShowDialog(this);
-
-                    if (result != DialogResult.OK)
+                    if (paymentForm.ShowDialog(this) != DialogResult.OK)
                         return;
                 }
 
                 DialogResult = DialogResult.OK;
                 Close();
-
             }
             catch (Exception ex)
             {
@@ -178,19 +238,13 @@ namespace VRMS.Forms
             }
         }
 
+        // =====================================================
+        // CANCEL
+        // 
         private void btnCancel_Click(object? sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
-        }
-
-        private void BtnAddDamage_Click(object? sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "Damage entry will be implemented next.",
-                "Not Implemented",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
         }
     }
 }
