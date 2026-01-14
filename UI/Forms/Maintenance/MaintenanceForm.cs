@@ -7,73 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VRMS.Enums;
+using VRMS.Models.Fleet;
+using VRMS.DTOs.Vehicle;
 
 namespace VRMS.UI.Forms.Maintenance
 {
     public partial class MaintenanceForm : Form
     {
-        // Enums
-        public enum VehicleStatus
-        {
-            Available = 0,
-            InUse = 1,
-            UnderMaintenance = 2,
-            OutOfService = 3
-        }
+        private VehicleDto? currentVehicle;
+        private readonly List<MaintenanceRecord> maintenanceRecords = new();
 
-        public enum MaintenanceStatus
-        {
-            Scheduled = 0,
-            InProgress = 1,
-            Completed = 2,
-            Cancelled = 3
-        }
-
-        public enum MaintenanceType
-        {
-            RoutineService = 0,
-            Repair = 1,
-            Inspection = 2,
-            Emergency = 3,
-            Preventive = 4,
-            ScheduledMaintenance = 5,
-            TireReplacement = 6,
-            BrakeService = 7,
-            OilChange = 8,
-            BatteryReplacement = 9
-        }
-
-        // DTO classes
-        public class SimpleVehicleDto
-        {
-            public int Id { get; set; }
-            public string Make { get; set; }
-            public string Model { get; set; }
-            public string PlateNo { get; set; }
-            public VehicleStatus Status { get; set; }
-        }
-
-        public class MaintenanceRecord
-        {
-            public int Id { get; set; }
-            public int VehicleId { get; set; }
-            public string Title { get; set; }
-            public string Description { get; set; }
-            public MaintenanceType Type { get; set; }
-            public MaintenanceStatus Status { get; set; }
-            public DateTime StartDate { get; set; }
-            public DateTime? EndDate { get; set; }
-            public decimal Cost { get; set; }
-            public string PerformedBy { get; set; }
-            public DateTime CreatedAt { get; set; }
-            public DateTime UpdatedAt { get; set; }
-        }
-
-        // Properties
+        // Flags for parent form
         public bool RecordCreated { get; private set; } = false;
-        public bool VehicleStatusUpdated { get; private set; } = false;
-        private SimpleVehicleDto currentVehicle;
-        private List<MaintenanceRecord> maintenanceRecords = new List<MaintenanceRecord>();
+        private bool VehicleStatusUpdated { get; set; } = false;
+        
 
         // Constructor
         public MaintenanceForm()
@@ -83,7 +31,7 @@ namespace VRMS.UI.Forms.Maintenance
         }
 
         // Overloaded constructor
-        public MaintenanceForm(SimpleVehicleDto vehicle) : this()
+        public MaintenanceForm(VehicleDto vehicle) : this()
         {
             currentVehicle = vehicle;
             LoadVehicleInfo();
@@ -114,7 +62,7 @@ namespace VRMS.UI.Forms.Maintenance
             {
                 lblVehicleMake.Text = $"Make: {currentVehicle.Make}";
                 lblVehicleModel.Text = $"Model: {currentVehicle.Model}";
-                lblPlateNo.Text = currentVehicle.PlateNo;
+                lblPlateNo.Text = currentVehicle.LicensePlate;
                 lblFormTitle.Text = $"Maintenance - {currentVehicle.Make} {currentVehicle.Model}";
 
                 // Update button visibility
@@ -325,7 +273,7 @@ namespace VRMS.UI.Forms.Maintenance
             var result = MessageBox.Show(
                 $"Are you sure you want to mark this vehicle as AVAILABLE?\n\n" +
                 $"Vehicle: {currentVehicle.Make} {currentVehicle.Model}\n" +
-                $"Plate: {currentVehicle.PlateNo}\n\n" +
+                $"Plate: {currentVehicle.LicensePlate}\n\n" +
                 $"This will change the vehicle status from Under Maintenance to Available.",
                 "Mark Vehicle Available",
                 MessageBoxButtons.YesNo,
