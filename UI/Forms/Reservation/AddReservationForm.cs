@@ -134,79 +134,40 @@ namespace VRMS.UI.Forms.Reservation
         // ----------------------------------
         private void btnSave_Click(object sender, EventArgs e)
         {
+            if (_selectedCustomer == null || _selectedVehicle == null)
+                return;
+
             var start = dtpStart.Value.Date;
             var end = dtpEnd.Value.Date.AddDays(1).AddTicks(-1);
+
             try
             {
-                var reservationId = _reservationService.CreateReservation(
+                _reservationService.CreateReservation(
                     _selectedCustomer.Id,
                     _selectedVehicle.Id,
                     start,
                     end
                 );
 
-                // ----------------------------
-                // OPEN RESERVATION FEE FORM
-                // ----------------------------
-                using var feeForm = new ReservationFee();
-
-                // Calculate estimated rental (same as UI)
-                var estimatedTotal = _rateService.CalculateRentalCost(
-                    start,
-                    end,
-                    _selectedVehicle.VehicleCategoryId);
-
-                // Get reservation (for fee amount)
-                var reservation = _reservationService.GetReservationById(reservationId);
-
-                // Pass data to fee form
-                feeForm.SetReservationDetails(
-                    customerName: $"{_selectedCustomer.FirstName} {_selectedCustomer.LastName}",
-                    vehicleInfo: $"{_selectedVehicle.Make} {_selectedVehicle.Model}",
-                    reservationId: reservationId.ToString(),
-                    estimatedTotal: estimatedTotal,
-                    reservationFee: reservation.ReservationFeeAmount
-                );
-
-                // SHOW MODAL
-                if (feeForm.ShowDialog(this) != DialogResult.OK)
-                {
-                    // User cancelled payment → leave reservation as Pending
-                    MessageBox.Show(
-                        "Reservation created but NOT confirmed.\nReservation fee was not paid.",
-                        "Pending Reservation",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-
-                    DialogResult = DialogResult.OK;
-                    Close();
-                    return;
-                }
-
-                // ----------------------------
-                // CONFIRM RESERVATION
-                // ----------------------------
-                _reservationService.ConfirmReservation(reservationId);
-
                 MessageBox.Show(
-                    "Reservation successfully created and confirmed.",
-                    "Success",
+                    "Reservation saved successfully.\nStatus: Pending",
+                    "Reservation Created",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
                 DialogResult = DialogResult.OK;
                 Close();
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
                     ex.Message,
-                    "Cannot Proceed",
+                    "Cannot Save Reservation",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
+
 
 
         // ----------------------------------

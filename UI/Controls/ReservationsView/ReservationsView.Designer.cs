@@ -33,18 +33,18 @@
             panel1 = new Panel();
             txtSearch = new TextBox();
             cbStatusFilter = new ComboBox();
-            btnViewDetails = new Button();
             lblTitle = new Label();
             btnNewReservation = new Button();
             btnCancelReservation = new Button();
             dgvReservations = new DataGridView();
             splitContainer1 = new SplitContainer();
+            btnConfirmReservation = new Button();
+            btnProceedRent = new Button();
             lblDetailAmount = new Label();
             lblDetailDates = new Label();
             lblDetailCustomer = new Label();
             lblDetailVehicle = new Label();
             pbVehicle = new PictureBox();
-            btnProceedRent = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvReservations).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -59,7 +59,6 @@
             panel1.BackColor = Color.WhiteSmoke;
             panel1.Controls.Add(txtSearch);
             panel1.Controls.Add(cbStatusFilter);
-            panel1.Controls.Add(btnViewDetails);
             panel1.Controls.Add(lblTitle);
             panel1.Controls.Add(btnNewReservation);
             panel1.Controls.Add(btnCancelReservation);
@@ -93,21 +92,6 @@
             cbStatusFilter.Size = new Size(251, 31);
             cbStatusFilter.TabIndex = 5;
             // 
-            // btnViewDetails
-            // 
-            btnViewDetails.BackColor = Color.FromArgb(52, 152, 219);
-            btnViewDetails.FlatAppearance.BorderSize = 0;
-            btnViewDetails.FlatStyle = FlatStyle.Flat;
-            btnViewDetails.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnViewDetails.ForeColor = Color.White;
-            btnViewDetails.Location = new Point(407, 85);
-            btnViewDetails.Margin = new Padding(3, 4, 3, 4);
-            btnViewDetails.Name = "btnViewDetails";
-            btnViewDetails.Size = new Size(185, 51);
-            btnViewDetails.TabIndex = 4;
-            btnViewDetails.Text = "🔍 View Details";
-            btnViewDetails.UseVisualStyleBackColor = false;
-            // 
             // lblTitle
             // 
             lblTitle.AutoSize = true;
@@ -133,7 +117,7 @@
             btnNewReservation.TabIndex = 1;
             btnNewReservation.Text = "➕ New Reservation";
             btnNewReservation.UseVisualStyleBackColor = false;
-            btnNewReservation.Click += BtnNewReservation_Click;
+            btnNewReservation.Click += btnNewReservation_Click;
             // 
             // btnCancelReservation
             // 
@@ -206,6 +190,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.BackColor = Color.White;
+            splitContainer1.Panel2.Controls.Add(btnConfirmReservation);
             splitContainer1.Panel2.Controls.Add(btnProceedRent);
             splitContainer1.Panel2.Controls.Add(lblDetailAmount);
             splitContainer1.Panel2.Controls.Add(lblDetailDates);
@@ -217,6 +202,40 @@
             splitContainer1.SplitterDistance = 914;
             splitContainer1.SplitterWidth = 17;
             splitContainer1.TabIndex = 6;
+            // 
+            // btnConfirmReservation
+            // 
+            btnConfirmReservation.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnConfirmReservation.BackColor = Color.LimeGreen;
+            btnConfirmReservation.FlatAppearance.BorderSize = 0;
+            btnConfirmReservation.FlatStyle = FlatStyle.Flat;
+            btnConfirmReservation.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnConfirmReservation.ForeColor = Color.White;
+            btnConfirmReservation.Location = new Point(35, 609);
+            btnConfirmReservation.Margin = new Padding(5);
+            btnConfirmReservation.Name = "btnConfirmReservation";
+            btnConfirmReservation.Size = new Size(291, 48);
+            btnConfirmReservation.TabIndex = 7;
+            btnConfirmReservation.Text = "✔️ Confirm Reservation";
+            btnConfirmReservation.UseVisualStyleBackColor = false;
+            btnConfirmReservation.Click += btnConfirmReservation_Click;
+            // 
+            // btnProceedRent
+            // 
+            btnProceedRent.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnProceedRent.BackColor = Color.FromArgb(155, 89, 182);
+            btnProceedRent.FlatAppearance.BorderSize = 0;
+            btnProceedRent.FlatStyle = FlatStyle.Flat;
+            btnProceedRent.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnProceedRent.ForeColor = Color.White;
+            btnProceedRent.Location = new Point(35, 667);
+            btnProceedRent.Margin = new Padding(5);
+            btnProceedRent.Name = "btnProceedRent";
+            btnProceedRent.Size = new Size(291, 48);
+            btnProceedRent.TabIndex = 6;
+            btnProceedRent.Text = "🚗 Proceed Rent";
+            btnProceedRent.UseVisualStyleBackColor = false;
+            btnProceedRent.Click += btnProceedRent_Click;
             // 
             // lblDetailAmount
             // 
@@ -269,26 +288,10 @@
             pbVehicle.Location = new Point(18, 21);
             pbVehicle.Margin = new Padding(3, 4, 3, 4);
             pbVehicle.Name = "pbVehicle";
-            pbVehicle.Size = new Size(395, 287);
+            pbVehicle.Size = new Size(317, 287);
             pbVehicle.SizeMode = PictureBoxSizeMode.Zoom;
             pbVehicle.TabIndex = 0;
             pbVehicle.TabStop = false;
-            // 
-            // btnProceedRent
-            // 
-            btnProceedRent.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnProceedRent.BackColor = Color.FromArgb(155, 89, 182);
-            btnProceedRent.FlatAppearance.BorderSize = 0;
-            btnProceedRent.FlatStyle = FlatStyle.Flat;
-            btnProceedRent.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnProceedRent.ForeColor = Color.White;
-            btnProceedRent.Location = new Point(35, 667);
-            btnProceedRent.Margin = new Padding(5);
-            btnProceedRent.Name = "btnProceedRent";
-            btnProceedRent.Size = new Size(369, 48);
-            btnProceedRent.TabIndex = 6;
-            btnProceedRent.Text = "🚗 Proceed Rent";
-            btnProceedRent.UseVisualStyleBackColor = false;
             // 
             // ReservationsView
             // 
@@ -326,9 +329,9 @@
         private System.Windows.Forms.Label lblDetailCustomer;
         private System.Windows.Forms.Label lblDetailVehicle;
         private System.Windows.Forms.PictureBox pbVehicle;
-        private System.Windows.Forms.Button btnViewDetails;
         private System.Windows.Forms.ComboBox cbStatusFilter;
         private System.Windows.Forms.TextBox txtSearch;
         private Button btnProceedRent;
+        private Button btnConfirmReservation;
     }
 }

@@ -6,18 +6,11 @@ using System.Linq;
 using System.Windows.Forms;
 using VRMS.DTOs.Reservation;
 using VRMS.Enums;
-using VRMS.Forms;
-using VRMS.Models.Rentals;
-using VRMS.Repositories.Accounts;
-using VRMS.Repositories.Billing;
-using VRMS.Repositories.Fleet;
-using VRMS.Repositories.Rentals;
-using VRMS.Repositories.Customers;
-using VRMS.Services.Account;
 using VRMS.Services.Customer;
 using VRMS.Services.Fleet;
 using VRMS.Services.Rental;
 using VRMS.UI.ApplicationService;
+using VRMS.UI.Forms.Payments;
 using VRMS.UI.Forms.Reservation;
 
 namespace VRMS.Controls
@@ -27,6 +20,7 @@ namespace VRMS.Controls
         private readonly CustomerService _customerService;
         private readonly VehicleService _vehicleService;
         private readonly ReservationService _reservationService;
+        private readonly RentalService _rentalService;
 
         private List<ReservationGridRow> _allRows = new();
 
@@ -40,46 +34,29 @@ namespace VRMS.Controls
             _customerService = ApplicationServices.CustomerService;
             _vehicleService = ApplicationServices.VehicleService;
             _reservationService = ApplicationServices.ReservationService;
+            _rentalService = ApplicationServices.RentalService;
 
-            // Events
             Load += ReservationsView_Load;
             dgvReservations.SelectionChanged += DgvReservations_SelectionChanged;
             txtSearch.TextChanged += (_, __) => ApplyFilters();
             cbStatusFilter.SelectedIndexChanged += (_, __) => ApplyFilters();
-            btnViewDetails.Click += BtnViewDetails_Click;
         }
 
 
+        // =====================================================
+        // LOAD
+        // =====================================================
 
         private void ReservationsView_Load(object sender, EventArgs e)
         {
             ConfigureGrid();
             LoadStatusFilter();
-
-            txtSearch.ForeColor = Color.Gray;
-            txtSearch.Text = "Search reservations...";
-
-            txtSearch.GotFocus += (_, __) =>
-            {
-                if (txtSearch.Text == "Search reservations...")
-                {
-                    txtSearch.Text = "";
-                    txtSearch.ForeColor = Color.Black;
-                }
-            };
-
-            txtSearch.LostFocus += (_, __) =>
-            {
-                if (string.IsNullOrWhiteSpace(txtSearch.Text))
-                {
-                    txtSearch.Text = "Search reservations...";
-                    txtSearch.ForeColor = Color.Gray;
-                }
-            };
-
             LoadReservations();
         }
 
+        // =====================================================
+        // GRID SETUP
+        // =====================================================
 
         private void ConfigureGrid()
         {
@@ -91,9 +68,9 @@ namespace VRMS.Controls
 
             dgvReservations.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Reservation ID",
+                HeaderText = "ID",
                 DataPropertyName = "ReservationId",
-                Width = 80
+                Width = 70
             });
 
             dgvReservations.Columns.Add(new DataGridViewTextBoxColumn
@@ -107,7 +84,7 @@ namespace VRMS.Controls
             {
                 HeaderText = "Vehicle",
                 DataPropertyName = "VehicleName",
-                Width = 240
+                Width = 220
             });
 
             dgvReservations.Columns.Add(new DataGridViewTextBoxColumn
@@ -133,27 +110,23 @@ namespace VRMS.Controls
                 Width = 100
             });
 
-            // Optional: style status column
             dgvReservations.CellFormatting += DgvReservations_CellFormatting;
         }
 
         private void LoadStatusFilter()
         {
-            // We'll show a "All" option by creating an array with an "All" sentinel
-            var values = Enum.GetValues(typeof(ReservationStatus)).Cast<ReservationStatus>().ToList();
-            // We'll treat null selection as "All"
             cbStatusFilter.Items.Clear();
             cbStatusFilter.Items.Add("All");
-            foreach (var v in values)
-                cbStatusFilter.Items.Add(v);
+
+            foreach (var s in Enum.GetValues(typeof(ReservationStatus)))
+                cbStatusFilter.Items.Add(s);
+
             cbStatusFilter.SelectedIndex = 0;
         }
 
         private void LoadReservations()
         {
-            _allRows = _reservationService
-                .GetAllForGrid(); // later if you promote it into the service
-
+            _allRows = _reservationService.GetAllForGrid();
             ApplyFilters();
         }
 
@@ -161,22 +134,21 @@ namespace VRMS.Controls
         {
             IEnumerable<ReservationGridRow> filtered = _allRows;
 
-            // status
             if (cbStatusFilter.SelectedIndex > 0)
             {
                 var status = (ReservationStatus)cbStatusFilter.SelectedItem;
                 filtered = filtered.Where(r => r.Status == status);
             }
 
-            var search = txtSearch.Text.Trim();
-            if (search == "Search reservations...")
-                search = "";
-
             dgvReservations.DataSource = filtered.ToList();
             UpdateActionButtons();
         }
 
-        private void DgvReservations_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        // =====================================================
+        // GRID STYLING
+        // =====================================================
+
+        private void DgvReservations_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (dgvReservations.Columns[e.ColumnIndex].DataPropertyName != "Status")
                 return;
@@ -194,24 +166,20 @@ namespace VRMS.Controls
             };
         }
 
-        private void DgvReservations_SelectionChanged(object? sender, EventArgs e)
+        // =====================================================
+        // SELECTION
+        // =====================================================
+
+        private void DgvReservations_SelectionChanged(object sender, EventArgs e)
         {
             UpdateActionButtons();
 
             if (dgvReservations.SelectedRows.Count == 0)
-            {
-                lblDetailVehicle.Text = "Vehicle Name";
-                lblDetailCustomer.Text = "Customer Name";
-                lblDetailDates.Text = "Period: Select entry";
-                lblDetailAmount.Text = "Price: ₱ 0.0";
-                pbVehicle.Image = null;
                 return;
-            }
 
             if (dgvReservations.SelectedRows[0].DataBoundItem is not ReservationGridRow row)
                 return;
 
-            // load the details using services
             var reservation = _reservationService.GetReservationById(row.ReservationId);
             var vehicle = _vehicleService.GetVehicleById(reservation.VehicleId);
             var customer = _customerService.GetCustomerById(reservation.CustomerId);
@@ -219,7 +187,7 @@ namespace VRMS.Controls
             lblDetailVehicle.Text = $"{vehicle.Year} {vehicle.Make} {vehicle.Model}";
             lblDetailCustomer.Text = $"{customer.FirstName} {customer.LastName}";
             lblDetailDates.Text = $"From {reservation.StartDate:d} to {reservation.EndDate:d}";
-            lblDetailAmount.Text = "Price: ₱ --"; // if you calculate price elsewhere, plug it here
+            lblDetailAmount.Text = "Price: ₱ --";
 
             LoadVehicleImage(vehicle.Id);
         }
@@ -234,126 +202,168 @@ namespace VRMS.Controls
 
             var images = _vehicleService.GetVehicleImages(vehicleId);
 
-            string? imagePath = images.Count > 0
+            string imagePath = images.Count > 0
                 ? Path.Combine(AppContext.BaseDirectory, "Storage", images[0].ImagePath)
-                : null;
+                : Path.Combine(AppContext.BaseDirectory, PlaceholderImagePath);
 
-            if (imagePath == null || !File.Exists(imagePath))
-            {
-                imagePath = Path.Combine(AppContext.BaseDirectory, PlaceholderImagePath);
-                if (!File.Exists(imagePath))
-                    return;
-            }
+            if (!File.Exists(imagePath))
+                return;
 
             using var fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             pbVehicle.Image = Image.FromStream(fs);
         }
 
+        // =====================================================
+        // ACTION BUTTONS
+        // =====================================================
+
         private void UpdateActionButtons()
         {
-            bool hasSelection = dgvReservations.SelectedRows.Count > 0;
-
-            bool canCancel = false;
-            if (hasSelection && dgvReservations.SelectedRows[0].DataBoundItem is ReservationGridRow row)
-            {
-                canCancel = row.Status == ReservationStatus.Pending || row.Status == ReservationStatus.Confirmed;
-            }
-
-            btnCancelReservation.Enabled = canCancel;
-            btnViewDetails.Enabled = hasSelection;
-
-            // style the cancel button
-            if (btnCancelReservation.Enabled)
-            {
-                btnCancelReservation.BackColor = Color.FromArgb(231, 76, 60);
-                btnCancelReservation.ForeColor = Color.White;
-            }
-            else
-            {
-                btnCancelReservation.BackColor = Color.LightGray;
-                btnCancelReservation.ForeColor = Color.DarkGray;
-            }
-        }
-
-        private bool _cancelInProgress = false;
-
-        private void BtnCancelReservation_Click(object? sender, EventArgs e)
-        {
-            if (_cancelInProgress)
-                return;
-
             if (dgvReservations.SelectedRows.Count == 0)
-                return;
-
-            if (dgvReservations.SelectedRows[0].DataBoundItem is not ReservationGridRow row)
-                return;
-
-            var result = MessageBox.Show(
-                "Are you sure you want to cancel this reservation?",
-                "Confirm Cancellation",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
-
-            if (result != DialogResult.Yes)
-                return;
-
-            _cancelInProgress = true;
-            btnCancelReservation.Enabled = false;
-
-            try
             {
-                try
-                {
-                    _reservationService.CancelReservation(row.ReservationId);
-                    MessageBox.Show("Reservation cancelled.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Unable to cancel reservation: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                // reload grid
-                LoadReservations();
-            }
-            finally
-            {
-                _cancelInProgress = false;
-                UpdateActionButtons();
-            }
-        }
-
-        private void BtnViewDetails_Click(object? sender, EventArgs e)
-        {
-            if (dgvReservations.SelectedRows.Count == 0)
+                btnCancelReservation.Enabled = false;
+                btnProceedRent.Enabled = false;
+               
+                btnConfirmReservation.Enabled = false;
                 return;
+            }
 
-            if (dgvReservations.SelectedRows[0].DataBoundItem is not ReservationGridRow row)
-                return;
+            var row = dgvReservations.SelectedRows[0].DataBoundItem as ReservationGridRow;
+            if (row == null) return;
 
-            // Option A: open a ReservationDetailsForm (if you have one)
-            // Option B: show the same information already in side panel
-            // For now, show a simple details dialog:
-            using var msg = new Form { Width = 600, Height = 400, Text = $"Reservation #{row.ReservationId}" };
-            var tb = new TextBox { Multiline = true, Dock = DockStyle.Fill, ReadOnly = true };
-            tb.Text = $"Reservation ID: {row.ReservationId}\r\nCustomer: {row.CustomerName}\r\nVehicle: {row.VehicleName}\r\nPeriod: {row.StartDate:d} → {row.EndDate:d}\r\nStatus: {row.Status}";
-            msg.Controls.Add(tb);
-            msg.StartPosition = FormStartPosition.CenterParent;
-            msg.ShowDialog(this);
+           
+
+            btnCancelReservation.Enabled =
+                row.Status == ReservationStatus.Pending ||
+                row.Status == ReservationStatus.Confirmed;
+
+            btnConfirmReservation.Enabled =
+                row.Status == ReservationStatus.Pending;
+
+            btnProceedRent.Enabled =
+                row.Status == ReservationStatus.Confirmed;
         }
-        private void BtnNewReservation_Click(object sender, EventArgs e)
-        {
-            using var form = new AddReservationForm();
 
-
-            if (form.ShowDialog(FindForm()) == DialogResult.OK)
-                LoadReservations();
-        }
+        // =====================================================
+        // CANCEL
+        // =====================================================
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
-            BtnCancelReservation_Click(sender, e);
+            if (dgvReservations.SelectedRows.Count == 0)
+                return;
+
+            if (dgvReservations.SelectedRows[0].DataBoundItem is not ReservationGridRow row)
+                return;
+
+            if (MessageBox.Show(
+                    "Cancel this reservation?",
+                    "Confirm",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning) != DialogResult.Yes)
+                return;
+
+            _reservationService.CancelReservation(row.ReservationId);
+            LoadReservations();
+        }
+
+        // =====================================================
+        // CONFIRM RESERVATION
+        // =====================================================
+
+        private void btnConfirmReservation_Click(object sender, EventArgs e)
+        {
+            if (dgvReservations.SelectedRows.Count == 0)
+                return;
+
+            if (dgvReservations.SelectedRows[0].DataBoundItem is not ReservationGridRow row)
+                return;
+
+            if (row.Status != ReservationStatus.Pending)
+            {
+                MessageBox.Show(
+                    "Only pending reservations can be confirmed.",
+                    "Not Allowed",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                var reservation = _reservationService.GetReservationById(row.ReservationId);
+                var vehicle = _vehicleService.GetVehicleById(reservation.VehicleId);
+                var customer = _customerService.GetCustomerById(reservation.CustomerId);
+
+                var estimatedTotal =
+                    ApplicationServices.RateService.CalculateRentalCost(
+                        reservation.StartDate,
+                        reservation.EndDate,
+                        vehicle.VehicleCategoryId);
+
+                using var feeForm = new ReservationFee();
+
+                feeForm.SetReservationDetails(
+                    $"{customer.FirstName} {customer.LastName}",
+                    $"{vehicle.Make} {vehicle.Model}",
+                    reservation.Id.ToString(),
+                    estimatedTotal,
+                    reservation.ReservationFeeAmount
+                );
+
+                if (feeForm.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                _reservationService.ConfirmReservation(reservation.Id);
+                MessageBox.Show("Reservation confirmed.", "Success");
+
+                LoadReservations();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        // =====================================================
+        // PROCEED TO RENT
+        // =====================================================
+
+        private void btnProceedRent_Click(object sender, EventArgs e)
+        {
+            if (dgvReservations.SelectedRows.Count == 0)
+                return;
+
+            if (dgvReservations.SelectedRows[0].DataBoundItem is not ReservationGridRow row)
+                return;
+
+            if (row.Status != ReservationStatus.Confirmed)
+            {
+                MessageBox.Show(
+                    "Reservation must be confirmed before renting.",
+                    "Not Allowed");
+                return;
+            }
+
+            var reservation = _reservationService.GetReservationById(row.ReservationId);
+            var vehicle = _vehicleService.GetVehicleById(reservation.VehicleId);
+            var customer = _customerService.GetCustomerById(reservation.CustomerId);
+
+            using var form = new VRMS.UI.Forms.Rentals.ProceedToRent(
+                $"{customer.FirstName} {customer.LastName}",
+                $"{vehicle.Year} {vehicle.Make} {vehicle.Model}",
+                vehicle.Odometer
+            );
+
+            if (form.ShowDialog(this) == DialogResult.OK)
+                LoadReservations();
+        }
+
+        private void btnNewReservation_Click(object sender, EventArgs e)
+        {
+            using var form = new AddReservationForm();
+            if (form.ShowDialog(FindForm()) == DialogResult.OK)
+                LoadReservations();
         }
     }
-    
-    
 }
