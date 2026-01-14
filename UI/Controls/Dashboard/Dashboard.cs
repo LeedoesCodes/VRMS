@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using VRMS.Models.Dashboard;
-using VRMS.Repositories.Dashboard;
 using VRMS.Services.Dashboard;
 using VRMS.UI.Config.ApplicationService;
 
@@ -13,12 +11,14 @@ namespace VRMS.Controls
     public partial class DashboardView : UserControl
     {
         private readonly DashboardService _dashboardService;
+
         public DashboardView()
         {
             InitializeComponent();
 
             _dashboardService = ApplicationServices.DashboardService;
 
+            // Date picker = END MONTH selector
             dateRangePicker.Value =
                 new DateTime(
                     DateTime.Today.Year,
@@ -26,16 +26,17 @@ namespace VRMS.Controls
                     1
                 );
 
-            dateRangePicker.ValueChanged += (s, e) => LoadDashboard();
             this.Load += (s, e) => LoadDashboard();
             btnRefresh.Click += (s, e) => LoadDashboard();
+            dateRangePicker.ValueChanged += (s, e) => LoadDashboard();
         }
+
+        // =====================================================
+        // MAIN LOAD
+        // =====================================================
 
         private void LoadDashboard()
         {
-            int year = dateRangePicker.Value.Year;
-            int month = dateRangePicker.Value.Month;
-
             DashboardSnapshot snapshot;
 
             try
@@ -88,36 +89,105 @@ namespace VRMS.Controls
                 $"₱{snapshot.Revenue.MonthlyRevenue:N0}";
 
             // -----------------------------
-            // CHART
+            // CHART (FIXED)
             // -----------------------------
 
             SetupPerformanceChart(snapshot.MonthlyTrends);
 
             // -----------------------------
-            // GRIDS (STILL MOCKED FOR NOW)
+            // GRIDS
             // -----------------------------
 
             PopulateGrids();
         }
 
+        // =====================================================
+        // CHART (DATE-BASED — REAL FIX)
+        // =====================================================
+
+        private void SetupPerformanceChart(
+            IReadOnlyList<DashboardMonthlyTrend> trends)
+        {
+            // Remove old charts
+            foreach (Control c in pnlChartArea.Controls)
+            {
+                if (c is Chart oldChart)
+                    oldChart.Dispose();
+            }
+
+            pnlChartArea.Controls.Clear();
+            pnlChartArea.Controls.Add(lblChartTitle);
+
+            Chart chart = new Chart { Dock = DockStyle.Fill };
+
+            ChartArea area = new ChartArea("Main");
+
+            area.AxisX.MajorGrid.Enabled = false;
+            area.AxisY.MajorGrid.LineColor =
+                Color.FromArgb(240, 240, 240);
+
+            // 🔥 KEY FIX
+            area.AxisX.IntervalType = DateTimeIntervalType.Months;
+            area.AxisX.Interval = 1;
+            area.AxisX.LabelStyle.Format = "MMM yy";
+            area.AxisX.IsMarginVisible = true;
+            area.AxisX.ScaleView.Zoomable = false;
+            area.AxisX.ScrollBar.Enabled = false;
+
+            chart.ChartAreas.Add(area);
+
+            Series series = new Series("Rentals Completed")
+            {
+                ChartType = SeriesChartType.Column,
+                XValueType = ChartValueType.DateTime,
+                Color = Color.FromArgb(52, 152, 219),
+                ToolTip = "#VAL rentals in #AXISLABEL"
+            };
+
+            series["PointWidth"] = "0.7";
+            series.Points.Clear();
+
+            foreach (var item in trends)
+            {
+                DateTime month =
+                    new DateTime(item.Year, item.Month, 1);
+
+                int index =
+                    series.Points.AddXY(
+                        month,
+                        item.CompletedRentals
+                    );
+
+                // Highlight selected month
+                if (item.Year == dateRangePicker.Value.Year &&
+                    item.Month == dateRangePicker.Value.Month)
+                {
+                    series.Points[index].Color =
+                        Color.FromArgb(39, 174, 96);
+                }
+            }
+
+            chart.Series.Add(series);
+            chart.Legends.Add(
+                new Legend { Docking = Docking.Bottom });
+
+            pnlChartArea.Controls.Add(chart);
+            chart.BringToFront();
+            lblChartTitle.BringToFront();
+        }
+
+        // =====================================================
+        // GRIDS
+        // =====================================================
 
         private void PopulateGrids()
         {
-            // =============================
-            // TODAY'S SCHEDULE (REAL DATA)
-            // =============================
-
             dgvTodaySchedule.DataSource =
                 _dashboardService.GetTodaySchedule();
-
-            // =============================
-            // ALERTS (REAL DATA)
-            // =============================
 
             dgvAlerts.DataSource =
                 _dashboardService.GetAlerts();
 
-            // Priority coloring
             dgvAlerts.DataBindingComplete += (s, e) =>
             {
                 foreach (DataGridViewRow row in dgvAlerts.Rows)
@@ -127,72 +197,10 @@ namespace VRMS.Controls
 
                     if (priority == "CRITICAL")
                         row.DefaultCellStyle.ForeColor = Color.Red;
-
-                    if (priority == "HIGH")
+                    else if (priority == "HIGH")
                         row.DefaultCellStyle.ForeColor = Color.OrangeRed;
                 }
             };
-        }
-
-
-        private void SetupPerformanceChart(
-            IReadOnlyList<DashboardMonthlyTrend> trends)
-        {
-            pnlChartArea.Controls.Clear();
-            pnlChartArea.Controls.Add(lblChartTitle);
-
-            Chart chart = new Chart { Dock = DockStyle.Fill };
-
-            // 1. Force the Chart Area to expand
-            ChartArea area = new ChartArea("Main");
-            area.AxisX.MajorGrid.LineColor = Color.FromArgb(240, 240, 240);
-            area.AxisY.MajorGrid.LineColor = Color.FromArgb(240, 240, 240);
-
-            // Ensure all labels show up
-            area.AxisX.Interval = 1;
-            area.AxisX.LabelStyle.Enabled = true;
-
-            chart.ChartAreas.Add(area);
-
-            // 2. Configure the Series with explicit Bar Width
-            Series s = new Series("Rentals Completed")
-            {
-                ChartType = SeriesChartType.Column, // Using Column for clearer bars
-                XValueType = ChartValueType.String,
-                Color = Color.FromArgb(52, 152, 219),
-            };
-
-            // Explicitly set the bar width (0.8 is a good standard size)
-            s["PointWidth"] = "0.8";
-
-            string[] months = { "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan" };
-            int[] data = { 38, 42, 55, 68, 50, 62, 45, 80, 110, 75 };
-
-            // 3. Clear existing points before adding new ones
-            s.Points.Clear();
-
-            foreach (var item in trends)
-            {
-                var label =
-                    new DateTime(item.Year, item.Month, 1)
-                        .ToString("MMM");
-
-                int index =
-                    s.Points.AddXY(label, item.CompletedRentals);
-
-                s.Points[index].AxisLabel = label;
-            }
-
-
-            chart.Series.Add(s);
-
-            // 4. Position the Legend at the bottom
-            Legend leg = new Legend("Legend") { Docking = Docking.Bottom };
-            chart.Legends.Add(leg);
-
-            pnlChartArea.Controls.Add(chart);
-            chart.BringToFront();
-            lblChartTitle.BringToFront();
         }
     }
 }
