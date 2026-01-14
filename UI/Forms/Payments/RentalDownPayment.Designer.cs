@@ -211,7 +211,6 @@
             // 
             cbPaymentMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cbPaymentMethod.Font = new System.Drawing.Font("Segoe UI", 10F);
-            cbPaymentMethod.Items.AddRange(new object[] { "Cash", "Credit Card", "Bank Transfer", "E-Wallet" });
             cbPaymentMethod.Location = new System.Drawing.Point(22, 80);
             cbPaymentMethod.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             cbPaymentMethod.Name = "cbPaymentMethod";

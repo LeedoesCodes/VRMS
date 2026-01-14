@@ -62,7 +62,15 @@ namespace VRMS.UI.Forms.Payments
 
             lblTotalInitialPayment.Text =
                 $"TOTAL DUE: ₱{(_initialRentalFee + _securityDeposit):N2}";
+
+            cbPaymentMethod.DataSource =
+                Enum.GetValues(typeof(PaymentMethod))
+                    .Cast<PaymentMethod>()
+                    .ToList();
+
+            cbPaymentMethod.SelectedItem = PaymentMethod.Cash;
         }
+
 
 
         // -------------------------------
@@ -70,32 +78,66 @@ namespace VRMS.UI.Forms.Payments
         // -------------------------------
         private void BtnProcess_Click(object? sender, EventArgs e)
         {
-            if (cbPaymentMethod.SelectedItem == null)
+            if (cbPaymentMethod.SelectedItem is not PaymentMethod method)
             {
-                MessageBox.Show("Please select a payment method.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Please select a payment method.",
+                    "Validation Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
 
             if (!decimal.TryParse(txtAmountPaid.Text, out var amountPaid) || amountPaid <= 0)
             {
-                MessageBox.Show("Please enter a valid payment amount.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Please enter a valid payment amount.",
+                    "Validation Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
 
-            // map the selected item to enum
-            if (!Enum.TryParse<PaymentMethod>(cbPaymentMethod.SelectedItem.ToString(), true, out var pm))
+            decimal totalDue = _initialRentalFee + _securityDeposit;
+
+            // ❌ Cannot pay LESS than security deposit
+            if (amountPaid < _securityDeposit)
             {
-                MessageBox.Show("Unknown payment method.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    $"You must pay at least the security deposit: ₱{_securityDeposit:N2}.",
+                    "Invalid Payment",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                txtAmountPaid.Focus();
+                txtAmountPaid.SelectAll();
                 return;
             }
 
-            // set public properties so caller can read them
+            // ❌ Cannot pay MORE than total due
+            if (amountPaid > totalDue)
+            {
+                MessageBox.Show(
+                    $"Payment cannot exceed total due: ₱{totalDue:N2}.",
+                    "Invalid Payment",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                txtAmountPaid.Focus();
+                txtAmountPaid.SelectAll();
+                return;
+            }
+
+            // ✅ VALID RANGE
             PaidAmount = amountPaid;
-            SelectedPaymentMethod = pm;
+            SelectedPaymentMethod = method;
 
             DialogResult = DialogResult.OK;
             Close();
         }
+
+
+
 
     }
 }

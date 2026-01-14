@@ -251,13 +251,30 @@ public class BillingService
             throw new InvalidOperationException(
                 "Payment amount must be greater than zero.");
 
-        var invoice =
-            _invoiceRepo.GetById(invoiceId);
+        var invoice = _invoiceRepo.GetById(invoiceId);
 
         if (invoice.Status == InvoiceStatus.Paid)
             throw new InvalidOperationException(
                 "Invoice is already paid.");
 
+        // ✅ HARD RULE: SECURITY DEPOSIT MUST MATCH EXACTLY
+        if (paymentType == PaymentType.Deposit)
+        {
+            var items = _lineItemRepo.GetByInvoice(invoiceId);
+
+            var depositItem = items.FirstOrDefault(
+                x => x.Description == "Security deposit");
+
+            if (depositItem == null)
+                throw new InvalidOperationException(
+                    "Security deposit not found on invoice.");
+
+            if (amount != depositItem.Amount)
+                throw new InvalidOperationException(
+                    $"Security deposit must be EXACTLY ₱{depositItem.Amount:N2}.");
+        }
+
+        // Final payment safety
         if (paymentType == PaymentType.Final)
         {
             var balance = GetInvoiceBalance(invoiceId);
@@ -274,7 +291,6 @@ public class BillingService
                 paymentType,
                 date);
 
-        // Only mark PAID if the invoice has a finalized total
         if (paymentType == PaymentType.Final &&
             invoice.TotalAmount > 0m &&
             GetInvoiceBalance(invoiceId) == 0m)
@@ -282,9 +298,10 @@ public class BillingService
             _invoiceRepo.MarkPaid(invoiceId);
         }
 
-
         return paymentId;
     }
+
+
 
     /// <summary>
     /// Retrieves all payments made against an invoice.
@@ -380,10 +397,13 @@ public class BillingService
         if (securityDeposit > 0m)
             _lineItemRepo.Create(invoice.Id, "Security deposit", securityDeposit);
 
-        // Recompute total from line items and set on invoice
+        // Recompute total from line items and persist on invoice
         var items = _lineItemRepo.GetByInvoice(invoice.Id);
         decimal total = 0m;
         foreach (var it in items) total += it.Amount;
+
+        // Persist the total so balance calculations work (and deposits can be compared)
+        _invoiceRepo.FinalizeTotal(invoice.Id, total);
 
         // Return fresh invoice object
         return _invoiceRepo.GetById(invoice.Id);

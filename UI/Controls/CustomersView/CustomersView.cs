@@ -30,7 +30,7 @@ namespace VRMS.UI.Controls.CustomersView
         {
             InitializeComponent();
 
-            splitContainer1.FixedPanel = FixedPanel.Panel2;
+            splitContainer1.FixedPanel = FixedPanel.None;
             splitContainer1.IsSplitterFixed = false;
             splitContainer1.Panel1MinSize = 300;
             splitContainer1.Panel2MinSize = 450;

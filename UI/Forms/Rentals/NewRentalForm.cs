@@ -269,6 +269,16 @@ namespace VRMS.UI.Forms.Rentals
                         baseRental,
                         securityDeposit);
 
+                if (paymentForm.PaidAmount != securityDeposit)
+                {
+                    MessageBox.Show(
+                        $"Deposit must be exactly ₱{securityDeposit:N2}.",
+                        "Payment Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+                
                 _billingService.AddPayment(
                     invoice.Id,
                     paymentForm.PaidAmount,

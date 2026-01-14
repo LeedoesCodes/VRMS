@@ -151,8 +151,8 @@
             // 
             // splitContainer1.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(panel2);
             splitContainer1.Panel2.Controls.Add(tabControl1);
+            splitContainer1.Panel2.Controls.Add(panel2);
             splitContainer1.Size = new Size(1333, 1078);
             splitContainer1.SplitterDistance = 400;
             splitContainer1.SplitterWidth = 5;
@@ -223,11 +223,38 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(248, 249, 250);
-            panel2.Controls.Add(btnEmergencyContacts);
-            panel2.Controls.Add(btnSave);
-            panel2.Controls.Add(btnManageAccount);
-            panel2.Controls.Add(btnDelete);
-            panel2.Controls.Add(btnClear);
+            // BUTTON LAYOUT (BOTTOM BAR)
+            buttonLayout = new TableLayoutPanel();
+            buttonLayout.Dock = DockStyle.Fill;
+            buttonLayout.RowCount = 1;
+            buttonLayout.ColumnCount = 6;
+            buttonLayout.Padding = Padding.Empty;
+            buttonLayout.Margin = Padding.Empty;
+
+            buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // Save
+            buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // Account
+            buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // Delete
+            buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // Clear
+            buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F)); // spacer
+            buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // Emergency
+
+            // REMOVE ANCHORS (IMPORTANT)
+            btnSave.Anchor = AnchorStyles.None;
+            btnManageAccount.Anchor = AnchorStyles.None;
+            btnDelete.Anchor = AnchorStyles.None;
+            btnClear.Anchor = AnchorStyles.None;
+            btnEmergencyContacts.Anchor = AnchorStyles.None;
+
+            // ADD BUTTONS
+            buttonLayout.Controls.Add(btnSave, 0, 0);
+            buttonLayout.Controls.Add(btnManageAccount, 1, 0);
+            buttonLayout.Controls.Add(btnDelete, 2, 0);
+            buttonLayout.Controls.Add(btnClear, 3, 0);
+            buttonLayout.Controls.Add(btnEmergencyContacts, 5, 0);
+
+            // ADD LAYOUT TO PANEL
+            panel2.Controls.Add(buttonLayout);
+
             panel2.Dock = DockStyle.Bottom;
             panel2.Location = new Point(0, 907);
             panel2.Margin = new Padding(13, 15, 13, 15);
@@ -238,7 +265,6 @@
             // 
             // btnEmergencyContacts
             // 
-            btnEmergencyContacts.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnEmergencyContacts.BackColor = Color.FromArgb(155, 89, 182);
             btnEmergencyContacts.FlatAppearance.BorderSize = 0;
             btnEmergencyContacts.FlatStyle = FlatStyle.Flat;
@@ -318,7 +344,7 @@
             // 
             // tabControl1
             // 
-            tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tabControl1.Dock = DockStyle.Fill;
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
@@ -356,7 +382,7 @@
             tabPage1.Location = new Point(4, 32);
             tabPage1.Margin = new Padding(3, 4, 3, 4);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(20);
+            tabPage1.Padding = Padding.Empty;
             tabPage1.Size = new Size(906, 858);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Personal Information";
@@ -560,7 +586,7 @@
             tabPage2.Location = new Point(4, 32);
             tabPage2.Margin = new Padding(3, 4, 3, 4);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(20);
+            tabPage2.Padding = Padding.Empty;
             tabPage2.Size = new Size(906, 858);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Driver's License";
@@ -579,7 +605,7 @@
             groupBox3.Location = new Point(27, 361);
             groupBox3.Margin = new Padding(3, 4, 3, 4);
             groupBox3.Name = "groupBox3";
-            groupBox3.Padding = new Padding(20);
+            groupBox3.Padding = Padding.Empty;
             groupBox3.Size = new Size(860, 260);
             groupBox3.TabIndex = 1;
             groupBox3.TabStop = false;
@@ -680,7 +706,7 @@
             groupBox2.Location = new Point(27, 31);
             groupBox2.Margin = new Padding(3, 4, 3, 4);
             groupBox2.Name = "groupBox2";
-            groupBox2.Padding = new Padding(20);
+            groupBox2.Padding = Padding.Empty;
             groupBox2.Size = new Size(860, 310);
             groupBox2.TabIndex = 0;
             groupBox2.TabStop = false;
@@ -774,7 +800,7 @@
             tabPage3.Location = new Point(4, 32);
             tabPage3.Margin = new Padding(3, 4, 3, 4);
             tabPage3.Name = "tabPage3";
-            tabPage3.Padding = new Padding(20);
+            tabPage3.Padding = Padding.Empty;
             tabPage3.Size = new Size(906, 858);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Classification & Overview";
@@ -826,7 +852,7 @@
             groupBox5.Location = new Point(27, 251);
             groupBox5.Margin = new Padding(3, 4, 3, 4);
             groupBox5.Name = "groupBox5";
-            groupBox5.Padding = new Padding(20);
+            groupBox5.Padding = Padding.Empty;
             groupBox5.Size = new Size(860, 180);
             groupBox5.TabIndex = 1;
             groupBox5.TabStop = false;
@@ -873,7 +899,7 @@
             groupBox4.Location = new Point(27, 31);
             groupBox4.Margin = new Padding(3, 4, 3, 4);
             groupBox4.Name = "groupBox4";
-            groupBox4.Padding = new Padding(20);
+            groupBox4.Padding = Padding.Empty;
             groupBox4.Size = new Size(860, 211);
             groupBox4.TabIndex = 0;
             groupBox4.TabStop = false;
@@ -923,7 +949,8 @@
             tabPage4.Location = new Point(4, 32);
             tabPage4.Margin = new Padding(3, 4, 3, 4);
             tabPage4.Name = "tabPage4";
-            tabPage4.Padding = new Padding(20);
+            tabPage4.AutoScroll = true;
+            tabPage4.Padding = Padding.Empty;
             tabPage4.Size = new Size(906, 858);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Rental History";
@@ -933,7 +960,7 @@
             panel3.BackColor = Color.White;
             panel3.Controls.Add(label14);
             panel3.Dock = DockStyle.Top;
-            panel3.Location = new Point(20, 20);
+            //panel3.Location = new Point(20, 20);
             panel3.Margin = new Padding(3, 4, 3, 4);
             panel3.Name = "panel3";
             panel3.Size = new Size(866, 110);
@@ -981,7 +1008,6 @@
             dgvRentalHistory.Dock = DockStyle.Fill;
             dgvRentalHistory.EnableHeadersVisualStyles = false;
             dgvRentalHistory.GridColor = Color.FromArgb(240, 240, 240);
-            dgvRentalHistory.Location = new Point(20, 20);
             dgvRentalHistory.Margin = new Padding(3, 4, 3, 4);
             dgvRentalHistory.MultiSelect = false;
             dgvRentalHistory.Name = "dgvRentalHistory";
@@ -1154,7 +1180,7 @@
         }
 
         #endregion
-
+        private System.Windows.Forms.TableLayoutPanel buttonLayout;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dgvCustomers;
