@@ -168,7 +168,6 @@
             btnAddCategory.TabIndex = 7;
             btnAddCategory.Text = "➕ Categories";
             btnAddCategory.UseVisualStyleBackColor = false;
-            btnAddCategory.Click += btnAddCategory_Click;
             // 
             // panelSearch
             // 
@@ -218,7 +217,6 @@
             btnEdit.TabIndex = 2;
             btnEdit.Text = "✏ Edit";
             btnEdit.UseVisualStyleBackColor = false;
-            btnEdit.Click += btnEdit_Click;
             // 
             // btnAdd
             // 
@@ -234,7 +232,6 @@
             btnAdd.TabIndex = 1;
             btnAdd.Text = "➕ Add";
             btnAdd.UseVisualStyleBackColor = false;
-            btnAdd.Click += btnAdd_Click;
             // 
             // splitContainerMain
             // 
@@ -333,7 +330,7 @@
             cmbTrasmissionType.FlatStyle = FlatStyle.Flat;
             cmbTrasmissionType.Font = new Font("Segoe UI", 8F);
             cmbTrasmissionType.FormattingEnabled = true;
-            cmbTrasmissionType.Items.AddRange(new object[] { "Automatic", "Manual" });
+            cmbTrasmissionType.Items.AddRange(new object[] { "All Transmissions", "Automatic", "Manual" });
             cmbTrasmissionType.Location = new Point(528, 1);
             cmbTrasmissionType.Name = "cmbTrasmissionType";
             cmbTrasmissionType.Size = new Size(150, 25);
@@ -345,7 +342,7 @@
             cmbFuelType.FlatStyle = FlatStyle.Flat;
             cmbFuelType.Font = new Font("Segoe UI", 8F);
             cmbFuelType.FormattingEnabled = true;
-            cmbFuelType.Items.AddRange(new object[] { "Gasoline", "Electric", "Diesel", "Hybrid" });
+            cmbFuelType.Items.AddRange(new object[] { "All Fuel Types", "Gasoline", "Diesel", "Electric", "Hybrid" });
             cmbFuelType.Location = new Point(372, 3);
             cmbFuelType.Name = "cmbFuelType";
             cmbFuelType.Size = new Size(150, 25);
@@ -357,7 +354,7 @@
             cmbYear.FlatStyle = FlatStyle.Flat;
             cmbYear.Font = new Font("Segoe UI", 8F);
             cmbYear.FormattingEnabled = true;
-            cmbYear.Items.AddRange(new object[] { "Year (Ascending)", "Year (Descending)" });
+            cmbYear.Items.AddRange(new object[] { "All Years", "2015+", "2018+", "2020+", "2022+", "2024+" });
             cmbYear.Location = new Point(55, 3);
             cmbYear.Name = "cmbYear";
             cmbYear.Size = new Size(150, 25);
@@ -369,7 +366,7 @@
             cmbVehicleCategory.FlatStyle = FlatStyle.Flat;
             cmbVehicleCategory.Font = new Font("Segoe UI", 8F);
             cmbVehicleCategory.FormattingEnabled = true;
-            cmbVehicleCategory.Items.AddRange(new object[] { "MPV", "SUV", "Pickup", "Sedan", "Van" });
+            cmbVehicleCategory.Items.AddRange(new object[] { "All Categories", "MPV", "SUV", "Pickup", "Sedan", "Van" });
             cmbVehicleCategory.Location = new Point(211, 3);
             cmbVehicleCategory.Name = "cmbVehicleCategory";
             cmbVehicleCategory.Size = new Size(150, 25);
