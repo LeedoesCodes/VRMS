@@ -74,6 +74,8 @@ namespace VRMS.UI.Forms
                     LoadControl(new RegisterUserControl(_userService));
 
                 login.ExitApplication += (_, __) => Application.Exit();
+
+                // 🔴 IMPORTANT: login success handler
                 login.LoginSuccess += (_, __) => HandleLoginSuccess(login);
             }
 
@@ -82,17 +84,32 @@ namespace VRMS.UI.Forms
             panelLogin.BringToFront();
         }
 
+        // =====================================================
+        // ✅ LOGIN SUCCESS — FIX IS HERE
+        // =====================================================
         private void HandleLoginSuccess(LoginUserControl login)
         {
+            // ==============================
+            // STAFF / ADMIN LOGIN
+            // ==============================
             if (login.LoggedInUser != null)
             {
+                // ✅ SET GLOBAL SESSION STATE (THIS WAS MISSING)
+                Program.CurrentUserId = login.LoggedInUser.Id;
+                Program.CurrentUsername = login.LoggedInUser.Username;
+                Program.CurrentUserRole = login.LoggedInUser.Role.ToString();
+
                 var mainForm = new MainForm();
                 mainForm.Show();
                 Hide();
+
                 mainForm.FormClosed += (_, __) => Application.Exit();
                 return;
             }
 
+            // ==============================
+            // CUSTOMER LOGIN
+            // ==============================
             if (login.LoggedInCustomer != null)
             {
                 var customerForm =
@@ -100,10 +117,14 @@ namespace VRMS.UI.Forms
 
                 customerForm.Show();
                 Hide();
+
                 customerForm.FormClosed += OnChildFormClosed;
             }
         }
 
+        // =====================================================
+        // ANIMATION CALLBACKS
+        // =====================================================
         public void OnAnimationStart()
         {
             btnProceed.Enabled = false;
