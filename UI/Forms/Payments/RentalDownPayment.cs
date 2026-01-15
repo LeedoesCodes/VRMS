@@ -57,11 +57,8 @@ namespace VRMS.UI.Forms.Payments
             lblFirstInstallment.Text =
                 $"Initial Rental Fee: ₱{_initialRentalFee:N2}";
 
-            lblSecurityDeposit.Text =
-                $"Security Deposit: ₱{_securityDeposit:N2}";
-
             lblTotalInitialPayment.Text =
-                $"TOTAL DUE: ₱{(_initialRentalFee + _securityDeposit):N2}";
+                $"SECURITY DEPOSIT DUE: ₱{_securityDeposit:N2}";
 
             cbPaymentMethod.DataSource =
                 Enum.GetValues(typeof(PaymentMethod))
@@ -97,28 +94,12 @@ namespace VRMS.UI.Forms.Payments
                     MessageBoxIcon.Warning);
                 return;
             }
-
-            decimal totalDue = _initialRentalFee + _securityDeposit;
-
-            // ❌ Cannot pay LESS than security deposit
-            if (amountPaid < _securityDeposit)
+            
+            // Deposit-only payment (MUST be exact)
+            if (amountPaid != _securityDeposit)
             {
                 MessageBox.Show(
-                    $"You must pay at least the security deposit: ₱{_securityDeposit:N2}.",
-                    "Invalid Payment",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-
-                txtAmountPaid.Focus();
-                txtAmountPaid.SelectAll();
-                return;
-            }
-
-            // ❌ Cannot pay MORE than total due
-            if (amountPaid > totalDue)
-            {
-                MessageBox.Show(
-                    $"Payment cannot exceed total due: ₱{totalDue:N2}.",
+                    $"Security deposit must be exactly ₱{_securityDeposit:N2}.",
                     "Invalid Payment",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);

@@ -212,10 +212,10 @@ namespace VRMS.UI.Forms.Rentals
                     _vehicleService.GetCategoryById(
                         _selectedVehicle.VehicleCategoryId);
 
-                _lastCalculatedTotal =
-                    baseRental + (category?.SecurityDeposit ?? 0m);
+                // Display ONLY rental cost (exclude security deposit)
+                _lastCalculatedTotal = baseRental;
 
-                lblTotal.Text = $"Total: ₱{_lastCalculatedTotal:N2}";
+                lblTotal.Text = $"Total: ₱{baseRental:N2}";
             }
             catch
             {
