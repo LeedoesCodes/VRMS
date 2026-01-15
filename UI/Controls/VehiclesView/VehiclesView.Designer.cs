@@ -326,7 +326,7 @@
             cmbAdvancedFilter.FlatStyle = FlatStyle.Flat;
             cmbAdvancedFilter.Font = new Font("Segoe UI", 8F);
             cmbAdvancedFilter.FormattingEnabled = true;
-            cmbAdvancedFilter.Items.AddRange(new object[] { "⚙ Advanced Filters", "📍 By Location", "📅 By Year", "💰 By Price Range", "📊 By Category", "⛽ By Fuel Type", "⚙ By Transmission" });
+            cmbAdvancedFilter.Items.AddRange(new object[] { "Advanced Filters", "By Category", "By Fuel Type", "By Transmission" });
             cmbAdvancedFilter.Location = new Point(60, 3);
             cmbAdvancedFilter.Name = "cmbAdvancedFilter";
             cmbAdvancedFilter.Size = new Size(150, 25);

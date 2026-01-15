@@ -18,6 +18,9 @@ namespace VRMS.UI.Controls.VehiclesView
         private readonly DriversLicenseService _driversLicenseService;
         private readonly CustomerService _customerService;
         private readonly RentalService _rentalService;
+        
+        private VehicleAdvancedFilterDto? _advancedFilter;
+
 
         public VehiclesView()
         {
@@ -65,14 +68,8 @@ namespace VRMS.UI.Controls.VehiclesView
                     // Reset to all vehicles
                     ApplyFilters();
                     break;
-                case "By Location":
-                    ShowLocationFilterDialog();
-                    break;
                 case "By Year":
                     ShowYearFilterDialog();
-                    break;
-                case "By Price Range":
-                    ShowPriceRangeFilterDialog();
                     break;
                 case "By Category":
                     ShowCategoryFilterDialog();
@@ -86,56 +83,86 @@ namespace VRMS.UI.Controls.VehiclesView
             }
         }
 
-        private void ShowLocationFilterDialog()
-        {
-            MessageBox.Show("Location filter - Implement location selection dialog", "Filter by Location",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         private void ShowYearFilterDialog()
         {
-            MessageBox.Show("Year filter - Implement year range selection", "Filter by Year",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
+            var fromInput = Microsoft.VisualBasic.Interaction.InputBox(
+                "Enter start year (leave empty for no minimum):",
+                "Filter by Year");
 
-        private void ShowPriceRangeFilterDialog()
-        {
-            MessageBox.Show("Price range filter - Implement price range selection", "Filter by Price Range",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var toInput = Microsoft.VisualBasic.Interaction.InputBox(
+                "Enter end year (leave empty for no maximum):",
+                "Filter by Year");
+
+            _advancedFilter ??= new VehicleAdvancedFilterDto();
+
+            _advancedFilter.YearFrom =
+                int.TryParse(fromInput, out var yf) ? yf : null;
+
+            _advancedFilter.YearTo =
+                int.TryParse(toInput, out var yt) ? yt : null;
+
+            ApplyFilters();
         }
+        
 
         private void ShowCategoryFilterDialog()
         {
-            try
-            {
-                var categories = _vehicleService.GetAllCategories();
-                if (categories.Count == 0)
-                {
-                    MessageBox.Show("No categories available", "Filter by Category",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-                MessageBox.Show($"Select from {categories.Count} categories - Implement category selection",
-                    "Filter by Category", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading categories: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            var categories = _vehicleService.GetAllCategories();
+            if (categories.Count == 0) return;
+
+            // TEMP: pick first category (replace with dialog later)
+            _advancedFilter ??= new VehicleAdvancedFilterDto();
+            _advancedFilter.CategoryId = categories[0].Id;
+
+            ApplyFilters();
         }
+
 
         private void ShowFuelTypeFilterDialog()
         {
-            MessageBox.Show("Fuel type filter - Implement fuel type selection", "Filter by Fuel Type",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var values = Enum.GetValues(typeof(FuelType))
+                .Cast<FuelType>()
+                .ToList();
+
+            var choice = MessageBox.Show(
+                "Yes = Gasoline\nNo = Diesel\nCancel = Clear Fuel Filter",
+                "Filter by Fuel Type",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            _advancedFilter ??= new VehicleAdvancedFilterDto();
+
+            if (choice == DialogResult.Yes)
+                _advancedFilter.FuelType = FuelType.Gasoline;
+            else if (choice == DialogResult.No)
+                _advancedFilter.FuelType = FuelType.Diesel;
+            else
+                _advancedFilter.FuelType = null;
+
+            ApplyFilters();
         }
+
 
         private void ShowTransmissionFilterDialog()
         {
-            MessageBox.Show("Transmission filter - Implement transmission type selection", "Filter by Transmission",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var choice = MessageBox.Show(
+                "Yes = Automatic\nNo = Manual\nCancel = Clear Transmission Filter",
+                "Filter by Transmission",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            _advancedFilter ??= new VehicleAdvancedFilterDto();
+
+            if (choice == DialogResult.Yes)
+                _advancedFilter.Transmission = TransmissionType.Automatic;
+            else if (choice == DialogResult.No)
+                _advancedFilter.Transmission = TransmissionType.Manual;
+            else
+                _advancedFilter.Transmission = null;
+
+            ApplyFilters();
         }
+
 
         private void BtnRetire_Click(object sender, EventArgs e)
         {
@@ -250,7 +277,8 @@ namespace VRMS.UI.Controls.VehiclesView
             var status = GetSelectedStatus();
             var vehicles = _vehicleService.SearchVehicles(
                 status,
-                txtSearch.Text
+                txtSearch.Text,
+                _advancedFilter
             );
 
             dgvVehicles.DataSource = null;

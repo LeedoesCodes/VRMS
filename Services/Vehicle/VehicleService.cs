@@ -1,4 +1,5 @@
-﻿using VRMS.Enums;
+﻿using VRMS.DTOs.Vehicle;
+using VRMS.Enums;
 using VRMS.Models.Billing;
 using VRMS.Models.Fleet;
 using VRMS.Repositories.Billing;
@@ -199,9 +200,10 @@ public class VehicleService
 
     public List<Vehicle> SearchVehicles(
         VehicleStatus? status,
-        string? search)
+        string? search,
+        VehicleAdvancedFilterDto? advanced)
     {
-        return _vehicleRepo.Search(status, search);
+        return _vehicleRepo.Search(status, search, advanced);
     }
 
     // -------------------------------------------------

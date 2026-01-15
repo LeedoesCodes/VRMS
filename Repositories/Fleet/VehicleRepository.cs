@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using VRMS.Database;
+using VRMS.DTOs.Vehicle;
 using VRMS.Enums;
 using VRMS.Models.Fleet;
 
@@ -96,14 +97,21 @@ public class VehicleRepository
         return Map(table.Rows[0]);
     }
     
+
     public List<Vehicle> Search(
         VehicleStatus? status,
-        string? search)
+        string? search,
+        VehicleAdvancedFilterDto? advanced)
     {
         var table = DB.Query(
-            "CALL sp_vehicles_search(@status,@search);",
+            "CALL sp_vehicles_search(@status,@search,@cat,@yf,@yt,@fuel,@trans);",
             ("@status", status?.ToString()),
-            ("@search", string.IsNullOrWhiteSpace(search) ? null : search)
+            ("@search", string.IsNullOrWhiteSpace(search) ? null : search),
+            ("@cat", advanced?.CategoryId),
+            ("@yf", advanced?.YearFrom),
+            ("@yt", advanced?.YearTo),
+            ("@fuel", advanced?.FuelType?.ToString()),
+            ("@trans", advanced?.Transmission?.ToString())
         );
 
         return MapList(table);
