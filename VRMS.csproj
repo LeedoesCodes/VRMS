@@ -64,6 +64,8 @@
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
+	  <None Remove="Assets\company_logo.png" />
+	  <EmbeddedResource Include="Assets\company_logo.png" />
 	</ItemGroup>
 
 </Project>
