@@ -58,6 +58,7 @@
             lblVehicleModel = new Label();
             lblVehicleMake = new Label();
             panel4 = new Panel();
+            btnRetire = new Button();
             btnMarkAvailable = new Button();
             btnClear = new Button();
             btnSave = new Button();
@@ -91,7 +92,6 @@
             statusStrip1 = new StatusStrip();
             lblStatusMessage = new ToolStripStatusLabel();
             lblRecordCount = new ToolStripStatusLabel();
-            btnRetire = new Button();
             mainPanel.SuspendLayout();
             tabControlMain.SuspendLayout();
             tabNew.SuspendLayout();
@@ -409,6 +409,21 @@
             panel4.Padding = new Padding(11, 13, 11, 13);
             panel4.Size = new Size(222, 815);
             panel4.TabIndex = 1;
+            // 
+            // btnRetire
+            // 
+            btnRetire.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnRetire.BackColor = Color.Black;
+            btnRetire.FlatAppearance.BorderSize = 0;
+            btnRetire.FlatStyle = FlatStyle.Flat;
+            btnRetire.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            btnRetire.ForeColor = Color.White;
+            btnRetire.Location = new Point(14, 734);
+            btnRetire.Name = "btnRetire";
+            btnRetire.Size = new Size(196, 63);
+            btnRetire.TabIndex = 9;
+            btnRetire.Text = "♻ Retire";
+            btnRetire.UseVisualStyleBackColor = false;
             // 
             // btnMarkAvailable
             // 
@@ -822,7 +837,7 @@
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnClose.ForeColor = Color.White;
-            btnClose.Location = new Point(1015, 13);
+            btnClose.Location = new Point(998, 27);
             btnClose.Margin = new Padding(3, 4, 3, 4);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(77, 44);
@@ -876,21 +891,6 @@
             lblRecordCount.Name = "lblRecordCount";
             lblRecordCount.Size = new Size(159, 20);
             lblRecordCount.Text = "0 maintenance records";
-            // 
-            // btnRetire
-            // 
-            btnRetire.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnRetire.BackColor = Color.Black;
-            btnRetire.FlatAppearance.BorderSize = 0;
-            btnRetire.FlatStyle = FlatStyle.Flat;
-            btnRetire.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            btnRetire.ForeColor = Color.White;
-            btnRetire.Location = new Point(14, 734);
-            btnRetire.Name = "btnRetire";
-            btnRetire.Size = new Size(196, 63);
-            btnRetire.TabIndex = 9;
-            btnRetire.Text = "♻ Retire";
-            btnRetire.UseVisualStyleBackColor = false;
             // 
             // MaintenanceForm
             // 

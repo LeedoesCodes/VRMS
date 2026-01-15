@@ -86,7 +86,6 @@
             panel2 = new Panel();
             buttonLayout = new TableLayoutPanel();
             btnSave = new Button();
-            btnManageAccount = new Button();
             btnDelete = new Button();
             btnClear = new Button();
             btnEmergencyContacts = new Button();
@@ -789,18 +788,18 @@
             // 
             // buttonLayout
             // 
-            buttonLayout.ColumnCount = 6;
+            buttonLayout.ColumnCount = 7;
             buttonLayout.ColumnStyles.Add(new ColumnStyle());
             buttonLayout.ColumnStyles.Add(new ColumnStyle());
             buttonLayout.ColumnStyles.Add(new ColumnStyle());
             buttonLayout.ColumnStyles.Add(new ColumnStyle());
             buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             buttonLayout.ColumnStyles.Add(new ColumnStyle());
+            buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             buttonLayout.Controls.Add(btnSave, 0, 0);
-            buttonLayout.Controls.Add(btnManageAccount, 1, 0);
             buttonLayout.Controls.Add(btnDelete, 2, 0);
             buttonLayout.Controls.Add(btnClear, 3, 0);
-            buttonLayout.Controls.Add(btnEmergencyContacts, 5, 0);
+            buttonLayout.Controls.Add(btnEmergencyContacts, 4, 0);
             buttonLayout.Dock = DockStyle.Fill;
             buttonLayout.Location = new Point(20, 15);
             buttonLayout.Margin = new Padding(0);
@@ -827,23 +826,6 @@
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += BtnSave_Click;
             // 
-            // btnManageAccount
-            // 
-            btnManageAccount.Anchor = AnchorStyles.None;
-            btnManageAccount.BackColor = Color.FromArgb(52, 152, 219);
-            btnManageAccount.FlatAppearance.BorderSize = 0;
-            btnManageAccount.FlatStyle = FlatStyle.Flat;
-            btnManageAccount.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            btnManageAccount.ForeColor = Color.White;
-            btnManageAccount.Location = new Point(169, 40);
-            btnManageAccount.Margin = new Padding(3, 4, 3, 4);
-            btnManageAccount.Name = "btnManageAccount";
-            btnManageAccount.Size = new Size(160, 60);
-            btnManageAccount.TabIndex = 3;
-            btnManageAccount.Text = "🔐 Account";
-            btnManageAccount.UseVisualStyleBackColor = false;
-            btnManageAccount.Click += btnManageAccount_Click;
-            // 
             // btnDelete
             // 
             btnDelete.Anchor = AnchorStyles.None;
@@ -852,7 +834,7 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(335, 40);
+            btnDelete.Location = new Point(169, 40);
             btnDelete.Margin = new Padding(3, 4, 3, 4);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(120, 60);
@@ -869,7 +851,7 @@
             btnClear.FlatStyle = FlatStyle.Flat;
             btnClear.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnClear.ForeColor = Color.White;
-            btnClear.Location = new Point(461, 40);
+            btnClear.Location = new Point(295, 40);
             btnClear.Margin = new Padding(3, 4, 3, 4);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(120, 60);
@@ -885,7 +867,7 @@
             btnEmergencyContacts.FlatStyle = FlatStyle.Flat;
             btnEmergencyContacts.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnEmergencyContacts.ForeColor = Color.White;
-            btnEmergencyContacts.Location = new Point(665, 40);
+            btnEmergencyContacts.Location = new Point(533, 40);
             btnEmergencyContacts.Margin = new Padding(3, 4, 3, 4);
             btnEmergencyContacts.Name = "btnEmergencyContacts";
             btnEmergencyContacts.Size = new Size(220, 60);
@@ -982,7 +964,6 @@
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnManageAccount;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtLicenseNum;
         private System.Windows.Forms.Label label12;

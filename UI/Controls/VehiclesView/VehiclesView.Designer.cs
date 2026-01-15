@@ -39,7 +39,6 @@
             panelSearch = new Panel();
             txtSearch = new TextBox();
             cmbStatusFilter = new ComboBox();
-            btnRetire = new Button();
             btnEdit = new Button();
             btnAdd = new Button();
             splitContainerMain = new SplitContainer();
@@ -127,7 +126,6 @@
             panelToolbar.Controls.Add(btnAddCategory);
             panelToolbar.Controls.Add(panelSearch);
             panelToolbar.Controls.Add(cmbStatusFilter);
-            panelToolbar.Controls.Add(btnRetire);
             panelToolbar.Controls.Add(btnEdit);
             panelToolbar.Controls.Add(btnAdd);
             panelToolbar.Dock = DockStyle.Top;
@@ -201,21 +199,6 @@
             cmbStatusFilter.Name = "cmbStatusFilter";
             cmbStatusFilter.Size = new Size(160, 28);
             cmbStatusFilter.TabIndex = 5;
-            // 
-            // btnRetire
-            // 
-            btnRetire.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnRetire.BackColor = Color.FromArgb(150, 150, 150);
-            btnRetire.FlatAppearance.BorderSize = 0;
-            btnRetire.FlatStyle = FlatStyle.Flat;
-            btnRetire.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            btnRetire.ForeColor = Color.White;
-            btnRetire.Location = new Point(751, 11);
-            btnRetire.Name = "btnRetire";
-            btnRetire.Size = new Size(100, 40);
-            btnRetire.TabIndex = 8;
-            btnRetire.Text = "♻ Retire";
-            btnRetire.UseVisualStyleBackColor = false;
             // 
             // btnEdit
             // 
@@ -697,6 +680,5 @@
         private Button btnAddCategory;
         private ComboBox cmbAdvancedFilter;
         private Button btnUnderMaintenance;
-        private Button btnRetire;
     }
 }

@@ -18,9 +18,6 @@
         private void InitializeComponent()
         {
             pnlLoginCard = new Panel();
-            pnlUserType = new Panel();
-            rbAgent = new RadioButton();
-            rbCustomer = new RadioButton();
             lblSubTitle = new Label();
             label3 = new Label();
             label1 = new Label();
@@ -31,13 +28,11 @@
             btnLogin = new Button();
             btnExit = new Button();
             pnlLoginCard.SuspendLayout();
-            pnlUserType.SuspendLayout();
             SuspendLayout();
             // 
             // pnlLoginCard
             // 
             pnlLoginCard.BackColor = Color.White;
-            pnlLoginCard.Controls.Add(pnlUserType);
             pnlLoginCard.Controls.Add(lblSubTitle);
             pnlLoginCard.Controls.Add(label3);
             pnlLoginCard.Controls.Add(label1);
@@ -51,43 +46,6 @@
             pnlLoginCard.Name = "pnlLoginCard";
             pnlLoginCard.Size = new Size(503, 668);
             pnlLoginCard.TabIndex = 0;
-            // 
-            // pnlUserType
-            // 
-            pnlUserType.Controls.Add(rbAgent);
-            pnlUserType.Controls.Add(rbCustomer);
-            pnlUserType.Location = new Point(38, 300);
-            pnlUserType.Margin = new Padding(3, 4, 3, 4);
-            pnlUserType.Name = "pnlUserType";
-            pnlUserType.Size = new Size(423, 40);
-            pnlUserType.TabIndex = 8;
-            // 
-            // rbAgent
-            // 
-            rbAgent.AutoSize = true;
-            rbAgent.Checked = true;
-            rbAgent.Font = new Font("Segoe UI", 9F);
-            rbAgent.Location = new Point(76, 4);
-            rbAgent.Margin = new Padding(3, 4, 3, 4);
-            rbAgent.Name = "rbAgent";
-            rbAgent.Size = new Size(70, 24);
-            rbAgent.TabIndex = 1;
-            rbAgent.TabStop = true;
-            rbAgent.Text = "Agent";
-            rbAgent.UseVisualStyleBackColor = true;
-            // 
-            // rbCustomer
-            // 
-            rbCustomer.AutoSize = true;
-            rbCustomer.Font = new Font("Segoe UI", 9F);
-            rbCustomer.Location = new Point(243, 4);
-            rbCustomer.Margin = new Padding(3, 4, 3, 4);
-            rbCustomer.Name = "rbCustomer";
-            rbCustomer.Size = new Size(93, 24);
-            rbCustomer.TabIndex = 2;
-            rbCustomer.TabStop = true;
-            rbCustomer.Text = "Customer";
-            rbCustomer.UseVisualStyleBackColor = true;
             // 
             // lblSubTitle
             // 
@@ -211,8 +169,6 @@
             Size = new Size(617, 800);
             pnlLoginCard.ResumeLayout(false);
             pnlLoginCard.PerformLayout();
-            pnlUserType.ResumeLayout(false);
-            pnlUserType.PerformLayout();
             ResumeLayout(false);
 
         }
@@ -229,8 +185,5 @@
         private System.Windows.Forms.Button btnGoToRegister;
         private System.Windows.Forms.Panel pnlLoginCard;
         private System.Windows.Forms.Label lblSubTitle;
-        private System.Windows.Forms.Panel pnlUserType;
-        private System.Windows.Forms.RadioButton rbAgent;
-        private System.Windows.Forms.RadioButton rbCustomer;
     }
 }

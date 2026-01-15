@@ -51,8 +51,7 @@ namespace VRMS.UI.Forms
 
             LoadControl(
                 new LoginUserControl(
-                    _userService,
-                    _customerAuthService
+                    _userService
                 )
             );
 
@@ -73,8 +72,7 @@ namespace VRMS.UI.Forms
                     LoadControl(new RegisterUserControl(_userService));
 
                 login.ExitApplication += (_, __) => Application.Exit();
-
-                // 🔴 IMPORTANT: login success handler
+                
                 login.LoginSuccess += (_, __) => HandleLoginSuccess(login);
             }
 

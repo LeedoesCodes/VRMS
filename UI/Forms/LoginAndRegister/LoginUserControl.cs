@@ -9,9 +9,6 @@ namespace VRMS.Controls
 {
     public partial class LoginUserControl : UserControl
     {
-        private readonly CustomerAuthService _customerAuthService;
-
-        public CustomerAccount? LoggedInCustomer { get; private set; }
         public event EventHandler? GoToRegisterRequest;
         public event EventHandler? LoginSuccess;
         public event EventHandler? ExitApplication;
@@ -23,24 +20,19 @@ namespace VRMS.Controls
         public User? LoggedInUser { get; private set; }
 
         public LoginUserControl()
-            : this(
-                ApplicationServices.UserService,
-                ApplicationServices.CustomerAuthService)
+            : this(ApplicationServices.UserService)
         {
         }
 
-        internal LoginUserControl(
-            UserService userService,
-            CustomerAuthService customerAuthService)
+        internal LoginUserControl(UserService userService)
         {
             InitializeComponent();
 
             _userService = userService;
-            _customerAuthService = customerAuthService;
 
-            rbAgent.Checked = true;
             SetupEventHandlers();
         }
+
 
 
 
@@ -89,28 +81,12 @@ namespace VRMS.Controls
 
             try
             {
-                if (rbAgent.Checked)
-                {
-                    // =========================
-                    // AGENT LOGIN
-                    // =========================
-                    var user = _userService.Authenticate(username, password);
+                var user = _userService.Authenticate(username, password);
 
-                    if (!user.IsActive)
-                        throw new InvalidOperationException("Account inactive.");
+                if (!user.IsActive)
+                    throw new InvalidOperationException("Account inactive.");
 
-                    LoggedInUser = user;
-                }
-                else
-                {
-                    // =========================
-                    // CUSTOMER LOGIN
-                    // =========================
-                    var customer =
-                        _customerAuthService.Authenticate(username, password);
-
-                    LoggedInCustomer = customer;
-                }
+                LoggedInUser = user;
 
                 LoginSuccess?.Invoke(this, EventArgs.Empty);
             }
@@ -119,6 +95,7 @@ namespace VRMS.Controls
                 MessageBox.Show(ex.Message, "Login Failed");
             }
         }
+
 
 
 

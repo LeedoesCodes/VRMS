@@ -37,8 +37,7 @@ namespace VRMS.UI.Controls.VehiclesView
             cmbStatusFilter.SelectedIndexChanged += CmbStatusFilter_SelectedIndexChanged;
             cmbAdvancedFilter.SelectedIndexChanged += CmbAdvancedFilter_SelectedIndexChanged;
             txtSearch.TextChanged += (_, _) => ApplyFilters();
-
-            btnRetire.Click += BtnRetire_Click;
+            
             btnUnderMaintenance.Click += btnUnderMaintenance_Click;
         }
 
