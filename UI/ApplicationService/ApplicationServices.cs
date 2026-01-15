@@ -4,7 +4,6 @@ using VRMS.Repositories.Customers;
 using VRMS.Repositories.Damages;
 using VRMS.Repositories.Dashboard;
 using VRMS.Repositories.Fleet;
-using VRMS.Repositories.Inspections;
 using VRMS.Repositories.Rentals;
 using VRMS.Services.Account;
 using VRMS.Services.Billing;
@@ -66,9 +65,6 @@ public static class ApplicationServices
 
     private static readonly DamageReportRepository _damageReportRepo =
         new DamageReportRepository();
-
-    private static readonly VehicleInspectionRepository _inspectionRepo =
-        new VehicleInspectionRepository();
     
     private static readonly DashboardRepository _dashboardRepo =
         new DashboardRepository();
@@ -124,7 +120,6 @@ public static class ApplicationServices
             CustomerService,
             _rentalRepo,
             BillingService,
-            _inspectionRepo,
             _damageRepo,
             _damageReportRepo
         );

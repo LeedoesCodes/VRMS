@@ -3,7 +3,6 @@ using VRMS.DTOs.Damage;
 using VRMS.DTOs.Rental;
 using VRMS.Enums;
 using VRMS.Repositories.Damages;
-using VRMS.Repositories.Inspections;
 using VRMS.Repositories.Rentals;
 using VRMS.Services.Billing;
 using VRMS.Services.Customer;
@@ -32,8 +31,7 @@ public class RentalService
     private readonly RentalRepository _rentalRepo;
     private readonly BillingService _billingService;
     private readonly CustomerService _customerService;
-
-    private readonly VehicleInspectionRepository _inspectionRepo;
+    
     private readonly DamageRepository _damageRepo;
     private readonly DamageReportRepository _damageReportRepo;
 
@@ -46,7 +44,6 @@ public class RentalService
         CustomerService customerService,   
         RentalRepository rentalRepo,
         BillingService billingService,
-        VehicleInspectionRepository inspectionRepo,
         DamageRepository damageRepo,
         DamageReportRepository damageReportRepo)
     {
@@ -54,7 +51,6 @@ public class RentalService
         _rentalRepo = rentalRepo;
         _billingService = billingService;
         _customerService = customerService;
-        _inspectionRepo = inspectionRepo;
         _damageRepo = damageRepo;
         _damageReportRepo = damageReportRepo;
     }
@@ -99,91 +95,6 @@ public class RentalService
         _vehicleService.UpdateVehicleStatus(vehicleId, VehicleStatus.Rented);
 
         return rentalId;
-    }
-    
-
-
-
-
-    // -------------------------------------------------
-    // RETURN INSPECTION
-    // -------------------------------------------------
-
-    /// <summary>
-    /// Creates or retrieves a RETURN inspection for a rental.
-    /// Ensures only one return inspection exists per rental.
-    /// </summary>
-    public int CreateOrGetReturnInspection(int rentalId)
-    {
-        var inspection =
-            _inspectionRepo.GetByRental(
-                rentalId,
-                InspectionType.Return);
-
-        if (inspection != null)
-            return inspection.Id;
-
-        return _inspectionRepo.Create(
-            rentalId,
-            InspectionType.Return,
-            notes: "Return inspection",
-            fuelLevel: string.Empty,
-            cleanliness: string.Empty
-        );
-    }
-    
-    /// <summary>
-    /// Retrieves a vehicle inspection by id (thin wrapper).
-    /// </summary>
-    public Models.Damages.VehicleInspection GetInspectionById(int inspectionId)
-        => _inspectionRepo.GetById(inspectionId);
-
-    /// <summary>
-    /// Persist updates to a return inspection (notes, fuel level, cleanliness).
-    /// Thin wrapper to repository, used by the UI.
-    /// </summary>
-    public void UpdateReturnInspection(
-        int inspectionId,
-        string notes,
-        string fuelLevel,
-        string cleanliness)
-    {
-        // Basic validation (defensive)
-        if (inspectionId <= 0)
-            throw new InvalidOperationException("Invalid inspection id.");
-
-        _inspectionRepo.Update(inspectionId, notes ?? string.Empty, fuelLevel ?? string.Empty, cleanliness ?? string.Empty);
-    }
-
-
-    /// <summary>
-    /// Retrieves damages linked to a specific vehicle inspection.
-    /// Used by ReturnVehicleForm for damage listing.
-    /// </summary>
-    public IReadOnlyList<DamageReportListDto> GetDamagesByInspectionId(
-     int vehicleInspectionId)
-
-    {
-        var reports =
-            _damageReportRepo.GetByInspection(vehicleInspectionId);
-
-        var result = new List<DamageReportListDto>();
-
-        foreach (var report in reports)
-        {
-            var damage =
-                _damageRepo.GetById(report.DamageId);
-
-            result.Add(new DamageReportListDto
-            {
-                DamageReportId = report.Id,
-                Description = damage.Description,
-                EstimatedCost = damage.EstimatedCost
-            });
-
-        }
-
-        return result;
     }
     
     public void CancelRental(int rentalId)

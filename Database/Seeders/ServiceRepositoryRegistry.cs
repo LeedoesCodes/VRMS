@@ -4,7 +4,6 @@ using VRMS.Repositories.Billing;
 using VRMS.Repositories.Customers;
 using VRMS.Repositories.Damages;
 using VRMS.Repositories.Fleet;
-using VRMS.Repositories.Inspections;
 using VRMS.Repositories.Rentals;
 using VRMS.Services.Account;
 using VRMS.Services.Billing;
@@ -32,7 +31,6 @@ public static class ServiceRepositoryRegistry
         services.AddSingleton<VehicleFeatureMappingRepository>();
         services.AddSingleton<VehicleImageRepository>();
         services.AddSingleton<MaintenanceRepository>();
-        services.AddSingleton<VehicleInspectionRepository>();
 
         // Customers
         services.AddSingleton<CustomerRepository>();

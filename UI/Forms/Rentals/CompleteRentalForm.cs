@@ -181,50 +181,13 @@ namespace VRMS.UI.Forms.Rentals
         // =====================================================
         private void BtnAddDamage_Click(object? sender, EventArgs e)
         {
-            try
-            {
-                // Ensure return inspection exists
-                int inspectionId =
-                    _rentalService.CreateOrGetReturnInspection(_rentalId);
-
-                using (var form = new AddDamageForm(
-                           inspectionId,
-                           _rentalService,
-                           _vehicleService,
-                           ApplicationServices.DamageService
-                       ))
-                {
-                    if (form.ShowDialog(this) == DialogResult.OK)
-                    {
-                        // Immediately reload damages and update preview
-                        LoadDamages();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    ex.Message,
-                    "Cannot Add Damage",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
+            MessageBox.Show(
+                "Damage entry is being updated to the new rental-based system.",
+                "Not Available",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
-        // =====================================================
-        // INSPECTION CHECKLIST (LINKED)
-        // =====================================================
-        private void BtnInspectionChecklist_Click(object sender, EventArgs e)
-        {
-            using (var form = new InspectionChecklistForm(_rentalId, _rentalService))
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    // Reload damages & preview (inspection changes might affect billing later)
-                    LoadDamages();
-                }
-            }
-        }
 
         // =====================================================
         // COMPLETE RETURN (AUTHORITATIVE)
@@ -284,39 +247,11 @@ namespace VRMS.UI.Forms.Rentals
         // =====================================================
         private void LoadDamages()
         {
-            try
-            {
-                // Ensure return inspection exists
-                int inspectionId = _rentalService.CreateOrGetReturnInspection(_rentalId);
-
-                var damages = _rentalService.GetDamagesByInspectionId(inspectionId);
-
-                dgvDamages.Rows.Clear();
-
-                
-                foreach (var d in damages)
-                {
-                    dgvDamages.Rows.Add(
-                        d.DamageReportId,    
-                        d.Description,       
-                        d.EstimatedCost     
-                    );
-                }
-
-                // Update UI-only damage fees preview
-                _damageFees = damages.Sum(x => x.EstimatedCost);
-                UpdateBillingUI();
-            }
-            catch (Exception ex)
-            {
-                // Non-fatal: show message but keep form open
-                MessageBox.Show(
-                    ex.Message,
-                    "Cannot load damages",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
+            dgvDamages.Rows.Clear();
+            _damageFees = 0m;
+            UpdateBillingUI();
         }
+
 
       
         private void DtReturns_ValueChanged(object? sender, EventArgs e)
