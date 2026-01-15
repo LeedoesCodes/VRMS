@@ -24,9 +24,6 @@ public class BillingService
     /// <summary>Rental data access</summary>
     private readonly RentalRepository _rentalRepo;
 
-    /// <summary>Reservation business logic</summary>
-    private readonly ReservationService _reservationService;
-
     /// <summary>Vehicle lookup and metadata access</summary>
     private readonly VehicleService _vehicleService;
 
@@ -50,7 +47,6 @@ public class BillingService
     /// </summary>
     public BillingService(
         RentalRepository rentalRepo,
-        ReservationService reservationService,
         VehicleService vehicleService,
         RateService rateService,
         InvoiceRepository invoiceRepo,
@@ -59,7 +55,6 @@ public class BillingService
         DamageReportRepository damageReportRepo)
     {
         _rentalRepo = rentalRepo;
-        _reservationService = reservationService;
         _vehicleService = vehicleService;
         _rateService = rateService;
         _invoiceRepo = invoiceRepo;
@@ -133,19 +128,9 @@ public class BillingService
             ?? throw new InvalidOperationException(
                 "Invoice does not exist.");
 
-        Reservation? reservation = null;
-
-        if (rental.ReservationId.HasValue)
-        {
-            reservation =
-                _reservationService.GetReservationById(
-                    rental.ReservationId.Value);
-        }
-
         var vehicle =
             _vehicleService.GetVehicleById(
-                reservation?.VehicleId
-                ?? rental.VehicleId);
+                rental.VehicleId);
 
         EnsureInvoiceEditable(invoice.Id);
 
@@ -160,16 +145,6 @@ public class BillingService
             invoice.Id,
             "Base rental charge",
             baseRental);
-        
-        // -------- RESERVATION FEE CREDIT --------
-        if (reservation != null &&
-            reservation.ReservationFeeAmount > 0m)
-        {
-            _lineItemRepo.Create(
-                invoice.Id,
-                "Reservation fee (credited)",
-                -reservation.ReservationFeeAmount);
-        }
 
         // -------- LATE RETURN PENALTY --------
         var latePenalty =
@@ -297,7 +272,6 @@ public class BillingService
         var paymentId =
             _paymentRepo.Create(
                 invoiceId,
-                null,          // reservationId (NOT USED HERE)
                 amount,
                 method,
                 paymentType,
@@ -382,7 +356,6 @@ public class BillingService
 
         return _paymentRepo.Create(
             invoiceId,
-            null,          // reservationId
             amount,
             method,
             PaymentType.Refund,

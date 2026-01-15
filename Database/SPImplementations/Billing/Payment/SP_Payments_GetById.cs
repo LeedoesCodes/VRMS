@@ -12,14 +12,13 @@ public static class SP_Payments_GetById
                                       SELECT
                                           id,
                                           invoice_id,
-                                          reservation_id,
                                           amount,
                                           payment_method,
                                           payment_type,
                                           payment_date
                                       FROM payments
                                       WHERE id = p_payment_id;
-                                  
                                   END;
                                   """;
+
 }

@@ -21,8 +21,7 @@ public static class SP_Dashboard_Alerts
                                               ' Day(s) Late'
                                           ) AS deadline
                                       FROM rentals rt
-                                      JOIN reservations r ON r.id = rt.reservation_id
-                                      JOIN vehicles v ON v.id = r.vehicle_id
+                                      JOIN vehicles v ON v.id = rt.vehicle_id
                                       WHERE rt.status = 'Active'
                                         AND rt.expected_return_date < NOW()
 

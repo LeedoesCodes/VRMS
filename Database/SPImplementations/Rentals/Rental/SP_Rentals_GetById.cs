@@ -11,7 +11,6 @@ public static class SP_Rentals_GetById
                                   BEGIN
                                       SELECT
                                           id,
-                                          reservation_id,
                                           customer_id,     
                                           vehicle_id,
                                           pickup_date,
@@ -24,7 +23,7 @@ public static class SP_Rentals_GetById
                                           status
                                       FROM rentals
                                       WHERE id = p_rental_id;
-                                      
                                   END;
                                   """;
+
 }

@@ -9,7 +9,6 @@ public static class SP_Rentals_GetAll
                                   BEGIN
                                       SELECT
                                           id,
-                                          reservation_id,
                                           customer_id,     
                                           vehicle_id,
                                           pickup_date,
@@ -24,4 +23,5 @@ public static class SP_Rentals_GetAll
                                       ORDER BY pickup_date DESC;
                                   END;
                                   """;
+
 }

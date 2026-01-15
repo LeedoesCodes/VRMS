@@ -9,9 +9,6 @@ public static class M_0010_CreateRentalsTable
                                       CREATE TABLE IF NOT EXISTS rentals (
                                           id INT AUTO_INCREMENT PRIMARY KEY,
 
-                                          -- OPTIONAL reservation (walk-in allowed)
-                                          reservation_id INT NULL,
-
                                           -- CUSTOMER OWNS THE RENTAL (even for walk-ins)
                                           customer_id INT NOT NULL,
 
@@ -29,11 +26,6 @@ public static class M_0010_CreateRentalsTable
                                           end_fuel_level {Tbl.ToEnum<FuelLevel>()} NULL,
 
                                           status {Tbl.ToEnum<RentalStatus>()} NOT NULL,
-
-                                          CONSTRAINT fk_rentals_reservation
-                                              FOREIGN KEY (reservation_id)
-                                              REFERENCES reservations(id)
-                                              ON DELETE SET NULL,
 
                                           CONSTRAINT fk_rentals_customer
                                               FOREIGN KEY (customer_id)

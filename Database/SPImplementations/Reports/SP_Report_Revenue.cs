@@ -24,10 +24,8 @@ public static class SP_Report_Revenue
                                       FROM invoices i
                                       JOIN rentals r
                                           ON r.id = i.rental_id
-                                      JOIN reservations res
-                                          ON res.id = r.reservation_id
                                       JOIN vehicles v
-                                          ON v.id = res.vehicle_id
+                                          ON v.id = r.vehicle_id
 
                                       WHERE DATE(i.generated_date)
                                           BETWEEN p_from AND p_to

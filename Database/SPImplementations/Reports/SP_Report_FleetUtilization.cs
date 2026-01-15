@@ -48,10 +48,8 @@ public static class SP_Report_FleetUtilization
                                           ) AS utilization_percent
 
                                       FROM vehicles v
-                                      LEFT JOIN reservations res
-                                          ON res.vehicle_id = v.id
                                       LEFT JOIN rentals r
-                                          ON r.reservation_id = res.id
+                                          ON r.vehicle_id = v.id
                                          AND r.pickup_date <= p_to
                                          AND COALESCE(r.actual_return_date, p_to) >= p_from
 

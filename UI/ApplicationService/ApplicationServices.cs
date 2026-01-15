@@ -31,9 +31,6 @@ public static class ApplicationServices
     private static readonly CustomerAccountRepository _customerAccountRepo =
         new CustomerAccountRepository();
 
-    private static readonly ReservationRepository _reservationRepo =
-        new ReservationRepository();
-
     private static readonly RentalRepository _rentalRepo =
         new RentalRepository();
 
@@ -116,19 +113,10 @@ public static class ApplicationServices
 
     public static RateService RateService { get; } =
         new RateService(_rateConfigRepo);
-    
-    public static ReservationService ReservationService { get; } =
-        new ReservationService(
-            CustomerService,
-            VehicleService,
-            _reservationRepo,
-            RateService
-        );
 
     public static BillingService BillingService { get; } =
         new BillingService(
             _rentalRepo,
-            ReservationService,
             VehicleService,
             RateService,
             _invoiceRepo,
@@ -139,7 +127,6 @@ public static class ApplicationServices
 
     public static RentalService RentalService { get; } =
         new RentalService(
-            ReservationService,
             VehicleService,
             CustomerService,
             _rentalRepo,

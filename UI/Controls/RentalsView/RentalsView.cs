@@ -15,7 +15,6 @@ namespace VRMS.UI.Controls.RentalsView
     {
         private readonly CustomerService _customerService;
         private readonly VehicleService _vehicleService;
-        private readonly ReservationService _reservationService;
         private readonly RentalService _rentalService;
         private readonly RateService _rateService;
         private readonly BillingService _billingService;
@@ -30,7 +29,6 @@ namespace VRMS.UI.Controls.RentalsView
 
             _customerService = ApplicationServices.CustomerService;
             _vehicleService = ApplicationServices.VehicleService;
-            _reservationService = ApplicationServices.ReservationService;
             _rentalService = ApplicationServices.RentalService;
             _rateService = ApplicationServices.RateService;
             _billingService = ApplicationServices.BillingService;
@@ -77,23 +75,14 @@ namespace VRMS.UI.Controls.RentalsView
             {
                 string customerName = "Walk-in";
 
-                if (r.ReservationId.HasValue)
-                {
-                    var reservation =
-                        _reservationService.GetReservationById(r.ReservationId.Value);
-
-                    var customer =
-                        _customerService.GetCustomerById(reservation.CustomerId);
-
-                    customerName = $"{customer.FirstName} {customer.LastName}";
-                }
-                else if (r.CustomerId.HasValue)
+                if (r.CustomerId.HasValue)
                 {
                     var customer =
                         _customerService.GetCustomerById(r.CustomerId.Value);
 
                     customerName = $"{customer.FirstName} {customer.LastName}";
                 }
+
 
 
                 return new RentalGridRow
@@ -164,12 +153,12 @@ namespace VRMS.UI.Controls.RentalsView
                 using var form = new CompleteRentalForm(
                     row.RentalId,
                     _rentalService,
-                    _reservationService,
                     _vehicleService,
                     _customerService,
                     _rateService,
                     _billingService
                 );
+
                 if (form.ShowDialog(FindForm()) == DialogResult.OK)
                     LoadRentals();
             }
@@ -220,23 +209,14 @@ namespace VRMS.UI.Controls.RentalsView
             // =========================
             string customerName = "Walk-in";
 
-            if (rental.ReservationId.HasValue)
-            {
-                var reservation =
-                    _reservationService.GetReservationById(rental.ReservationId.Value);
-
-                var customer =
-                    _customerService.GetCustomerById(reservation.CustomerId);
-
-                customerName = $"{customer.FirstName} {customer.LastName}";
-            }
-            else if (rental.CustomerId.HasValue)
+            if (rental.CustomerId.HasValue)
             {
                 var customer =
                     _customerService.GetCustomerById(rental.CustomerId.Value);
 
                 customerName = $"{customer.FirstName} {customer.LastName}";
             }
+
 
             // =========================
             // BASIC UI FIELDS

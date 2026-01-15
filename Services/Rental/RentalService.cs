@@ -27,8 +27,7 @@ public class RentalService
     // -------------------------------------------------
     // DEPENDENCIES
     // -------------------------------------------------
-
-    private readonly ReservationService _reservationService;
+    
     private readonly VehicleService _vehicleService;
     private readonly RentalRepository _rentalRepo;
     private readonly BillingService _billingService;
@@ -43,7 +42,6 @@ public class RentalService
     // -------------------------------------------------
 
     public RentalService(
-        ReservationService reservationService,
         VehicleService vehicleService,
         CustomerService customerService,   
         RentalRepository rentalRepo,
@@ -52,7 +50,6 @@ public class RentalService
         DamageRepository damageRepo,
         DamageReportRepository damageReportRepo)
     {
-        _reservationService = reservationService;
         _vehicleService = vehicleService;
         _rentalRepo = rentalRepo;
         _billingService = billingService;
@@ -60,50 +57,6 @@ public class RentalService
         _inspectionRepo = inspectionRepo;
         _damageRepo = damageRepo;
         _damageReportRepo = damageReportRepo;
-    }
-    
-    public int StartRentalFromReservation(
-        int reservationId,
-        DateTime pickupDate,
-        FuelLevel startFuelLevel)
-    {
-        var reservation =
-            _reservationService.GetReservationById(reservationId);
-
-        if (reservation.Status != ReservationStatus.Confirmed)
-            throw new InvalidOperationException(
-                "Reservation must be confirmed before starting rental.");
-
-
-        if (_rentalRepo.GetByReservation(reservationId) != null)
-            throw new InvalidOperationException("A rental already exists for this reservation.");
-
-        var vehicle =
-            _vehicleService.GetVehicleById(reservation.VehicleId);
-        
-        if (_vehicleService.HasOverlappingMaintenance(vehicle.Id, pickupDate, reservation.EndDate))
-            throw new InvalidOperationException("Vehicle has scheduled or in-progress maintenance that overlaps the reservation period.");
-
-        if (vehicle.Status != VehicleStatus.Reserved)
-            throw new InvalidOperationException("Vehicle must be reserved.");
-
-        var rentalId =
-            _rentalRepo.Create(
-                reservationId: reservation.Id,
-                customerId: reservation.CustomerId,   
-                vehicleId: vehicle.Id,
-                pickupDate: pickupDate,
-                expectedReturnDate: reservation.EndDate,
-                startOdometer: vehicle.Odometer,
-                startFuelLevel: startFuelLevel,
-                status: RentalStatus.Active);
-
-        _rentalRepo.MarkStarted(rentalId);
-        _vehicleService.UpdateVehicleStatus(vehicle.Id, VehicleStatus.Rented);
-        _reservationService
-            .MarkReservationAsRented(reservation.Id);
-
-        return rentalId;
     }
 
 
@@ -132,14 +85,15 @@ public class RentalService
         // WALK-IN RENTAL: NO reservation, BUT customer IS KNOWN
         var rentalId =
             _rentalRepo.Create(
-                reservationId: null,          // NO reservation
-                customerId: customerId,       // THIS IS THE FIX
+                customerId: customerId,
                 vehicleId: vehicleId,
                 pickupDate: pickupDate,
                 expectedReturnDate: expectedReturnDate,
                 startOdometer: vehicle.Odometer,
                 startFuelLevel: startFuelLevel,
                 status: RentalStatus.Active);
+
+
 
         _rentalRepo.MarkStarted(rentalId);
         _vehicleService.UpdateVehicleStatus(vehicleId, VehicleStatus.Rented);
@@ -317,10 +271,6 @@ public class RentalService
 
     public IReadOnlyList<Models.Rentals.Rental> GetAllRentals()
         => _rentalRepo.GetAll();
-
-    public Models.Rentals.Rental? GetRentalByReservation(
-        int reservationId)
-        => _rentalRepo.GetByReservation(reservationId);
     
     public IReadOnlyList<RentalHistoryRowDto>
         GetRentalHistoryForCustomer(int customerId)

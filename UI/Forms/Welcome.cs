@@ -6,7 +6,6 @@ using VRMS.Forms;
 using VRMS.Services.Account;
 using VRMS.UI.ApplicationService;
 using VRMS.UI.Config.Animation;
-using VRMS.UI.Forms.Main;
 
 namespace VRMS.UI.Forms
 {
@@ -106,20 +105,7 @@ namespace VRMS.UI.Forms
                 mainForm.FormClosed += (_, __) => Application.Exit();
                 return;
             }
-
-            // ==============================
-            // CUSTOMER LOGIN
-            // ==============================
-            if (login.LoggedInCustomer != null)
-            {
-                var customerForm =
-                    new CustomerMainForm(login.LoggedInCustomer);
-
-                customerForm.Show();
-                Hide();
-
-                customerForm.FormClosed += OnChildFormClosed;
-            }
+            
         }
 
         // =====================================================

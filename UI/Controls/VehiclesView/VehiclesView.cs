@@ -17,7 +17,6 @@ namespace VRMS.UI.Controls.VehiclesView
         private readonly VehicleService _vehicleService;
         private readonly DriversLicenseService _driversLicenseService;
         private readonly CustomerService _customerService;
-        private readonly ReservationService _reservationService;
         private readonly RentalService _rentalService;
 
         public VehiclesView()
@@ -27,7 +26,6 @@ namespace VRMS.UI.Controls.VehiclesView
             _vehicleService = ApplicationServices.VehicleService;
             _driversLicenseService = ApplicationServices.DriversLicenseService;
             _customerService = ApplicationServices.CustomerService;
-            _reservationService = ApplicationServices.ReservationService;
             _rentalService = ApplicationServices.RentalService;
 
             Load += VehiclesView_Load;

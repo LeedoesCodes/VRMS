@@ -28,14 +28,7 @@ public static class SeederRunner
             new Customer.CustomerSeeder(
                 services.GetRequiredService<CustomerService>(),
                 services.GetRequiredService<DriversLicenseService>()
-            ),
-            new Rental.ReservationSeeder(
-                services.GetRequiredService<ReservationService>(),
-                services.GetRequiredService<PaymentRepository>()
-            ),
-            new Rental.RentalSeeder(
-                services.GetRequiredService<RentalService>()
-            ),
+            )
 
         };
 

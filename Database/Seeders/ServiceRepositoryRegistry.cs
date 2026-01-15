@@ -46,7 +46,6 @@ public static class ServiceRepositoryRegistry
         services.AddSingleton<RateConfigurationRepository>();
         
         // Rentals
-        services.AddSingleton<ReservationRepository>();
         services.AddSingleton<RentalRepository>();
         
         // Damages
@@ -64,7 +63,6 @@ public static class ServiceRepositoryRegistry
         services.AddSingleton<CustomerService>();
         services.AddSingleton<VehicleService>();
         services.AddSingleton<BillingService>();
-        services.AddSingleton<ReservationService>();
         services.AddSingleton<RentalService>();
         services.AddSingleton<RateService>();
     }

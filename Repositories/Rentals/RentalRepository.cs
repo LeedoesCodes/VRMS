@@ -12,8 +12,7 @@ public class RentalRepository
     // -------------------------------------------------
 
     public int Create(
-        int? reservationId,
-        int? customerId,               
+        int customerId,
         int vehicleId,
         DateTime pickupDate,
         DateTime expectedReturnDate,
@@ -22,9 +21,8 @@ public class RentalRepository
         RentalStatus status)
     {
         var table = DB.Query(
-            "CALL sp_rentals_create(@rid,@cid,@vid,@pickup,@expected,@odo,@fuel,@status);",
-            ("@rid", reservationId),
-            ("@cid", customerId),                    
+            "CALL sp_rentals_create(@cid,@vid,@pickup,@expected,@odo,@fuel,@status);",
+            ("@cid", customerId),
             ("@vid", vehicleId),
             ("@pickup", pickupDate),
             ("@expected", expectedReturnDate),
@@ -35,8 +33,8 @@ public class RentalRepository
 
         return Convert.ToInt32(table.Rows[0]["rental_id"]);
     }
-    
-    
+
+
     public void MarkStarted(int rentalId)
     {
         DB.Execute(
@@ -74,7 +72,7 @@ public class RentalRepository
             ("@status", status.ToString())
         );
     }
-    
+
     public void Delete(int rentalId)
     {
         DB.Execute(
@@ -101,19 +99,8 @@ public class RentalRepository
         return Map(table.Rows[0]);
     }
 
-    public Rental? GetByReservation(int reservationId)
-    {
-        var table = DB.Query(
-            "CALL sp_rentals_get_by_reservation(@rid);",
-            ("@rid", reservationId)
-        );
+    // NOTE: GetByReservation removed (reservations removed from schema)
 
-        if (table.Rows.Count == 0)
-            return null;
-
-        return Map(table.Rows[0]);
-    }
-    
     public List<Rental> GetAll()
     {
         var rentals = new List<Rental>();
@@ -128,7 +115,7 @@ public class RentalRepository
 
         return rentals;
     }
-    
+
     public List<(Rental rental, decimal? totalAmount)>
         GetByCustomer(int customerId)
     {
@@ -144,16 +131,16 @@ public class RentalRepository
             var rental = Map(row);
 
             decimal? total =
-                row["total_amount"] == DBNull.Value
-                    ? null
-                    : Convert.ToDecimal(row["total_amount"]);
+                row.Table.Columns.Contains("total_amount") && row["total_amount"] != DBNull.Value
+                    ? Convert.ToDecimal(row["total_amount"])
+                    : null;
 
             result.Add((rental, total));
         }
 
         return result;
     }
-    
+
     public List<Rental> GetOverlappingRentals(
         int vehicleId,
         DateTime start,
@@ -184,16 +171,9 @@ public class RentalRepository
         return new Rental
         {
             Id = Convert.ToInt32(row["id"]),
-            ReservationId =
-                row["reservation_id"] == DBNull.Value
-                    ? null
-                    : Convert.ToInt32(row["reservation_id"]),
 
-            // <-- map customer_id
-            CustomerId =
-                row.Table.Columns.Contains("customer_id") && row["customer_id"] != DBNull.Value
-                    ? Convert.ToInt32(row["customer_id"])
-                    : (int?)null,
+            // customer_id is NOT NULL in the rentals table
+            CustomerId = Convert.ToInt32(row["customer_id"]),
 
             VehicleId = Convert.ToInt32(row["vehicle_id"]),
             PickupDate = Convert.ToDateTime(row["pickup_date"]),

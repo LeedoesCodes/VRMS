@@ -16,7 +16,6 @@ namespace VRMS.UI.Controls.History
         private readonly RentalService _rentalService;
         private readonly CustomerService _customerService;
         private readonly VehicleService _vehicleService;
-        private readonly ReservationService _reservationService;
 
         private static readonly string PlaceholderImagePath =
             Path.Combine(AppContext.BaseDirectory, "Assets", "img_placeholder.png");
@@ -28,15 +27,12 @@ namespace VRMS.UI.Controls.History
             _rentalService = ApplicationServices.RentalService;
             _customerService = ApplicationServices.CustomerService;
             _vehicleService = ApplicationServices.VehicleService;
-            _reservationService = ApplicationServices.ReservationService;
 
             // FORM LOAD
             Load += History_Load;
 
             // GRID EVENTS
             dgvRentals.SelectionChanged += DgvRentals_SelectionChanged;
-            dgvReservations.SelectionChanged += DgvReservations_SelectionChanged;
-            dgvReservations.CellFormatting += DgvReservations_CellFormatting;
 
             // TAB CHANGE
             tabControlHistory.SelectedIndexChanged += TabControlHistory_SelectedIndexChanged;
@@ -54,7 +50,6 @@ namespace VRMS.UI.Controls.History
         {
             ConfigureRentalsGrid();
             LoadRentals();
-            LoadReservations();
             ResetDetails();
         }
 
@@ -113,30 +108,6 @@ namespace VRMS.UI.Controls.History
             lblSummary.Text = $"Total Rentals: {rentals.Count}";
         }
 
-        private void LoadReservations()
-        {
-            dgvReservations.Rows.Clear();
-
-            var reservations = _reservationService
-                .GetAllForGrid()
-                .OrderByDescending(r => r.StartDate)
-                .ToList();
-
-            foreach (var r in reservations)
-            {
-                dgvReservations.Rows.Add(
-                    r.ReservationId,
-                    r.VehicleName,
-                    $"{r.StartDate:MMM dd, yyyy} → {r.EndDate:MMM dd, yyyy}",
-                    r.Status.ToString(),
-                    "—"
-                );
-            }
-
-            lblSummary.Text =
-                $"Total: {reservations.Count} reservations | {_rentalService.GetAllRentals().Count} rentals";
-        }
-
         // =====================================================
         // STATUS STYLING
         // =====================================================
@@ -160,27 +131,7 @@ namespace VRMS.UI.Controls.History
                 _ => e.CellStyle.ForeColor
             };
         }
-
-        private void DgvReservations_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (dgvReservations.Columns[e.ColumnIndex].Name != "Status")
-                return;
-
-            if (e.Value is not string status)
-                return;
-
-            e.CellStyle.Font = new Font(dgvReservations.Font, FontStyle.Bold);
-
-            e.CellStyle.ForeColor = status switch
-            {
-                nameof(ReservationStatus.Pending) => Color.Orange,
-                nameof(ReservationStatus.Confirmed) => Color.Green,
-                nameof(ReservationStatus.Rented) => Color.Blue,
-                nameof(ReservationStatus.Cancelled) => Color.DarkGray,
-                _ => e.CellStyle.ForeColor
-            };
-        }
-
+        
         // =====================================================
         // SELECTION → DETAILS
         // =====================================================
@@ -219,13 +170,6 @@ namespace VRMS.UI.Controls.History
             panelDetailsContent.Visible = true;
 
             btnViewReceipt.Enabled = true;
-            btnRefund.Enabled = false;
-        }
-
-        private void DgvReservations_SelectionChanged(object sender, EventArgs e)
-        {
-            ResetDetails();
-            btnViewReceipt.Enabled = false;
             btnRefund.Enabled = false;
         }
 
@@ -284,8 +228,6 @@ namespace VRMS.UI.Controls.History
 
             if (tabControlHistory.SelectedTab == tabRentals)
                 LoadRentals();
-            else if (tabControlHistory.SelectedTab == tabReservations)
-                LoadReservations();
 
             btnViewReceipt.Enabled = false;
             btnRefund.Enabled = false;

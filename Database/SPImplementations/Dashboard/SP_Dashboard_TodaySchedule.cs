@@ -8,35 +8,33 @@ public static class SP_Dashboard_TodaySchedule
                                   CREATE PROCEDURE sp_dashboard_today_schedule()
                                   BEGIN
                                       -- =========================
-                                      -- PICKUPS (RESERVATIONS)
+                                      -- PICKUPS (RENTALS STARTING TODAY)
                                       -- =========================
                                       SELECT
                                           'Pickup' AS type,
                                           CONCAT(v.make, ' ', v.model, ' (', v.license_plate, ')') AS vehicle,
                                           CONCAT(c.first_name, ' ', c.last_name) AS customer,
                                           r.status AS status
-                                      FROM reservations r
+                                      FROM rentals r
                                       JOIN vehicles v ON v.id = r.vehicle_id
                                       JOIN customers c ON c.id = r.customer_id
-                                      WHERE DATE(r.start_date) = CURDATE()
-                                        AND r.status <> 'Cancelled'
+                                      WHERE DATE(r.pickup_date) = CURDATE()
 
                                       UNION ALL
 
                                       -- =========================
-                                      -- RETURNS (RENTALS)
+                                      -- RETURNS (RENTALS DUE TODAY)
                                       -- =========================
                                       SELECT
                                           'Return' AS type,
                                           CONCAT(v.make, ' ', v.model, ' (', v.license_plate, ')') AS vehicle,
                                           CONCAT(c.first_name, ' ', c.last_name) AS customer,
-                                          rt.status AS status
-                                      FROM rentals rt
-                                      JOIN reservations r ON r.id = rt.reservation_id
+                                          r.status AS status
+                                      FROM rentals r
                                       JOIN vehicles v ON v.id = r.vehicle_id
                                       JOIN customers c ON c.id = r.customer_id
-                                      WHERE DATE(rt.expected_return_date) = CURDATE()
-                                        AND rt.status <> 'Completed'
+                                      WHERE DATE(r.expected_return_date) = CURDATE()
+                                        AND r.status <> 'Completed'
 
                                       ORDER BY type DESC;
                                   END;

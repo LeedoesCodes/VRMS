@@ -14,7 +14,6 @@ namespace VRMS.UI.Forms.Rentals
     {
         private readonly int _rentalId;
         private readonly RentalService _rentalService;
-        private readonly ReservationService _reservationService;
         private readonly VehicleService _vehicleService;
         private readonly CustomerService _customerService;
         private readonly RateService _rateService;
@@ -30,7 +29,6 @@ namespace VRMS.UI.Forms.Rentals
         public CompleteRentalForm(
             int rentalId,
             RentalService rentalService,
-            ReservationService reservationService,
             VehicleService vehicleService,
             CustomerService customerService,
             RateService rateService,
@@ -40,7 +38,6 @@ namespace VRMS.UI.Forms.Rentals
 
             _rentalId = rentalId;
             _rentalService = rentalService;
-            _reservationService = reservationService;
             _vehicleService = vehicleService;
             _customerService = customerService;
             _rateService = rateService;
