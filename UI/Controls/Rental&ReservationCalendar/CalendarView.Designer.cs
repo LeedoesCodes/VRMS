@@ -20,6 +20,7 @@
             components = new System.ComponentModel.Container();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             pnlHeader = new Panel();
             dtpWeekView = new DateTimePicker();
             dtpMonthYear = new DateTimePicker();
@@ -33,6 +34,7 @@
             pnlMain = new Panel();
             splitContainer = new SplitContainer();
             pnlVehicleList = new Panel();
+            pnlVehicleHeader = new Panel();
             dgvVehicles = new DataGridView();
             colYear = new DataGridViewTextBoxColumn();
             colLicense = new DataGridViewTextBoxColumn();
@@ -79,6 +81,7 @@
             dtpWeekView.Size = new Size(171, 27);
             dtpWeekView.TabIndex = 11;
             dtpWeekView.Visible = false;
+            dtpWeekView.ValueChanged += dtpWeekView_ValueChanged;
             // 
             // dtpMonthYear
             // 
@@ -90,6 +93,7 @@
             dtpMonthYear.ShowUpDown = true;
             dtpMonthYear.Size = new Size(171, 27);
             dtpMonthYear.TabIndex = 7;
+            dtpMonthYear.ValueChanged += dtpMonthYear_ValueChanged;
             // 
             // btnNext
             // 
@@ -133,6 +137,7 @@
             cmbFilter.Name = "cmbFilter";
             cmbFilter.Size = new Size(137, 28);
             cmbFilter.TabIndex = 3;
+            cmbFilter.SelectedIndexChanged += cmbFilter_SelectedIndexChanged;
             // 
             // cmbSort
             // 
@@ -144,6 +149,7 @@
             cmbSort.Name = "cmbSort";
             cmbSort.Size = new Size(137, 28);
             cmbSort.TabIndex = 2;
+            cmbSort.SelectedIndexChanged += cmbSort_SelectedIndexChanged;
             // 
             // btnWeekView
             // 
@@ -206,31 +212,36 @@
             // pnlVehicleList
             // 
             pnlVehicleList.Controls.Add(dgvVehicles);
+            pnlVehicleList.Controls.Add(pnlVehicleHeader);
             pnlVehicleList.Dock = DockStyle.Fill;
             pnlVehicleList.Location = new Point(0, 0);
             pnlVehicleList.Margin = new Padding(3, 4, 3, 4);
             pnlVehicleList.Name = "pnlVehicleList";
-            pnlVehicleList.Padding = new Padding(6, 7, 6, 7);
+            pnlVehicleList.Padding = Padding.Empty;
             pnlVehicleList.Size = new Size(286, 734);
             pnlVehicleList.TabIndex = 0;
+            pnlVehicleList.Resize += pnlVehicleList_Resize;
+            // 
+            // pnlVehicleHeader
+            // 
+            pnlVehicleHeader.BackColor = Color.FromArgb(240, 240, 240);
+            pnlVehicleHeader.Dock = DockStyle.Top;
+            pnlVehicleHeader.Location = new Point(0, 0);
+            pnlVehicleHeader.Margin = new Padding(3, 4, 3, 4);
+            pnlVehicleHeader.Name = "pnlVehicleHeader";
+            pnlVehicleHeader.Size = new Size(286, 40);
+            pnlVehicleHeader.TabIndex = 1;
+            pnlVehicleHeader.Paint += pnlVehicleHeader_Paint;
             // 
             // dgvVehicles
             // 
             dgvVehicles.AllowUserToAddRows = false;
             dgvVehicles.AllowUserToDeleteRows = false;
             dgvVehicles.AllowUserToResizeRows = false;
-            dgvVehicles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvVehicles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dgvVehicles.BackgroundColor = Color.White;
             dgvVehicles.BorderStyle = BorderStyle.None;
-            dgvVehicles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvVehicles.ColumnHeadersVisible = false;
-            dgvVehicles.Columns.AddRange(new DataGridViewColumn[] { colYear, colLicense, colModel });
-            dgvVehicles.Dock = DockStyle.Fill;
-            dgvVehicles.Location = new Point(6, 7);
-            dgvVehicles.Margin = new Padding(3, 4, 3, 4);
-            dgvVehicles.MultiSelect = false;
-            dgvVehicles.Name = "dgvVehicles";
-            dgvVehicles.ReadOnly = true;
+            dgvVehicles.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
@@ -238,39 +249,66 @@
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvVehicles.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvVehicles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvVehicles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvVehicles.ColumnHeadersVisible = false;
+            dgvVehicles.Columns.AddRange(new DataGridViewColumn[] { colYear, colLicense, colModel });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvVehicles.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvVehicles.Dock = DockStyle.Fill;
+            dgvVehicles.Location = new Point(0, 40);
+            dgvVehicles.Margin = new Padding(3, 4, 3, 4);
+            dgvVehicles.MultiSelect = false;
+            dgvVehicles.Name = "dgvVehicles";
+            dgvVehicles.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvVehicles.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvVehicles.RowHeadersVisible = false;
             dgvVehicles.RowHeadersWidth = 51;
-            dataGridViewCellStyle2.BackColor = Color.WhiteSmoke;
-            dgvVehicles.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dgvVehicles.RowTemplate.Height = 40;
             dgvVehicles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvVehicles.Size = new Size(274, 720);
+            dgvVehicles.Size = new Size(286, 694);
             dgvVehicles.TabIndex = 0;
+            dgvVehicles.RowPrePaint += dgvVehicles_RowPrePaint;
             // 
             // colYear
             // 
             colYear.DataPropertyName = "Year";
             colYear.FillWeight = 30F;
             colYear.HeaderText = "Year";
-            colYear.MinimumWidth = 6;
+            colYear.MinimumWidth = 50;
             colYear.Name = "colYear";
             colYear.ReadOnly = true;
+            colYear.Width = 50;
             // 
             // colLicense
             // 
             colLicense.DataPropertyName = "LicensePlate";
             colLicense.FillWeight = 40F;
             colLicense.HeaderText = "License";
-            colLicense.MinimumWidth = 6;
+            colLicense.MinimumWidth = 80;
             colLicense.Name = "colLicense";
             colLicense.ReadOnly = true;
+            colLicense.Width = 80;
             // 
             // colModel
             // 
             colModel.DataPropertyName = "Model";
             colModel.FillWeight = 60F;
             colModel.HeaderText = "Model";
-            colModel.MinimumWidth = 6;
+            colModel.MinimumWidth = 100;
             colModel.Name = "colModel";
             colModel.ReadOnly = true;
             // 
@@ -329,5 +367,6 @@
         private Button btnWeekView;
         private Button btnMonthView;
         private DateTimePicker dtpWeekView;
+        private Panel pnlVehicleHeader;
     }
 }
