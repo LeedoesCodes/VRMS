@@ -17,7 +17,7 @@ public class RateConfigurationRepository
         decimal excessMileageRate)
     {
         var table = DB.Query(
-            "CALL sp_rate_configurations_create(@cat,@daily,@weekly,@monthly,@hourly,@included,@excess);",
+            "CALL sp_rate_configurations_create(@cat,@daily,@weekly,@monthly,@included,@excess);",
             ("@cat", vehicleCategoryId),
             ("@daily", daily),
             ("@weekly", weekly),
@@ -57,7 +57,7 @@ public class RateConfigurationRepository
         decimal excessMileageRate)
     {
         DB.Execute(
-            "CALL sp_rate_configurations_update(@id,@daily,@weekly,@monthly,@hourly,@included,@excess);",
+            "CALL sp_rate_configurations_update(@id,@daily,@weekly,@monthly,@included,@excess);",
             ("@id", id),
             ("@daily", daily),
             ("@weekly", weekly),
