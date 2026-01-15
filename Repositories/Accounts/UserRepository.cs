@@ -120,7 +120,7 @@ public class UserRepository
             ("@id", id)
         );
     }
-    
+
     public void UpdatePhoto(int userId, string photoPath)
     {
         DB.Execute(
@@ -129,7 +129,7 @@ public class UserRepository
             ("@photo", photoPath)
         );
     }
-    
+
     public void UpdateSelfProfile(
         int userId,
         string? fullName,
@@ -160,7 +160,7 @@ public class UserRepository
 
         return list;
     }
-    
+
     public IEnumerable<User> GetAllActive()
     {
         var table = DB.Query("CALL sp_users_get_all_active();");
@@ -221,7 +221,7 @@ public class UserRepository
 
         user.Id = Convert.ToInt32(row["id"]);
         user.Username = row["username"].ToString()!;
-        
+
         user.FullName =
             row["full_name"] == DBNull.Value ? null : row["full_name"].ToString();
         user.Email =
