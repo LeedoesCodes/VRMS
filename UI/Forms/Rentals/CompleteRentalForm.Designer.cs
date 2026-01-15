@@ -35,7 +35,6 @@
             txtConditions = new TextBox();
             pnlDamageAssessment = new Panel();
             btnViewDamageDetails = new Button();
-            btnInspectionChecklist = new Button();
             lblSectionTitleDamage = new Label();
             btnAddDamage = new Button();
             dgvDamages = new DataGridView();
@@ -242,7 +241,6 @@
             pnlDamageAssessment.BackColor = Color.White;
             pnlDamageAssessment.BorderStyle = BorderStyle.FixedSingle;
             pnlDamageAssessment.Controls.Add(btnViewDamageDetails);
-            pnlDamageAssessment.Controls.Add(btnInspectionChecklist);
             pnlDamageAssessment.Controls.Add(lblSectionTitleDamage);
             pnlDamageAssessment.Controls.Add(btnAddDamage);
             pnlDamageAssessment.Controls.Add(dgvDamages);
@@ -264,21 +262,6 @@
             btnViewDamageDetails.TabIndex = 4;
             btnViewDamageDetails.Text = "View Damage Details";
             btnViewDamageDetails.UseVisualStyleBackColor = false;
-            // 
-            // btnInspectionChecklist
-            // 
-            btnInspectionChecklist.BackColor = Color.FromArgb(155, 89, 182);
-            btnInspectionChecklist.FlatStyle = FlatStyle.Flat;
-            btnInspectionChecklist.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnInspectionChecklist.ForeColor = Color.White;
-            btnInspectionChecklist.ImageAlign = ContentAlignment.MiddleLeft;
-            btnInspectionChecklist.Location = new Point(635, 9);
-            btnInspectionChecklist.Name = "btnInspectionChecklist";
-            btnInspectionChecklist.Size = new Size(220, 35);
-            btnInspectionChecklist.TabIndex = 3;
-            btnInspectionChecklist.Text = "Inspection Checklist";
-            btnInspectionChecklist.UseVisualStyleBackColor = false;
-            btnInspectionChecklist.Click += BtnInspectionChecklist_Click;
             // 
             // lblSectionTitleDamage
             // 
@@ -548,7 +531,6 @@
         private Panel pnlActionBar;
         private Button btnCompleteReturn;
         private Button btnCancels;
-        private Button btnInspectionChecklist;
         private Label lblSubtotal;
         private Label lblSubtotalValue;
         private Label lblBaseRental;
