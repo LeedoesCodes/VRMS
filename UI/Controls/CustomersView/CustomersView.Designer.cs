@@ -169,6 +169,9 @@
             dgvCustomers.RowHeadersWidth = 51;
             dgvCustomers.RowTemplate.Height = 40;
             dgvCustomers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvCustomers.MultiSelect = false;
+            dgvCustomers.ColumnHeadersDefaultCellStyle.SelectionBackColor = dgvCustomers.ColumnHeadersDefaultCellStyle.BackColor;
+            dgvCustomers.ColumnHeadersDefaultCellStyle.SelectionForeColor = dgvCustomers.ColumnHeadersDefaultCellStyle.ForeColor;
             dgvCustomers.Size = new Size(400, 986);
             dgvCustomers.TabIndex = 1;
             // 
