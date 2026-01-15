@@ -262,6 +262,7 @@
             btnViewDamageDetails.TabIndex = 4;
             btnViewDamageDetails.Text = "View Damage Details";
             btnViewDamageDetails.UseVisualStyleBackColor = false;
+            btnViewDamageDetails.Click += btnViewDamageDetails_Click;
             // 
             // lblSectionTitleDamage
             // 

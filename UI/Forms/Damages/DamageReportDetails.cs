@@ -9,9 +9,9 @@ namespace VRMS.UI.Forms.Damages
 {
     public partial class DamageReportDetails : Form
     {
-        // =========================
+        // =====================================================
         // STATE
-        // =========================
+        // =====================================================
 
         private readonly int _damageReportId;
         private readonly DamageService _damageService;
@@ -19,11 +19,11 @@ namespace VRMS.UI.Forms.Damages
         private DamageReport _report = null!;
         private Damage _damage = null!;
 
-        private bool _editMode = false;
+        private bool _editMode;
 
-        // =========================
+        // =====================================================
         // CONSTRUCTOR
-        // =========================
+        // =====================================================
 
         public DamageReportDetails(
             int damageReportId,
@@ -35,14 +35,14 @@ namespace VRMS.UI.Forms.Damages
             _damageService = damageService;
 
             Load += DamageReportDetails_Load;
-            btnEdit.Click += btnEdit_Click;
-            btnSave.Click += btnSave_Click;
+            btnEdit.Click += BtnEdit_Click;
+            btnSave.Click += BtnSave_Click;
             btnClose.Click += (_, __) => Close();
         }
 
-        // =========================
+        // =====================================================
         // LOAD
-        // =========================
+        // =====================================================
 
         private void DamageReportDetails_Load(object? sender, EventArgs e)
         {
@@ -50,9 +50,9 @@ namespace VRMS.UI.Forms.Damages
             SetEditMode(false);
         }
 
-        // =========================
-        // DATA LOAD
-        // =========================
+        // =====================================================
+        // LOAD DATA
+        // =====================================================
 
         private void LoadData()
         {
@@ -65,6 +65,9 @@ namespace VRMS.UI.Forms.Damages
                     _damageService.GetDamageReportById(
                         _damageReportId);
 
+                // ----------------------------
+                // DAMAGE
+                // ----------------------------
                 _damage =
                     _damageService.GetDamageById(
                         _report.DamageId);
@@ -91,7 +94,7 @@ namespace VRMS.UI.Forms.Damages
                 txtVehicleColor.Text = "N/A";
 
                 // ----------------------------
-                // DAMAGE INFO
+                // DAMAGE DETAILS
                 // ----------------------------
                 txtDamageDescription.Text = _damage.Description;
                 txtDamageType.Text = _damage.DamageType.ToString();
@@ -100,7 +103,7 @@ namespace VRMS.UI.Forms.Damages
                 txtRepairNotes.Text = string.Empty;
 
                 // ----------------------------
-                // STATUS
+                // STATUS (ONLY WHAT DB SUPPORTS)
                 // ----------------------------
                 cbStatus.Items.Clear();
                 cbStatus.Items.Add("Pending");
@@ -118,7 +121,7 @@ namespace VRMS.UI.Forms.Damages
             {
                 MessageBox.Show(
                     ex.Message,
-                    "Load Error",
+                    "Failed to Load Damage Report",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
@@ -126,31 +129,40 @@ namespace VRMS.UI.Forms.Damages
             }
         }
 
-        // =========================
-        // PHOTO
-        // =========================
+        // =====================================================
+        // PHOTO LOADING (SAFE)
+        // =====================================================
 
-        private void LoadPhoto(string path)
+        private void LoadPhoto(string relativePath)
         {
             pbDamageImage1.Image?.Dispose();
             pbDamageImage1.Image = null;
 
-            if (!File.Exists(path))
+            if (string.IsNullOrWhiteSpace(relativePath))
                 return;
 
-            using var fs =
-                new FileStream(
-                    path,
-                    FileMode.Open,
-                    FileAccess.Read);
+            // MUST match FileStorageHelper.StorageRoot
+            string fullPath =
+                Path.Combine(
+                    AppContext.BaseDirectory,
+                    "Storage",
+                    relativePath
+                );
 
-            pbDamageImage1.Image =
-                Image.FromStream(fs);
+            if (!File.Exists(fullPath))
+                return;
+
+            // Load safely without locking the file
+            using var temp = Image.FromFile(fullPath);
+            pbDamageImage1.Image = new Bitmap(temp);
         }
 
-        // =========================
+
+
+
+        // =====================================================
         // EDIT MODE
-        // =========================
+        // =====================================================
 
         private void SetEditMode(bool enabled)
         {
@@ -161,26 +173,27 @@ namespace VRMS.UI.Forms.Damages
             btnEdit.Enabled = !enabled;
         }
 
-        // =========================
+        // =====================================================
         // EDIT
-        // =========================
+        // =====================================================
 
-        private void btnEdit_Click(object? sender, EventArgs e)
+        private void BtnEdit_Click(object? sender, EventArgs e)
         {
             SetEditMode(true);
         }
 
-        // =========================
-        // SAVE
-        // =========================
+        // =====================================================
+        // SAVE (APPROVAL ONLY)
+        // =====================================================
 
-        private void btnSave_Click(object? sender, EventArgs e)
+        private void BtnSave_Click(object? sender, EventArgs e)
         {
             try
             {
                 bool approveSelected =
                     cbStatus.SelectedItem?.ToString() == "Approved";
 
+                // DB only supports approving ONCE
                 if (approveSelected && !_report.Approved)
                 {
                     _damageService.ApproveDamageReport(
@@ -200,7 +213,7 @@ namespace VRMS.UI.Forms.Damages
             {
                 MessageBox.Show(
                     ex.Message,
-                    "Save Error",
+                    "Save Failed",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }

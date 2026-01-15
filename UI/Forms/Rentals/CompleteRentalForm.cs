@@ -46,6 +46,10 @@ namespace VRMS.UI.Forms.Rentals
             Load += ReturnVehicleForm_Load;
             numOdometer.ValueChanged += NumOdometer_ValueChanged;
             dtReturns.ValueChanged += DtReturns_ValueChanged;
+
+            // ADD THIS: Enable double-click to open damage details
+            dgvDamages.CellDoubleClick += (_, __) =>
+                btnViewDamageDetails_Click(_, __);
         }
 
         // =====================================================
@@ -84,9 +88,8 @@ namespace VRMS.UI.Forms.Rentals
             _baseRentalAmount = 0m;
             _lateFees = 0m;
             _damageFees = 0m;
-            
-            DtReturns_ValueChanged(null, EventArgs.Empty);
 
+            DtReturns_ValueChanged(null, EventArgs.Empty);
 
             ConfigureDamageGrid();
             UpdateBillingUI();
@@ -105,24 +108,36 @@ namespace VRMS.UI.Forms.Rentals
         }
 
         // =====================================================
-        // DAMAGE GRID
+        // DAMAGE GRID - FIXED VERSION
         // =====================================================
         private void ConfigureDamageGrid()
         {
             dgvDamages.AutoGenerateColumns = false;
             dgvDamages.Columns.Clear();
+            dgvDamages.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvDamages.MultiSelect = false;
+            dgvDamages.ReadOnly = true;
+
+            // HIDDEN: DamageReportId (CRITICAL FOR BUTTON TO WORK)
+            dgvDamages.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "DamageReportId",
+                Visible = false
+            });
 
             dgvDamages.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Description",
-                HeaderText = "Description"
+                HeaderText = "Description",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
 
             dgvDamages.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "EstimatedCost",
                 HeaderText = "Estimated Cost",
-                DefaultCellStyle = { Format = "₱ #,##0.00" }
+                DefaultCellStyle = { Format = "₱ #,##0.00" },
+                Width = 150
             });
         }
 
@@ -255,16 +270,18 @@ namespace VRMS.UI.Forms.Rentals
             }
         }
 
-
         // =====================================================
         // CANCEL
-        // 
+        // =====================================================
         private void btnCancel_Click(object? sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
         }
-        
+
+        // =====================================================
+        // LOAD DAMAGES - FIXED VERSION
+        // =====================================================
         private void LoadDamages()
         {
             try
@@ -276,10 +293,14 @@ namespace VRMS.UI.Forms.Rentals
 
                 dgvDamages.Rows.Clear();
 
+                
                 foreach (var d in damages)
                 {
-                    // Add a row using the columns you defined in ConfigureDamageGrid
-                    dgvDamages.Rows.Add(d.Description, d.EstimatedCost);
+                    dgvDamages.Rows.Add(
+                        d.DamageReportId,    
+                        d.Description,       
+                        d.EstimatedCost     
+                    );
                 }
 
                 // Update UI-only damage fees preview
@@ -296,7 +317,8 @@ namespace VRMS.UI.Forms.Rentals
                     MessageBoxIcon.Error);
             }
         }
-        
+
+      
         private void DtReturns_ValueChanged(object? sender, EventArgs e)
         {
             try
@@ -319,6 +341,35 @@ namespace VRMS.UI.Forms.Rentals
             }
         }
 
+        // =====================================================
+        // VIEW DAMAGE DETAILS - FIXED VERSION (NOW WORKS!)
+        // =====================================================
+        private void btnViewDamageDetails_Click(object sender, EventArgs e)
+        {
+            if (dgvDamages.CurrentRow == null)
+            {
+                MessageBox.Show(
+                    "Please select a damage record first.",
+                    "No Selection",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            int damageReportId =
+                Convert.ToInt32(
+                    dgvDamages.CurrentRow.Cells["DamageReportId"].Value);
+
+            using (var form =
+                   new VRMS.UI.Forms.Damages.DamageReportDetails(
+                       damageReportId,
+                       ApplicationServices.DamageService))
+            {
+                form.ShowDialog(this);
+            }
+
+            LoadDamages();
+        }
 
     }
 }
