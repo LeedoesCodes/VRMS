@@ -173,7 +173,7 @@
             lblDetailAmount.Name = "lblDetailAmount";
             lblDetailAmount.Size = new Size(109, 25);
             lblDetailAmount.TabIndex = 4;
-            lblDetailAmount.Text = "Total: ₱ 0.0";
+            lblDetailAmount.Text = "Total: ₱ --";
             // 
             // lblDetailDates
             // 

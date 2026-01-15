@@ -243,7 +243,7 @@
             // 
             lbluserInfo.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             lbluserInfo.ForeColor = Color.White;
-            lbluserInfo.Location = new Point(97, 20);
+            lbluserInfo.Location = new Point(114, 20);
             lbluserInfo.Margin = new Padding(5, 0, 5, 0);
             lbluserInfo.Name = "lbluserInfo";
             lbluserInfo.Size = new Size(183, 93);
@@ -253,10 +253,11 @@
             // 
             // logoPictureBox
             // 
+            logoPictureBox.Image = Properties.Resources.company_logo;
             logoPictureBox.Location = new Point(17, 20);
             logoPictureBox.Margin = new Padding(5, 4, 5, 4);
             logoPictureBox.Name = "logoPictureBox";
-            logoPictureBox.Size = new Size(69, 93);
+            logoPictureBox.Size = new Size(87, 93);
             logoPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             logoPictureBox.TabIndex = 0;
             logoPictureBox.TabStop = false;

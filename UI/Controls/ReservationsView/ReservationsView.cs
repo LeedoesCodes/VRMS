@@ -233,30 +233,48 @@ namespace VRMS.Controls
 
         private void UpdateActionButtons()
         {
+            // Default: everything disabled + grey
+            btnConfirmReservation.Enabled = false;
+            btnProceedRent.Enabled = false;
+
+            btnConfirmReservation.BackColor = Color.LightGray;
+            btnConfirmReservation.ForeColor = Color.DarkGray;
+
+            btnProceedRent.BackColor = Color.LightGray;
+            btnProceedRent.ForeColor = Color.DarkGray;
+
             if (dgvReservations.SelectedRows.Count == 0)
-            {
-                btnCancelReservation.Enabled = false;
-                btnProceedRent.Enabled = false;
-               
-                btnConfirmReservation.Enabled = false;
                 return;
+
+            if (dgvReservations.SelectedRows[0].DataBoundItem is not ReservationGridRow row)
+                return;
+
+            switch (row.Status)
+            {
+                case ReservationStatus.Pending:
+                    // Confirm enabled
+                    btnConfirmReservation.Enabled = true;
+                    btnConfirmReservation.BackColor = Color.LimeGreen;
+                    btnConfirmReservation.ForeColor = Color.White;
+
+                    // Proceed disabled (already grey)
+                    break;
+
+                case ReservationStatus.Confirmed:
+                    // Confirm disabled (already grey)
+
+                    // Proceed enabled
+                    btnProceedRent.Enabled = true;
+                    btnProceedRent.BackColor = Color.FromArgb(155, 89, 182); // purple
+                    btnProceedRent.ForeColor = Color.White;
+                    break;
+
+                case ReservationStatus.Rented:
+                    // Both disabled (already grey)
+                    break;
             }
-
-            var row = dgvReservations.SelectedRows[0].DataBoundItem as ReservationGridRow;
-            if (row == null) return;
-
-           
-
-            btnCancelReservation.Enabled =
-                row.Status == ReservationStatus.Pending ||
-                row.Status == ReservationStatus.Confirmed;
-
-            btnConfirmReservation.Enabled =
-                row.Status == ReservationStatus.Pending;
-
-            btnProceedRent.Enabled =
-                row.Status == ReservationStatus.Confirmed;
         }
+
 
         // =====================================================
         // CANCEL

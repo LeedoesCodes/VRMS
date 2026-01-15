@@ -189,6 +189,10 @@ namespace VRMS.UI.Controls.RentalsView
         private void DgvRentals_SelectionChanged(object? sender, EventArgs e)
         {
             UpdateActionButtons();
+
+            // =========================
+            // NO SELECTION
+            // =========================
             if (dgvRentals.SelectedRows.Count == 0)
             {
                 lblDetailVehicle.Text = "Vehicle";
@@ -199,13 +203,21 @@ namespace VRMS.UI.Controls.RentalsView
                 return;
             }
 
-            if (dgvRentals.SelectedRows[0].DataBoundItem is not RentalGridRow row) return;
+            // =========================
+            // GET SELECTED ROW
+            // =========================
+            if (dgvRentals.SelectedRows[0].DataBoundItem is not RentalGridRow row)
+                return;
 
+            // =========================
+            // LOAD CORE ENTITIES
+            // =========================
             var rental = _rentalService.GetRentalById(row.RentalId);
+            var vehicle = _vehicleService.GetVehicleById(rental.VehicleId);
 
-            var vehicle =
-                _vehicleService.GetVehicleById(rental.VehicleId);
-
+            // =========================
+            // CUSTOMER NAME
+            // =========================
             string customerName = "Walk-in";
 
             if (rental.ReservationId.HasValue)
@@ -226,15 +238,58 @@ namespace VRMS.UI.Controls.RentalsView
                 customerName = $"{customer.FirstName} {customer.LastName}";
             }
 
-
+            // =========================
+            // BASIC UI FIELDS
+            // =========================
             lblDetailVehicle.Text = $"{vehicle.Year} {vehicle.Make} {vehicle.Model}";
             lblDetailCustomer.Text = customerName;
             lblDetailDates.Text =
                 $"From {rental.PickupDate:d} to {rental.ExpectedReturnDate:d}";
-            lblDetailAmount.Text = "Total: ₱ --";
 
+            // =========================
+            // TOTAL CALCULATION
+            // =========================
+            try
+            {
+                var invoice = _billingService.GetInvoiceByRental(rental.Id);
+
+                if (invoice != null)
+                {
+                    // AUTHORITATIVE TOTAL
+                    lblDetailAmount.Text = $"Total: ₱ {invoice.TotalAmount:N2}";
+                }
+                else
+                {
+                    // FALLBACK: estimate same as NewRentalForm
+                    decimal baseRental =
+                        _rateService.CalculateRentalCost(
+                            rental.PickupDate,
+                            rental.ExpectedReturnDate,
+                            vehicle.VehicleCategoryId);
+
+                    var category =
+                        _vehicleService.GetCategoryById(vehicle.VehicleCategoryId);
+
+                    decimal securityDeposit =
+                        category?.SecurityDeposit ?? 0m;
+
+                    decimal estimatedTotal =
+                        baseRental + securityDeposit;
+
+                    lblDetailAmount.Text = $"Total: ₱ {estimatedTotal:N2}";
+                }
+            }
+            catch
+            {
+                lblDetailAmount.Text = "Total: ₱ --";
+            }
+
+            // =========================
+            // IMAGE
+            // =========================
             LoadVehicleImage(vehicle.Id);
         }
+
 
         private void LoadVehicleImage(int vehicleId)
         {
