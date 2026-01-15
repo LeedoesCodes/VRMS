@@ -85,17 +85,25 @@ public class UserService
         var hash =
             PasswordHelper.Hash(plainPassword);
 
-        // User starts with NO uploaded photo
-        return _userRepo.Create(
+        var userId = _userRepo.Create(
             username,
-            null,   // full name
-            null,   // email
-            null,   // phone
+            null,
+            null,
+            null,
             hash,
             role,
             isActive,
-            null    // photo
+            null
         );
+
+        SystemLogger.Log(
+            action: "Create",
+            entity: "User",
+            entityId: userId,
+            description: $"User '{username}' was created with role {role}"
+        );
+
+        return userId;
     }
 
     // ----------------------------
@@ -166,6 +174,13 @@ public class UserService
         _userRepo.UpdatePassword(
             userId,
             hash);
+        
+        SystemLogger.Log(
+            action: "ResetPassword",
+            entity: "User",
+            entityId: userId,
+            description: "Admin reset user password"
+        );
     }
 
     // ----------------------------
@@ -173,7 +188,16 @@ public class UserService
     // ----------------------------
 
     public void Deactivate(int userId)
-        => _userRepo.Deactivate(userId);
+    {
+        _userRepo.Deactivate(userId);
+
+        SystemLogger.Log(
+            action: "Deactivate",
+            entity: "User",
+            entityId: userId,
+            description: $"User {userId} was deactivated"
+        );
+    }
 
     // ----------------------------
     // PASSWORD MANAGEMENT
@@ -220,6 +244,13 @@ public class UserService
             username,
             role,
             isActive);
+        
+        SystemLogger.Log(
+            action: "UpdateProfile",
+            entity: "User",
+            entityId: userId,
+            description: $"User profile updated (role={role}, active={isActive})"
+        );
     }
 
     // ----------------------------
@@ -246,6 +277,13 @@ public class UserService
         _userRepo.UpdatePhoto(
             userId,
             relativePath);
+        
+        SystemLogger.Log(
+            action: "SetPhoto",
+            entity: "User",
+            entityId: userId,
+            description: "User profile photo updated"
+        );
     }
 
     public void DeleteUserPhoto(int userId)
@@ -260,6 +298,13 @@ public class UserService
         _userRepo.UpdatePhoto(
             userId,
             null);
+        
+        SystemLogger.Log(
+            action: "DeletePhoto",
+            entity: "User",
+            entityId: userId,
+            description: "User profile photo removed"
+        );
     }
     
     public void UpdateSelfProfile(
