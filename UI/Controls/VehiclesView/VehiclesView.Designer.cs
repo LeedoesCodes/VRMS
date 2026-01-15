@@ -31,6 +31,7 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             panelHeader = new Panel();
+            label1 = new Label();
             lblVehicleCount = new Label();
             panelToolbar = new Panel();
             btnUnderMaintenance = new Button();
@@ -39,7 +40,6 @@
             txtSearch = new TextBox();
             cmbStatusFilter = new ComboBox();
             btnRetire = new Button();
-            btnDelete = new Button();
             btnEdit = new Button();
             btnAdd = new Button();
             splitContainerMain = new SplitContainer();
@@ -70,6 +70,7 @@
             panelPreviewHeader = new Panel();
             lblVehicleDetails = new Label();
             picVehiclePreview = new PictureBox();
+            panelHeader.SuspendLayout();
             panelToolbar.SuspendLayout();
             panelSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
@@ -88,21 +89,33 @@
             // 
             // panelHeader
             // 
-            panelHeader.BackColor = Color.White;
+            panelHeader.BackColor = Color.FromArgb(30, 60, 90);
+            panelHeader.Controls.Add(label1);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
             panelHeader.Size = new Size(1491, 70);
             panelHeader.TabIndex = 0;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(20, 15);
+            label1.Name = "label1";
+            label1.Size = new Size(127, 41);
+            label1.TabIndex = 0;
+            label1.Text = "Vehicles";
+            // 
             // lblVehicleCount
             // 
             lblVehicleCount.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblVehicleCount.Font = new Font("Segoe UI", 10F);
-            lblVehicleCount.ForeColor = Color.FromArgb(64, 64, 64);
-            lblVehicleCount.Location = new Point(908, 3);
+            lblVehicleCount.ForeColor = Color.Black;
+            lblVehicleCount.Location = new Point(905, 1);
             lblVehicleCount.Name = "lblVehicleCount";
-            lblVehicleCount.Size = new Size(180, 25);
+            lblVehicleCount.Size = new Size(180, 27);
             lblVehicleCount.TabIndex = 1;
             lblVehicleCount.Text = "Total: 0 vehicles";
             lblVehicleCount.TextAlign = ContentAlignment.MiddleRight;
@@ -115,7 +128,6 @@
             panelToolbar.Controls.Add(panelSearch);
             panelToolbar.Controls.Add(cmbStatusFilter);
             panelToolbar.Controls.Add(btnRetire);
-            panelToolbar.Controls.Add(btnDelete);
             panelToolbar.Controls.Add(btnEdit);
             panelToolbar.Controls.Add(btnAdd);
             panelToolbar.Dock = DockStyle.Top;
@@ -133,7 +145,7 @@
             btnUnderMaintenance.FlatStyle = FlatStyle.Flat;
             btnUnderMaintenance.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnUnderMaintenance.ForeColor = Color.White;
-            btnUnderMaintenance.Location = new Point(756, 10);
+            btnUnderMaintenance.Location = new Point(895, 11);
             btnUnderMaintenance.Name = "btnUnderMaintenance";
             btnUnderMaintenance.Size = new Size(184, 40);
             btnUnderMaintenance.TabIndex = 9;
@@ -148,7 +160,7 @@
             btnAddCategory.FlatStyle = FlatStyle.Flat;
             btnAddCategory.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnAddCategory.ForeColor = Color.White;
-            btnAddCategory.Location = new Point(1329, 11);
+            btnAddCategory.Location = new Point(1307, 11);
             btnAddCategory.Name = "btnAddCategory";
             btnAddCategory.Size = new Size(119, 40);
             btnAddCategory.TabIndex = 7;
@@ -171,10 +183,10 @@
             // 
             txtSearch.BorderStyle = BorderStyle.None;
             txtSearch.Font = new Font("Segoe UI", 10F);
-            txtSearch.Location = new Point(35, 8);
+            txtSearch.Location = new Point(4, 8);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "🔍 Search vehicles...";
-            txtSearch.Size = new Size(310, 23);
+            txtSearch.Size = new Size(406, 23);
             txtSearch.TabIndex = 1;
             // 
             // cmbStatusFilter
@@ -198,27 +210,12 @@
             btnRetire.FlatStyle = FlatStyle.Flat;
             btnRetire.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnRetire.ForeColor = Color.White;
-            btnRetire.Location = new Point(637, 10);
+            btnRetire.Location = new Point(751, 11);
             btnRetire.Name = "btnRetire";
             btnRetire.Size = new Size(100, 40);
             btnRetire.TabIndex = 8;
             btnRetire.Text = "♻ Retire";
             btnRetire.UseVisualStyleBackColor = false;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnDelete.BackColor = Color.FromArgb(231, 76, 60);
-            btnDelete.FlatAppearance.BorderSize = 0;
-            btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(1008, 10);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(100, 40);
-            btnDelete.TabIndex = 3;
-            btnDelete.Text = "🗑 Delete";
-            btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnEdit
             // 
@@ -228,7 +225,7 @@
             btnEdit.FlatStyle = FlatStyle.Flat;
             btnEdit.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnEdit.ForeColor = Color.White;
-            btnEdit.Location = new Point(1116, 10);
+            btnEdit.Location = new Point(1094, 10);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(90, 40);
             btnEdit.TabIndex = 2;
@@ -244,7 +241,7 @@
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             btnAdd.ForeColor = Color.White;
-            btnAdd.Location = new Point(1213, 11);
+            btnAdd.Location = new Point(1191, 11);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(110, 40);
             btnAdd.TabIndex = 1;
@@ -295,11 +292,11 @@
             dgvVehicles.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvVehicles.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(32, 191, 158);
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(30, 60, 90);
             dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
             dataGridViewCellStyle1.ForeColor = Color.White;
             dataGridViewCellStyle1.Padding = new Padding(8, 0, 0, 0);
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(32, 191, 158);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(30, 60, 90);
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dgvVehicles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
@@ -331,8 +328,8 @@
             // panelStatusFilter
             // 
             panelStatusFilter.BackColor = Color.White;
-            panelStatusFilter.Controls.Add(lblVehicleCount);
             panelStatusFilter.Controls.Add(cmbAdvancedFilter);
+            panelStatusFilter.Controls.Add(lblVehicleCount);
             panelStatusFilter.Controls.Add(lblStatusFilter);
             panelStatusFilter.Dock = DockStyle.Top;
             panelStatusFilter.Location = new Point(10, 10);
@@ -636,6 +633,8 @@
             Controls.Add(panelHeader);
             Name = "VehiclesView";
             Size = new Size(1491, 800);
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
             panelToolbar.ResumeLayout(false);
             panelSearch.ResumeLayout(false);
             panelSearch.PerformLayout();
@@ -660,6 +659,7 @@
         #endregion
 
         private Panel panelHeader;
+        private Label label1;
         private Panel panelToolbar;
         private SplitContainer splitContainerMain;
         private Panel panelVehicleList;
@@ -669,7 +669,6 @@
         private Panel panelStatusFilter;
         private Label lblStatusFilter;
         private Button btnAdd;
-        private Button btnDelete;
         private Button btnEdit;
         private ComboBox cmbStatusFilter;
         private Panel panelSearch;

@@ -53,6 +53,7 @@
             btnClearVehicle = new Button();
             panelCustomer = new Panel();
             panelVehicle = new Panel();
+            errLabel = new Label();
             pnlHeader.SuspendLayout();
             panelCustomer.SuspendLayout();
             panelVehicle.SuspendLayout();
@@ -381,12 +382,22 @@
             panelVehicle.Size = new Size(797, 42);
             panelVehicle.TabIndex = 25;
             // 
+            // errLabel
+            // 
+            errLabel.Location = new Point(371, 743);
+            errLabel.Name = "errLabel";
+            errLabel.Size = new Size(452, 20);
+            errLabel.TabIndex = 26;
+            errLabel.Text = "label";
+            errLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // NewRentalForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(852, 758);
+            ClientSize = new Size(852, 772);
+            Controls.Add(errLabel);
             Controls.Add(panelVehicle);
             Controls.Add(panelCustomer);
             Controls.Add(pnlHeader);
@@ -450,5 +461,6 @@
         private System.Windows.Forms.Button btnClearVehicle;
         private System.Windows.Forms.Panel panelCustomer;
         private System.Windows.Forms.Panel panelVehicle;
+        private Label errLabel;
     }
 }

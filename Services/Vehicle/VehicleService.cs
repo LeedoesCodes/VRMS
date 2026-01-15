@@ -291,6 +291,24 @@ public class VehicleService
         var overlaps = _maintenanceRepo.GetOverlapping(vehicleId, start, end);
         return overlaps != null && overlaps.Count > 0;
     }
+    public bool AreRentalDatesAvailable(
+        int vehicleId,
+        DateTime start,
+        DateTime end)
+    {
+        if (end <= start)
+            return false;
+
+        var overlaps =
+            _rentalRepo.GetOverlappingRentals(
+                vehicleId,
+                start,
+                end);
+
+        return overlaps.Count == 0;
+    }
+
+    
 
     // -------------------------------------------------
     // CATEGORIES

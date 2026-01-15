@@ -84,9 +84,14 @@
             btnDelete = new Button();
             btnEdit = new Button();
             btnRefreshHistory = new Button();
+            panel1 = new Panel();
+            btnClose = new Button();
+            lblFormTitle = new Label();
+            picVehicle = new PictureBox();
             statusStrip1 = new StatusStrip();
             lblStatusMessage = new ToolStripStatusLabel();
             lblRecordCount = new ToolStripStatusLabel();
+            btnRetire = new Button();
             mainPanel.SuspendLayout();
             tabControlMain.SuspendLayout();
             tabNew.SuspendLayout();
@@ -104,18 +109,21 @@
             ((System.ComponentModel.ISupportInitialize)dgvHistory).BeginInit();
             grpRecordDetails.SuspendLayout();
             panel2.SuspendLayout();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picVehicle).BeginInit();
             statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // mainPanel
             // 
             mainPanel.Controls.Add(tabControlMain);
+            mainPanel.Controls.Add(panel1);
             mainPanel.Dock = DockStyle.Fill;
             mainPanel.Location = new Point(0, 0);
             mainPanel.Margin = new Padding(3, 4, 3, 4);
             mainPanel.Name = "mainPanel";
             mainPanel.Padding = new Padding(11, 13, 11, 13);
-            mainPanel.Size = new Size(1125, 871);
+            mainPanel.Size = new Size(1125, 980);
             mainPanel.TabIndex = 0;
             // 
             // tabControlMain
@@ -125,11 +133,11 @@
             tabControlMain.Dock = DockStyle.Fill;
             tabControlMain.Font = new Font("Segoe UI", 9.5F);
             tabControlMain.ItemSize = new Size(120, 30);
-            tabControlMain.Location = new Point(11, 13);
+            tabControlMain.Location = new Point(11, 106);
             tabControlMain.Margin = new Padding(3, 4, 3, 4);
             tabControlMain.Name = "tabControlMain";
             tabControlMain.SelectedIndex = 0;
-            tabControlMain.Size = new Size(1103, 845);
+            tabControlMain.Size = new Size(1103, 861);
             tabControlMain.TabIndex = 1;
             // 
             // tabNew
@@ -141,7 +149,7 @@
             tabNew.Margin = new Padding(3, 4, 3, 4);
             tabNew.Name = "tabNew";
             tabNew.Padding = new Padding(3, 4, 3, 4);
-            tabNew.Size = new Size(1095, 714);
+            tabNew.Size = new Size(1095, 823);
             tabNew.TabIndex = 0;
             tabNew.Text = "New Maintenance Record";
             // 
@@ -154,7 +162,7 @@
             panel3.Margin = new Padding(3, 4, 3, 4);
             panel3.Name = "panel3";
             panel3.Padding = new Padding(11, 13, 11, 13);
-            panel3.Size = new Size(867, 706);
+            panel3.Size = new Size(867, 815);
             panel3.TabIndex = 0;
             // 
             // grpMaintenanceInfo
@@ -180,7 +188,7 @@
             grpMaintenanceInfo.Margin = new Padding(3, 4, 3, 4);
             grpMaintenanceInfo.Name = "grpMaintenanceInfo";
             grpMaintenanceInfo.Padding = new Padding(3, 4, 3, 4);
-            grpMaintenanceInfo.Size = new Size(837, 516);
+            grpMaintenanceInfo.Size = new Size(837, 624);
             grpMaintenanceInfo.TabIndex = 1;
             grpMaintenanceInfo.TabStop = false;
             grpMaintenanceInfo.Text = "Maintenance Information";
@@ -390,6 +398,7 @@
             // panel4
             // 
             panel4.BackColor = Color.FromArgb(248, 249, 250);
+            panel4.Controls.Add(btnRetire);
             panel4.Controls.Add(btnMarkAvailable);
             panel4.Controls.Add(btnClear);
             panel4.Controls.Add(btnSave);
@@ -398,7 +407,7 @@
             panel4.Margin = new Padding(3, 4, 3, 4);
             panel4.Name = "panel4";
             panel4.Padding = new Padding(11, 13, 11, 13);
-            panel4.Size = new Size(222, 706);
+            panel4.Size = new Size(222, 815);
             panel4.TabIndex = 1;
             // 
             // btnMarkAvailable
@@ -461,7 +470,7 @@
             tabHistory.Margin = new Padding(3, 4, 3, 4);
             tabHistory.Name = "tabHistory";
             tabHistory.Padding = new Padding(3, 4, 3, 4);
-            tabHistory.Size = new Size(1095, 807);
+            tabHistory.Size = new Size(1095, 823);
             tabHistory.TabIndex = 1;
             tabHistory.Text = "Maintenance History";
             // 
@@ -472,7 +481,7 @@
             panel5.Location = new Point(3, 4);
             panel5.Margin = new Padding(3, 4, 3, 4);
             panel5.Name = "panel5";
-            panel5.Size = new Size(1089, 662);
+            panel5.Size = new Size(1089, 695);
             panel5.TabIndex = 1;
             // 
             // splitContainer1
@@ -490,8 +499,8 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(grpRecordDetails);
-            splitContainer1.Size = new Size(1089, 662);
-            splitContainer1.SplitterDistance = 722;
+            splitContainer1.Size = new Size(1089, 695);
+            splitContainer1.SplitterDistance = 807;
             splitContainer1.SplitterWidth = 5;
             splitContainer1.TabIndex = 0;
             // 
@@ -551,16 +560,16 @@
             dgvHistory.RowsDefaultCellStyle = dataGridViewCellStyle5;
             dgvHistory.RowTemplate.Height = 35;
             dgvHistory.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvHistory.Size = new Size(722, 662);
+            dgvHistory.Size = new Size(807, 695);
             dgvHistory.TabIndex = 0;
             // 
             // panel6
             // 
             panel6.Dock = DockStyle.Right;
-            panel6.Location = new Point(722, 0);
+            panel6.Location = new Point(807, 0);
             panel6.Margin = new Padding(3, 4, 3, 4);
             panel6.Name = "panel6";
-            panel6.Size = new Size(0, 662);
+            panel6.Size = new Size(0, 695);
             panel6.TabIndex = 1;
             // 
             // grpRecordDetails
@@ -584,7 +593,7 @@
             grpRecordDetails.Margin = new Padding(3, 4, 3, 4);
             grpRecordDetails.Name = "grpRecordDetails";
             grpRecordDetails.Padding = new Padding(3, 4, 3, 4);
-            grpRecordDetails.Size = new Size(362, 662);
+            grpRecordDetails.Size = new Size(277, 695);
             grpRecordDetails.TabIndex = 0;
             grpRecordDetails.TabStop = false;
             grpRecordDetails.Text = "Record Details";
@@ -595,13 +604,13 @@
             txtDetailDescription.BackColor = Color.White;
             txtDetailDescription.BorderStyle = BorderStyle.None;
             txtDetailDescription.Font = new Font("Segoe UI", 9F);
-            txtDetailDescription.Location = new Point(23, 281);
+            txtDetailDescription.Location = new Point(23, 360);
             txtDetailDescription.Margin = new Padding(3, 4, 3, 4);
             txtDetailDescription.Multiline = true;
             txtDetailDescription.Name = "txtDetailDescription";
             txtDetailDescription.ReadOnly = true;
             txtDetailDescription.ScrollBars = ScrollBars.Vertical;
-            txtDetailDescription.Size = new Size(321, 279);
+            txtDetailDescription.Size = new Size(236, 312);
             txtDetailDescription.TabIndex = 12;
             txtDetailDescription.Text = "No record selected";
             // 
@@ -609,7 +618,7 @@
             // 
             lblDetailCost.AutoSize = true;
             lblDetailCost.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblDetailCost.Location = new Point(137, 242);
+            lblDetailCost.Location = new Point(137, 300);
             lblDetailCost.Name = "lblDetailCost";
             lblDetailCost.Size = new Size(49, 20);
             lblDetailCost.TabIndex = 11;
@@ -619,7 +628,7 @@
             // 
             lblDetailEndDate.AutoSize = true;
             lblDetailEndDate.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblDetailEndDate.Location = new Point(137, 202);
+            lblDetailEndDate.Location = new Point(137, 260);
             lblDetailEndDate.Name = "lblDetailEndDate";
             lblDetailEndDate.Size = new Size(39, 20);
             lblDetailEndDate.TabIndex = 10;
@@ -629,7 +638,7 @@
             // 
             lblDetailStartDate.AutoSize = true;
             lblDetailStartDate.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblDetailStartDate.Location = new Point(137, 162);
+            lblDetailStartDate.Location = new Point(137, 220);
             lblDetailStartDate.Name = "lblDetailStartDate";
             lblDetailStartDate.Size = new Size(39, 20);
             lblDetailStartDate.TabIndex = 9;
@@ -639,7 +648,7 @@
             // 
             lblDetailStatus.AutoSize = true;
             lblDetailStatus.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblDetailStatus.Location = new Point(137, 122);
+            lblDetailStatus.Location = new Point(137, 180);
             lblDetailStatus.Name = "lblDetailStatus";
             lblDetailStatus.Size = new Size(39, 20);
             lblDetailStatus.TabIndex = 8;
@@ -649,7 +658,7 @@
             // 
             lblDetailType.AutoSize = true;
             lblDetailType.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblDetailType.Location = new Point(137, 82);
+            lblDetailType.Location = new Point(137, 140);
             lblDetailType.Name = "lblDetailType";
             lblDetailType.Size = new Size(39, 20);
             lblDetailType.TabIndex = 7;
@@ -659,7 +668,7 @@
             // 
             lblDetailTitle.AutoSize = true;
             lblDetailTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblDetailTitle.Location = new Point(137, 42);
+            lblDetailTitle.Location = new Point(137, 100);
             lblDetailTitle.Name = "lblDetailTitle";
             lblDetailTitle.Size = new Size(39, 20);
             lblDetailTitle.TabIndex = 6;
@@ -669,7 +678,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 9F);
-            label7.Location = new Point(23, 242);
+            label7.Location = new Point(23, 300);
             label7.Name = "label7";
             label7.Size = new Size(41, 20);
             label7.TabIndex = 5;
@@ -679,7 +688,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 9F);
-            label6.Location = new Point(23, 202);
+            label6.Location = new Point(23, 260);
             label6.Name = "label6";
             label6.Size = new Size(73, 20);
             label6.TabIndex = 4;
@@ -689,7 +698,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 9F);
-            label5.Location = new Point(23, 162);
+            label5.Location = new Point(23, 220);
             label5.Name = "label5";
             label5.Size = new Size(79, 20);
             label5.TabIndex = 3;
@@ -699,7 +708,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9F);
-            label4.Location = new Point(23, 122);
+            label4.Location = new Point(23, 180);
             label4.Name = "label4";
             label4.Size = new Size(52, 20);
             label4.TabIndex = 2;
@@ -709,7 +718,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 9F);
-            label3.Location = new Point(23, 82);
+            label3.Location = new Point(23, 140);
             label3.Name = "label3";
             label3.Size = new Size(43, 20);
             label3.TabIndex = 1;
@@ -719,7 +728,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 9F);
-            label2.Location = new Point(23, 42);
+            label2.Location = new Point(23, 100);
             label2.Name = "label2";
             label2.Size = new Size(41, 20);
             label2.TabIndex = 0;
@@ -732,11 +741,11 @@
             panel2.Controls.Add(btnEdit);
             panel2.Controls.Add(btnRefreshHistory);
             panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(3, 666);
+            panel2.Location = new Point(3, 699);
             panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(11, 13, 11, 13);
-            panel2.Size = new Size(1089, 137);
+            panel2.Size = new Size(1089, 120);
             panel2.TabIndex = 0;
             // 
             // btnDelete
@@ -747,7 +756,7 @@
             btnDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnDelete.ForeColor = Color.White;
             btnDelete.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDelete.Location = new Point(629, 27);
+            btnDelete.Location = new Point(657, 17);
             btnDelete.Margin = new Padding(3, 4, 3, 4);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(137, 60);
@@ -764,7 +773,7 @@
             btnEdit.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnEdit.ForeColor = Color.White;
             btnEdit.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEdit.Location = new Point(469, 27);
+            btnEdit.Location = new Point(497, 17);
             btnEdit.Margin = new Padding(3, 4, 3, 4);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(137, 60);
@@ -781,7 +790,7 @@
             btnRefreshHistory.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnRefreshHistory.ForeColor = Color.White;
             btnRefreshHistory.ImageAlign = ContentAlignment.MiddleLeft;
-            btnRefreshHistory.Location = new Point(309, 27);
+            btnRefreshHistory.Location = new Point(337, 17);
             btnRefreshHistory.Margin = new Padding(3, 4, 3, 4);
             btnRefreshHistory.Name = "btnRefreshHistory";
             btnRefreshHistory.Size = new Size(137, 60);
@@ -790,11 +799,64 @@
             btnRefreshHistory.UseVisualStyleBackColor = false;
             btnRefreshHistory.Click += btnRefreshHistory_Click;
             // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(41, 128, 185);
+            panel1.Controls.Add(btnClose);
+            panel1.Controls.Add(lblFormTitle);
+            panel1.Controls.Add(picVehicle);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(11, 13);
+            panel1.Margin = new Padding(3, 4, 3, 4);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1103, 93);
+            panel1.TabIndex = 0;
+            // 
+            // btnClose
+            // 
+            btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnClose.BackColor = Color.Transparent;
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.FlatAppearance.MouseDownBackColor = Color.FromArgb(231, 76, 60);
+            btnClose.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 57, 43);
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnClose.ForeColor = Color.White;
+            btnClose.Location = new Point(1015, 13);
+            btnClose.Margin = new Padding(3, 4, 3, 4);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(77, 44);
+            btnClose.TabIndex = 2;
+            btnClose.Text = "✕";
+            btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += btnClose_Click;
+            // 
+            // lblFormTitle
+            // 
+            lblFormTitle.AutoSize = true;
+            lblFormTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblFormTitle.ForeColor = Color.White;
+            lblFormTitle.Location = new Point(80, 27);
+            lblFormTitle.Name = "lblFormTitle";
+            lblFormTitle.Size = new Size(281, 37);
+            lblFormTitle.TabIndex = 1;
+            lblFormTitle.Text = "Vehicle Maintenance";
+            // 
+            // picVehicle
+            // 
+            picVehicle.Location = new Point(17, 13);
+            picVehicle.Margin = new Padding(3, 4, 3, 4);
+            picVehicle.Name = "picVehicle";
+            picVehicle.Size = new Size(57, 67);
+            picVehicle.SizeMode = PictureBoxSizeMode.Zoom;
+            picVehicle.TabIndex = 0;
+            picVehicle.TabStop = false;
+            // 
             // statusStrip1
             // 
             statusStrip1.ImageScalingSize = new Size(20, 20);
             statusStrip1.Items.AddRange(new ToolStripItem[] { lblStatusMessage, lblRecordCount });
-            statusStrip1.Location = new Point(0, 845);
+            statusStrip1.Location = new Point(0, 954);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new Padding(1, 0, 16, 0);
             statusStrip1.Size = new Size(1125, 26);
@@ -815,12 +877,27 @@
             lblRecordCount.Size = new Size(159, 20);
             lblRecordCount.Text = "0 maintenance records";
             // 
+            // btnRetire
+            // 
+            btnRetire.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnRetire.BackColor = Color.Black;
+            btnRetire.FlatAppearance.BorderSize = 0;
+            btnRetire.FlatStyle = FlatStyle.Flat;
+            btnRetire.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            btnRetire.ForeColor = Color.White;
+            btnRetire.Location = new Point(14, 734);
+            btnRetire.Name = "btnRetire";
+            btnRetire.Size = new Size(196, 63);
+            btnRetire.TabIndex = 9;
+            btnRetire.Text = "♻ Retire";
+            btnRetire.UseVisualStyleBackColor = false;
+            // 
             // MaintenanceForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1125, 871);
+            ClientSize = new Size(1125, 980);
             Controls.Add(statusStrip1);
             Controls.Add(mainPanel);
             Font = new Font("Segoe UI", 9F);
@@ -849,6 +926,9 @@
             grpRecordDetails.ResumeLayout(false);
             grpRecordDetails.PerformLayout();
             panel2.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picVehicle).EndInit();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             ResumeLayout(false);
@@ -859,6 +939,9 @@
         #endregion
 
         private Panel mainPanel;
+        private Panel panel1;
+        private Label lblFormTitle;
+        private PictureBox picVehicle;
         private TabControl tabControlMain;
         private TabPage tabNew;
         private Panel panel3;
@@ -912,5 +995,7 @@
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel lblStatusMessage;
         private ToolStripStatusLabel lblRecordCount;
+        private Button btnClose;
+        private Button btnRetire;
     }
 }

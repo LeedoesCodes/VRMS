@@ -39,8 +39,25 @@ namespace VRMS.UI.Forms.Rentals
             _rateService = rateService;
 
             // Date changes
-            dtPickup.ValueChanged += (_, __) => RecalculateTotal();
-            dtReturn.ValueChanged += (_, __) => RecalculateTotal();
+            dtPickup.ValueChanged += (_, __) =>
+            {
+                dtReturn.MinDate = dtPickup.Value;
+
+                if (dtReturn.Value < dtReturn.MinDate)
+                    dtReturn.Value = dtReturn.MinDate;
+
+                RecalculateTotal();
+                UpdateSaveButtonState();
+            };
+
+
+            dtReturn.ValueChanged += (_, __) =>
+            {
+                RecalculateTotal();
+                UpdateSaveButtonState();
+            };
+
+
 
             // Form lifecycle
             Load += NewRentalForm_Load;
@@ -55,10 +72,16 @@ namespace VRMS.UI.Forms.Rentals
         {
             LoadFuelLevels();
             UpdateSaveButtonState();
+
             _isLoaded = true;
 
             dtPickup.Value = DateTime.Today;
             dtReturn.Value = DateTime.Today.AddDays(1);
+            dtReturn.Value = dtReturn.MinDate;
+            errLabel.Text = string.Empty;
+            errLabel.Visible = false;
+            
+            StyleCancelButton();
         }
 
         private void LoadFuelLevels()
@@ -139,6 +162,8 @@ namespace VRMS.UI.Forms.Rentals
 
         private void UpdateVehicleDisplay()
         {
+            errLabel.Visible = false;
+            errLabel.Text = string.Empty;
             if (_selectedVehicle != null)
             {
                 lblSelectedVehicle.Text =
@@ -342,14 +367,107 @@ namespace VRMS.UI.Forms.Rentals
                     MessageBoxIcon.Error);
             }
         }
+        
+        private bool IsFormValid()
+        {
+            // 1. Customer
+            if (_selectedCustomer == null)
+                return false;
+
+            // 2. Vehicle
+            if (_selectedVehicle == null)
+                return false;
+
+            // 3. Dates
+            if (dtReturn.Value <= dtPickup.Value)
+                return false;
+
+            // 4. Odometer
+            if (string.IsNullOrWhiteSpace(txtOdometer.Text))
+                return false;
+
+            if (!int.TryParse(txtOdometer.Text, out int odometer))
+                return false;
+
+            if (odometer < _selectedVehicle.Odometer)
+                return false;
+
+            return true;
+        }
+        
+        private bool UpdateDateAvailabilityUI()
+        {
+            errLabel.Visible = false;
+            errLabel.Text = string.Empty;
+
+            if (_selectedVehicle == null)
+                return false;
+
+            if (dtReturn.Value <= dtPickup.Value)
+                return false;
+
+            bool available =
+                _vehicleService.AreRentalDatesAvailable(
+                    _selectedVehicle.Id,
+                    dtPickup.Value.Date,
+                    dtReturn.Value.Date);
+
+            if (!available)
+            {
+                errLabel.Text = "Selected dates overlap with an existing rental.";
+                errLabel.ForeColor = Color.FromArgb(231, 76, 60); // red
+                errLabel.Visible = true;
+                return false;
+            }
+
+            errLabel.Text = "Rental dates are available.";
+            errLabel.ForeColor = Color.FromArgb(46, 204, 113); // green
+            errLabel.Visible = true;
+
+            return true;
+        }
+
 
 
 
         private void UpdateSaveButtonState()
         {
-            btnSave.Enabled =
-                _selectedCustomer != null &&
-                _selectedVehicle != null;
+            bool formValid = IsFormValid();
+            bool datesValid = UpdateDateAvailabilityUI();
+
+            btnSave.Enabled = formValid && datesValid;
+
+            btnSave.BackColor = btnSave.Enabled
+                ? Color.FromArgb(46, 204, 113)
+                : Color.FromArgb(189, 195, 199);
         }
+        
+        private void StyleCancelButton()
+        {
+            // Base color
+            var normal = Color.FromArgb(231, 76, 60);   // red
+            var hover = Color.FromArgb(241, 96, 80);    // lighter red
+            var pressed = Color.FromArgb(192, 57, 43);  // darker red
+            var disabled = Color.FromArgb(189, 195, 199);
+
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.FlatAppearance.BorderSize = 0;
+
+            btnCancel.BackColor = normal;
+            btnCancel.ForeColor = Color.White;
+
+            btnCancel.FlatAppearance.MouseOverBackColor = hover;
+            btnCancel.FlatAppearance.MouseDownBackColor = pressed;
+
+            btnCancel.EnabledChanged += (_, __) =>
+            {
+                btnCancel.BackColor = btnCancel.Enabled ? normal : disabled;
+            };
+        }
+
+
+        
+
+
     }
 }
