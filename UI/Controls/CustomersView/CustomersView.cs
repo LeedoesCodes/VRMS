@@ -517,13 +517,23 @@ namespace VRMS.UI.Controls.CustomersView
                 return;
             }
 
-            // Customer accounts feature removed
-            // Always allow delete
-            btnDelete.Enabled = true;
-            btnDelete.BackColor = Color.FromArgb(231, 76, 60); // red
-            btnDelete.ForeColor = Color.White;
-        }
+            var hasAccount =
+                _customerService.HasLoginAccount(
+                    _state.SelectedCustomer.Id);
 
+            btnDelete.Enabled = !hasAccount;
+
+            if (hasAccount)
+            {
+                btnDelete.BackColor = Color.FromArgb(180, 180, 180); // grey
+                btnDelete.ForeColor = Color.White;
+            }
+            else
+            {
+                btnDelete.BackColor = Color.FromArgb(231, 76, 60); // red
+                btnDelete.ForeColor = Color.White;
+            }
+        }
 
 
         private void btnManageAccount_Click(object sender, EventArgs e)
