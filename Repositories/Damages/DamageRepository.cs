@@ -17,13 +17,15 @@ namespace VRMS.Repositories.Damages
         public int Create(
             int rentalId,
             DamageType damageType,
+            DamageSeverity severity,
             string description,
             decimal estimatedCost)
         {
             var table = DB.Query(
-                "CALL sp_damages_create(@rentalId, @type, @desc, @cost);",
+                "CALL sp_damages_create(@rentalId, @type, @severity, @desc, @cost);",
                 ("@rentalId", rentalId),
                 ("@type", damageType.ToString()),
+                ("@severity", severity.ToString()),
                 ("@desc", description),
                 ("@cost", estimatedCost)
             );
@@ -34,13 +36,15 @@ namespace VRMS.Repositories.Damages
         public void Update(
             int damageId,
             DamageType damageType,
+            DamageSeverity severity,
             string description,
             decimal estimatedCost)
         {
             DB.Execute(
-                "CALL sp_damages_update(@id, @type, @desc, @cost);",
+                "CALL sp_damages_update(@id, @type, @severity, @desc, @cost);",
                 ("@id", damageId),
                 ("@type", damageType.ToString()),
+                ("@severity", severity.ToString()),
                 ("@desc", description),
                 ("@cost", estimatedCost)
             );
@@ -151,6 +155,7 @@ namespace VRMS.Repositories.Damages
                     id,
                     rental_id,
                     damage_type,
+                    severity,
                     description,
                     estimated_cost
                 FROM damages
@@ -177,9 +182,12 @@ namespace VRMS.Repositories.Damages
             return new Damage
             {
                 Id = Convert.ToInt32(row["id"]),
-                RentalId = Convert.ToInt32(row["rental_id"]), // ✅ THIS WAS MISSING
+                RentalId = Convert.ToInt32(row["rental_id"]),
                 DamageType = Enum.Parse<DamageType>(
                     row["damage_type"].ToString()!,
+                    ignoreCase: true),
+                Severity = Enum.Parse<DamageSeverity>(
+                    row["severity"].ToString()!,
                     ignoreCase: true),
                 Description = row["description"].ToString()!,
                 EstimatedCost = Convert.ToDecimal(row["estimated_cost"])

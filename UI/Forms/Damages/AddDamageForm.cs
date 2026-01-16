@@ -174,7 +174,23 @@ namespace VRMS.Forms
             lblNoPhotos.Visible =
                 _selectedPhotos.Count == 0;
         }
+        
+        private DamageSeverity GetSelectedSeverity()
+        {
+            if (rbSeverityMinor.Checked)
+                return DamageSeverity.Minor;
 
+            if (rbSeverityMajor.Checked)
+                return DamageSeverity.Major;
+
+            if (rbSeverityCritical.Checked)
+                return DamageSeverity.Critical;
+
+            // This should never happen, but we guard anyway
+            throw new InvalidOperationException(
+                "Please select a damage severity.");
+        }
+        
         // =========================
         // SAVE DAMAGE REPORT
         // =========================
@@ -192,13 +208,18 @@ namespace VRMS.Forms
                 DamageType damageType =
                     (DamageType)cbDamageType.SelectedItem!;
 
+                DamageSeverity severity =
+                    GetSelectedSeverity();
+
                 int damageId =
                     _damageService.CreateDamage(
                         _rentalId,
                         damageType,
+                        severity,
                         txtDescription.Text.Trim(),
                         numEstimatedCost.Value
                     );
+
 
 
                 // ----------------------------

@@ -53,6 +53,8 @@
             pnlActionBar = new Panel();
             btnCompleteReturn = new Button();
             btnCancels = new Button();
+            label1 = new Label();
+            lblMileageOverageFeesValue = new Label();
             pnlHeader.SuspendLayout();
             pnlRentalSummary.SuspendLayout();
             pnlReturnDetails.SuspendLayout();
@@ -306,6 +308,8 @@
             // 
             pnlBillingSummary.BackColor = Color.White;
             pnlBillingSummary.BorderStyle = BorderStyle.FixedSingle;
+            pnlBillingSummary.Controls.Add(lblMileageOverageFeesValue);
+            pnlBillingSummary.Controls.Add(label1);
             pnlBillingSummary.Controls.Add(lblSectionTitleBilling);
             pnlBillingSummary.Controls.Add(lblTotalValue);
             pnlBillingSummary.Controls.Add(lblTotalLabel);
@@ -468,6 +472,28 @@
             btnCancels.UseVisualStyleBackColor = false;
             btnCancels.Click += btnCancel_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 10F);
+            label1.ForeColor = Color.DimGray;
+            label1.Location = new Point(20, 82);
+            label1.Name = "label1";
+            label1.Size = new Size(181, 23);
+            label1.TabIndex = 11;
+            label1.Text = "Mileage Overage Fees:";
+            // 
+            // lblMileageOverageFeesValue
+            // 
+            lblMileageOverageFeesValue.AutoSize = true;
+            lblMileageOverageFeesValue.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblMileageOverageFeesValue.ForeColor = Color.FromArgb(243, 156, 18);
+            lblMileageOverageFeesValue.Location = new Point(420, 82);
+            lblMileageOverageFeesValue.Name = "lblMileageOverageFeesValue";
+            lblMileageOverageFeesValue.Size = new Size(62, 25);
+            lblMileageOverageFeesValue.TabIndex = 12;
+            lblMileageOverageFeesValue.Text = "₱0.00";
+            // 
             // CompleteRentalForm
             // 
             ClientSize = new Size(1300, 889);
@@ -537,5 +563,7 @@
         private Label lblBaseRental;
         private Label lblBaseRentalValue;
         private Button btnViewDamageDetails;
+        private Label label1;
+        private Label lblMileageOverageFeesValue;
     }
 }
