@@ -9,6 +9,7 @@ using VRMS.Services.Rental;
 using VRMS.Services.Customer;
 using VRMS.Services.Fleet;
 using VRMS.UI.ApplicationService;
+using VRMS.Repositories.Billing;
 
 namespace VRMS.UI.Controls.History
 {
@@ -17,15 +18,15 @@ namespace VRMS.UI.Controls.History
         private readonly RentalService _rentalService;
         private readonly CustomerService _customerService;
         private readonly VehicleService _vehicleService;
+
         private Invoice? _selectedInvoice;
         private Payment? _lastPayment;
 
-        private static readonly string PlaceholderImagePath =
-            Path.Combine(AppContext.BaseDirectory, "Assets", "img_placeholder.png");
-
-        // 🔒 CRITICAL STATE GUARDS
         private bool _suspendSelectionEvents;
         private int? _lastSelectedRentalId;
+
+        private static readonly string PlaceholderImagePath =
+            Path.Combine(AppContext.BaseDirectory, "Assets", "img_placeholder.png");
 
         public History()
         {
@@ -60,26 +61,13 @@ namespace VRMS.UI.Controls.History
         private void ConfigureRentalsGrid()
         {
             dgvRentals.AutoGenerateColumns = false;
-            dgvRentals.Columns.Clear();
             dgvRentals.ReadOnly = true;
             dgvRentals.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvRentals.MultiSelect = false;
-
-            dgvRentals.Columns.Add("Id", "ID");
-            dgvRentals.Columns.Add("Vehicle", "Vehicle");
-            dgvRentals.Columns.Add("Dates", "Dates");
-            dgvRentals.Columns.Add("Status", "Status");
-            dgvRentals.Columns.Add("Amount", "Amount");
-            dgvRentals.Columns.Add("Odometer", "Odometer");
-
-            dgvRentals.Columns["Id"].Width = 60;
-            dgvRentals.Columns["Status"].Width = 100;
-
-            dgvRentals.CellFormatting += DgvRentals_CellFormatting;
         }
 
         // =====================================================
-        // LOAD DATA
+        // LOAD RENTALS
         // =====================================================
 
         private void LoadRentals()
@@ -91,16 +79,34 @@ namespace VRMS.UI.Controls.History
                 .OrderByDescending(r => r.PickupDate)
                 .ToList();
 
+            var billingService = ApplicationServices.BillingService;
+            var lineRepo = new InvoiceLineItemRepository();
+
             foreach (var r in rentals)
             {
                 var vehicle = _vehicleService.GetVehicleById(r.VehicleId);
+
+                string amountText = "—";
+
+                var invoice = billingService.GetInvoiceByRental(r.Id);
+                if (invoice != null)
+                {
+                    var items = lineRepo.GetByInvoice(invoice.Id);
+
+                    decimal chargeOnly =
+                        items
+                            .Where(i => i.Description != "Security deposit")
+                            .Sum(i => i.Amount);
+
+                    amountText = $"₱ {chargeOnly:N2}";
+                }
 
                 dgvRentals.Rows.Add(
                     r.Id,
                     $"{vehicle.Make} {vehicle.Model}",
                     $"{r.PickupDate:MMM dd, yyyy} → {r.ExpectedReturnDate:MMM dd, yyyy}",
                     r.Status.ToString(),
-                    "—",
+                    amountText,
                     r.EndOdometer?.ToString() ?? "-"
                 );
             }
@@ -109,54 +115,24 @@ namespace VRMS.UI.Controls.History
         }
 
         // =====================================================
-        // STATUS STYLING
-        // =====================================================
-
-        private void DgvRentals_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (dgvRentals.Columns[e.ColumnIndex].Name != "Status")
-                return;
-
-            if (e.Value is not string status)
-                return;
-
-            e.CellStyle.Font = new Font(dgvRentals.Font, FontStyle.Bold);
-
-            e.CellStyle.ForeColor = status switch
-            {
-                nameof(RentalStatus.Active) => Color.Green,
-                nameof(RentalStatus.Late) => Color.OrangeRed,
-                nameof(RentalStatus.Completed) => Color.Gray,
-                nameof(RentalStatus.Cancelled) => Color.DarkGray,
-                _ => e.CellStyle.ForeColor
-            };
-        }
-
-        // =====================================================
         // SELECTION → DETAILS (SAFE)
         // =====================================================
 
         private void DgvRentals_SelectionChanged(object sender, EventArgs e)
         {
-            // 🔥 HARD GUARDS (NON-NEGOTIABLE)
             if (_suspendSelectionEvents)
-                return;
-
-            if (!IsHandleCreated || IsDisposed || !Visible)
                 return;
 
             if (dgvRentals.SelectedRows.Count == 0)
             {
                 ResetDetails();
-                _lastSelectedRentalId = null;
                 return;
             }
 
             int rentalId =
                 Convert.ToInt32(
-                    dgvRentals.SelectedRows[0].Cells["Id"].Value);
+                    dgvRentals.SelectedRows[0].Cells[0].Value);
 
-            // 🔒 Prevent re-entering same selection
             if (_lastSelectedRentalId == rentalId)
                 return;
 
@@ -164,10 +140,9 @@ namespace VRMS.UI.Controls.History
 
             var rental = _rentalService.GetRentalById(rentalId);
             var billingService = ApplicationServices.BillingService;
+            var lineRepo = new InvoiceLineItemRepository();
 
-            // Load invoice (may be null)
             _selectedInvoice = billingService.GetInvoiceByRental(rentalId);
-
             _lastPayment = null;
 
             if (_selectedInvoice != null)
@@ -175,7 +150,6 @@ namespace VRMS.UI.Controls.History
                 var payments =
                     billingService.GetPaymentsByInvoice(_selectedInvoice.Id);
 
-                // Get the most recent NON-refund payment
                 _lastPayment = payments
                     .Where(p => p.PaymentType != PaymentType.Refund)
                     .OrderByDescending(p => p.PaymentDate)
@@ -197,9 +171,29 @@ namespace VRMS.UI.Controls.History
             lblDatesValue.Text = $"{rental.PickupDate:d} → {rental.ExpectedReturnDate:d}";
             lblCustomerValue.Text = customerName;
             lblVehicleName.Text = $"{vehicle.Make} {vehicle.Model}";
-            lblAmountValue.Text = "—";
-            lblPaymentValue.Text = "—";
             lblCreatedValue.Text = rental.PickupDate.ToString("yyyy-MM-dd");
+
+            // ===== Amount (NO DEPOSIT) =====
+            if (_selectedInvoice != null)
+            {
+                var items = lineRepo.GetByInvoice(_selectedInvoice.Id);
+
+                decimal chargeOnly =
+                    items
+                        .Where(i => i.Description != "Security deposit")
+                        .Sum(i => i.Amount);
+
+                lblAmountValue.Text = $"₱ {chargeOnly:N2}";
+            }
+            else
+            {
+                lblAmountValue.Text = "—";
+            }
+
+            lblPaymentValue.Text =
+                _lastPayment != null
+                    ? $"{_lastPayment.PaymentType} - {_lastPayment.PaymentMethod}"
+                    : "—";
 
             LoadVehicleImage(vehicle.Id);
 
@@ -209,12 +203,11 @@ namespace VRMS.UI.Controls.History
             btnViewReceipt.Enabled = true;
             btnRefund.Enabled =
                 _selectedInvoice != null &&
-                _lastPayment != null &&
-                _selectedInvoice.TotalAmount > 0m;
+                _lastPayment != null;
         }
 
         // =====================================================
-        // VEHICLE IMAGE (SAFE)
+        // VEHICLE IMAGE
         // =====================================================
 
         private void LoadVehicleImage(int vehicleId)
@@ -239,11 +232,11 @@ namespace VRMS.UI.Controls.History
             using var fs =
                 new FileStream(imagePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             using var temp = Image.FromStream(fs);
-            picVehicle.Image = new Bitmap(temp); // CLONE
+            picVehicle.Image = new Bitmap(temp);
         }
 
         // =====================================================
-        // BUTTONS (CRASH-PROOF)
+        // BUTTONS
         // =====================================================
 
         private void BtnViewReceipt_Click(object sender, EventArgs e)
@@ -253,101 +246,37 @@ namespace VRMS.UI.Controls.History
 
             int rentalId =
                 Convert.ToInt32(
-                    dgvRentals.SelectedRows[0].Cells["Id"].Value);
+                    dgvRentals.SelectedRows[0].Cells[0].Value);
 
             _suspendSelectionEvents = true;
 
             try
             {
-                using (var form =
-                       new VRMS.UI.Forms.Receipts.ReceiptForm(rentalId))
-                {
-                    form.ShowDialog(this); // ✅ NOT FindForm()
-                }
+                using var form =
+                    new VRMS.UI.Forms.Receipts.ReceiptForm(rentalId);
+
+                form.ShowDialog(this);
             }
             finally
             {
-                dgvRentals.ClearSelection();
-                ResetDetails();
-
-                // Delay re-enabling until UI stabilizes
                 BeginInvoke(new Action(() =>
                 {
                     _suspendSelectionEvents = false;
                     _lastSelectedRentalId = null;
+                    dgvRentals.ClearSelection();
+                    ResetDetails();
                 }));
             }
         }
 
         private void BtnRefund_Click(object sender, EventArgs e)
         {
-            if (_selectedInvoice == null || _lastPayment == null)
-            {
-                MessageBox.Show(
-                    "No refundable payment found.",
-                    "Refund",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-                return;
-            }
-
-            var rentalId =
-                Convert.ToInt32(dgvRentals.SelectedRows[0].Cells["Id"].Value);
-
-            var rental =
-                _rentalService.GetRentalById(rentalId);
-
-            var vehicle =
-                _vehicleService.GetVehicleById(rental.VehicleId);
-
-            string customerName = "Walk-in";
-            if (rental.CustomerId.HasValue)
-            {
-                var customer =
-                    _customerService.GetCustomerById(rental.CustomerId.Value);
-                customerName = $"{customer.FirstName} {customer.LastName}";
-            }
-
-            using var form = new VRMS.UI.Forms.Payments.RefundForm(
-                transactionId: _lastPayment.Id,
-                customer: customerName,
-                vehicle: $"{vehicle.Make} {vehicle.Model}",
-                originalAmount: _lastPayment.Amount,
-                paymentMethod: _lastPayment.PaymentMethod.ToString(),
-                transactionDate: _lastPayment.PaymentDate
-            );
-
-            if (form.ShowDialog(FindForm()) != DialogResult.OK)
-                return;
-
-            try
-            {
-                ApplicationServices.BillingService.IssueRefund(
-                    invoiceId: _selectedInvoice.Id,
-                    amount: _lastPayment.Amount,
-                    method: _lastPayment.PaymentMethod,
-                    date: DateTime.UtcNow
-                );
-
-                MessageBox.Show(
-                    "Refund issued successfully.",
-                    "Refund",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-
-                LoadRentals();
-                ResetDetails();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    ex.Message,
-                    "Refund Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
+            MessageBox.Show(
+                "Refunds are handled via billing flow.",
+                "Info",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
-
 
         // =====================================================
         // RESET
