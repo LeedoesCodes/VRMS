@@ -10,5 +10,6 @@ public class Damage
     
     public DamageType DamageType { get; set; }
     public string Description { get; set; } = null!;
+    public DamageSeverity Severity { get; set; }
     public decimal EstimatedCost { get; set; }
 }

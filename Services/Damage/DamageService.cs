@@ -43,6 +43,7 @@ namespace VRMS.Services.Damage
         public int CreateDamage(
             int rentalId,
             DamageType damageType,
+            DamageSeverity severity,
             string description,
             decimal estimatedCost)
         {
@@ -51,6 +52,9 @@ namespace VRMS.Services.Damage
 
             if (!Enum.IsDefined(typeof(DamageType), damageType))
                 throw new InvalidOperationException("Invalid damage type.");
+            
+            if (!Enum.IsDefined(typeof(DamageSeverity), severity))
+                throw new InvalidOperationException("Invalid damage severity.");
 
             if (string.IsNullOrWhiteSpace(description))
                 throw new InvalidOperationException(
@@ -63,6 +67,7 @@ namespace VRMS.Services.Damage
             return _damageRepo.Create(
                 rentalId,
                 damageType,
+                severity,
                 description,
                 estimatedCost);
         }
@@ -71,11 +76,15 @@ namespace VRMS.Services.Damage
         public void UpdateDamage(
             int damageId,
             DamageType damageType,
+            DamageSeverity severity,
             string description,
             decimal estimatedCost)
         {
             if (!Enum.IsDefined(typeof(DamageType), damageType))
                 throw new InvalidOperationException("Invalid damage type.");
+            
+            if (!Enum.IsDefined(typeof(DamageSeverity), severity))
+                throw new InvalidOperationException("Invalid damage severity.");
 
             if (string.IsNullOrWhiteSpace(description))
                 throw new InvalidOperationException(
@@ -90,8 +99,10 @@ namespace VRMS.Services.Damage
             _damageRepo.Update(
                 damageId,
                 damageType,
+                severity,
                 description,
                 estimatedCost);
+
         }
 
         public void DeleteDamage(int damageId)

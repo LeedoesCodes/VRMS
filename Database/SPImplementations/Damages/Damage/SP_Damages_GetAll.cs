@@ -11,10 +11,11 @@ public static class SP_Damages_GetAll
                                           id,
                                           rental_id,
                                           damage_type,
+                                          severity,
                                           description,
                                           estimated_cost
                                       FROM damages
-                                      WHERE id = p_damage_id;
+                                      ORDER BY id;
                                   END;
                                   """;
 }

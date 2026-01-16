@@ -28,714 +28,722 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DamageReportDetails));
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.pnlMain = new System.Windows.Forms.Panel();
-            this.splitContainerMain = new System.Windows.Forms.SplitContainer();
-            this.pnlReportInfo = new System.Windows.Forms.Panel();
-            this.gbReportDetails = new System.Windows.Forms.GroupBox();
-            this.txtLocation = new System.Windows.Forms.TextBox();
-            this.lblLocation = new System.Windows.Forms.Label();
-            this.dtpReportDate = new System.Windows.Forms.DateTimePicker();
-            this.lblReportDate = new System.Windows.Forms.Label();
-            this.txtReportedBy = new System.Windows.Forms.TextBox();
-            this.lblReportedBy = new System.Windows.Forms.Label();
-            this.txtReportId = new System.Windows.Forms.TextBox();
-            this.lblReportId = new System.Windows.Forms.Label();
-            this.gbVehicleInfo = new System.Windows.Forms.GroupBox();
-            this.txtVehicleColor = new System.Windows.Forms.TextBox();
-            this.lblVehicleColor = new System.Windows.Forms.Label();
-            this.txtVehicleModel = new System.Windows.Forms.TextBox();
-            this.lblVehicleModel = new System.Windows.Forms.Label();
-            this.txtVehicleMake = new System.Windows.Forms.TextBox();
-            this.lblVehicleMake = new System.Windows.Forms.Label();
-            this.txtLicensePlate = new System.Windows.Forms.TextBox();
-            this.lblLicensePlate = new System.Windows.Forms.Label();
-            this.txtVIN = new System.Windows.Forms.TextBox();
-            this.lblVIN = new System.Windows.Forms.Label();
-            this.gbDamageDetails = new System.Windows.Forms.GroupBox();
-            this.txtRepairNotes = new System.Windows.Forms.TextBox();
-            this.lblRepairNotes = new System.Windows.Forms.Label();
-            this.txtRepairCost = new System.Windows.Forms.TextBox();
-            this.lblRepairCost = new System.Windows.Forms.Label();
-            this.txtSeverity = new System.Windows.Forms.TextBox();
-            this.lblSeverity = new System.Windows.Forms.Label();
-            this.txtDamageType = new System.Windows.Forms.TextBox();
-            this.lblDamageType = new System.Windows.Forms.Label();
-            this.txtDamageDescription = new System.Windows.Forms.TextBox();
-            this.lblDamageDescription = new System.Windows.Forms.Label();
-            this.pnlImages = new System.Windows.Forms.Panel();
-            this.gbDamageImages = new System.Windows.Forms.GroupBox();
-            this.flowLayoutPanelImages = new System.Windows.Forms.FlowLayoutPanel();
-            this.pbDamageImage1 = new System.Windows.Forms.PictureBox();
-            this.pbDamageImage2 = new System.Windows.Forms.PictureBox();
-            this.pbDamageImage3 = new System.Windows.Forms.PictureBox();
-            this.pbDamageImage4 = new System.Windows.Forms.PictureBox();
-            this.pnlActions = new System.Windows.Forms.Panel();
-            this.gbStatusActions = new System.Windows.Forms.GroupBox();
-            this.cbStatus = new System.Windows.Forms.ComboBox();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.pnlFooter = new System.Windows.Forms.Panel();
-            this.lblFooterInfo = new System.Windows.Forms.Label();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.pnlHeader.SuspendLayout();
-            this.pnlMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
-            this.splitContainerMain.Panel1.SuspendLayout();
-            this.splitContainerMain.Panel2.SuspendLayout();
-            this.splitContainerMain.SuspendLayout();
-            this.pnlReportInfo.SuspendLayout();
-            this.gbReportDetails.SuspendLayout();
-            this.gbVehicleInfo.SuspendLayout();
-            this.gbDamageDetails.SuspendLayout();
-            this.pnlImages.SuspendLayout();
-            this.gbDamageImages.SuspendLayout();
-            this.flowLayoutPanelImages.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDamageImage1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDamageImage2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDamageImage3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDamageImage4)).BeginInit();
-            this.pnlActions.SuspendLayout();
-            this.gbStatusActions.SuspendLayout();
-            this.pnlFooter.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            pnlHeader = new Panel();
+            lblTitle = new Label();
+            pnlMain = new Panel();
+            splitContainerMain = new SplitContainer();
+            pnlReportInfo = new Panel();
+            gbDamageDetails = new GroupBox();
+            txtRepairNotes = new TextBox();
+            lblRepairNotes = new Label();
+            txtRepairCost = new TextBox();
+            lblRepairCost = new Label();
+            txtSeverity = new TextBox();
+            lblSeverity = new Label();
+            txtDamageType = new TextBox();
+            lblDamageType = new Label();
+            txtDamageDescription = new TextBox();
+            lblDamageDescription = new Label();
+            gbVehicleInfo = new GroupBox();
+            txtVehicleColor = new TextBox();
+            lblVehicleColor = new Label();
+            txtVehicleModel = new TextBox();
+            lblVehicleModel = new Label();
+            txtVehicleMake = new TextBox();
+            lblVehicleMake = new Label();
+            txtLicensePlate = new TextBox();
+            lblLicensePlate = new Label();
+            txtVIN = new TextBox();
+            lblVIN = new Label();
+            gbReportDetails = new GroupBox();
+            txtLocation = new TextBox();
+            lblLocation = new Label();
+            dtpReportDate = new DateTimePicker();
+            lblReportDate = new Label();
+            txtReportedBy = new TextBox();
+            lblReportedBy = new Label();
+            txtReportId = new TextBox();
+            lblReportId = new Label();
+            pnlImages = new Panel();
+            gbDamageImages = new GroupBox();
+            flowLayoutPanelImages = new FlowLayoutPanel();
+            pbDamageImage1 = new PictureBox();
+            pbDamageImage2 = new PictureBox();
+            pbDamageImage3 = new PictureBox();
+            pbDamageImage4 = new PictureBox();
+            pnlActions = new Panel();
+            gbStatusActions = new GroupBox();
+            button1 = new Button();
+            cbStatus = new ComboBox();
+            lblStatus = new Label();
+            btnEdit = new Button();
+            btnSave = new Button();
+            btnClose = new Button();
+            pnlFooter = new Panel();
+            lblFooterInfo = new Label();
+            toolTip = new ToolTip(components);
+            pnlHeader.SuspendLayout();
+            pnlMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
+            splitContainerMain.Panel1.SuspendLayout();
+            splitContainerMain.Panel2.SuspendLayout();
+            splitContainerMain.SuspendLayout();
+            pnlReportInfo.SuspendLayout();
+            gbDamageDetails.SuspendLayout();
+            gbVehicleInfo.SuspendLayout();
+            gbReportDetails.SuspendLayout();
+            pnlImages.SuspendLayout();
+            gbDamageImages.SuspendLayout();
+            flowLayoutPanelImages.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbDamageImage1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbDamageImage2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbDamageImage3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbDamageImage4).BeginInit();
+            pnlActions.SuspendLayout();
+            gbStatusActions.SuspendLayout();
+            pnlFooter.SuspendLayout();
+            SuspendLayout();
             // 
             // pnlHeader
             // 
-            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1200, 80);
-            this.pnlHeader.TabIndex = 0;
+            pnlHeader.BackColor = Color.FromArgb(52, 152, 219);
+            pnlHeader.Controls.Add(lblTitle);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Location = new Point(0, 0);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Size = new Size(1200, 80);
+            pnlHeader.TabIndex = 0;
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(20, 15);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(387, 54);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Damage Report Details";
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(20, 15);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(462, 54);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Damage Report Details";
             // 
             // pnlMain
             // 
-            this.pnlMain.Controls.Add(this.splitContainerMain);
-            this.pnlMain.Controls.Add(this.pnlActions);
-            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(0, 80);
-            this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Padding = new System.Windows.Forms.Padding(15);
-            this.pnlMain.Size = new System.Drawing.Size(1200, 670);
-            this.pnlMain.TabIndex = 1;
+            pnlMain.Controls.Add(splitContainerMain);
+            pnlMain.Controls.Add(pnlActions);
+            pnlMain.Dock = DockStyle.Fill;
+            pnlMain.Location = new Point(0, 80);
+            pnlMain.Name = "pnlMain";
+            pnlMain.Padding = new Padding(15);
+            pnlMain.Size = new Size(1200, 670);
+            pnlMain.TabIndex = 1;
             // 
             // splitContainerMain
             // 
-            this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerMain.Location = new System.Drawing.Point(15, 15);
-            this.splitContainerMain.Name = "splitContainerMain";
+            splitContainerMain.Dock = DockStyle.Fill;
+            splitContainerMain.Location = new Point(15, 15);
+            splitContainerMain.Name = "splitContainerMain";
             // 
             // splitContainerMain.Panel1
             // 
-            this.splitContainerMain.Panel1.Controls.Add(this.pnlReportInfo);
-            this.splitContainerMain.Panel1.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            splitContainerMain.Panel1.Controls.Add(pnlReportInfo);
+            splitContainerMain.Panel1.Padding = new Padding(0, 0, 10, 0);
             // 
             // splitContainerMain.Panel2
             // 
-            this.splitContainerMain.Panel2.Controls.Add(this.pnlImages);
-            this.splitContainerMain.Panel2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.splitContainerMain.Size = new System.Drawing.Size(870, 640);
-            this.splitContainerMain.SplitterDistance = 580;
-            this.splitContainerMain.SplitterWidth = 10;
-            this.splitContainerMain.TabIndex = 0;
+            splitContainerMain.Panel2.Controls.Add(pnlImages);
+            splitContainerMain.Panel2.Padding = new Padding(10, 0, 0, 0);
+            splitContainerMain.Size = new Size(870, 640);
+            splitContainerMain.SplitterDistance = 580;
+            splitContainerMain.SplitterWidth = 10;
+            splitContainerMain.TabIndex = 0;
             // 
             // pnlReportInfo
             // 
-            this.pnlReportInfo.Controls.Add(this.gbDamageDetails);
-            this.pnlReportInfo.Controls.Add(this.gbVehicleInfo);
-            this.pnlReportInfo.Controls.Add(this.gbReportDetails);
-            this.pnlReportInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlReportInfo.Location = new System.Drawing.Point(0, 0);
-            this.pnlReportInfo.Name = "pnlReportInfo";
-            this.pnlReportInfo.Size = new System.Drawing.Size(570, 640);
-            this.pnlReportInfo.TabIndex = 0;
-            // 
-            // gbReportDetails
-            // 
-            this.gbReportDetails.Controls.Add(this.txtLocation);
-            this.gbReportDetails.Controls.Add(this.lblLocation);
-            this.gbReportDetails.Controls.Add(this.dtpReportDate);
-            this.gbReportDetails.Controls.Add(this.lblReportDate);
-            this.gbReportDetails.Controls.Add(this.txtReportedBy);
-            this.gbReportDetails.Controls.Add(this.lblReportedBy);
-            this.gbReportDetails.Controls.Add(this.txtReportId);
-            this.gbReportDetails.Controls.Add(this.lblReportId);
-            this.gbReportDetails.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbReportDetails.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.gbReportDetails.Location = new System.Drawing.Point(0, 0);
-            this.gbReportDetails.Name = "gbReportDetails";
-            this.gbReportDetails.Size = new System.Drawing.Size(570, 180);
-            this.gbReportDetails.TabIndex = 0;
-            this.gbReportDetails.TabStop = false;
-            this.gbReportDetails.Text = "Report Information";
-            // 
-            // txtLocation
-            // 
-            this.txtLocation.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtLocation.Location = new System.Drawing.Point(300, 120);
-            this.txtLocation.Name = "txtLocation";
-            this.txtLocation.ReadOnly = true;
-            this.txtLocation.Size = new System.Drawing.Size(250, 30);
-            this.txtLocation.TabIndex = 7;
-            // 
-            // lblLocation
-            // 
-            this.lblLocation.AutoSize = true;
-            this.lblLocation.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblLocation.Location = new System.Drawing.Point(296, 95);
-            this.lblLocation.Name = "lblLocation";
-            this.lblLocation.Size = new System.Drawing.Size(76, 23);
-            this.lblLocation.TabIndex = 6;
-            this.lblLocation.Text = "Location:";
-            // 
-            // dtpReportDate
-            // 
-            this.dtpReportDate.Enabled = false;
-            this.dtpReportDate.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.dtpReportDate.Location = new System.Drawing.Point(20, 120);
-            this.dtpReportDate.Name = "dtpReportDate";
-            this.dtpReportDate.Size = new System.Drawing.Size(250, 30);
-            this.dtpReportDate.TabIndex = 5;
-            // 
-            // lblReportDate
-            // 
-            this.lblReportDate.AutoSize = true;
-            this.lblReportDate.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblReportDate.Location = new System.Drawing.Point(16, 95);
-            this.lblReportDate.Name = "lblReportDate";
-            this.lblReportDate.Size = new System.Drawing.Size(99, 23);
-            this.lblReportDate.TabIndex = 4;
-            this.lblReportDate.Text = "Report Date:";
-            // 
-            // txtReportedBy
-            // 
-            this.txtReportedBy.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtReportedBy.Location = new System.Drawing.Point(300, 50);
-            this.txtReportedBy.Name = "txtReportedBy";
-            this.txtReportedBy.ReadOnly = true;
-            this.txtReportedBy.Size = new System.Drawing.Size(250, 30);
-            this.txtReportedBy.TabIndex = 3;
-            // 
-            // lblReportedBy
-            // 
-            this.lblReportedBy.AutoSize = true;
-            this.lblReportedBy.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblReportedBy.Location = new System.Drawing.Point(296, 25);
-            this.lblReportedBy.Name = "lblReportedBy";
-            this.lblReportedBy.Size = new System.Drawing.Size(104, 23);
-            this.lblReportedBy.TabIndex = 2;
-            this.lblReportedBy.Text = "Reported By:";
-            // 
-            // txtReportId
-            // 
-            this.txtReportId.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtReportId.Location = new System.Drawing.Point(20, 50);
-            this.txtReportId.Name = "txtReportId";
-            this.txtReportId.ReadOnly = true;
-            this.txtReportId.Size = new System.Drawing.Size(250, 30);
-            this.txtReportId.TabIndex = 1;
-            // 
-            // lblReportId
-            // 
-            this.lblReportId.AutoSize = true;
-            this.lblReportId.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblReportId.Location = new System.Drawing.Point(16, 25);
-            this.lblReportId.Name = "lblReportId";
-            this.lblReportId.Size = new System.Drawing.Size(83, 23);
-            this.lblReportId.TabIndex = 0;
-            this.lblReportId.Text = "Report ID:";
-            // 
-            // gbVehicleInfo
-            // 
-            this.gbVehicleInfo.Controls.Add(this.txtVehicleColor);
-            this.gbVehicleInfo.Controls.Add(this.lblVehicleColor);
-            this.gbVehicleInfo.Controls.Add(this.txtVehicleModel);
-            this.gbVehicleInfo.Controls.Add(this.lblVehicleModel);
-            this.gbVehicleInfo.Controls.Add(this.txtVehicleMake);
-            this.gbVehicleInfo.Controls.Add(this.lblVehicleMake);
-            this.gbVehicleInfo.Controls.Add(this.txtLicensePlate);
-            this.gbVehicleInfo.Controls.Add(this.lblLicensePlate);
-            this.gbVehicleInfo.Controls.Add(this.txtVIN);
-            this.gbVehicleInfo.Controls.Add(this.lblVIN);
-            this.gbVehicleInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbVehicleInfo.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.gbVehicleInfo.Location = new System.Drawing.Point(0, 180);
-            this.gbVehicleInfo.Name = "gbVehicleInfo";
-            this.gbVehicleInfo.Size = new System.Drawing.Size(570, 200);
-            this.gbVehicleInfo.TabIndex = 1;
-            this.gbVehicleInfo.TabStop = false;
-            this.gbVehicleInfo.Text = "Vehicle Information";
-            // 
-            // txtVehicleColor
-            // 
-            this.txtVehicleColor.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtVehicleColor.Location = new System.Drawing.Point(300, 150);
-            this.txtVehicleColor.Name = "txtVehicleColor";
-            this.txtVehicleColor.ReadOnly = true;
-            this.txtVehicleColor.Size = new System.Drawing.Size(250, 30);
-            this.txtVehicleColor.TabIndex = 9;
-            // 
-            // lblVehicleColor
-            // 
-            this.lblVehicleColor.AutoSize = true;
-            this.lblVehicleColor.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblVehicleColor.Location = new System.Drawing.Point(296, 125);
-            this.lblVehicleColor.Name = "lblVehicleColor";
-            this.lblVehicleColor.Size = new System.Drawing.Size(106, 23);
-            this.lblVehicleColor.TabIndex = 8;
-            this.lblVehicleColor.Text = "Vehicle Color:";
-            // 
-            // txtVehicleModel
-            // 
-            this.txtVehicleModel.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtVehicleModel.Location = new System.Drawing.Point(20, 150);
-            this.txtVehicleModel.Name = "txtVehicleModel";
-            this.txtVehicleModel.ReadOnly = true;
-            this.txtVehicleModel.Size = new System.Drawing.Size(250, 30);
-            this.txtVehicleModel.TabIndex = 7;
-            // 
-            // lblVehicleModel
-            // 
-            this.lblVehicleModel.AutoSize = true;
-            this.lblVehicleModel.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblVehicleModel.Location = new System.Drawing.Point(16, 125);
-            this.lblVehicleModel.Name = "lblVehicleModel";
-            this.lblVehicleModel.Size = new System.Drawing.Size(117, 23);
-            this.lblVehicleModel.TabIndex = 6;
-            this.lblVehicleModel.Text = "Vehicle Model:";
-            // 
-            // txtVehicleMake
-            // 
-            this.txtVehicleMake.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtVehicleMake.Location = new System.Drawing.Point(300, 80);
-            this.txtVehicleMake.Name = "txtVehicleMake";
-            this.txtVehicleMake.ReadOnly = true;
-            this.txtVehicleMake.Size = new System.Drawing.Size(250, 30);
-            this.txtVehicleMake.TabIndex = 5;
-            // 
-            // lblVehicleMake
-            // 
-            this.lblVehicleMake.AutoSize = true;
-            this.lblVehicleMake.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblVehicleMake.Location = new System.Drawing.Point(296, 55);
-            this.lblVehicleMake.Name = "lblVehicleMake";
-            this.lblVehicleMake.Size = new System.Drawing.Size(109, 23);
-            this.lblVehicleMake.TabIndex = 4;
-            this.lblVehicleMake.Text = "Vehicle Make:";
-            // 
-            // txtLicensePlate
-            // 
-            this.txtLicensePlate.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtLicensePlate.Location = new System.Drawing.Point(20, 80);
-            this.txtLicensePlate.Name = "txtLicensePlate";
-            this.txtLicensePlate.ReadOnly = true;
-            this.txtLicensePlate.Size = new System.Drawing.Size(250, 30);
-            this.txtLicensePlate.TabIndex = 3;
-            // 
-            // lblLicensePlate
-            // 
-            this.lblLicensePlate.AutoSize = true;
-            this.lblLicensePlate.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblLicensePlate.Location = new System.Drawing.Point(16, 55);
-            this.lblLicensePlate.Name = "lblLicensePlate";
-            this.lblLicensePlate.Size = new System.Drawing.Size(109, 23);
-            this.lblLicensePlate.TabIndex = 2;
-            this.lblLicensePlate.Text = "License Plate:";
-            // 
-            // txtVIN
-            // 
-            this.txtVIN.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtVIN.Location = new System.Drawing.Point(160, 28);
-            this.txtVIN.Name = "txtVIN";
-            this.txtVIN.ReadOnly = true;
-            this.txtVIN.Size = new System.Drawing.Size(390, 30);
-            this.txtVIN.TabIndex = 1;
-            // 
-            // lblVIN
-            // 
-            this.lblVIN.AutoSize = true;
-            this.lblVIN.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblVIN.Location = new System.Drawing.Point(16, 31);
-            this.lblVIN.Name = "lblVIN";
-            this.lblVIN.Size = new System.Drawing.Size(126, 23);
-            this.lblVIN.TabIndex = 0;
-            this.lblVIN.Text = "VIN (Vehicle ID):";
+            pnlReportInfo.Controls.Add(gbDamageDetails);
+            pnlReportInfo.Controls.Add(gbVehicleInfo);
+            pnlReportInfo.Controls.Add(gbReportDetails);
+            pnlReportInfo.Dock = DockStyle.Fill;
+            pnlReportInfo.Location = new Point(0, 0);
+            pnlReportInfo.Name = "pnlReportInfo";
+            pnlReportInfo.Size = new Size(570, 640);
+            pnlReportInfo.TabIndex = 0;
             // 
             // gbDamageDetails
             // 
-            this.gbDamageDetails.Controls.Add(this.txtRepairNotes);
-            this.gbDamageDetails.Controls.Add(this.lblRepairNotes);
-            this.gbDamageDetails.Controls.Add(this.txtRepairCost);
-            this.gbDamageDetails.Controls.Add(this.lblRepairCost);
-            this.gbDamageDetails.Controls.Add(this.txtSeverity);
-            this.gbDamageDetails.Controls.Add(this.lblSeverity);
-            this.gbDamageDetails.Controls.Add(this.txtDamageType);
-            this.gbDamageDetails.Controls.Add(this.lblDamageType);
-            this.gbDamageDetails.Controls.Add(this.txtDamageDescription);
-            this.gbDamageDetails.Controls.Add(this.lblDamageDescription);
-            this.gbDamageDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbDamageDetails.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.gbDamageDetails.Location = new System.Drawing.Point(0, 380);
-            this.gbDamageDetails.Name = "gbDamageDetails";
-            this.gbDamageDetails.Size = new System.Drawing.Size(570, 260);
-            this.gbDamageDetails.TabIndex = 2;
-            this.gbDamageDetails.TabStop = false;
-            this.gbDamageDetails.Text = "Damage Details";
+            gbDamageDetails.Controls.Add(txtRepairNotes);
+            gbDamageDetails.Controls.Add(lblRepairNotes);
+            gbDamageDetails.Controls.Add(txtRepairCost);
+            gbDamageDetails.Controls.Add(lblRepairCost);
+            gbDamageDetails.Controls.Add(txtSeverity);
+            gbDamageDetails.Controls.Add(lblSeverity);
+            gbDamageDetails.Controls.Add(txtDamageType);
+            gbDamageDetails.Controls.Add(lblDamageType);
+            gbDamageDetails.Controls.Add(txtDamageDescription);
+            gbDamageDetails.Controls.Add(lblDamageDescription);
+            gbDamageDetails.Dock = DockStyle.Fill;
+            gbDamageDetails.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            gbDamageDetails.Location = new Point(0, 380);
+            gbDamageDetails.Name = "gbDamageDetails";
+            gbDamageDetails.Size = new Size(570, 260);
+            gbDamageDetails.TabIndex = 2;
+            gbDamageDetails.TabStop = false;
+            gbDamageDetails.Text = "Damage Details";
             // 
             // txtRepairNotes
             // 
-            this.txtRepairNotes.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtRepairNotes.Location = new System.Drawing.Point(20, 205);
-            this.txtRepairNotes.Multiline = true;
-            this.txtRepairNotes.Name = "txtRepairNotes";
-            this.txtRepairNotes.ReadOnly = true;
-            this.txtRepairNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtRepairNotes.Size = new System.Drawing.Size(530, 40);
-            this.txtRepairNotes.TabIndex = 9;
+            txtRepairNotes.Font = new Font("Segoe UI", 10F);
+            txtRepairNotes.Location = new Point(20, 205);
+            txtRepairNotes.Multiline = true;
+            txtRepairNotes.Name = "txtRepairNotes";
+            txtRepairNotes.ReadOnly = true;
+            txtRepairNotes.ScrollBars = ScrollBars.Vertical;
+            txtRepairNotes.Size = new Size(530, 40);
+            txtRepairNotes.TabIndex = 9;
             // 
             // lblRepairNotes
             // 
-            this.lblRepairNotes.AutoSize = true;
-            this.lblRepairNotes.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblRepairNotes.Location = new System.Drawing.Point(16, 180);
-            this.lblRepairNotes.Name = "lblRepairNotes";
-            this.lblRepairNotes.Size = new System.Drawing.Size(105, 23);
-            this.lblRepairNotes.TabIndex = 8;
-            this.lblRepairNotes.Text = "Repair Notes:";
+            lblRepairNotes.AutoSize = true;
+            lblRepairNotes.Font = new Font("Segoe UI", 10F);
+            lblRepairNotes.Location = new Point(16, 180);
+            lblRepairNotes.Name = "lblRepairNotes";
+            lblRepairNotes.Size = new Size(112, 23);
+            lblRepairNotes.TabIndex = 8;
+            lblRepairNotes.Text = "Repair Notes:";
             // 
             // txtRepairCost
             // 
-            this.txtRepairCost.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtRepairCost.Location = new System.Drawing.Point(300, 135);
-            this.txtRepairCost.Name = "txtRepairCost";
-            this.txtRepairCost.ReadOnly = true;
-            this.txtRepairCost.Size = new System.Drawing.Size(250, 30);
-            this.txtRepairCost.TabIndex = 7;
+            txtRepairCost.Font = new Font("Segoe UI", 10F);
+            txtRepairCost.Location = new Point(300, 135);
+            txtRepairCost.Name = "txtRepairCost";
+            txtRepairCost.ReadOnly = true;
+            txtRepairCost.Size = new Size(250, 30);
+            txtRepairCost.TabIndex = 7;
             // 
             // lblRepairCost
             // 
-            this.lblRepairCost.AutoSize = true;
-            this.lblRepairCost.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblRepairCost.Location = new System.Drawing.Point(296, 110);
-            this.lblRepairCost.Name = "lblRepairCost";
-            this.lblRepairCost.Size = new System.Drawing.Size(94, 23);
-            this.lblRepairCost.TabIndex = 6;
-            this.lblRepairCost.Text = "Repair Cost:";
+            lblRepairCost.AutoSize = true;
+            lblRepairCost.Font = new Font("Segoe UI", 10F);
+            lblRepairCost.Location = new Point(296, 110);
+            lblRepairCost.Name = "lblRepairCost";
+            lblRepairCost.Size = new Size(101, 23);
+            lblRepairCost.TabIndex = 6;
+            lblRepairCost.Text = "Repair Cost:";
             // 
             // txtSeverity
             // 
-            this.txtSeverity.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtSeverity.Location = new System.Drawing.Point(20, 135);
-            this.txtSeverity.Name = "txtSeverity";
-            this.txtSeverity.ReadOnly = true;
-            this.txtSeverity.Size = new System.Drawing.Size(250, 30);
-            this.txtSeverity.TabIndex = 5;
+            txtSeverity.Font = new Font("Segoe UI", 10F);
+            txtSeverity.Location = new Point(20, 135);
+            txtSeverity.Name = "txtSeverity";
+            txtSeverity.ReadOnly = true;
+            txtSeverity.Size = new Size(250, 30);
+            txtSeverity.TabIndex = 5;
             // 
             // lblSeverity
             // 
-            this.lblSeverity.AutoSize = true;
-            this.lblSeverity.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblSeverity.Location = new System.Drawing.Point(16, 110);
-            this.lblSeverity.Name = "lblSeverity";
-            this.lblSeverity.Size = new System.Drawing.Size(70, 23);
-            this.lblSeverity.TabIndex = 4;
-            this.lblSeverity.Text = "Severity:";
+            lblSeverity.AutoSize = true;
+            lblSeverity.Font = new Font("Segoe UI", 10F);
+            lblSeverity.Location = new Point(16, 110);
+            lblSeverity.Name = "lblSeverity";
+            lblSeverity.Size = new Size(73, 23);
+            lblSeverity.TabIndex = 4;
+            lblSeverity.Text = "Severity:";
             // 
             // txtDamageType
             // 
-            this.txtDamageType.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtDamageType.Location = new System.Drawing.Point(300, 65);
-            this.txtDamageType.Name = "txtDamageType";
-            this.txtDamageType.ReadOnly = true;
-            this.txtDamageType.Size = new System.Drawing.Size(250, 30);
-            this.txtDamageType.TabIndex = 3;
+            txtDamageType.Font = new Font("Segoe UI", 10F);
+            txtDamageType.Location = new Point(300, 65);
+            txtDamageType.Name = "txtDamageType";
+            txtDamageType.ReadOnly = true;
+            txtDamageType.Size = new Size(250, 30);
+            txtDamageType.TabIndex = 3;
             // 
             // lblDamageType
             // 
-            this.lblDamageType.AutoSize = true;
-            this.lblDamageType.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblDamageType.Location = new System.Drawing.Point(296, 40);
-            this.lblDamageType.Name = "lblDamageType";
-            this.lblDamageType.Size = new System.Drawing.Size(110, 23);
-            this.lblDamageType.TabIndex = 2;
-            this.lblDamageType.Text = "Damage Type:";
+            lblDamageType.AutoSize = true;
+            lblDamageType.Font = new Font("Segoe UI", 10F);
+            lblDamageType.Location = new Point(296, 40);
+            lblDamageType.Name = "lblDamageType";
+            lblDamageType.Size = new Size(118, 23);
+            lblDamageType.TabIndex = 2;
+            lblDamageType.Text = "Damage Type:";
             // 
             // txtDamageDescription
             // 
-            this.txtDamageDescription.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtDamageDescription.Location = new System.Drawing.Point(20, 65);
-            this.txtDamageDescription.Multiline = true;
-            this.txtDamageDescription.Name = "txtDamageDescription";
-            this.txtDamageDescription.ReadOnly = true;
-            this.txtDamageDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDamageDescription.Size = new System.Drawing.Size(250, 40);
-            this.txtDamageDescription.TabIndex = 1;
+            txtDamageDescription.Font = new Font("Segoe UI", 10F);
+            txtDamageDescription.Location = new Point(20, 65);
+            txtDamageDescription.Multiline = true;
+            txtDamageDescription.Name = "txtDamageDescription";
+            txtDamageDescription.ReadOnly = true;
+            txtDamageDescription.ScrollBars = ScrollBars.Vertical;
+            txtDamageDescription.Size = new Size(250, 40);
+            txtDamageDescription.TabIndex = 1;
             // 
             // lblDamageDescription
             // 
-            this.lblDamageDescription.AutoSize = true;
-            this.lblDamageDescription.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblDamageDescription.Location = new System.Drawing.Point(16, 40);
-            this.lblDamageDescription.Name = "lblDamageDescription";
-            this.lblDamageDescription.Size = new System.Drawing.Size(159, 23);
-            this.lblDamageDescription.TabIndex = 0;
-            this.lblDamageDescription.Text = "Damage Description:";
+            lblDamageDescription.AutoSize = true;
+            lblDamageDescription.Font = new Font("Segoe UI", 10F);
+            lblDamageDescription.Location = new Point(16, 40);
+            lblDamageDescription.Name = "lblDamageDescription";
+            lblDamageDescription.Size = new Size(169, 23);
+            lblDamageDescription.TabIndex = 0;
+            lblDamageDescription.Text = "Damage Description:";
+            // 
+            // gbVehicleInfo
+            // 
+            gbVehicleInfo.Controls.Add(txtVehicleColor);
+            gbVehicleInfo.Controls.Add(lblVehicleColor);
+            gbVehicleInfo.Controls.Add(txtVehicleModel);
+            gbVehicleInfo.Controls.Add(lblVehicleModel);
+            gbVehicleInfo.Controls.Add(txtVehicleMake);
+            gbVehicleInfo.Controls.Add(lblVehicleMake);
+            gbVehicleInfo.Controls.Add(txtLicensePlate);
+            gbVehicleInfo.Controls.Add(lblLicensePlate);
+            gbVehicleInfo.Controls.Add(txtVIN);
+            gbVehicleInfo.Controls.Add(lblVIN);
+            gbVehicleInfo.Dock = DockStyle.Top;
+            gbVehicleInfo.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            gbVehicleInfo.Location = new Point(0, 180);
+            gbVehicleInfo.Name = "gbVehicleInfo";
+            gbVehicleInfo.Size = new Size(570, 200);
+            gbVehicleInfo.TabIndex = 1;
+            gbVehicleInfo.TabStop = false;
+            gbVehicleInfo.Text = "Vehicle Information";
+            // 
+            // txtVehicleColor
+            // 
+            txtVehicleColor.Font = new Font("Segoe UI", 10F);
+            txtVehicleColor.Location = new Point(300, 150);
+            txtVehicleColor.Name = "txtVehicleColor";
+            txtVehicleColor.ReadOnly = true;
+            txtVehicleColor.Size = new Size(250, 30);
+            txtVehicleColor.TabIndex = 9;
+            // 
+            // lblVehicleColor
+            // 
+            lblVehicleColor.AutoSize = true;
+            lblVehicleColor.Font = new Font("Segoe UI", 10F);
+            lblVehicleColor.Location = new Point(296, 125);
+            lblVehicleColor.Name = "lblVehicleColor";
+            lblVehicleColor.Size = new Size(114, 23);
+            lblVehicleColor.TabIndex = 8;
+            lblVehicleColor.Text = "Vehicle Color:";
+            // 
+            // txtVehicleModel
+            // 
+            txtVehicleModel.Font = new Font("Segoe UI", 10F);
+            txtVehicleModel.Location = new Point(20, 150);
+            txtVehicleModel.Name = "txtVehicleModel";
+            txtVehicleModel.ReadOnly = true;
+            txtVehicleModel.Size = new Size(250, 30);
+            txtVehicleModel.TabIndex = 7;
+            // 
+            // lblVehicleModel
+            // 
+            lblVehicleModel.AutoSize = true;
+            lblVehicleModel.Font = new Font("Segoe UI", 10F);
+            lblVehicleModel.Location = new Point(16, 125);
+            lblVehicleModel.Name = "lblVehicleModel";
+            lblVehicleModel.Size = new Size(121, 23);
+            lblVehicleModel.TabIndex = 6;
+            lblVehicleModel.Text = "Vehicle Model:";
+            // 
+            // txtVehicleMake
+            // 
+            txtVehicleMake.Font = new Font("Segoe UI", 10F);
+            txtVehicleMake.Location = new Point(300, 80);
+            txtVehicleMake.Name = "txtVehicleMake";
+            txtVehicleMake.ReadOnly = true;
+            txtVehicleMake.Size = new Size(250, 30);
+            txtVehicleMake.TabIndex = 5;
+            // 
+            // lblVehicleMake
+            // 
+            lblVehicleMake.AutoSize = true;
+            lblVehicleMake.Font = new Font("Segoe UI", 10F);
+            lblVehicleMake.Location = new Point(296, 55);
+            lblVehicleMake.Name = "lblVehicleMake";
+            lblVehicleMake.Size = new Size(114, 23);
+            lblVehicleMake.TabIndex = 4;
+            lblVehicleMake.Text = "Vehicle Make:";
+            // 
+            // txtLicensePlate
+            // 
+            txtLicensePlate.Font = new Font("Segoe UI", 10F);
+            txtLicensePlate.Location = new Point(20, 80);
+            txtLicensePlate.Name = "txtLicensePlate";
+            txtLicensePlate.ReadOnly = true;
+            txtLicensePlate.Size = new Size(250, 30);
+            txtLicensePlate.TabIndex = 3;
+            // 
+            // lblLicensePlate
+            // 
+            lblLicensePlate.AutoSize = true;
+            lblLicensePlate.Font = new Font("Segoe UI", 10F);
+            lblLicensePlate.Location = new Point(16, 55);
+            lblLicensePlate.Name = "lblLicensePlate";
+            lblLicensePlate.Size = new Size(112, 23);
+            lblLicensePlate.TabIndex = 2;
+            lblLicensePlate.Text = "License Plate:";
+            // 
+            // txtVIN
+            // 
+            txtVIN.Font = new Font("Segoe UI", 10F);
+            txtVIN.Location = new Point(160, 28);
+            txtVIN.Name = "txtVIN";
+            txtVIN.ReadOnly = true;
+            txtVIN.Size = new Size(390, 30);
+            txtVIN.TabIndex = 1;
+            // 
+            // lblVIN
+            // 
+            lblVIN.AutoSize = true;
+            lblVIN.Font = new Font("Segoe UI", 10F);
+            lblVIN.Location = new Point(16, 31);
+            lblVIN.Name = "lblVIN";
+            lblVIN.Size = new Size(134, 23);
+            lblVIN.TabIndex = 0;
+            lblVIN.Text = "VIN (Vehicle ID):";
+            // 
+            // gbReportDetails
+            // 
+            gbReportDetails.Controls.Add(txtLocation);
+            gbReportDetails.Controls.Add(lblLocation);
+            gbReportDetails.Controls.Add(dtpReportDate);
+            gbReportDetails.Controls.Add(lblReportDate);
+            gbReportDetails.Controls.Add(txtReportedBy);
+            gbReportDetails.Controls.Add(lblReportedBy);
+            gbReportDetails.Controls.Add(txtReportId);
+            gbReportDetails.Controls.Add(lblReportId);
+            gbReportDetails.Dock = DockStyle.Top;
+            gbReportDetails.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            gbReportDetails.Location = new Point(0, 0);
+            gbReportDetails.Name = "gbReportDetails";
+            gbReportDetails.Size = new Size(570, 180);
+            gbReportDetails.TabIndex = 0;
+            gbReportDetails.TabStop = false;
+            gbReportDetails.Text = "Report Information";
+            // 
+            // txtLocation
+            // 
+            txtLocation.Font = new Font("Segoe UI", 10F);
+            txtLocation.Location = new Point(300, 120);
+            txtLocation.Name = "txtLocation";
+            txtLocation.ReadOnly = true;
+            txtLocation.Size = new Size(250, 30);
+            txtLocation.TabIndex = 7;
+            // 
+            // lblLocation
+            // 
+            lblLocation.AutoSize = true;
+            lblLocation.Font = new Font("Segoe UI", 10F);
+            lblLocation.Location = new Point(296, 95);
+            lblLocation.Name = "lblLocation";
+            lblLocation.Size = new Size(79, 23);
+            lblLocation.TabIndex = 6;
+            lblLocation.Text = "Location:";
+            // 
+            // dtpReportDate
+            // 
+            dtpReportDate.Enabled = false;
+            dtpReportDate.Font = new Font("Segoe UI", 10F);
+            dtpReportDate.Location = new Point(16, 121);
+            dtpReportDate.Name = "dtpReportDate";
+            dtpReportDate.Size = new Size(273, 30);
+            dtpReportDate.TabIndex = 5;
+            // 
+            // lblReportDate
+            // 
+            lblReportDate.AutoSize = true;
+            lblReportDate.Font = new Font("Segoe UI", 10F);
+            lblReportDate.Location = new Point(16, 95);
+            lblReportDate.Name = "lblReportDate";
+            lblReportDate.Size = new Size(106, 23);
+            lblReportDate.TabIndex = 4;
+            lblReportDate.Text = "Report Date:";
+            // 
+            // txtReportedBy
+            // 
+            txtReportedBy.Font = new Font("Segoe UI", 10F);
+            txtReportedBy.Location = new Point(300, 50);
+            txtReportedBy.Name = "txtReportedBy";
+            txtReportedBy.ReadOnly = true;
+            txtReportedBy.Size = new Size(250, 30);
+            txtReportedBy.TabIndex = 3;
+            // 
+            // lblReportedBy
+            // 
+            lblReportedBy.AutoSize = true;
+            lblReportedBy.Font = new Font("Segoe UI", 10F);
+            lblReportedBy.Location = new Point(296, 25);
+            lblReportedBy.Name = "lblReportedBy";
+            lblReportedBy.Size = new Size(107, 23);
+            lblReportedBy.TabIndex = 2;
+            lblReportedBy.Text = "Reported By:";
+            // 
+            // txtReportId
+            // 
+            txtReportId.Font = new Font("Segoe UI", 10F);
+            txtReportId.Location = new Point(20, 50);
+            txtReportId.Name = "txtReportId";
+            txtReportId.ReadOnly = true;
+            txtReportId.Size = new Size(269, 30);
+            txtReportId.TabIndex = 1;
+            // 
+            // lblReportId
+            // 
+            lblReportId.AutoSize = true;
+            lblReportId.Font = new Font("Segoe UI", 10F);
+            lblReportId.Location = new Point(16, 25);
+            lblReportId.Name = "lblReportId";
+            lblReportId.Size = new Size(87, 23);
+            lblReportId.TabIndex = 0;
+            lblReportId.Text = "Report ID:";
             // 
             // pnlImages
             // 
-            this.pnlImages.Controls.Add(this.gbDamageImages);
-            this.pnlImages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlImages.Location = new System.Drawing.Point(10, 0);
-            this.pnlImages.Name = "pnlImages";
-            this.pnlImages.Size = new System.Drawing.Size(280, 640);
-            this.pnlImages.TabIndex = 0;
+            pnlImages.Controls.Add(gbDamageImages);
+            pnlImages.Dock = DockStyle.Fill;
+            pnlImages.Location = new Point(10, 0);
+            pnlImages.Name = "pnlImages";
+            pnlImages.Size = new Size(270, 640);
+            pnlImages.TabIndex = 0;
             // 
             // gbDamageImages
             // 
-            this.gbDamageImages.Controls.Add(this.flowLayoutPanelImages);
-            this.gbDamageImages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbDamageImages.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.gbDamageImages.Location = new System.Drawing.Point(0, 0);
-            this.gbDamageImages.Name = "gbDamageImages";
-            this.gbDamageImages.Size = new System.Drawing.Size(280, 640);
-            this.gbDamageImages.TabIndex = 0;
-            this.gbDamageImages.TabStop = false;
-            this.gbDamageImages.Text = "Damage Images";
+            gbDamageImages.Controls.Add(flowLayoutPanelImages);
+            gbDamageImages.Dock = DockStyle.Fill;
+            gbDamageImages.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            gbDamageImages.Location = new Point(0, 0);
+            gbDamageImages.Name = "gbDamageImages";
+            gbDamageImages.Size = new Size(270, 640);
+            gbDamageImages.TabIndex = 0;
+            gbDamageImages.TabStop = false;
+            gbDamageImages.Text = "Damage Images";
             // 
             // flowLayoutPanelImages
             // 
-            this.flowLayoutPanelImages.AutoScroll = true;
-            this.flowLayoutPanelImages.Controls.Add(this.pbDamageImage1);
-            this.flowLayoutPanelImages.Controls.Add(this.pbDamageImage2);
-            this.flowLayoutPanelImages.Controls.Add(this.pbDamageImage3);
-            this.flowLayoutPanelImages.Controls.Add(this.pbDamageImage4);
-            this.flowLayoutPanelImages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelImages.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanelImages.Location = new System.Drawing.Point(3, 26);
-            this.flowLayoutPanelImages.Name = "flowLayoutPanelImages";
-            this.flowLayoutPanelImages.Padding = new System.Windows.Forms.Padding(10);
-            this.flowLayoutPanelImages.Size = new System.Drawing.Size(274, 611);
-            this.flowLayoutPanelImages.TabIndex = 0;
+            flowLayoutPanelImages.AutoScroll = true;
+            flowLayoutPanelImages.Controls.Add(pbDamageImage1);
+            flowLayoutPanelImages.Controls.Add(pbDamageImage2);
+            flowLayoutPanelImages.Controls.Add(pbDamageImage3);
+            flowLayoutPanelImages.Controls.Add(pbDamageImage4);
+            flowLayoutPanelImages.Dock = DockStyle.Fill;
+            flowLayoutPanelImages.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanelImages.Location = new Point(3, 26);
+            flowLayoutPanelImages.Name = "flowLayoutPanelImages";
+            flowLayoutPanelImages.Padding = new Padding(10);
+            flowLayoutPanelImages.Size = new Size(264, 611);
+            flowLayoutPanelImages.TabIndex = 0;
             // 
             // pbDamageImage1
             // 
-            this.pbDamageImage1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbDamageImage1.Location = new System.Drawing.Point(13, 13);
-            this.pbDamageImage1.Name = "pbDamageImage1";
-            this.pbDamageImage1.Size = new System.Drawing.Size(240, 180);
-            this.pbDamageImage1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbDamageImage1.TabIndex = 0;
-            this.pbDamageImage1.TabStop = false;
-            this.toolTip.SetToolTip(this.pbDamageImage1, "Click to view full size");
+            pbDamageImage1.BorderStyle = BorderStyle.FixedSingle;
+            pbDamageImage1.Location = new Point(13, 13);
+            pbDamageImage1.Name = "pbDamageImage1";
+            pbDamageImage1.Size = new Size(240, 180);
+            pbDamageImage1.SizeMode = PictureBoxSizeMode.Zoom;
+            pbDamageImage1.TabIndex = 0;
+            pbDamageImage1.TabStop = false;
+            toolTip.SetToolTip(pbDamageImage1, "Click to view full size");
             // 
             // pbDamageImage2
             // 
-            this.pbDamageImage2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbDamageImage2.Location = new System.Drawing.Point(13, 209);
-            this.pbDamageImage2.Name = "pbDamageImage2";
-            this.pbDamageImage2.Size = new System.Drawing.Size(240, 180);
-            this.pbDamageImage2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbDamageImage2.TabIndex = 1;
-            this.pbDamageImage2.TabStop = false;
-            this.toolTip.SetToolTip(this.pbDamageImage2, "Click to view full size");
+            pbDamageImage2.BorderStyle = BorderStyle.FixedSingle;
+            pbDamageImage2.Location = new Point(13, 199);
+            pbDamageImage2.Name = "pbDamageImage2";
+            pbDamageImage2.Size = new Size(240, 180);
+            pbDamageImage2.SizeMode = PictureBoxSizeMode.Zoom;
+            pbDamageImage2.TabIndex = 1;
+            pbDamageImage2.TabStop = false;
+            toolTip.SetToolTip(pbDamageImage2, "Click to view full size");
             // 
             // pbDamageImage3
             // 
-            this.pbDamageImage3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbDamageImage3.Location = new System.Drawing.Point(13, 405);
-            this.pbDamageImage3.Name = "pbDamageImage3";
-            this.pbDamageImage3.Size = new System.Drawing.Size(240, 180);
-            this.pbDamageImage3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbDamageImage3.TabIndex = 2;
-            this.pbDamageImage3.TabStop = false;
-            this.toolTip.SetToolTip(this.pbDamageImage3, "Click to view full size");
+            pbDamageImage3.BorderStyle = BorderStyle.FixedSingle;
+            pbDamageImage3.Location = new Point(13, 385);
+            pbDamageImage3.Name = "pbDamageImage3";
+            pbDamageImage3.Size = new Size(240, 180);
+            pbDamageImage3.SizeMode = PictureBoxSizeMode.Zoom;
+            pbDamageImage3.TabIndex = 2;
+            pbDamageImage3.TabStop = false;
+            toolTip.SetToolTip(pbDamageImage3, "Click to view full size");
             // 
             // pbDamageImage4
             // 
-            this.pbDamageImage4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbDamageImage4.Location = new System.Drawing.Point(13, 601);
-            this.pbDamageImage4.Name = "pbDamageImage4";
-            this.pbDamageImage4.Size = new System.Drawing.Size(240, 180);
-            this.pbDamageImage4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbDamageImage4.TabIndex = 3;
-            this.pbDamageImage4.TabStop = false;
-            this.toolTip.SetToolTip(this.pbDamageImage4, "Click to view full size");
+            pbDamageImage4.BorderStyle = BorderStyle.FixedSingle;
+            pbDamageImage4.Location = new Point(259, 13);
+            pbDamageImage4.Name = "pbDamageImage4";
+            pbDamageImage4.Size = new Size(240, 180);
+            pbDamageImage4.SizeMode = PictureBoxSizeMode.Zoom;
+            pbDamageImage4.TabIndex = 3;
+            pbDamageImage4.TabStop = false;
+            toolTip.SetToolTip(pbDamageImage4, "Click to view full size");
             // 
             // pnlActions
             // 
-            this.pnlActions.Controls.Add(this.gbStatusActions);
-            this.pnlActions.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlActions.Location = new System.Drawing.Point(885, 15);
-            this.pnlActions.Name = "pnlActions";
-            this.pnlActions.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.pnlActions.Size = new System.Drawing.Size(300, 640);
-            this.pnlActions.TabIndex = 1;
+            pnlActions.Controls.Add(gbStatusActions);
+            pnlActions.Dock = DockStyle.Right;
+            pnlActions.Location = new Point(885, 15);
+            pnlActions.Name = "pnlActions";
+            pnlActions.Padding = new Padding(10, 0, 0, 0);
+            pnlActions.Size = new Size(300, 640);
+            pnlActions.TabIndex = 1;
             // 
             // gbStatusActions
             // 
-            this.gbStatusActions.Controls.Add(this.cbStatus);
-            this.gbStatusActions.Controls.Add(this.lblStatus);
-            this.gbStatusActions.Controls.Add(this.btnEdit);
-            this.gbStatusActions.Controls.Add(this.btnSave);
-            this.gbStatusActions.Controls.Add(this.btnClose);
-            this.gbStatusActions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbStatusActions.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.gbStatusActions.Location = new System.Drawing.Point(10, 0);
-            this.gbStatusActions.Name = "gbStatusActions";
-            this.gbStatusActions.Size = new System.Drawing.Size(290, 640);
-            this.gbStatusActions.TabIndex = 0;
-            this.gbStatusActions.TabStop = false;
-            this.gbStatusActions.Text = "Status & Actions";
+            gbStatusActions.Controls.Add(button1);
+            gbStatusActions.Controls.Add(cbStatus);
+            gbStatusActions.Controls.Add(lblStatus);
+            gbStatusActions.Controls.Add(btnEdit);
+            gbStatusActions.Controls.Add(btnSave);
+            gbStatusActions.Controls.Add(btnClose);
+            gbStatusActions.Dock = DockStyle.Fill;
+            gbStatusActions.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            gbStatusActions.Location = new Point(10, 0);
+            gbStatusActions.Name = "gbStatusActions";
+            gbStatusActions.Size = new Size(290, 640);
+            gbStatusActions.TabIndex = 0;
+            gbStatusActions.TabStop = false;
+            gbStatusActions.Text = "Status & Actions";
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(220, 53, 69);
+            button1.Enabled = false;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(20, 249);
+            button1.Name = "button1";
+            button1.Size = new Size(250, 50);
+            button1.TabIndex = 5;
+            button1.Text = "Delete Report";
+            button1.UseVisualStyleBackColor = false;
             // 
             // cbStatus
             // 
-            this.cbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbStatus.Enabled = false;
-            this.cbStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cbStatus.FormattingEnabled = true;
-            this.cbStatus.Items.AddRange(new object[] {
-            "Pending",
-            "Under Review",
-            "Approved",
-            "In Repair",
-            "Completed",
-            "Rejected"});
-            this.cbStatus.Location = new System.Drawing.Point(20, 70);
-            this.cbStatus.Name = "cbStatus";
-            this.cbStatus.Size = new System.Drawing.Size(250, 31);
-            this.cbStatus.TabIndex = 0;
+            cbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbStatus.Enabled = false;
+            cbStatus.Font = new Font("Segoe UI", 10F);
+            cbStatus.FormattingEnabled = true;
+            cbStatus.Items.AddRange(new object[] { "Pending", "Under Review", "Approved", "In Repair", "Completed", "Rejected" });
+            cbStatus.Location = new Point(20, 70);
+            cbStatus.Name = "cbStatus";
+            cbStatus.Size = new Size(250, 31);
+            cbStatus.TabIndex = 0;
             // 
             // lblStatus
             // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblStatus.Location = new System.Drawing.Point(16, 40);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(109, 23);
-            this.lblStatus.TabIndex = 1;
-            this.lblStatus.Text = "Report Status:";
+            lblStatus.AutoSize = true;
+            lblStatus.Font = new Font("Segoe UI", 10F);
+            lblStatus.Location = new Point(16, 40);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(116, 23);
+            lblStatus.TabIndex = 1;
+            lblStatus.Text = "Report Status:";
             // 
             // btnEdit
             // 
-            this.btnEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(156)))), ((int)(((byte)(18)))));
-            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnEdit.ForeColor = System.Drawing.Color.White;
-            this.btnEdit.Location = new System.Drawing.Point(20, 130);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(250, 50);
-            this.btnEdit.TabIndex = 2;
-            this.btnEdit.Text = "Edit";
-            this.btnEdit.UseVisualStyleBackColor = false;
+            btnEdit.BackColor = Color.FromArgb(243, 156, 18);
+            btnEdit.FlatStyle = FlatStyle.Flat;
+            btnEdit.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnEdit.ForeColor = Color.White;
+            btnEdit.Location = new Point(20, 188);
+            btnEdit.Name = "btnEdit";
+            btnEdit.Size = new Size(250, 50);
+            btnEdit.TabIndex = 2;
+            btnEdit.Text = "Edit";
+            btnEdit.UseVisualStyleBackColor = false;
             // 
             // btnSave
             // 
-            this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.btnSave.Enabled = false;
-            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(20, 190);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(250, 50);
-            this.btnSave.TabIndex = 3;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = false;
+            btnSave.BackColor = Color.FromArgb(46, 204, 113);
+            btnSave.Enabled = false;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(20, 125);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(250, 50);
+            btnSave.TabIndex = 3;
+            btnSave.Text = "Save";
+            btnSave.UseVisualStyleBackColor = false;
             // 
             // btnClose
             // 
-            this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(20, 550);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(250, 50);
-            this.btnClose.TabIndex = 4;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = false;
+            btnClose.BackColor = Color.FromArgb(149, 165, 166);
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnClose.ForeColor = Color.White;
+            btnClose.Location = new Point(20, 550);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(250, 50);
+            btnClose.TabIndex = 4;
+            btnClose.Text = "Close";
+            btnClose.UseVisualStyleBackColor = false;
             // 
             // pnlFooter
             // 
-            this.pnlFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
-            this.pnlFooter.Controls.Add(this.lblFooterInfo);
-            this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlFooter.Location = new System.Drawing.Point(0, 750);
-            this.pnlFooter.Name = "pnlFooter";
-            this.pnlFooter.Size = new System.Drawing.Size(1200, 30);
-            this.pnlFooter.TabIndex = 2;
+            pnlFooter.BackColor = Color.FromArgb(241, 241, 241);
+            pnlFooter.Controls.Add(lblFooterInfo);
+            pnlFooter.Dock = DockStyle.Bottom;
+            pnlFooter.Location = new Point(0, 750);
+            pnlFooter.Name = "pnlFooter";
+            pnlFooter.Size = new Size(1200, 30);
+            pnlFooter.TabIndex = 2;
             // 
             // lblFooterInfo
             // 
-            this.lblFooterInfo.AutoSize = true;
-            this.lblFooterInfo.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblFooterInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblFooterInfo.Location = new System.Drawing.Point(10, 6);
-            this.lblFooterInfo.Name = "lblFooterInfo";
-            this.lblFooterInfo.Size = new System.Drawing.Size(287, 20);
-            this.lblFooterInfo.TabIndex = 0;
-            this.lblFooterInfo.Text = "Damage Report Details - View and Manage";
+            lblFooterInfo.AutoSize = true;
+            lblFooterInfo.Font = new Font("Segoe UI", 9F);
+            lblFooterInfo.ForeColor = Color.FromArgb(100, 100, 100);
+            lblFooterInfo.Location = new Point(10, 6);
+            lblFooterInfo.Name = "lblFooterInfo";
+            lblFooterInfo.Size = new Size(298, 20);
+            lblFooterInfo.TabIndex = 0;
+            lblFooterInfo.Text = "Damage Report Details - View and Manage";
             // 
             // DamageReportDetails
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1200, 780);
-            this.Controls.Add(this.pnlMain);
-            this.Controls.Add(this.pnlFooter);
-            this.Controls.Add(this.pnlHeader);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1218, 827);
-            this.Name = "DamageReportDetails";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Damage Report Details - VRMS";
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
-            this.pnlMain.ResumeLayout(false);
-            this.splitContainerMain.Panel1.ResumeLayout(false);
-            this.splitContainerMain.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
-            this.splitContainerMain.ResumeLayout(false);
-            this.pnlReportInfo.ResumeLayout(false);
-            this.gbReportDetails.ResumeLayout(false);
-            this.gbReportDetails.PerformLayout();
-            this.gbVehicleInfo.ResumeLayout(false);
-            this.gbVehicleInfo.PerformLayout();
-            this.gbDamageDetails.ResumeLayout(false);
-            this.gbDamageDetails.PerformLayout();
-            this.pnlImages.ResumeLayout(false);
-            this.gbDamageImages.ResumeLayout(false);
-            this.flowLayoutPanelImages.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbDamageImage1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDamageImage2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDamageImage3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDamageImage4)).EndInit();
-            this.pnlActions.ResumeLayout(false);
-            this.gbStatusActions.ResumeLayout(false);
-            this.gbStatusActions.PerformLayout();
-            this.pnlFooter.ResumeLayout(false);
-            this.pnlFooter.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            ClientSize = new Size(1200, 780);
+            Controls.Add(pnlMain);
+            Controls.Add(pnlFooter);
+            Controls.Add(pnlHeader);
+            Font = new Font("Segoe UI", 9F);
+            MinimumSize = new Size(1218, 827);
+            Name = "DamageReportDetails";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Damage Report Details - VRMS";
+            pnlHeader.ResumeLayout(false);
+            pnlHeader.PerformLayout();
+            pnlMain.ResumeLayout(false);
+            splitContainerMain.Panel1.ResumeLayout(false);
+            splitContainerMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerMain).EndInit();
+            splitContainerMain.ResumeLayout(false);
+            pnlReportInfo.ResumeLayout(false);
+            gbDamageDetails.ResumeLayout(false);
+            gbDamageDetails.PerformLayout();
+            gbVehicleInfo.ResumeLayout(false);
+            gbVehicleInfo.PerformLayout();
+            gbReportDetails.ResumeLayout(false);
+            gbReportDetails.PerformLayout();
+            pnlImages.ResumeLayout(false);
+            gbDamageImages.ResumeLayout(false);
+            flowLayoutPanelImages.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbDamageImage1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbDamageImage2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbDamageImage3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbDamageImage4).EndInit();
+            pnlActions.ResumeLayout(false);
+            gbStatusActions.ResumeLayout(false);
+            gbStatusActions.PerformLayout();
+            pnlFooter.ResumeLayout(false);
+            pnlFooter.PerformLayout();
+            ResumeLayout(false);
 
         }
 
@@ -794,5 +802,6 @@
         private System.Windows.Forms.Panel pnlFooter;
         private System.Windows.Forms.Label lblFooterInfo;
         private System.Windows.Forms.ToolTip toolTip;
+        private Button button1;
     }
 }

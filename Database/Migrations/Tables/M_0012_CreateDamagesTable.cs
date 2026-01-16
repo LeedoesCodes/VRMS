@@ -14,6 +14,7 @@ public static class M_0012_CreateDamagesTable
 
                                           damage_type {Tbl.ToEnum<DamageType>()} NOT NULL,
                                           description TEXT NOT NULL,
+                                          severity {Tbl.ToEnum<DamageSeverity>()} NOT NULL,
 
                                           estimated_cost DECIMAL(10,2) NOT NULL DEFAULT 0.00,
 
