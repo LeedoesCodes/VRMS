@@ -17,7 +17,7 @@ namespace VRMS.Forms
         // STATE
         // =========================
 
-        private readonly int _vehicleInspectionId;
+        private readonly int _rentalId;
 
         private readonly RentalService _rentalService;
         private readonly VehicleService _vehicleService;
@@ -30,14 +30,14 @@ namespace VRMS.Forms
         // =========================
 
         public AddDamageForm(
-            int vehicleInspectionId,
+            int rentalId,
             RentalService rentalService,
             VehicleService vehicleService,
             DamageService damageService)
         {
             InitializeComponent();
 
-            _vehicleInspectionId = vehicleInspectionId;
+            _rentalId = rentalId;
             _rentalService = rentalService;
             _vehicleService = vehicleService;
             _damageService = damageService;
@@ -84,9 +84,8 @@ namespace VRMS.Forms
         {
             try
             {
-                InspectionVehicleInfoDto info =
-                    _damageService.GetVehicleInfoByInspection(
-                        _vehicleInspectionId);
+                RentalVehicleInfoDto info =
+                    _damageService.GetVehicleInfoByRental(_rentalId);
 
                 txtVehicleModel.Text = info.VehicleModel;
                 txtPlateNumber.Text = info.PlateNumber;
@@ -107,6 +106,8 @@ namespace VRMS.Forms
                 Close();
             }
         }
+
+
 
         // =========================
         // PHOTO UPLOAD
@@ -193,34 +194,28 @@ namespace VRMS.Forms
 
                 int damageId =
                     _damageService.CreateDamage(
+                        _rentalId,
                         damageType,
                         txtDescription.Text.Trim(),
                         numEstimatedCost.Value
                     );
 
-                // ----------------------------
-                // CREATE DAMAGE REPORT
-                // ----------------------------
-
-                int reportId =
-                    _damageService.CreateDamageReport(
-                        _vehicleInspectionId,
-                        damageId
-                    );
 
                 // ----------------------------
-                // SAVE FIRST PHOTO (TEMP)
+                // SAVE ALL PHOTOS (ONE REPORT PER PHOTO)
                 // ----------------------------
-
-                if (_selectedPhotos.Count > 0)
+                foreach (var photoPath in _selectedPhotos)
                 {
+                    int photoReportId =
+                        _damageService.CreateDamageReport(damageId);
+
                     using var stream =
-                        File.OpenRead(_selectedPhotos[0]);
+                        File.OpenRead(photoPath);
 
                     _damageService.SetDamageReportPhoto(
-                        reportId,
+                        photoReportId,
                         stream,
-                        Path.GetFileName(_selectedPhotos[0])
+                        Path.GetFileName(photoPath)
                     );
                 }
 

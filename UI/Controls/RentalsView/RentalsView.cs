@@ -246,38 +246,19 @@ namespace VRMS.UI.Controls.RentalsView
             // =========================
             try
             {
-                var invoice = _billingService.GetInvoiceByRental(rental.Id);
+                decimal baseRental =
+                    _rateService.CalculateRentalCost(
+                        rental.PickupDate,
+                        rental.ExpectedReturnDate,
+                        vehicle.VehicleCategoryId);
 
-                if (invoice != null)
-                {
-                    // AUTHORITATIVE TOTAL
-                    lblDetailAmount.Text = $"Total: ₱ {invoice.TotalAmount:N2}";
-                }
-                else
-                {
-                    // FALLBACK: estimate same as NewRentalForm
-                    decimal baseRental =
-                        _rateService.CalculateRentalCost(
-                            rental.PickupDate,
-                            rental.ExpectedReturnDate,
-                            vehicle.VehicleCategoryId);
-
-                    var category =
-                        _vehicleService.GetCategoryById(vehicle.VehicleCategoryId);
-
-                    decimal securityDeposit =
-                        category?.SecurityDeposit ?? 0m;
-
-                    decimal estimatedTotal =
-                        baseRental + securityDeposit;
-
-                    lblDetailAmount.Text = $"Total: ₱ {estimatedTotal:N2}";
-                }
+                lblDetailAmount.Text = $"Total: ₱ {baseRental:N2}";
             }
             catch
             {
                 lblDetailAmount.Text = "Total: ₱ --";
             }
+
 
             // =========================
             // IMAGE
